@@ -35,6 +35,8 @@ Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisa
 
 - [Crédits](#credits)
 
+- [Documents de licence LGPL](#lgpl-licensing)
+
 <a id="download-and-installation"></a>
 
 ## Téléchargement et installation
@@ -251,3 +253,13 @@ Toutes les captures d’écran montrent la version anglaise du jeu.
 - CorinaMarie, pour avoir documenté la technique des Urgent Advice de SimCity 4 que suivent les avis de conseiller du mod.
 
 - La communauté de modding de SimCity 4, pour vingt ans de recherches, d’outils et de connaissances partagées.
+
+<a id="lgpl-licensing"></a>
+
+## Documents de licence LGPL
+
+Le Ministère de l’Optimisation utilise [gzcom-dll](https://github.com/nsgomez/gzcom-dll), sous licence LGPL-2.1-or-later.
+
+Le code source correspondant de la bibliothèque, les mentions de licence et les éléments nécessaires à une nouvelle édition de liens sont disponibles dans le [paquet de documents LGPL](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
+
+Ces éléments ne sont pas nécessaires pour installer ou utiliser le mod.

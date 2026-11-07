@@ -35,6 +35,8 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 
 - [Podziękowania](#credits)
 
+- [Materiały licencyjne LGPL](#lgpl-licensing)
+
 <a id="download-and-installation"></a>
 
 ## Pobieranie i instalacja
@@ -251,3 +253,13 @@ Wszystkie zrzuty ekranu pokazują angielską wersję gry.
 - CorinaMarie, za udokumentowanie techniki Urgent Advice z SimCity 4, według której działają komunikaty doradców tego moda.
 
 - Społeczność moderska SimCity 4, za dwie dekady badań, narzędzi i wspólnie dzielonej wiedzy.
+
+<a id="lgpl-licensing"></a>
+
+## Materiały licencyjne LGPL
+
+Ministerstwo Optymalizacji korzysta z [gzcom-dll](https://github.com/nsgomez/gzcom-dll) na licencji LGPL-2.1-or-later.
+
+Odpowiedni kod źródłowy biblioteki, informacje licencyjne i materiały potrzebne do ponownego linkowania są dostępne w [pakiecie materiałów LGPL](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
+
+Materiały te nie są potrzebne do zainstalowania ani używania modyfikacji.

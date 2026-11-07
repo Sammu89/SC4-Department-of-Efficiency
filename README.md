@@ -35,6 +35,8 @@ Everything is controlled from within the game at **Play Options → Department o
 
 - [Credits](#credits)
 
+- [LGPL licensing materials](#lgpl-licensing)
+
 <a id="download-and-installation"></a>
 
 ## Download and installation
@@ -251,3 +253,13 @@ All screenshots show the English version of the game.
 - CorinaMarie, for documenting the SimCity 4 Urgent Advice technique that the mod's advisor notices follow.
 
 - The SimCity 4 modding community, for two decades of research, tools and shared knowledge.
+
+<a id="lgpl-licensing"></a>
+
+## LGPL licensing materials
+
+Department of Efficiency uses [gzcom-dll](https://github.com/nsgomez/gzcom-dll), licensed under LGPL-2.1-or-later.
+
+The corresponding library source code, license notices, and materials required for relinking are available in the [LGPL materials package](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
+
+These materials are not required to install or use the mod.

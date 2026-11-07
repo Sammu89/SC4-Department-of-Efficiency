@@ -35,6 +35,8 @@ Alles wird im Spiel unter **Spieloptionen → Ministerium für Effizienz** geste
 
 - [Danksagungen](#credits)
 
+- [LGPL-Lizenzmaterialien](#lgpl-licensing)
+
 <a id="download-and-installation"></a>
 
 ## Download und Installation
@@ -251,3 +253,13 @@ Alle Screenshots zeigen die englische Version des Spiels.
 - CorinaMarie, für die Dokumentation der Urgent-Advice-Technik von SimCity 4, der die Beraterhinweise des Mods folgen.
 
 - Die SimCity-4-Modding-Community, für zwei Jahrzehnte Forschung, Werkzeuge und geteiltes Wissen.
+
+<a id="lgpl-licensing"></a>
+
+## LGPL-Lizenzmaterialien
+
+Das Ministerium für Effizienz verwendet [gzcom-dll](https://github.com/nsgomez/gzcom-dll) unter der Lizenz LGPL-2.1-or-later.
+
+Der zugehörige Quellcode der Bibliothek, die Lizenzhinweise und die zum erneuten Linken benötigten Materialien sind im [LGPL-Materialpaket](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip) verfügbar.
+
+Diese Materialien werden für die Installation oder Nutzung des Mods nicht benötigt.
