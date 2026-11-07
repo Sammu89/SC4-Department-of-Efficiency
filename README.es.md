@@ -2,8 +2,6 @@
 
 # Ministerio de Optimización
 
-### [⬇ Descargar Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
-
 **El Ministerio de Optimización se ocupa de los pequeños detalles de la gestión de la ciudad que marcan una gran diferencia.**
 
 El Ministerio de Optimización (*Department of Efficiency*, en inglés) es un plugin para **SimCity 4 Deluxe** que automatiza tareas rutinarias de gestión de la ciudad, para que puedas centrarte en construir, planificar y hacer crecer tu ciudad.
@@ -19,6 +17,8 @@ Todo se controla desde el juego, en **Opciones de juego → Ministerio de Optimi
 
 ## Contenido
 
+- [Descarga e instalación](#download-and-installation)
+
 - [Qué hace el Ministerio](#features)
 
 - [Configuración inicial](#first-time-setup)
@@ -29,13 +29,47 @@ Todo se controla desde el juego, en **Opciones de juego → Ministerio de Optimi
 
 - [Requisitos y compatibilidad](#requirements-and-compatibility)
 
-- [Descarga e instalación](#download-and-installation)
-
 - [Actualizar y desinstalar](#updating-and-uninstalling)
 
 - [Limitaciones conocidas](#known-limitations)
 
 - [Créditos](#credits)
+
+<a id="download-and-installation"></a>
+
+## Descarga e instalación
+
+### [⬇ Descargar Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
+1\. Abre la [página de releases](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) del proyecto y elige la última versión.
+
+2\. En **Assets**, descarga el **ZIP de distribución de Department of Efficiency**.
+
+3\. **Cierra SimCity 4.** Extrae el ZIP en una carpeta temporal.
+
+4\. Copia **`DepartmentEfficiency.dll`** y toda la carpeta **`Department of Efficiency`** en la raíz de `Documentos\SimCity 4\Plugins`.
+
+5\. Inicia el juego y sigue las instrucciones de la [configuración inicial](#first-time-setup) antes de jugar una ciudad guardada.
+
+El ZIP de distribución contiene la DLL y una carpeta con cinco archivos DAT y tres INI. Tras la instalación, deberías tener:
+
+```text
+Documents\SimCity 4\Plugins\
+    DepartmentEfficiency.dll
+    Department of Efficiency\
+        DepartmentEfficiency.dat
+        DepartmentEfficiencyUI.dat
+        DepartmentEfficiencyGarbageAdvice.dat
+        DepartmentEfficiencyDealAdvice.dat
+        DepartmentEfficiencyCivicAdvice.dat
+        DepartmentEfficiency.ini
+        DepartmentEfficiencyUtility.ini
+        DepartmentEfficiencyDemolition.ini
+```
+
+Los archivos Markdown y las capturas de pantalla del repositorio público **no** son necesarios para el juego. Mantén la DLL **directamente en Plugins**, con su carpeta al lado.
+
+**Cambiar los ajustes más tarde:** abre **Opciones de juego → Ministerio de Optimización**, usa las páginas **Servicios** y **Demolición** y pulsa **Aceptar**. Para el interruptor general también puedes usar la ordenanza **Crear un Ministerio de Optimización**, sin coste mensual. Desactivar el Ministerio detiene las acciones futuras; no deshace la financiación, los contratos ni las demoliciones ya aplicados.
 
 <a id="features"></a>
 
@@ -185,43 +219,6 @@ Todas las capturas de pantalla muestran la versión inglesa del juego.
 - **Recomendado:** añade `-CPUCount:1` en **Steam → Biblioteca → SimCity 4 Deluxe → Propiedades → Opciones de lanzamiento**. Esto ayudó a la estabilidad en sesiones largas en el ordenador del autor.
 
 - **Diez idiomas en el juego:** inglés, portugués, francés, alemán, español, italiano, neerlandés, danés, sueco y polaco. El Ministerio sigue automáticamente el idioma de tu juego.
-
-<a id="download-and-installation"></a>
-
-## Descarga e instalación
-
-1\. Abre la página de **Releases** del proyecto (`<PUBLIC-REPOSITORY-URL>/releases`) y elige la última versión. Sustituye este marcador por la dirección del repositorio público antes de publicar.
-
-2\. En **Assets**, descarga el **ZIP de distribución de Department of Efficiency**.
-
-3\. **Cierra SimCity 4.** Extrae el ZIP en una carpeta temporal.
-
-4\. Copia **`DepartmentEfficiency.dll`** y toda la carpeta **`Department of Efficiency`** en la raíz de `Documentos\SimCity 4\Plugins`.
-
-5\. Inicia el juego y sigue las instrucciones de la [configuración inicial](#first-time-setup) antes de jugar una ciudad guardada.
-
-El ZIP de distribución contiene la DLL, un `README.txt` y una carpeta con cinco archivos DAT y tres INI. Tras la instalación, deberías tener:
-
-```text
-Documents\SimCity 4\Plugins\
-    README files
-    DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
-        DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
-    features\
-    screenshots\
-```
-
-Los archivos Markdown y las capturas de pantalla del repositorio público **no** son necesarios para el juego. Mantén la DLL **directamente en Plugins**, con su carpeta al lado.
-
-**Cambiar los ajustes más tarde:** abre **Opciones de juego → Ministerio de Optimización**, usa las páginas **Servicios** y **Demolición** y pulsa **Aceptar**. Para el interruptor general también puedes usar la ordenanza **Crear un Ministerio de Optimización**, sin coste mensual. Desactivar el Ministerio detiene las acciones futuras; no deshace la financiación, los contratos ni las demoliciones ya aplicados.
 
 <a id="updating-and-uninstalling"></a>
 

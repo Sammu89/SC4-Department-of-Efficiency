@@ -2,8 +2,6 @@
 
 # Effektivitetsdepartementet
 
-### [⬇ Ladda ner Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
-
 **Effektivitetsdepartementet tar hand om de små detaljerna i stadens skötsel som gör stor skillnad.**
 
 Effektivitetsdepartementet (*Department of Efficiency* på engelska) är ett tillägg för **SimCity 4 Deluxe** som automatiserar rutinuppgifter i stadens skötsel, så att du kan koncentrera dig på att bygga, planera och låta din stad växa.
@@ -19,6 +17,8 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 ## Innehåll
 
+- [Hämtning och installation](#download-and-installation)
+
 - [Vad Departementet gör](#features)
 
 - [Första inställningen](#first-time-setup)
@@ -29,13 +29,47 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 - [Krav och kompatibilitet](#requirements-and-compatibility)
 
-- [Hämtning och installation](#download-and-installation)
-
 - [Uppdatera och avinstallera](#updating-and-uninstalling)
 
 - [Kända begränsningar](#known-limitations)
 
 - [Tack till](#credits)
+
+<a id="download-and-installation"></a>
+
+## Hämtning och installation
+
+### [⬇ Ladda ner Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
+1\. Öppna projektets [releasesida](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) och välj den senaste utgåvan.
+
+2\. Under **Assets** hämtar du **distributions-ZIP:en för Department of Efficiency**.
+
+3\. **Stäng SimCity 4.** Packa upp ZIP-filen i en tillfällig mapp.
+
+4\. Kopiera **`DepartmentEfficiency.dll`** och hela mappen **`Department of Efficiency`** till roten av `Dokument\SimCity 4\Plugins`.
+
+5\. Starta spelet och följ anvisningarna under [första inställningen](#first-time-setup) innan du spelar en sparad stad.
+
+Distributions-ZIP:en innehåller DLL-filen och en mapp med fem DAT- och tre INI-filer. Efter installationen ska du ha:
+
+```text
+Documents\SimCity 4\Plugins\
+    DepartmentEfficiency.dll
+    Department of Efficiency\
+        DepartmentEfficiency.dat
+        DepartmentEfficiencyUI.dat
+        DepartmentEfficiencyGarbageAdvice.dat
+        DepartmentEfficiencyDealAdvice.dat
+        DepartmentEfficiencyCivicAdvice.dat
+        DepartmentEfficiency.ini
+        DepartmentEfficiencyUtility.ini
+        DepartmentEfficiencyDemolition.ini
+```
+
+Det offentliga arkivets Markdown-filer och skärmbilder behövs **inte** av spelet. Låt DLL-filen ligga **direkt i Plugins**, med den tillhörande mappen bredvid.
+
+**Ändra inställningar senare:** öppna **Spelalternativ → Effektivitetsdepartementet**, använd sidorna **Samhällsservice** och **Rivning** och klicka på **Godkänn**. För huvudströmbrytaren kan du också använda förordningen **Inrätta ett effektivitetsdepartement**, utan månadskostnad. Att stänga av Departementet stoppar framtida åtgärder; det ångrar inte finansiering, avtal eller rivningar som redan genomförts.
 
 <a id="features"></a>
 
@@ -185,43 +219,6 @@ Alla skärmbilder visar den engelska versionen av spelet.
 - **Rekommenderat:** lägg till `-CPUCount:1` under **Steam → Bibliotek → SimCity 4 Deluxe → Egenskaper → Startalternativ**. Det förbättrade stabiliteten i långa sessioner på skaparens dator.
 
 - **Tio språk i spelet:** engelska, portugisiska, franska, tyska, spanska, italienska, nederländska, danska, svenska och polska. Departementet följer automatiskt spelets språk.
-
-<a id="download-and-installation"></a>
-
-## Hämtning och installation
-
-1\. Öppna projektets **Releases**-sida (`<PUBLIC-REPOSITORY-URL>/releases`) och välj den senaste utgåvan. Ersätt platshållaren med det offentliga arkivets adress innan publicering.
-
-2\. Under **Assets** hämtar du **distributions-ZIP:en för Department of Efficiency**.
-
-3\. **Stäng SimCity 4.** Packa upp ZIP-filen i en tillfällig mapp.
-
-4\. Kopiera **`DepartmentEfficiency.dll`** och hela mappen **`Department of Efficiency`** till roten av `Dokument\SimCity 4\Plugins`.
-
-5\. Starta spelet och följ anvisningarna under [första inställningen](#first-time-setup) innan du spelar en sparad stad.
-
-Distributions-ZIP:en innehåller DLL-filen, en `README.txt` och en mapp med fem DAT- och tre INI-filer. Efter installationen ska du ha:
-
-```text
-Documents\SimCity 4\Plugins\
-    README files
-    DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
-        DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
-    features\
-    screenshots\
-```
-
-Det offentliga arkivets Markdown-filer och skärmbilder behövs **inte** av spelet. Låt DLL-filen ligga **direkt i Plugins**, med den tillhörande mappen bredvid.
-
-**Ändra inställningar senare:** öppna **Spelalternativ → Effektivitetsdepartementet**, använd sidorna **Samhällsservice** och **Rivning** och klicka på **Godkänn**. För huvudströmbrytaren kan du också använda förordningen **Inrätta ett effektivitetsdepartement**, utan månadskostnad. Att stänga av Departementet stoppar framtida åtgärder; det ångrar inte finansiering, avtal eller rivningar som redan genomförts.
 
 <a id="updating-and-uninstalling"></a>
 

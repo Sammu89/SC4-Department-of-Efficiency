@@ -2,8 +2,6 @@
 
 # Ministerie van Efficiëntie
 
-### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
-
 **Het Ministerie van Efficiëntie zorgt voor de kleine details van het stadsbeheer die een groot verschil maken.**
 
 Het Ministerie van Efficiëntie (*Department of Efficiency* in het Engels) is een plug-in voor **SimCity 4 Deluxe** die routinetaken van het stadsbeheer automatiseert, zodat u zich kunt richten op bouwen, plannen en uw stad laten groeien.
@@ -19,6 +17,8 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 ## Inhoud
 
+- [Downloaden en installeren](#download-and-installation)
+
 - [Wat het Ministerie doet](#features)
 
 - [Eerste installatie-instellingen](#first-time-setup)
@@ -29,13 +29,47 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 - [Vereisten en compatibiliteit](#requirements-and-compatibility)
 
-- [Downloaden en installeren](#download-and-installation)
-
 - [Bijwerken en verwijderen](#updating-and-uninstalling)
 
 - [Bekende beperkingen](#known-limitations)
 
 - [Dankbetuigingen](#credits)
+
+<a id="download-and-installation"></a>
+
+## Downloaden en installeren
+
+### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
+1\. Open de [releasepagina](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) van het project en kies de nieuwste release.
+
+2\. Download onder **Assets** de **distributie-ZIP van Department of Efficiency**.
+
+3\. **Sluit SimCity 4.** Pak de ZIP uit in een tijdelijke map.
+
+4\. Kopieer **`DepartmentEfficiency.dll`** en de hele map **`Department of Efficiency`** naar de hoofdmap van `Documenten\SimCity 4\Plugins`.
+
+5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
+
+De distributie-ZIP bevat de DLL en een map met vijf DAT- en drie INI-bestanden. Na de installatie hebt u:
+
+```text
+Documents\SimCity 4\Plugins\
+    DepartmentEfficiency.dll
+    Department of Efficiency\
+        DepartmentEfficiency.dat
+        DepartmentEfficiencyUI.dat
+        DepartmentEfficiencyGarbageAdvice.dat
+        DepartmentEfficiencyDealAdvice.dat
+        DepartmentEfficiencyCivicAdvice.dat
+        DepartmentEfficiency.ini
+        DepartmentEfficiencyUtility.ini
+        DepartmentEfficiencyDemolition.ini
+```
+
+De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de DLL **direct in Plugins**, met de bijbehorende map ernaast.
+
+**Instellingen later wijzigen:** open **Spelopties → Ministerie van Efficiëntie**, gebruik de pagina's **Diensten** en **Sloop** en klik op **Accepteren**. Voor de hoofdschakelaar kunt u ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken, zonder maandelijkse kosten. Het Ministerie uitschakelen stopt toekomstige acties; reeds toegepaste financiering, contracten en sloop worden niet ongedaan gemaakt.
 
 <a id="features"></a>
 
@@ -185,43 +219,6 @@ Alle schermafbeeldingen tonen de Engelse versie van het spel.
 - **Aanbevolen:** voeg `-CPUCount:1` toe onder **Steam → Bibliotheek → SimCity 4 Deluxe → Eigenschappen → Startopties**. Dit hielp de stabiliteit in lange sessies op de computer van de auteur.
 
 - **Tien talen in het spel:** Engels, Portugees, Frans, Duits, Spaans, Italiaans, Nederlands, Deens, Zweeds en Pools. Het Ministerie volgt automatisch de taal van uw spel.
-
-<a id="download-and-installation"></a>
-
-## Downloaden en installeren
-
-1\. Open de **Releases**-pagina van het project (`<PUBLIC-REPOSITORY-URL>/releases`) en kies de nieuwste release. Vervang deze plaatsaanduiding vóór publicatie door het adres van de openbare repository.
-
-2\. Download onder **Assets** de **distributie-ZIP van Department of Efficiency**.
-
-3\. **Sluit SimCity 4.** Pak de ZIP uit in een tijdelijke map.
-
-4\. Kopieer **`DepartmentEfficiency.dll`** en de hele map **`Department of Efficiency`** naar de hoofdmap van `Documenten\SimCity 4\Plugins`.
-
-5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
-
-De distributie-ZIP bevat de DLL, een `README.txt` en een map met vijf DAT- en drie INI-bestanden. Na de installatie hebt u:
-
-```text
-Documents\SimCity 4\Plugins\
-    README files
-    DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
-        DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
-    features\
-    screenshots\
-```
-
-De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de DLL **direct in Plugins**, met de bijbehorende map ernaast.
-
-**Instellingen later wijzigen:** open **Spelopties → Ministerie van Efficiëntie**, gebruik de pagina's **Diensten** en **Sloop** en klik op **Accepteren**. Voor de hoofdschakelaar kunt u ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken, zonder maandelijkse kosten. Het Ministerie uitschakelen stopt toekomstige acties; reeds toegepaste financiering, contracten en sloop worden niet ongedaan gemaakt.
 
 <a id="updating-and-uninstalling"></a>
 
