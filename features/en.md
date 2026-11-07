@@ -68,7 +68,7 @@ The percentages are relative to the building's capacity and operating cost at 10
 For example, a school with 1,000 places at 100% funding can accommodate approximately 500 students at 50%, or 1,100 students at 120%.
 
 <a id="education-healthcare-capacity-curve"></a>
-**Capacity formula (SimCity 4)**
+**Capacity formula (base game)**
 
 ```math
 \phi(f) = \min(f,1) + \frac{\max(0,f-1)}{2}
@@ -87,10 +87,11 @@ Where:
 
 The game uses internal rounding and may apply additional capacity modifiers. As a result, the displayed capacity can sometimes differ slightly from a straightforward calculation. The Department accounts for these differences when making decisions.
 
-**Monthly operating cost (SimCity 4)**
+**Monthly operating cost (base game)**
+
 
 ```math
-K = \operatorname{round}(K_0 \times f)
+K = \mathrm{round}(K_0 \times f)
 ```
 
 Where **K₀** is the building's monthly operating cost at 100% funding.
@@ -149,7 +150,7 @@ A coverage ratio of **1.0 (100%)** means the building has enough capacity for it
 
 A ratio below **0.8 (80%)** creates a risk of strikes. The lower the ratio, the greater the risk.
 
-**Strike probability (SimCity 4)**
+**Strike probability (base game)**
 
 ```math
 S(V) = 100 \times \max\left(0,1-\frac{V}{0.8}\right)
@@ -261,7 +262,7 @@ For safety, the increase used in the calculation is capped at **50%**.
 
 High schools, colleges and universities receive special protection. Student transfers between education levels can cause large annual increases, so the Department assumes a possible 50% increase until it has collected 13 monthly observations.
 
-**Largest monthly increase (Department)**
+**Largest monthly increase**
 
 ```math
 v = \min\left(0.5,\ \max\left(0,\ \max_i\left(\frac{U_i}{U_{i-1}}-1\right)\right)\right)
@@ -296,7 +297,7 @@ The Department compares the three requirements and uses whichever calls for the 
 - Protection against previous increases in demand and strikes.
 - Extra protection for small buildings.
 
-**Safety margin formula (Department)**
+**Safety margin formula**
 
 ```math
 M = \max\left(1+\frac{r}{100},\ 0.85(1+v),\ s(U)\right)
@@ -312,7 +313,7 @@ Where:
 
 The factor of 0.85 in the second rule aims to keep coverage above the game's 80% strike-risk threshold, even after a previously observed rise in demand.
 
-**Required capacity (Department)**
+**Required capacity**
 
 ```math
 R = \left\lceil U \times M \right\rceil
@@ -337,7 +338,7 @@ It chooses **the lowest whole percentage that safely meets the requirement**.
 
 By default, it considers funding levels from **1% to 120%**.
 
-**Funding choice (Department)**
+**Funding choice**
 
 ```math
 p^* = \min\left\{p\in[p_{\min},p_{\max}]: C(p)-1\ge R\right\}
@@ -498,7 +499,7 @@ It first checks whether more funding could resolve the problem.
 | **Funding is at maximum, but coverage is below 85%** | Confirms that the building cannot adequately serve its current demand. |
 | **The building is on strike but could normally provide sufficient capacity** | Treats the strike as a temporary problem rather than proof that a new building is needed. |
 
-**Maximum attainable coverage (Department)**
+**Maximum attainable coverage**
 
 ```math
 V_{\max} = \min\left(1,\frac{C_{\max}}{U}\right)
@@ -985,7 +986,7 @@ A plant's actual output depends on both **its funding and its condition**.
 For example, a new power plant funded at 100% can produce its full nominal capacity. As its condition deteriorates, its available output decreases.
 
 <a id="electricity-plant-efficiency"></a>
-**Plant efficiency (SimCity 4)**
+**Plant efficiency (base game)**
 
 ```math
 \text{Eff} = \frac{\text{Curve}(f)}{100} \times \text{Cond}
@@ -998,7 +999,7 @@ Where:
 - **Cond** is the plant's current condition, between 0 and 1.
 - **Eff** is the resulting efficiency, expressed as a fraction.
 
-**Effective output (SimCity 4)**
+**Effective output (base game)**
 
 ```math
 \text{Out} = \text{MaxOut} \times \text{Eff}
@@ -1052,7 +1053,7 @@ Funding above 100% is therefore less cost-effective: you pay 20% more to obtain 
 
 The game uses straight-line interpolation between the control points. The Department uses the same rule.
 
-**Curve interpolation (Department)**
+**Curve interpolation**
 
 ```math
 y(x) = y_i + \frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
@@ -1112,7 +1113,7 @@ These checks ensure that the planned changes meet the city's electricity needs a
 
 The operating cost changes in proportion to the funding percentage.
 
-**Monthly plant expense (SimCity 4)**
+**Monthly plant expense (base game)**
 
 ```math
 E(f) = \operatorname{round}\left(C \times \frac{f}{100}\right)
@@ -1149,7 +1150,7 @@ It is calculated as a **cost-weighted average** of the individual power plants' 
 
 That means a large, expensive power plant has more influence on the department percentage than a small, inexpensive one.
 
-**Overall electricity funding (SimCity 4)**
+**Overall electricity funding (base game)**
 
 ```math
 F_{\text{dept}} = \frac{\sum_i C_i f_i}{\sum_i C_i}
@@ -1242,7 +1243,7 @@ Plant A is fully funded but produces much less electricity than it could.
 
 Plant B receives less funding, but the city uses almost all the electricity it can produce at that funding level.
 
-**Plant usage (SimCity 4)**
+**Plant usage (base game)**
 
 ```math
 u = \frac{\text{Used}}{\text{Out}}
@@ -1498,7 +1499,7 @@ For example, if your city needs 5,000 units and imports 2,000 from a neighbor, i
 
 Electricity sold to neighbors must also be produced, so exports increase the local requirement.
 
-**Required local generating capacity (Department)**
+**Required local generating capacity**
 
 ```math
 N = \max\left(\left\lceil R \times \max(0,D-B)\right\rceil,\ Q-B\right)+S
@@ -1558,7 +1559,7 @@ For every possible funding level, the Department calculates:
 - Its monthly operating expense.
 - Its estimated wear cost, when the aging option is enabled.
 
-**Planned generating capacity (Department)**
+**Planned generating capacity**
 
 ```math
 \text{Cap}(f) = \left\lfloor \text{MaxOut} \times \frac{\text{Curve}(f)}{100} \times \text{Cond} \right\rfloor
@@ -1618,7 +1619,7 @@ There may be many possible funding combinations that provide enough electricity.
 
 It does not simply lower the most expensive plant first or fund every plant at the same percentage.
 
-**Electricity optimization formula (Department)**
+**Electricity optimization formula**
 
 ```math
 \min_{f_1,\ldots,f_n}\sum_{i=1}^{n}\left(E_i(f_i)+W_i(f_i)\right)
@@ -1655,7 +1656,7 @@ It uses an optimization algorithm that compares plant funding options together, 
 
 To keep the calculations fast in large cities, it organizes generating capacity into small units.
 
-**Optimization capacity unit (Department)**
+**Optimization capacity unit**
 
 ```math
 \text{unit} = \max\left(1,\left\lceil\frac{N}{20000}\right\rceil\right)
@@ -1715,7 +1716,7 @@ Each power plant has a construction cost and an aging threshold.
 
 The Department estimates how much of the plant's remaining useful condition is consumed during a simulated month, then assigns a monetary value to that wear.
 
-**Estimated monthly wear cost (Department)**
+**Estimated monthly wear cost**
 
 ```math
 W(f) = \operatorname{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
@@ -2455,7 +2456,7 @@ For example, between 90% and 100% funding, efficiency increases from 80% to 100%
 
 At 95% funding, production efficiency is therefore 90%.
 
-**Efficiency curve interpolation (Department)**
+**Efficiency curve interpolation**
 
 ```math
 y(x) = y_i + \frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
@@ -2522,7 +2523,7 @@ The total water department expense depends on two things:
 
 The game charges these costs in proportion to funding.
 
-**Monthly water expense (SimCity 4)**
+**Monthly water expense (base game)**
 
 ```math
 X(f) = \operatorname{round}\left(I\times\frac{f}{100}\right)
@@ -2560,7 +2561,7 @@ In SimCity 4, pipes can gradually deteriorate when the water department receives
 
 The game uses a separate curve to determine whether pipes deteriorate, remain stable or repair themselves.
 
-**Pipe deterioration and repair curve (SimCity 4)**
+**Pipe deterioration and repair curve (base game)**
 
 | Water funding | Effect on pipes |
 |---:|---|
@@ -2660,7 +2661,7 @@ For example, if your city needs 20,000 units of water and produces everything lo
 
 If the city purchases some of that water from a neighbor, the reserve applies only to the remaining local demand.
 
-**Required local water capacity (Department)**
+**Required local water capacity**
 
 ```math
 L = \left\lceil R \times \max(0,D-B) \right\rceil + S
@@ -2727,7 +2728,7 @@ It then estimates how much water the existing facilities could produce at differ
 
 Because all water producers share the same funding setting, this calculation is much simpler than electricity optimization.
 
-**Projected water production capacity (Department)**
+**Projected water production capacity**
 
 ```math
 C(v)=\left\lfloor C_{\text{now}}\times\frac{\eta(v)}{\eta(f_{\text{now}})}\right\rfloor
@@ -2823,7 +2824,7 @@ After removing unsafe options, the Department compares the remaining funding lev
 
 Its goal is to select **the lowest monthly expense that still provides the required water capacity**.
 
-**Funding optimization (Department)**
+**Funding optimization**
 
 ```math
 f^* = \arg\min_{v\in V,\ C(v)\ge L} X(v)
@@ -2918,7 +2919,7 @@ The Department's daily checks look for two situations.
 
 A shortage exists when the city consumes less water than it needs **and** the total usable supply is insufficient.
 
-**Regional water deficit (Department)**
+**Regional water deficit**
 
 ```math
 W < D \qquad\text{and}\qquad C+U-S<D
@@ -2951,7 +2952,7 @@ The Department also recalculates funding when any of the following changes by at
 - Contracted water imports.
 - Contracted water exports.
 
-**Significant change threshold (Department)**
+**Significant change threshold**
 
 ```math
 |x-x_0|\ge0.01\times\max(1,|x_0|)
@@ -2994,7 +2995,7 @@ For example:
 - **Selling water:** The Department calculates how much extra funding would be required to produce the water being sold.
 - **Buying water:** It calculates how much local funding could be saved by relying on the purchased water.
 
-**Marginal cost of water (Department)**
+**Marginal cost of water**
 
 ```math
 \Delta(q)=X^*(L+q)-X^*(L)
@@ -3611,7 +3612,7 @@ Although these contracts specify a monthly quantity, **the garbage is not delive
 
 Instead, the game normally moves approximately 10% of the contract's monthly quantity each simulated day until that month's allocation has been delivered.
 
-**Daily garbage contract delivery (SimCity 4)**
+**Daily garbage contract delivery (base game)**
 
 ```math
 s = \operatorname{round}(0.1 \times A)
@@ -3671,7 +3672,7 @@ However, **garbage treatment capacity does not increase in direct proportion to 
 
 SimCity 4 uses the same funding-to-efficiency curve as its power plants.
 
-**Sanitation efficiency (SimCity 4)**
+**Sanitation efficiency (base game)**
 
 ```math
 e = \frac{f(p)}{100}
@@ -3779,7 +3780,7 @@ Think of it as two different restrictions:
 
 A landfill may have plenty of empty storage space and still be unable to accept any more garbage that month.
 
-**Daily landfill intake (SimCity 4)**
+**Daily landfill intake (base game)**
 
 ```math
 \text{taken} =
@@ -3862,7 +3863,7 @@ SimCity 4 removes a small amount of stored garbage from each landfill cell every
 
 The amount depends on how full the cell is.
 
-**Monthly garbage decay per landfill cell (SimCity 4)**
+**Monthly garbage decay per landfill cell (base game)**
 
 ```math
 d =
@@ -3915,7 +3916,7 @@ The game stores garbage in a packed arrangement: full cells first, followed by a
 
 The Department can therefore calculate total decay using the amount of garbage stored and the capacity of each cell.
 
-**Total monthly landfill decay (SimCity 4)**
+**Total monthly landfill decay (base game)**
 
 ```math
 D(U) =
@@ -3956,7 +3957,7 @@ The amount absorbed depends on:
 - The number of landfill squares.
 - How much sanitation funding is actually provided.
 
-**Monthly landfill absorption (SimCity 4)**
+**Monthly landfill absorption (base game)**
 
 ```math
 \begin{aligned}
@@ -4093,7 +4094,7 @@ That capacity depends on:
 - The number of squares belonging to the landfill zone.
 - The number of active storage cells.
 
-**Landfill storage capacity (SimCity 4)**
+**Landfill storage capacity (base game)**
 
 ```math
 C = \operatorname{round}\left(\frac{T\times30000}{N}\right)
@@ -4185,7 +4186,7 @@ Landfill maintenance is calculated **square by square**.
 
 Empty landfill squares have a fixed maintenance cost, while squares containing garbage piles cost more.
 
-**Landfill maintenance at 100% funding (SimCity 4)**
+**Landfill maintenance at 100% funding (base game)**
 
 ```math
 B=\sum_{\text{squares in the zone}}c_i
@@ -4358,7 +4359,7 @@ To avoid choosing a budget that is only sufficient for the previous month's exac
 
 The default **Sanitation reserve is 2%**, adjustable from 2% to 20%.
 
-**Protected garbage production (Department)**
+**Protected garbage production**
 
 ```math
 G_{\mathrm{prot}}=
@@ -4395,7 +4396,7 @@ It may also receive waste from neighboring cities.
 
 The Department adds these amounts to obtain an overall monthly handling requirement.
 
-**Monthly garbage handling requirement (Department)**
+**Monthly garbage handling requirement**
 
 ```math
 H=G_{\mathrm{prot}}+Q+\sum\text{import amounts}
@@ -4514,7 +4515,7 @@ The Department detects this situation during the **first three simulated days**.
 
 If the reported usage is greater than the contract could possibly have delivered since the start of the month, the Department treats that reading as outdated and starts the month's calculation from zero.
 
-**Outdated reading test (Department)**
+**Outdated reading test**
 
 ```math
 U > (\text{day of month}-1)\times\operatorname{round}(0.1\times A)
@@ -4631,7 +4632,7 @@ Temporary accumulation during the month is allowed, provided it can be cleared b
 
 The Department does not impose an additional artificial limit on the highest temporary backlog.
 
-**Daily garbage projection (Department)**
+**Daily garbage projection**
 
 ```math
 \begin{aligned}
@@ -4674,7 +4675,7 @@ The game already reports the combined monthly treatment capacity of incinerators
 
 The Department uses that value to estimate what the capacity would be at another funding percentage.
 
-**Projected treatment capacity (Department)**
+**Projected treatment capacity**
 
 ```math
 K(p)=\operatorname{round}\left(K_{\mathrm{now}}\times\frac{e(p)}{e_{\mathrm{now}}}\right)
@@ -4699,7 +4700,7 @@ If current efficiency is zero while treatment buildings exist, the Department ca
 
 The Department also estimates how much more garbage the landfills can accept during the current month.
 
-**Remaining landfill intake (Department)**
+**Remaining landfill intake**
 
 ```math
 V_0(p)=
@@ -4753,7 +4754,7 @@ It compares:
 - The garbage stored afterwards.
 - The amount newly absorbed into landfill storage.
 
-**Observed monthly landfill decay (Department)**
+**Observed monthly landfill decay**
 
 ```math
 D_{\mathrm{obs}}=
@@ -4833,7 +4834,7 @@ After calculating how much garbage can be handled at each funding level, the Dep
 
 Sanitation expenses increase in proportion to funding.
 
-**Monthly sanitation expense (Department)**
+**Monthly sanitation expense**
 
 ```math
 E(p)=\operatorname{round}\left(I\times\frac{p}{100}\right)
@@ -4860,7 +4861,7 @@ But the cheapest percentage is not necessarily safe.
 
 A low budget may reduce treatment capacity, restrict landfill intake or leave garbage uncollected at the end of the month.
 
-**Funding optimization (Department)**
+**Funding optimization**
 
 ```math
 p^*=
@@ -5120,7 +5121,7 @@ The Department considers two sources of savings:
 1. Changes in the landfill's maintenance cost.
 2. Changes in the sanitation funding needed after resizing the landfill.
 
-**Changes in landfill maintenance (Department)**
+**Changes in landfill maintenance**
 
 ```math
 \begin{aligned}
@@ -5171,7 +5172,7 @@ The Department does not simply multiply the number of added or removed squares b
 
 It also recalculates **the cheapest sanitation funding required after the proposed change**, using the same garbage forecast, reserve, contracts and calendar.
 
-**Estimated monthly savings (Department)**
+**Estimated monthly savings**
 
 ```math
 \begin{aligned}
@@ -5206,7 +5207,7 @@ The default is **25%**, adjustable from **20% to 50%**.
 
 The Department only recommends a change when its expected monthly saving is **strictly greater than your threshold**.
 
-**Advice threshold (Department)**
+**Advice threshold**
 
 ```math
 \text{Saving}\times100>\theta\times E_0
@@ -6187,7 +6188,7 @@ The maximum quantity depends on two things:
 
 The actual maximum is whichever of those limits is lower.
 
-**Maximum contract quantity (SimCity 4)**
+**Maximum contract quantity (base game)**
 
 ```math
 Q_{\max} =
@@ -6324,7 +6325,7 @@ The game requires the paying city to have:
 
 The last condition corresponds to **five years of payments in simulated game time**.
 
-**Contract proposal requirements (SimCity 4)**
+**Contract proposal requirements (base game)**
 
 ```math
 \text{offered}\iff
@@ -6417,7 +6418,7 @@ That difference is central to how the Department decides which contracts are wor
 
 The game first calculates how much the selling city spends per unit of available supply.
 
-**Seller's unit cost (SimCity 4)**
+**Seller's unit cost (base game)**
 
 ```math
 u=\frac{E_{\mathrm{dept}}+C_{\mathrm{buy}}}{I+P+1}
@@ -6457,7 +6458,7 @@ With the original game's settings, the markup ranges from approximately **10% to
 
 The exact value depends on the buyer's available supply and how much surplus the seller will have left after the contract.
 
-**Monthly contract price (SimCity 4)**
+**Monthly contract price (base game)**
 
 ```math
 P(q)=q\times\operatorname{clamp}\left(
@@ -6519,7 +6520,7 @@ In practice, the difference is relatively small.
 
 Once the game calculates the contract's monthly price, it converts it to a whole number of simoleons.
 
-**Stored monthly contract cost (SimCity 4)**
+**Stored monthly contract cost (base game)**
 
 ```math
 \text{cost}=\max\left(1,\lfloor P(q)\rfloor\right)
@@ -6589,7 +6590,7 @@ The available amounts depend on:
 
 For a new contract, the game normally divides the maximum quantity into approximately ten steps, while respecting the minimum contract size.
 
-**New contract increment (SimCity 4)**
+**New contract increment (base game)**
 
 ```text
 maxQ = truncate(Qmax)
@@ -6647,7 +6648,7 @@ The window offers the smaller quantities of **1,000 and 2,000**, followed by lar
 
 This allows an existing contract to be adjusted without requiring the player to move through dozens of small steps.
 
-**Complete quantity-list rule (SimCity 4)**
+**Complete quantity-list rule (base game)**
 
 ```text
 maxQ = trunc(Qmax)
@@ -6764,7 +6765,7 @@ The contracted amount counts as supply for the buyer and as an obligation for th
 
 Garbage contracts operate through daily deliveries.
 
-**Daily garbage contract delivery (SimCity 4)**
+**Daily garbage contract delivery (base game)**
 
 ```math
 \text{daily step}=
@@ -6821,7 +6822,7 @@ This limit depends mainly on:
 - Garbage already imported.
 - The game's contract-duration tuning.
 
-**Maximum received garbage (SimCity 4)**
+**Maximum received garbage (base game)**
 
 ```math
 \sum A_{\mathrm{received}}
@@ -7036,7 +7037,7 @@ The Department does not simply maximize contract income.
 
 It considers **income, contract expenses and the cost of supplying the city's own services together**.
 
-**Regional contract portfolio objective (Department)**
+**Regional contract portfolio objective**
 
 ```math
 \max_x\ \operatorname{Net}(x)=
@@ -7146,7 +7147,7 @@ If the game's counters confirm a genuine regional shortage, the Department does 
 
 The Department calculates how much local capacity remains necessary after imports and exports.
 
-**Required local capacity (Department)**
+**Required local capacity**
 
 ```math
 N(B,S)=
@@ -7213,7 +7214,7 @@ The Department therefore compares contract prices with the actual change in loca
 
 The Department applies an additional purchase limit.
 
-**Purchase cap (Department)**
+**Purchase cap**
 
 ```math
 \sum_j x_j\le
@@ -7363,7 +7364,7 @@ Instead, the Department asks:
 
 **How much worse would the best legal plan become if this particular contract had to stay at its current amount?**
 
-**Marginal benefit of a contract decision (Department)**
+**Marginal benefit of a contract decision**
 
 ```math
 \Delta_k=
@@ -7769,7 +7770,7 @@ For a new contract or a change in quantity, the Department asks SimCity 4 for it
 
 It compares that price with the amount predicted by its own pricing formula.
 
-**Contract price tolerance (Department)**
+**Contract price tolerance**
 
 ```math
 \left|P_{\mathrm{game}}-P_{\mathrm{model}}\right|
@@ -7913,7 +7914,7 @@ It does not become a realized result until the game's contract state and financi
 
 After confirmation, the Department compares the game's monthly neighbor deal income and expenses before and after the change.
 
-**Realized contract result (Department)**
+**Realized contract result**
 
 ```math
 \Delta_{\mathrm{realized}}=
@@ -8038,7 +8039,7 @@ Instead of rejecting every possible arrangement because it cannot satisfy the fu
 
 #### How much demand can still be served?
 
-**Served demand during an emergency (Department)**
+**Served demand during an emergency**
 
 ```math
 \operatorname{served}(B,S)=
@@ -8955,7 +8956,7 @@ Internally, however, SimCity 4 records how long a building has remained in its c
 
 The Department therefore converts the selected number of months into days.
 
-**Waiting period conversion (Department)**
+**Waiting period conversion**
 
 ```math
 D=\operatorname{round}\left(\frac{M\times365}{12}\right)
@@ -8997,7 +8998,7 @@ If you edit the configuration file manually, the permitted stored ranges are wid
 
 It uses the game's own counter.
 
-**Demolition age requirement (Department)**
+**Demolition age requirement**
 
 ```math
 A\ge D
@@ -9181,7 +9182,7 @@ Two financial protections apply.
 
 The Department never orders demolitions whose combined cost exceeds the city's available treasury at the beginning of the monthly review.
 
-**Treasury rule (Department)**
+**Treasury rule**
 
 ```math
 c_i\le T-S_i
@@ -9223,7 +9224,7 @@ It is **off by default**.
 
 When enabled, the Department applies an additional rule.
 
-**Monthly budget rule (Department)**
+**Monthly budget rule**
 
 ```math
 c_i=0
@@ -9841,7 +9842,7 @@ A small difference can result from the game's own rounding or update timing.
 
 However, clearly contradictory readings prevent automatic funding decisions.
 
-**Inconsistent service readings (Department)**
+**Inconsistent service readings**
 
 ```math
 R>D\times1.01+1
@@ -9883,7 +9884,7 @@ A city may report insufficient consumption for two very different reasons:
 
 The Department uses the following test to distinguish them.
 
-**Regional supply deficit (Department)**
+**Regional supply deficit**
 
 ```math
 S<D
@@ -9915,7 +9916,7 @@ The problem is likely inside the city, such as disconnected electricity lines or
 
 The Department can also react when demand, local capacity, imports or exports change by at least **1%**.
 
-**Significant change threshold (Department)**
+**Significant change threshold**
 
 ```math
 |x-x_0|\ge0.01\times\max(1,|x_0|)
@@ -10250,7 +10251,7 @@ This avoids unnecessary warnings about problems that automatic management succes
 
 #### When are reminders displayed?
 
-**Utility shortage notice schedule (Department)**
+**Utility shortage notice schedule**
 
 ```math
 t_{\mathrm{first}}=t_{\mathrm{proof}}+30
@@ -10459,7 +10460,7 @@ However, a landfill gradually filling up is not necessarily evidence that the ci
 
 The Department therefore adds a requirement based on the amount of garbage actually left uncollected.
 
-**Significant uncollected garbage (Department)**
+**Significant uncollected garbage**
 
 ```math
 U>100+0.05G
@@ -11418,7 +11419,7 @@ Determines how much a proposed landfill-size change must save before the Departm
 
 The comparison uses the optimized monthly sanitation expense, including maintenance.
 
-**Advice threshold (Department)**
+**Advice threshold**
 
 ```math
 \text{Saving}\times100>
