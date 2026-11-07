@@ -2,6 +2,8 @@
 
 # Ministère de l’Optimisation
 
+### [⬇ Télécharger le Département de l’efficacité 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
 **Le Ministère de l’Optimisation s’occupe des petits détails de la gestion de la ville qui font une grande différence.**
 
 Le Ministère de l’Optimisation (*Department of Efficiency* en anglais) est un plugin pour **SimCity 4 Deluxe** qui automatise les tâches courantes de gestion de la ville, pour que vous puissiez vous concentrer sur la construction, la planification et la croissance de votre ville.

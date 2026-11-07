@@ -2,6 +2,8 @@
 
 # Ministerie van Efficiëntie
 
+### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
 **Het Ministerie van Efficiëntie zorgt voor de kleine details van het stadsbeheer die een groot verschil maken.**
 
 Het Ministerie van Efficiëntie (*Department of Efficiency* in het Engels) is een plug-in voor **SimCity 4 Deluxe** die routinetaken van het stadsbeheer automatiseert, zodat u zich kunt richten op bouwen, plannen en uw stad laten groeien.

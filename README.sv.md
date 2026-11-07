@@ -2,6 +2,8 @@
 
 # Effektivitetsdepartementet
 
+### [⬇ Ladda ner Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
 **Effektivitetsdepartementet tar hand om de små detaljerna i stadens skötsel som gör stor skillnad.**
 
 Effektivitetsdepartementet (*Department of Efficiency* på engelska) är ett tillägg för **SimCity 4 Deluxe** som automatiserar rutinuppgifter i stadens skötsel, så att du kan koncentrera dig på att bygga, planera och låta din stad växa.

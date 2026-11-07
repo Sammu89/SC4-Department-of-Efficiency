@@ -2,6 +2,8 @@
 
 # Department of Efficiency
 
+### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
 **The Department of Efficiency takes care of the small details of city management that make a big difference.**
 
 Department of Efficiency is a plugin for **SimCity 4 Deluxe** that automates routine city management tasks, so you can focus on building, planning, and growing your city.

@@ -2,6 +2,8 @@
 
 # Effektivitetsministeriet
 
+### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+
 **Effektivitetsministeriet tager sig af de små detaljer i byens drift, som gør en stor forskel.**
 
 Effektivitetsministeriet (*Department of Efficiency* på engelsk) er et plugin til **SimCity 4 Deluxe**, der automatiserer rutineopgaver i byens drift, så du kan koncentrere dig om at bygge, planlægge og få din by til at vokse.
