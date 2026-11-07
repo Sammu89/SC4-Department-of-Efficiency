@@ -33,9 +33,11 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 
 - [Znane ograniczenia](#known-limitations)
 
-- [Podziękowania](#credits)
+- [Kod źródłowy](#source-code)
 
-- [Materiały licencyjne LGPL](#lgpl-licensing)
+- [Licencja](#license)
+
+- [Podziękowania](#credits)
 
 <a id="download-and-installation"></a>
 
@@ -77,19 +79,19 @@ Pliki Markdown i zrzuty ekranu z publicznego repozytorium **nie są** potrzebne 
 
 ## Co robi Ministerstwo
 
-Poniższa tabela opisuje, co robi Ministerstwo. Wzory, przykłady, zabezpieczenia i mechanikę stojącą za jego decyzjami znajdziesz w **[szczegółowym opisie funkcji (po angielsku)](features/en.md)**.
+Poniższa tabela opisuje, co robi Ministerstwo. Wzory, przykłady, zabezpieczenia i mechanikę stojącą za jego decyzjami znajdziesz w **[szczegółowym opisie funkcji (po angielsku)](technical_docs/en/index.md)**.
 
 | Obszar | Co robi |
 |---|---|
-| [Oświata i ochrona zdrowia](features/en.md#education-healthcare) | Dostosowuje finansowanie **budynek po budynku** dla kwalifikujących się szkół, uczelni, bibliotek, muzeów, przychodni i szpitali. Kieruje się rzeczywistą frekwencją i pojemnością, z marginesem bezpieczeństwa. **Nie zmienia zasięgów** ani finansowania autobusów szkolnych i karetek. Jeśli budynek przy maksymalnym finansowaniu nadal jest przepełniony, doradca informuje, że potrzebny jest kolejny obiekt; **to Ty wybierasz, gdzie go zbudować**. |
-| [Energia elektryczna](features/en.md#electricity) | Zarządza **każdą elektrownią osobno**, wybierając finansowanie, które pokrywa potrzeby miasta i rezerwę bezpieczeństwa przy najniższym modelowanym koszcie. Uwzględnia sprawność i stan elektrowni; opcjonalne ustawienie bierze pod uwagę także ekonomiczny koszt ich starzenia się. |
-| [Woda](features/en.md#water) | Dostosowuje finansowanie wodociągów miasta do zapotrzebowania plus rezerwy bezpieczeństwa. Ochrona rur jest domyślnie włączona, by uniknąć cięć, przez które sieć by niszczała. Ukrywa też mylącą ikonę „brak wody” w grze nad farmami. |
-| [Gospodarka odpadami](features/en.md#garbage-landfills) | Dostosowuje finansowanie gospodarki odpadami na podstawie ilości śmieci, recyklingu, przetwarzania, pojemności wysypisk i umów regionalnych, chroniąc przy tym własne potrzeby miasta w zakresie utylizacji. |
-| [Umowy z sąsiadami](features/en.md#neighbor-deals) | Może **kupować lub sprzedawać prąd i wodę**, **płacić sąsiadom za przyjmowanie Twoich śmieci** albo **przyjmować ich śmieci za opłatą**. Zawiera, dostosowuje i wypowiada kwalifikujące się umowy, gdy ogólny wynik służy miastu, a jego własne potrzeby i rezerwy pozostają chronione. |
-| [Automatyczne wyburzanie](features/en.md#demolition) | Domyślnie może uprzątać ruiny po około **30 dniach symulacji** oraz kwalifikujące się budynki opuszczone od **jednego roku symulacji**. Ty decydujesz, które strefy i które powody opuszczenia się liczą, czy chronione ruiny mogą być uprzątane i czy ustawić miesięczny limit wydatków. |
-| [Komunikaty doradców](features/en.md#notices) | Korzysta z doradców gry, by zgłaszać udowodnione, trwałe niedobory, których nie rozwiążą ani finansowanie, ani dostępne umowy. Gdy to ma sens, komunikaty zawierają odnośniki prowadzące do danych budynków. |
-| [Porada o rozmiarze wysypiska](features/en.md#garbage-landfills-advice) | Opcjonalna porada wskazuje konkretne powiększenie wysypiska lub bezpieczne zmniejszenie, które mogłoby obniżyć rachunek za odpady o więcej niż wybrany próg oszczędności. **Ministerstwo doradza; to Ty decydujesz, czy zmienić strefę.** |
-| [Naprawa pól-widm](features/en.md#ghost-squares) | Gdy zarządzanie odpadami jest włączone, bezpiecznie naprawia kwalifikujące się niewidoczne pola wysypiska, które gra nadal wlicza do utrzymania. Przypadki niebezpieczne lub niezweryfikowane są pomijane; ta naprawa nie ma osobnego przełącznika. |
+| [Oświata i ochrona zdrowia](technical_docs/en/education_healthcare.md#education-healthcare) | Dostosowuje finansowanie **budynek po budynku** dla kwalifikujących się szkół, uczelni, bibliotek, muzeów, przychodni i szpitali. Kieruje się rzeczywistą frekwencją i pojemnością, z marginesem bezpieczeństwa. **Nie zmienia zasięgów** ani finansowania autobusów szkolnych i karetek. Jeśli budynek przy maksymalnym finansowaniu nadal jest przepełniony, doradca informuje, że potrzebny jest kolejny obiekt; **to Ty wybierasz, gdzie go zbudować**. |
+| [Energia elektryczna](technical_docs/en/power.md#power) | Zarządza **każdą elektrownią osobno**, wybierając finansowanie, które pokrywa potrzeby miasta i rezerwę bezpieczeństwa przy najniższym modelowanym koszcie. Uwzględnia sprawność i stan elektrowni; opcjonalne ustawienie bierze pod uwagę także ekonomiczny koszt ich starzenia się. |
+| [Woda](technical_docs/en/water.md#water) | Dostosowuje finansowanie wodociągów miasta do zapotrzebowania plus rezerwy bezpieczeństwa. Ochrona rur jest domyślnie włączona, by uniknąć cięć, przez które sieć by niszczała. Ukrywa też mylącą ikonę „brak wody” w grze nad farmami. |
+| [Gospodarka odpadami](technical_docs/en/garbage.md#garbage-landfills) | Dostosowuje finansowanie gospodarki odpadami na podstawie ilości śmieci, recyklingu, przetwarzania, pojemności wysypisk i umów regionalnych, chroniąc przy tym własne potrzeby miasta w zakresie utylizacji. |
+| [Umowy z sąsiadami](technical_docs/en/deals.md#neighbor-deals) | Może **kupować lub sprzedawać prąd i wodę**, **płacić sąsiadom za przyjmowanie Twoich śmieci** albo **przyjmować ich śmieci za opłatą**. Zawiera, dostosowuje i wypowiada kwalifikujące się umowy, gdy ogólny wynik służy miastu, a jego własne potrzeby i rezerwy pozostają chronione. |
+| [Automatyczne wyburzanie](technical_docs/en/demolition.md#demolition) | Domyślnie może uprzątać ruiny po około **30 dniach symulacji** oraz kwalifikujące się budynki opuszczone od **jednego roku symulacji**. Ty decydujesz, które strefy i które powody opuszczenia się liczą, czy chronione ruiny mogą być uprzątane i czy ustawić miesięczny limit wydatków. |
+| [Komunikaty doradców](technical_docs/en/safety.md#notices) | Korzysta z doradców gry, by zgłaszać udowodnione, trwałe niedobory, których nie rozwiążą ani finansowanie, ani dostępne umowy. Gdy to ma sens, komunikaty zawierają odnośniki prowadzące do danych budynków. |
+| [Porada o rozmiarze wysypiska](technical_docs/en/garbage.md#garbage-landfills-advice) | Opcjonalna porada wskazuje konkretne powiększenie wysypiska lub bezpieczne zmniejszenie, które mogłoby obniżyć rachunek za odpady o więcej niż wybrany próg oszczędności. **Ministerstwo doradza; to Ty decydujesz, czy zmienić strefę.** |
+| [Naprawa pól-widm](technical_docs/en/garbage.md#ghost-tiles) | Gdy zarządzanie odpadami jest włączone, bezpiecznie naprawia kwalifikujące się niewidoczne pola wysypiska, które gra nadal wlicza do utrzymania. Przypadki niebezpieczne lub niezweryfikowane są pomijane; ta naprawa nie ma osobnego przełącznika. |
 
 Nadal kontrolujesz budowę, strefy, podatki, drogi i transport, policję, straż pożarną oraz każdą inną usługę, którą Ministerstwo nie zarządza. Jeśli włączysz zarządzanie danym rodzajem umów z sąsiadami, Ministerstwo może też zmienić lub wypowiedzieć umowę, którą wcześniej zawarto ręcznie. Wyłącz tę opcję umów, by samodzielnie nimi zarządzać.
 
@@ -117,7 +119,7 @@ Ministerstwo możesz też włączać i wyłączać za pomocą uchwał miejskich.
 
 ## Ustawienia
 
-Otwórz **Opcje gry → Ministerstwo Optymalizacji**. Okno ma dwie strony: **Służby miejskie** i **Wyburzanie**. Poniższe tabele obejmują **każde ustawienie widoczne w menu**, bez wzorów technicznych. Kliknij nazwę opcji, aby przeczytać jej pełne wyjaśnienie w [opisie funkcji](features/en.md#options).
+Otwórz **Opcje gry → Ministerstwo Optymalizacji**. Okno ma dwie strony: **Służby miejskie** i **Wyburzanie**. Poniższe tabele obejmują **każde ustawienie widoczne w menu**, bez wzorów technicznych. Kliknij nazwę opcji, aby przeczytać jej pełne wyjaśnienie w [opisie funkcji](technical_docs/en/options.md#options).
 
 **Jak działają przełączniki:** „Włączone” oznacza, że Ministerstwo może zarządzać daną funkcją. Ustawienie zależne od innego jest wyszarzone, dopóki nadrzędne jest wyłączone. Ustawienia procentowe określają marginesy bezpieczeństwa i progi, pomagając Ministerstwu utrzymać zapas pojemności i radzić sobie z wahaniami popytu.
 
@@ -125,47 +127,47 @@ Otwórz **Opcje gry → Ministerstwo Optymalizacji**. Okno ma dwie strony: **Sł
 
 | Opcja | Domyślnie | Co oznacza |
 |---|---|---|
-| [Ministerstwo aktywne](features/en.md#opt-master) | **Włączone** | Główny wyłącznik finansowania, umów z sąsiadami, wyburzania i komunikatów Ministerstwa. Wyłączenie nie cofa zmian już wprowadzonych. |
-| [Zarządzaj oświatą](features/en.md#opt-education) | **Włączone** | Automatycznie dostosowuje po kolei kwalifikujące się szkoły, uczelnie, biblioteki i muzea. Nie zmienia ich zasięgu ani finansowania autobusów szkolnych. |
-| [Margines bezpieczeństwa (oświata)](features/en.md#opt-educationreserve) | **5%** (0–50%) | Dodatkowa pojemność ponad bieżące wykorzystanie oświaty. Większa pojemność kosztuje więcej. W budynkach o niskiej frekwencji Ministerstwo może utrzymywać dodatkowy margines. Pozwala to na przykład szkole urosnąć z 10 do 20 uczniów (+100%) bez strajku, zwłaszcza na początku, gdy dodatkowy koszt jest niewielki. |
-| [Zarządzaj ochroną zdrowia](features/en.md#opt-health) | **Włączone** | Automatycznie dostosowuje po kolei kwalifikujące się przychodnie, szpitale i inne obsługiwane obiekty zdrowotne. Nie zmienia finansowania karetek ani zasięgu. |
-| [Margines bezpieczeństwa (zdrowie)](features/en.md#opt-healthreserve) | **5%** (0–50%) | Działa tak samo jak margines bezpieczeństwa oświaty. |
-| [Zarządzaj energetyką](features/en.md#opt-power) | **Włączone** | Dostosowuje finansowanie poszczególnych elektrowni, aby dostarczyć dość prądu przy najniższym modelowanym koszcie. |
-| [Rezerwa energii](features/en.md#opt-powerreserve) | **20%** (10–50%) | Zapasowa moc wytwórcza dla części zapotrzebowania pokrywanej lokalnie; większe rezerwy dają więcej miejsca na szybki wzrost i zmniejszają ryzyko awarii zasilania, ale mogą kosztować więcej. |
-| [Uwzględniaj zużycie elektrowni](features/en.md#opt-poweraging) | **Wyłączone** | Wlicza do optymalizacji szacowany koszt zużycia i starzenia się elektrowni. Może faworyzować wyższe finansowanie, gdy długoterminowa korzyść z zachowania elektrowni przewyższa dodatkowy koszt eksploatacji. |
-| [Zarządzaj wodociągami](features/en.md#opt-water) | **Włączone** | Dostosowuje finansowanie wodociągów, by zaopatrywać miasto bez zbędnych wydatków. |
-| [Rezerwa wody](features/en.md#opt-waterreserve) | **10%** (10–50%) | Działa tak samo jak rezerwa energii. |
-| [Chroń wodociągi](features/en.md#opt-waterpipes) | **Włączone** | Utrzymuje finansowanie na poziomie co najmniej 50% z gry, by uniknąć uszkodzeń sieci rur. |
-| [Zarządzaj odpadami](features/en.md#opt-sanitation) | **Włączone** | Dostosowuje finansowanie wydziału odpadów, by pokryć potrzeby zbiórki i utylizacji. Naprawia też pola-widma (błąd gry, który nalicza koszty utrzymania za pola wysypiska już bez strefy). |
-| [Rezerwa przetwarzania odpadów](features/en.md#opt-sanitationreserve) | **2%** (2–20%) | Dodatkowa zdolność przetwarzania odpadów miasta, ponad to, co wytwarza po recyklingu, i ponad ewentualne zaległości. |
-| [Ostrzegaj, gdy rozmiar wysypiska może obniżyć koszty](features/en.md#opt-landfilladvice) | **Wyłączone** | Włącza opcjonalną poradę o zmianach strefy wysypiska, jeśli oszczędzają one pieniądze, a odpady miasta nadal są obsługiwane. Wymaga zarządzania odpadami. |
-| [Próg oszczędności dla wysypiska](features/en.md#opt-landfillthreshold) | **25%** (20–50%) | Prosi o rozważenie zmiany rozmiaru wysypiska tylko wtedy, gdy modelowana miesięczna oszczędność wynosi co najmniej tę część budżetu gospodarki odpadami. |
-| [Zarządzaj umowami z sąsiadami](features/en.md#opt-deals) | **Włączone** | Włącza automatyczne umowy regionalne; trzy osobne przełączniki poniżej decydują, jakimi zasobami wolno handlować. |
-| [Kupuj od jednego miasta, sprzedawaj innemu](features/en.md#opt-arbitrage) | **Wyłączone** | Dopuszcza opłacalne kombinacje kupna i sprzedaży tego samego zasobu między sąsiadami, z zachowaniem pierwszeństwa potrzeb miasta. |
-| [Zarządzaj umowami na prąd](features/en.md#opt-tradepower) | **Włączone** | Pozwala Ministerstwu zawierać, zmieniać i wypowiadać **umowy na import i eksport** prądu. Niezależne od finansowania elektrowni. |
-| [Zarządzaj umowami na wodę](features/en.md#opt-tradewater) | **Włączone** | Pozwala Ministerstwu zawierać, zmieniać i wypowiadać **umowy na import i eksport** wody. Niezależne od finansowania wodociągów. |
-| [Zarządzaj umowami na odpady](features/en.md#opt-tradegarbage) | **Włączone** | Pozwala Ministerstwu ustalać przetwarzanie odpadów **w obu kierunkach**. Niezależne od finansowania gospodarki odpadami. |
+| [Ministerstwo aktywne](technical_docs/en/options.md#opt-master) | **Włączone** | Główny wyłącznik finansowania, umów z sąsiadami, wyburzania i komunikatów Ministerstwa. Wyłączenie nie cofa zmian już wprowadzonych. |
+| [Zarządzaj oświatą](technical_docs/en/options.md#opt-education) | **Włączone** | Automatycznie dostosowuje po kolei kwalifikujące się szkoły, uczelnie, biblioteki i muzea. Nie zmienia ich zasięgu ani finansowania autobusów szkolnych. |
+| [Margines bezpieczeństwa (oświata)](technical_docs/en/options.md#opt-educationreserve) | **5%** (0–50%) | Dodatkowa pojemność ponad bieżące wykorzystanie oświaty. Większa pojemność kosztuje więcej. W budynkach o niskiej frekwencji Ministerstwo może utrzymywać dodatkowy margines. Pozwala to na przykład szkole urosnąć z 10 do 20 uczniów (+100%) bez strajku, zwłaszcza na początku, gdy dodatkowy koszt jest niewielki. |
+| [Zarządzaj ochroną zdrowia](technical_docs/en/options.md#opt-health) | **Włączone** | Automatycznie dostosowuje po kolei kwalifikujące się przychodnie, szpitale i inne obsługiwane obiekty zdrowotne. Nie zmienia finansowania karetek ani zasięgu. |
+| [Margines bezpieczeństwa (zdrowie)](technical_docs/en/options.md#opt-healthreserve) | **5%** (0–50%) | Działa tak samo jak margines bezpieczeństwa oświaty. |
+| [Zarządzaj energetyką](technical_docs/en/options.md#opt-power) | **Włączone** | Dostosowuje finansowanie poszczególnych elektrowni, aby dostarczyć dość prądu przy najniższym modelowanym koszcie. |
+| [Rezerwa energii](technical_docs/en/options.md#opt-powerreserve) | **20%** (10–50%) | Zapasowa moc wytwórcza dla części zapotrzebowania pokrywanej lokalnie; większe rezerwy dają więcej miejsca na szybki wzrost i zmniejszają ryzyko awarii zasilania, ale mogą kosztować więcej. |
+| [Uwzględniaj zużycie elektrowni](technical_docs/en/options.md#opt-poweraging) | **Wyłączone** | Wlicza do optymalizacji szacowany koszt zużycia i starzenia się elektrowni. Może faworyzować wyższe finansowanie, gdy długoterminowa korzyść z zachowania elektrowni przewyższa dodatkowy koszt eksploatacji. |
+| [Zarządzaj wodociągami](technical_docs/en/options.md#opt-water) | **Włączone** | Dostosowuje finansowanie wodociągów, by zaopatrywać miasto bez zbędnych wydatków. |
+| [Rezerwa wody](technical_docs/en/options.md#opt-waterreserve) | **10%** (10–50%) | Działa tak samo jak rezerwa energii. |
+| [Chroń wodociągi](technical_docs/en/options.md#opt-waterpipes) | **Włączone** | Utrzymuje finansowanie na poziomie co najmniej 50% z gry, by uniknąć uszkodzeń sieci rur. |
+| [Zarządzaj odpadami](technical_docs/en/options.md#opt-sanitation) | **Włączone** | Dostosowuje finansowanie wydziału odpadów, by pokryć potrzeby zbiórki i utylizacji. Naprawia też pola-widma (błąd gry, który nalicza koszty utrzymania za pola wysypiska już bez strefy). |
+| [Rezerwa przetwarzania odpadów](technical_docs/en/options.md#opt-sanitationreserve) | **2%** (2–20%) | Dodatkowa zdolność przetwarzania odpadów miasta, ponad to, co wytwarza po recyklingu, i ponad ewentualne zaległości. |
+| [Ostrzegaj, gdy rozmiar wysypiska może obniżyć koszty](technical_docs/en/options.md#opt-landfilladvice) | **Wyłączone** | Włącza opcjonalną poradę o zmianach strefy wysypiska, jeśli oszczędzają one pieniądze, a odpady miasta nadal są obsługiwane. Wymaga zarządzania odpadami. |
+| [Próg oszczędności dla wysypiska](technical_docs/en/options.md#opt-landfillthreshold) | **25%** (20–50%) | Prosi o rozważenie zmiany rozmiaru wysypiska tylko wtedy, gdy modelowana miesięczna oszczędność wynosi co najmniej tę część budżetu gospodarki odpadami. |
+| [Zarządzaj umowami z sąsiadami](technical_docs/en/options.md#opt-deals) | **Włączone** | Włącza automatyczne umowy regionalne; trzy osobne przełączniki poniżej decydują, jakimi zasobami wolno handlować. |
+| [Kupuj od jednego miasta, sprzedawaj innemu](technical_docs/en/options.md#opt-arbitrage) | **Wyłączone** | Dopuszcza opłacalne kombinacje kupna i sprzedaży tego samego zasobu między sąsiadami, z zachowaniem pierwszeństwa potrzeb miasta. |
+| [Zarządzaj umowami na prąd](technical_docs/en/options.md#opt-tradepower) | **Włączone** | Pozwala Ministerstwu zawierać, zmieniać i wypowiadać **umowy na import i eksport** prądu. Niezależne od finansowania elektrowni. |
+| [Zarządzaj umowami na wodę](technical_docs/en/options.md#opt-tradewater) | **Włączone** | Pozwala Ministerstwu zawierać, zmieniać i wypowiadać **umowy na import i eksport** wody. Niezależne od finansowania wodociągów. |
+| [Zarządzaj umowami na odpady](technical_docs/en/options.md#opt-tradegarbage) | **Włączone** | Pozwala Ministerstwu ustalać przetwarzanie odpadów **w obu kierunkach**. Niezależne od finansowania gospodarki odpadami. |
 
 ### Wyburzanie
 
 | Opcja | Domyślnie | Co oznacza |
 |---|---|---|
-| [Wyburzaj zniszczone budynki](features/en.md#opt-demolishdestroyed) | **Włączone** | Wyburza ruiny po określonym czasie. Nie uprząta automatycznie chronionych ruin budynków miejskich ani zabytkowych, chyba że pozwala na to opcja poniżej. |
-| [Okres oczekiwania (zniszczone budynki)](features/en.md#opt-destroyedmonths) | **1 miesiąc** (1–24) | Jak długo ruiny muszą stać, zanim będzie można je uprzątnąć; domyślnie około **30 dni symulacji**. |
-| [Wyburzaj zniszczone budynki miejskie i zabytkowe](features/en.md#opt-demolishmunicipal) | **Wyłączone** | Po włączeniu uprząta po okresie oczekiwania także kwalifikujące się **ruiny** budynków miejskich, specjalnych i zabytkowych. |
-| [Wyburzaj opuszczone budynki](features/en.md#opt-demolishabandoned) | **Włączone** | Uprząta kwalifikujące się opuszczone budynki po okresie oczekiwania, w wybranych typach stref i z wybranych powodów. |
-| [Okres oczekiwania (opuszczone budynki)](features/en.md#opt-abandonedmonths) | **12 miesięcy** (1–60) | Jak długo budynek musi pozostawać opuszczony, zanim będzie można go wyburzyć; domyślnie jeden rok symulacji. |
-| [Strefy mieszkalne](features/en.md#opt-zoneresidential) | **Włączone** | Obejmuje opuszczone domy i bloki mieszkalne. |
-| [Strefy handlowe](features/en.md#opt-zonecommercial) | **Włączone** | Obejmuje opuszczone sklepy i biura. |
-| [Strefy przemysłowe](features/en.md#opt-zoneindustrial) | **Włączone** | Obejmuje opuszczone fabryki i inne budynki przemysłowe. |
-| [Strefy rolnicze](features/en.md#opt-zoneagriculture) | **Wyłączone** | Obejmuje opuszczone farmy. Domyślnie wyłączone, bo puste lub opuszczone pola na farmie mogą być czymś normalnym. |
-| [Powód: nieatrakcyjna okolica](features/en.md#opt-reasonlowdesirability) | **Włączone** | Obejmuje opuszczenie spowodowane niską atrakcyjnością, np. zanieczyszczeniem lub brakiem usług. |
-| [Powód: zbyt długi dojazd](features/en.md#opt-reasoncommute) | **Włączone** | Obejmuje opuszczenie spowodowane zbyt długim dojazdem do pracy. |
-| [Powód: brak popytu](features/en.md#opt-reasonlowdemand) | **Włączone** | Obejmuje budynki opuszczone, ponieważ popyt na dany typ zniknął. |
-| [Powód: brak prądu](features/en.md#opt-reasonnopower) | **Wyłączone** | Opcjonalnie obejmuje budynki opuszczone z powodu braku prądu. Zwykle lepiej najpierw przywrócić prąd i sprawdzić, czy budynek się zaludni. |
-| [Powód: brak wody](features/en.md#opt-reasonnowater) | **Wyłączone** | Opcjonalnie obejmuje budynki opuszczone z powodu braku wody. Zwykle lepiej najpierw przywrócić wodę i sprawdzić, czy budynek się zaludni. |
-| [Ogranicz miesięczny budżet wyburzeń](features/en.md#opt-budgetlimit) | **Wyłączone** | Ustawia opcjonalny limit wydatków na automatyczne wyburzanie, oprócz środków dostępnych w kasie miasta. |
-| [Budżet miesięczny](features/en.md#opt-demolitionbudget) | **§1 000** (§0–§200 000) | Maksymalne wydatki na wyburzenia w miesiącu symulacji, **gdy limit budżetu jest włączony**. |
+| [Wyburzaj zniszczone budynki](technical_docs/en/options.md#opt-demolishdestroyed) | **Włączone** | Wyburza ruiny po określonym czasie. Nie uprząta automatycznie chronionych ruin budynków miejskich ani zabytkowych, chyba że pozwala na to opcja poniżej. |
+| [Okres oczekiwania (zniszczone budynki)](technical_docs/en/options.md#opt-destroyedmonths) | **1 miesiąc** (1–24) | Jak długo ruiny muszą stać, zanim będzie można je uprzątnąć; domyślnie około **30 dni symulacji**. |
+| [Wyburzaj zniszczone budynki miejskie i zabytkowe](technical_docs/en/options.md#opt-demolishmunicipal) | **Wyłączone** | Po włączeniu uprząta po okresie oczekiwania także kwalifikujące się **ruiny** budynków miejskich, specjalnych i zabytkowych. |
+| [Wyburzaj opuszczone budynki](technical_docs/en/options.md#opt-demolishabandoned) | **Włączone** | Uprząta kwalifikujące się opuszczone budynki po okresie oczekiwania, w wybranych typach stref i z wybranych powodów. |
+| [Okres oczekiwania (opuszczone budynki)](technical_docs/en/options.md#opt-abandonedmonths) | **12 miesięcy** (1–60) | Jak długo budynek musi pozostawać opuszczony, zanim będzie można go wyburzyć; domyślnie jeden rok symulacji. |
+| [Strefy mieszkalne](technical_docs/en/options.md#opt-zoneresidential) | **Włączone** | Obejmuje opuszczone domy i bloki mieszkalne. |
+| [Strefy handlowe](technical_docs/en/options.md#opt-zonecommercial) | **Włączone** | Obejmuje opuszczone sklepy i biura. |
+| [Strefy przemysłowe](technical_docs/en/options.md#opt-zoneindustrial) | **Włączone** | Obejmuje opuszczone fabryki i inne budynki przemysłowe. |
+| [Strefy rolnicze](technical_docs/en/options.md#opt-zoneagriculture) | **Wyłączone** | Obejmuje opuszczone farmy. Domyślnie wyłączone, bo puste lub opuszczone pola na farmie mogą być czymś normalnym. |
+| [Powód: nieatrakcyjna okolica](technical_docs/en/options.md#opt-reasonlowdesirability) | **Włączone** | Obejmuje opuszczenie spowodowane niską atrakcyjnością, np. zanieczyszczeniem lub brakiem usług. |
+| [Powód: zbyt długi dojazd](technical_docs/en/options.md#opt-reasoncommute) | **Włączone** | Obejmuje opuszczenie spowodowane zbyt długim dojazdem do pracy. |
+| [Powód: brak popytu](technical_docs/en/options.md#opt-reasonlowdemand) | **Włączone** | Obejmuje budynki opuszczone, ponieważ popyt na dany typ zniknął. |
+| [Powód: brak prądu](technical_docs/en/options.md#opt-reasonnopower) | **Wyłączone** | Opcjonalnie obejmuje budynki opuszczone z powodu braku prądu. Zwykle lepiej najpierw przywrócić prąd i sprawdzić, czy budynek się zaludni. |
+| [Powód: brak wody](technical_docs/en/options.md#opt-reasonnowater) | **Wyłączone** | Opcjonalnie obejmuje budynki opuszczone z powodu braku wody. Zwykle lepiej najpierw przywrócić wodę i sprawdzić, czy budynek się zaludni. |
+| [Ogranicz miesięczny budżet wyburzeń](technical_docs/en/options.md#opt-budgetlimit) | **Wyłączone** | Ustawia opcjonalny limit wydatków na automatyczne wyburzanie, oprócz środków dostępnych w kasie miasta. |
+| [Budżet miesięczny](technical_docs/en/options.md#opt-demolitionbudget) | **§1 000** (§0–§200 000) | Maksymalne wydatki na wyburzenia w miesiącu symulacji, **gdy limit budżetu jest włączony**. |
 
 <a id="screenshots"></a>
 
@@ -240,26 +242,49 @@ Wszystkie zrzuty ekranu pokazują angielską wersję gry.
 
 - **Porada o wysypisku:** wymaga dokładnie jednej strefy wysypiska. W miastach z wieloma wysypiskami Ministerstwo nadal może naprawiać kwalifikujące się błędne „pola-widma”, ale nie zaleca zmian rozmiaru.
 
+<a id="source-code"></a>
+
+## Kod źródłowy
+
+Kod źródłowy wtyczki znajduje się w folderze [`source/`](source/). Buduje się go przy użyciu CMake i Visual Studio do 32-bitowej biblioteki DLL (Win32). Potrzebne są Visual Studio 2026 z pakietem „Programowanie aplikacji klasycznych w C++” (inne wersje nie były testowane), CMake 3.20 lub nowszy oraz Git:
+
+```bat
+cmake -S . -B build -G "Visual Studio 18 2026" -A Win32
+cmake --build build --config Release
+```
+
+Podczas budowania pobierana jest biblioteka [gzcom-dll](https://github.com/nsgomez/gzcom-dll) w stałej rewizji (`779b669bf88112146d58fba6c7ed44f13ac6ce7d`). Aby użyć zmodyfikowanej kopii tej biblioteki albo zbudować projekt bez dostępu do Internetu, dodaj `-DFETCHCONTENT_SOURCE_DIR_GZCOM_DLL=<folder>` do pierwszego polecenia. Plik DLL powstaje w `build\Release\DepartmentEfficiency.dll`. Ponownie zbudowany plik DLL nie jest identyczny bajt po bajcie z opublikowanym.
+
+<a id="license"></a>
+
+## Licencja
+
+- Oryginalny kod Department of Efficiency (pliki w [`source/`](source/)) napisał **Sammu89** i jest on udostępniany na licencji **GNU General Public License, wersja 3 wyłącznie** (GPL-3.0-only). Pełny tekst znajduje się w [LICENSE](LICENSE). Możesz go studiować, modyfikować i redystrybuować na warunkach GPLv3: zachowaj informacje o prawach autorskich i podziękowania, oznacz swoje zmiany i udostępnij swoją wersję na tej samej licencji. Nie przedstawiaj zmodyfikowanych wersji jako oficjalnych wersji autora.
+
+- Dokumentacja (te pliki README i pliki w [`technical_docs/`](technical_docs/)) oraz teksty napisane na potrzeby tego projektu (w tym te z trzech plików INI i skompilowane w `DepartmentEfficiency.dat`), wraz z ich oryginalnymi tłumaczeniami, są udostępniane na tej samej licencji, GPL-3.0-only.
+
+- **gzcom-dll** nie jest objęta tą licencją: zachowuje własną licencję, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), i jest pobierana z oryginalnego repozytorium podczas budowania.
+
+- **SimCity 4** i jego oryginalne zasoby należą do Electronic Arts / Maxis. **Department of Efficiency** jest nieoficjalnym modem stworzonym przez fana, niezależnym od EA i niezatwierdzonym przez EA. Cztery pliki w `release/Department of Efficiency/` zawierają skrypty i definicje interfejsu pochodzące z zasobów samej gry, a zrzuty ekranu przedstawiają grę: nie są własnością autora, nie są objęte GPL, a wszelkie prawa do nich pozostają przy ich właścicielach. To samo dotyczy każdego innego materiału stron trzecich.
+
 <a id="credits"></a>
 
 ## Podziękowania
 
+**Autor**
+
 - Stworzone przez **Sammu89**.
 
-- Zbudowane z **gzcom-dll** Nelsona Gomeza (simmaster07), używanej na licencji LGPL-2.1-or-later i statycznie dołączonej do pliku DLL.
+**Użyta biblioteka**
 
-- Nicholas Hayes (0xC0000054 / Null 45), za badania, dokumentację i otwarte przykłady dotyczące bibliotek DLL SimCity 4: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example.
+- **gzcom-dll** autorstwa Nelsona Gomeza (simmaster07), z wkładem Nicholasa Hayesa (Null 45), Caspera Van Gheluwe, memo i innych (zobacz jej [repozytorium](https://github.com/nsgomez/gzcom-dll)), używana na licencji LGPL-2.1-or-later i statycznie dołączona do pliku DLL. Biblioteka nie jest dołączona: podczas budowania pobierana jest dokładna rewizja z oryginalnego repozytorium (zobacz [Kod źródłowy](#source-code)); informacje o prawach autorskich i tekst licencji znajdują się w [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) i [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). Możesz zmodyfikować bibliotekę i przebudować wtyczkę z własną wersją.
+
+**Wykorzystane techniki, dokumentacja i przykłady** (nie skopiowano z nich kodu; ich autorzy nie są współautorami Department of Efficiency):
+
+- Nicholas Hayes (0xC0000054 / Null 45), za badania, dokumentację i otwarte przykłady dotyczące bibliotek DLL SimCity 4: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Okno opcji, zarządzenie i plik komunikatów korzystają z mechanizmów opublikowanych w jego projektach sc4-region-census, sc4-humane-society-ordinance i sc4-lua-extension-example (licencja MIT); polecenia gry korzystają z sc4-auto-run-cheats i sc4-game-command-documentation.
 
 - CorinaMarie, za udokumentowanie techniki Urgent Advice z SimCity 4, według której działają komunikaty doradców tego moda.
 
-- Społeczność moderska SimCity 4, za dwie dekady badań, narzędzi i wspólnie dzielonej wiedzy.
+- Społeczność moderska SimCity 4, za dwie dekady badań, narzędzi i wspólnie dzielonej wiedzy, w tym dokumentację właściwości exemplarów z SC4Devotion.
 
-<a id="lgpl-licensing"></a>
-
-## Materiały licencyjne LGPL
-
-Ministerstwo Optymalizacji korzysta z [gzcom-dll](https://github.com/nsgomez/gzcom-dll) na licencji LGPL-2.1-or-later.
-
-Odpowiedni kod źródłowy biblioteki, informacje licencyjne i materiały potrzebne do ponownego linkowania są dostępne w [pakiecie materiałów LGPL](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
-
-Materiały te nie są potrzebne do zainstalowania ani używania modyfikacji.
+<!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

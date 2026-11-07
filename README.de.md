@@ -33,9 +33,11 @@ Alles wird im Spiel unter **Spieloptionen → Ministerium für Effizienz** geste
 
 - [Bekannte Einschränkungen](#known-limitations)
 
-- [Danksagungen](#credits)
+- [Quellcode](#source-code)
 
-- [LGPL-Lizenzmaterialien](#lgpl-licensing)
+- [Lizenz](#license)
+
+- [Danksagungen](#credits)
 
 <a id="download-and-installation"></a>
 
@@ -77,19 +79,19 @@ Die Markdown-Dateien und Screenshots des öffentlichen Repositorys werden vom Sp
 
 ## Was das Ministerium tut
 
-Die folgende Tabelle beschreibt, was das Ministerium tut. Formeln, Beispiele, Schutzmechanismen und die Mechanik hinter den Entscheidungen finden Sie in der **[ausführlichen Funktionsreferenz (auf Englisch)](features/en.md)**.
+Die folgende Tabelle beschreibt, was das Ministerium tut. Formeln, Beispiele, Schutzmechanismen und die Mechanik hinter den Entscheidungen finden Sie in der **[ausführlichen Funktionsreferenz (auf Englisch)](technical_docs/en/index.md)**.
 
 | Bereich | Was es tut |
 |---|---|
-| [Bildung und Gesundheit](features/en.md#education-healthcare) | Passt die Finanzierung **Gebäude für Gebäude** für geeignete Schulen, Hochschulen, Universitäten, Bibliotheken, Museen, Kliniken und Krankenhäuser an. Es richtet sich nach tatsächlicher Auslastung und Kapazität, mit einer Sicherheitsreserve. Es **ändert keine Einzugsbereiche** und nicht die Finanzierung von Schulbussen und Krankenwagen. Ist ein Gebäude trotz maximaler Finanzierung überfüllt, weist ein Berater darauf hin, dass eine weitere Einrichtung nötig ist; **wo sie gebaut wird, entscheiden Sie**. |
-| [Strom](features/en.md#electricity) | Verwaltet **jedes Kraftwerk einzeln** und wählt die Finanzierung, die den Bedarf der Stadt und die Sicherheitsreserve zu den niedrigsten modellierten Kosten deckt. Es berücksichtigt Wirkungsgrad und Zustand der Kraftwerke; eine optionale Einstellung bezieht auch die wirtschaftlichen Kosten der Kraftwerksalterung ein. |
-| [Wasser](features/en.md#water) | Passt die Wasserfinanzierung der Stadt an den Bedarf plus eine Sicherheitsreserve an. Der Schutz der Wasserleitungen ist standardmäßig eingeschaltet, um Kürzungen zu vermeiden, bei denen das Netz verfallen würde. Es blendet außerdem das irreführende „Kein Wasser“-Symbol des Spiels über Bauernhöfen aus. |
-| [Müllentsorgung](features/en.md#garbage-landfills) | Passt die Finanzierung der Müllentsorgung an Müllaufkommen, Recycling, Behandlung, Deponiespeicher und regionale Verträge an und schützt dabei den eigenen Entsorgungsbedarf der Stadt. |
-| [Nachbarschaftsverträge](features/en.md#neighbor-deals) | Kann **Strom und Wasser kaufen oder verkaufen**, **Nachbarn dafür bezahlen, Ihren Müll zu übernehmen**, oder **deren Müll gegen Bezahlung annehmen**. Es schließt, ändert und kündigt geeignete Verträge, wenn das Gesamtergebnis der Stadt nützt und der eigene Bedarf und die Reserven geschützt bleiben. |
-| [Automatischer Abriss](features/en.md#demolition) | Kann standardmäßig Ruinen nach etwa **30 simulierten Tagen** räumen und geeignete Gebäude, die **ein simuliertes Jahr** lang verlassen waren. Sie legen fest, welche Gebiete und welche Verlassensgründe zählen, ob geschützte Ruinen geräumt werden dürfen und ob ein monatliches Ausgabenlimit gelten soll. |
-| [Hinweise der Berater](features/en.md#notices) | Nutzt die Berater des Spiels, um nachgewiesene, anhaltende Engpässe zu melden, die weder Finanzierung noch verfügbare Verträge beheben können. Wo es passt, enthalten die Meldungen Links zu den betroffenen Gebäuden. |
-| [Hinweis zur Deponiegröße](features/en.md#garbage-landfills-advice) | Der optionale Hinweis nennt eine konkrete Deponieerweiterung oder eine sichere Verkleinerung, die die Müllkosten um mehr als Ihre gewählte Sparschwelle senken könnte. **Das Ministerium rät; ob Sie die Zonierung ändern, entscheiden Sie.** |
-| [Reparatur von Geisterfeldern](features/en.md#ghost-squares) | Bei eingeschalteter Müllverwaltung werden geeignete unsichtbare Deponiefelder, die das Spiel weiterhin zur Instandhaltung rechnet, sicher repariert. Unsichere oder ungeprüfte Fälle bleiben unberührt; für diese Reparatur gibt es keinen eigenen Schalter. |
+| [Bildung und Gesundheit](technical_docs/en/education_healthcare.md#education-healthcare) | Passt die Finanzierung **Gebäude für Gebäude** für geeignete Schulen, Hochschulen, Universitäten, Bibliotheken, Museen, Kliniken und Krankenhäuser an. Es richtet sich nach tatsächlicher Auslastung und Kapazität, mit einer Sicherheitsreserve. Es **ändert keine Einzugsbereiche** und nicht die Finanzierung von Schulbussen und Krankenwagen. Ist ein Gebäude trotz maximaler Finanzierung überfüllt, weist ein Berater darauf hin, dass eine weitere Einrichtung nötig ist; **wo sie gebaut wird, entscheiden Sie**. |
+| [Strom](technical_docs/en/power.md#power) | Verwaltet **jedes Kraftwerk einzeln** und wählt die Finanzierung, die den Bedarf der Stadt und die Sicherheitsreserve zu den niedrigsten modellierten Kosten deckt. Es berücksichtigt Wirkungsgrad und Zustand der Kraftwerke; eine optionale Einstellung bezieht auch die wirtschaftlichen Kosten der Kraftwerksalterung ein. |
+| [Wasser](technical_docs/en/water.md#water) | Passt die Wasserfinanzierung der Stadt an den Bedarf plus eine Sicherheitsreserve an. Der Schutz der Wasserleitungen ist standardmäßig eingeschaltet, um Kürzungen zu vermeiden, bei denen das Netz verfallen würde. Es blendet außerdem das irreführende „Kein Wasser“-Symbol des Spiels über Bauernhöfen aus. |
+| [Müllentsorgung](technical_docs/en/garbage.md#garbage-landfills) | Passt die Finanzierung der Müllentsorgung an Müllaufkommen, Recycling, Behandlung, Deponiespeicher und regionale Verträge an und schützt dabei den eigenen Entsorgungsbedarf der Stadt. |
+| [Nachbarschaftsverträge](technical_docs/en/deals.md#neighbor-deals) | Kann **Strom und Wasser kaufen oder verkaufen**, **Nachbarn dafür bezahlen, Ihren Müll zu übernehmen**, oder **deren Müll gegen Bezahlung annehmen**. Es schließt, ändert und kündigt geeignete Verträge, wenn das Gesamtergebnis der Stadt nützt und der eigene Bedarf und die Reserven geschützt bleiben. |
+| [Automatischer Abriss](technical_docs/en/demolition.md#demolition) | Kann standardmäßig Ruinen nach etwa **30 simulierten Tagen** räumen und geeignete Gebäude, die **ein simuliertes Jahr** lang verlassen waren. Sie legen fest, welche Gebiete und welche Verlassensgründe zählen, ob geschützte Ruinen geräumt werden dürfen und ob ein monatliches Ausgabenlimit gelten soll. |
+| [Hinweise der Berater](technical_docs/en/safety.md#notices) | Nutzt die Berater des Spiels, um nachgewiesene, anhaltende Engpässe zu melden, die weder Finanzierung noch verfügbare Verträge beheben können. Wo es passt, enthalten die Meldungen Links zu den betroffenen Gebäuden. |
+| [Hinweis zur Deponiegröße](technical_docs/en/garbage.md#garbage-landfills-advice) | Der optionale Hinweis nennt eine konkrete Deponieerweiterung oder eine sichere Verkleinerung, die die Müllkosten um mehr als Ihre gewählte Sparschwelle senken könnte. **Das Ministerium rät; ob Sie die Zonierung ändern, entscheiden Sie.** |
+| [Reparatur von Geisterfeldern](technical_docs/en/garbage.md#ghost-tiles) | Bei eingeschalteter Müllverwaltung werden geeignete unsichtbare Deponiefelder, die das Spiel weiterhin zur Instandhaltung rechnet, sicher repariert. Unsichere oder ungeprüfte Fälle bleiben unberührt; für diese Reparatur gibt es keinen eigenen Schalter. |
 
 Bau, Zonierung, Steuern, Straßen und Verkehr, Polizei, Feuerwehr und alle anderen Dienste, die das Ministerium nicht verwaltet, bleiben in Ihrer Hand. Schalten Sie die Verwaltung einer Vertragsart mit Nachbarn ein, kann das Ministerium auch einen Vertrag ändern oder kündigen, den Sie zuvor von Hand geschlossen haben. Schalten Sie diese Vertragsoption aus, um solche Verträge selbst zu verwalten.
 
@@ -117,7 +119,7 @@ Sie können das Ministerium auch über die Verordnungen der Stadt ein- oder auss
 
 ## Einstellungen
 
-Öffnen Sie **Spieloptionen → Ministerium für Effizienz**. Das Fenster hat zwei Seiten, **Versorgung** und **Abriss**. Die folgenden Tabellen behandeln **jede im Menü angezeigte Einstellung**, ohne die technischen Formeln. Klicken Sie auf den Namen einer Option, um die vollständige Erklärung in der [Funktionsreferenz](features/en.md#options) zu lesen.
+Öffnen Sie **Spieloptionen → Ministerium für Effizienz**. Das Fenster hat zwei Seiten, **Versorgung** und **Abriss**. Die folgenden Tabellen behandeln **jede im Menü angezeigte Einstellung**, ohne die technischen Formeln. Klicken Sie auf den Namen einer Option, um die vollständige Erklärung in der [Funktionsreferenz](technical_docs/en/options.md#options) zu lesen.
 
 **So funktionieren die Schalter:** „An“ bedeutet, dass das Ministerium diese Funktion verwalten darf. Eine Einstellung, die von einer anderen abhängt, ist ausgegraut, solange die übergeordnete ausgeschaltet ist. Prozenteinstellungen steuern Sicherheitsreserven und Schwellenwerte; sie helfen dem Ministerium, freie Kapazität vorzuhalten und Schwankungen der Nachfrage aufzufangen.
 
@@ -125,47 +127,47 @@ Sie können das Ministerium auch über die Verordnungen der Stadt ein- oder auss
 
 | Option | Standard | Bedeutung |
 |---|---|---|
-| [Ministerium aktiv](features/en.md#opt-master) | **An** | Hauptschalter für Finanzierung, Nachbarschaftsverträge, Abriss und die Hinweise des Ministeriums. Ausschalten macht bereits vorgenommene Änderungen nicht rückgängig. |
-| [Bildung verwalten](features/en.md#opt-education) | **An** | Passt geeignete Schulen, Universitäten, Bibliotheken und Museen automatisch einzeln an. Ändert weder deren Abdeckung noch die Schulbus-Finanzierung. |
-| [Sicherheitsreserve (Bildung)](features/en.md#opt-educationreserve) | **5%** (0–50%) | Zusätzliche Kapazität über der aktuellen Auslastung der Bildung. Mehr Kapazität kostet mehr. Bei schwach ausgelasteten Gebäuden kann das Ministerium eine zusätzliche Reserve vorhalten. So kann eine Schule beispielsweise von 10 auf 20 Schüler (+100%) wachsen, ohne dass gestreikt wird, besonders zu Beginn, wenn die Mehrkosten klein sind. |
-| [Gesundheit verwalten](features/en.md#opt-health) | **An** | Passt geeignete Kliniken, Krankenhäuser und andere unterstützte Gesundheitseinrichtungen automatisch einzeln an. Ändert weder die Krankenwagen-Finanzierung noch die Abdeckung. |
-| [Sicherheitsreserve (Gesundheit)](features/en.md#opt-healthreserve) | **5%** (0–50%) | Funktioniert wie die Sicherheitsreserve der Bildung. |
-| [Strom verwalten](features/en.md#opt-power) | **An** | Passt die Finanzierung einzelner Kraftwerke an, damit zu den niedrigsten modellierten Kosten genug Strom bereitsteht. |
-| [Stromreserve](features/en.md#opt-powerreserve) | **20%** (10–50%) | Freie Erzeugungskapazität für den Teil des Bedarfs, der vor Ort gedeckt wird; höhere Reserven bieten mehr Spielraum für schnelles Wachstum und senken das Ausfallrisiko, können aber mehr kosten. |
-| [Alterung der Kraftwerke berücksichtigen](features/en.md#opt-poweraging) | **Aus** | Bezieht die geschätzten Kosten für Verschleiß und Alterung der Kraftwerke in die Optimierung ein. Das kann eine höhere Finanzierung begünstigen, wenn der langfristige Nutzen für die Erhaltung des Kraftwerks die zusätzlichen Betriebskosten überwiegt. |
-| [Wasser verwalten](features/en.md#opt-water) | **An** | Passt die Finanzierung der Wasserwerke an, um die Stadt ohne unnötige Ausgaben zu versorgen. |
-| [Wasserreserve](features/en.md#opt-waterreserve) | **10%** (10–50%) | Funktioniert wie die Stromreserve. |
-| [Wasserleitungen schützen](features/en.md#opt-waterpipes) | **An** | Hält die Finanzierung bei mindestens den 50% des Spiels, um Schäden am Leitungsnetz zu vermeiden. |
-| [Müllentsorgung verwalten](features/en.md#opt-sanitation) | **An** | Passt die Finanzierung der Müllabfuhr an, damit Einsammeln und Entsorgung abgedeckt sind. Repariert außerdem Geisterfelder (ein Fehler des Spiels, der Instandhaltungskosten für nicht mehr ausgewiesene Deponiefelder berechnet). |
-| [Reserve der Müllentsorgung](features/en.md#opt-sanitationreserve) | **2%** (2–20%) | Zusätzliche Behandlungskapazität für den Müll der Stadt, über das hinaus, was sie nach dem Recycling produziert, und über einen vorhandenen Rückstau hinaus. |
-| [Warnen, wenn eine andere Deponiegröße Geld spart](features/en.md#opt-landfilladvice) | **Aus** | Schaltet den optionalen Hinweis auf Änderungen an der Deponiezonierung ein, wenn das Geld spart und der Müll der Stadt weiterhin bewältigt wird. Erfordert die Verwaltung der Müllentsorgung. |
-| [Sparschwelle für Deponiehinweise](features/en.md#opt-landfillthreshold) | **25%** (20–50%) | Bittet Sie nur dann, eine andere Deponiegröße zu erwägen, wenn die modellierte monatliche Ersparnis mindestens diesen Anteil des Müllbudgets beträgt. |
-| [Nachbarschaftsverträge verwalten](features/en.md#opt-deals) | **An** | Schaltet automatische regionale Verträge ein; die drei einzelnen Schalter unten bestimmen, welche Ressourcen gehandelt werden dürfen. |
-| [Bei einer Stadt kaufen, an eine andere verkaufen](features/en.md#opt-arbitrage) | **Aus** | Erlaubt gewinnbringende Kauf-und-Verkauf-Kombinationen derselben Ressource zwischen Nachbarn, wobei der Bedarf der eigenen Stadt Vorrang hat. |
-| [Stromverträge verwalten](features/en.md#opt-tradepower) | **An** | Erlaubt dem Ministerium, **Stromimporte und -exporte** zu schließen, zu ändern oder zu kündigen. Unabhängig von der Kraftwerksfinanzierung. |
-| [Wasserverträge verwalten](features/en.md#opt-tradewater) | **An** | Erlaubt dem Ministerium, **Wasserimporte und -exporte** zu schließen, zu ändern oder zu kündigen. Unabhängig von der Wasserfinanzierung. |
-| [Müllverträge verwalten](features/en.md#opt-tradegarbage) | **An** | Erlaubt dem Ministerium, die Müllbehandlung **in beide Richtungen** zu vereinbaren. Unabhängig von der Finanzierung der Müllentsorgung. |
+| [Ministerium aktiv](technical_docs/en/options.md#opt-master) | **An** | Hauptschalter für Finanzierung, Nachbarschaftsverträge, Abriss und die Hinweise des Ministeriums. Ausschalten macht bereits vorgenommene Änderungen nicht rückgängig. |
+| [Bildung verwalten](technical_docs/en/options.md#opt-education) | **An** | Passt geeignete Schulen, Universitäten, Bibliotheken und Museen automatisch einzeln an. Ändert weder deren Abdeckung noch die Schulbus-Finanzierung. |
+| [Sicherheitsreserve (Bildung)](technical_docs/en/options.md#opt-educationreserve) | **5%** (0–50%) | Zusätzliche Kapazität über der aktuellen Auslastung der Bildung. Mehr Kapazität kostet mehr. Bei schwach ausgelasteten Gebäuden kann das Ministerium eine zusätzliche Reserve vorhalten. So kann eine Schule beispielsweise von 10 auf 20 Schüler (+100%) wachsen, ohne dass gestreikt wird, besonders zu Beginn, wenn die Mehrkosten klein sind. |
+| [Gesundheit verwalten](technical_docs/en/options.md#opt-health) | **An** | Passt geeignete Kliniken, Krankenhäuser und andere unterstützte Gesundheitseinrichtungen automatisch einzeln an. Ändert weder die Krankenwagen-Finanzierung noch die Abdeckung. |
+| [Sicherheitsreserve (Gesundheit)](technical_docs/en/options.md#opt-healthreserve) | **5%** (0–50%) | Funktioniert wie die Sicherheitsreserve der Bildung. |
+| [Strom verwalten](technical_docs/en/options.md#opt-power) | **An** | Passt die Finanzierung einzelner Kraftwerke an, damit zu den niedrigsten modellierten Kosten genug Strom bereitsteht. |
+| [Stromreserve](technical_docs/en/options.md#opt-powerreserve) | **20%** (10–50%) | Freie Erzeugungskapazität für den Teil des Bedarfs, der vor Ort gedeckt wird; höhere Reserven bieten mehr Spielraum für schnelles Wachstum und senken das Ausfallrisiko, können aber mehr kosten. |
+| [Alterung der Kraftwerke berücksichtigen](technical_docs/en/options.md#opt-poweraging) | **Aus** | Bezieht die geschätzten Kosten für Verschleiß und Alterung der Kraftwerke in die Optimierung ein. Das kann eine höhere Finanzierung begünstigen, wenn der langfristige Nutzen für die Erhaltung des Kraftwerks die zusätzlichen Betriebskosten überwiegt. |
+| [Wasser verwalten](technical_docs/en/options.md#opt-water) | **An** | Passt die Finanzierung der Wasserwerke an, um die Stadt ohne unnötige Ausgaben zu versorgen. |
+| [Wasserreserve](technical_docs/en/options.md#opt-waterreserve) | **10%** (10–50%) | Funktioniert wie die Stromreserve. |
+| [Wasserleitungen schützen](technical_docs/en/options.md#opt-waterpipes) | **An** | Hält die Finanzierung bei mindestens den 50% des Spiels, um Schäden am Leitungsnetz zu vermeiden. |
+| [Müllentsorgung verwalten](technical_docs/en/options.md#opt-sanitation) | **An** | Passt die Finanzierung der Müllabfuhr an, damit Einsammeln und Entsorgung abgedeckt sind. Repariert außerdem Geisterfelder (ein Fehler des Spiels, der Instandhaltungskosten für nicht mehr ausgewiesene Deponiefelder berechnet). |
+| [Reserve der Müllentsorgung](technical_docs/en/options.md#opt-sanitationreserve) | **2%** (2–20%) | Zusätzliche Behandlungskapazität für den Müll der Stadt, über das hinaus, was sie nach dem Recycling produziert, und über einen vorhandenen Rückstau hinaus. |
+| [Warnen, wenn eine andere Deponiegröße Geld spart](technical_docs/en/options.md#opt-landfilladvice) | **Aus** | Schaltet den optionalen Hinweis auf Änderungen an der Deponiezonierung ein, wenn das Geld spart und der Müll der Stadt weiterhin bewältigt wird. Erfordert die Verwaltung der Müllentsorgung. |
+| [Sparschwelle für Deponiehinweise](technical_docs/en/options.md#opt-landfillthreshold) | **25%** (20–50%) | Bittet Sie nur dann, eine andere Deponiegröße zu erwägen, wenn die modellierte monatliche Ersparnis mindestens diesen Anteil des Müllbudgets beträgt. |
+| [Nachbarschaftsverträge verwalten](technical_docs/en/options.md#opt-deals) | **An** | Schaltet automatische regionale Verträge ein; die drei einzelnen Schalter unten bestimmen, welche Ressourcen gehandelt werden dürfen. |
+| [Bei einer Stadt kaufen, an eine andere verkaufen](technical_docs/en/options.md#opt-arbitrage) | **Aus** | Erlaubt gewinnbringende Kauf-und-Verkauf-Kombinationen derselben Ressource zwischen Nachbarn, wobei der Bedarf der eigenen Stadt Vorrang hat. |
+| [Stromverträge verwalten](technical_docs/en/options.md#opt-tradepower) | **An** | Erlaubt dem Ministerium, **Stromimporte und -exporte** zu schließen, zu ändern oder zu kündigen. Unabhängig von der Kraftwerksfinanzierung. |
+| [Wasserverträge verwalten](technical_docs/en/options.md#opt-tradewater) | **An** | Erlaubt dem Ministerium, **Wasserimporte und -exporte** zu schließen, zu ändern oder zu kündigen. Unabhängig von der Wasserfinanzierung. |
+| [Müllverträge verwalten](technical_docs/en/options.md#opt-tradegarbage) | **An** | Erlaubt dem Ministerium, die Müllbehandlung **in beide Richtungen** zu vereinbaren. Unabhängig von der Finanzierung der Müllentsorgung. |
 
 ### Abriss
 
 | Option | Standard | Bedeutung |
 |---|---|---|
-| [Zerstörte Gebäude abreißen](features/en.md#opt-demolishdestroyed) | **An** | Reißt Ruinen nach einer bestimmten Zeit ab. Räumt geschützte städtische oder historische Ruinen nicht automatisch, es sei denn, die Option weiter unten erlaubt es. |
-| [Wartezeit (zerstörte Gebäude)](features/en.md#opt-destroyedmonths) | **1 Monat** (1–24) | Wie lange Ruinen stehen bleiben müssen, bevor sie geräumt werden dürfen; standardmäßig etwa **30 simulierte Tage**. |
-| [Zerstörte städtische und historische Gebäude abreißen](features/en.md#opt-demolishmunicipal) | **Aus** | Wenn eingeschaltet, werden nach der Wartezeit auch geeignete **Ruinen** städtischer, besonderer und historischer Gebäude geräumt. |
-| [Verlassene Gebäude abreißen](features/en.md#opt-demolishabandoned) | **An** | Räumt geeignete verlassene Gebäude nach der Wartezeit, in den gewählten Gebietsarten und aus den gewählten Gründen. |
-| [Wartezeit (verlassene Gebäude)](features/en.md#opt-abandonedmonths) | **12 Monate** (1–60) | Wie lange ein Gebäude verlassen sein muss, bevor es abgerissen werden darf; standardmäßig ein simuliertes Jahr. |
-| [Wohngebiet](features/en.md#opt-zoneresidential) | **An** | Umfasst verlassene Häuser und Mehrfamilienhäuser. |
-| [Gewerbegebiet](features/en.md#opt-zonecommercial) | **An** | Umfasst verlassene Läden und Büros. |
-| [Industriegebiet](features/en.md#opt-zoneindustrial) | **An** | Umfasst verlassene Fabriken und andere Industriegebäude. |
-| [Landwirtschaftsgebiet](features/en.md#opt-zoneagriculture) | **Aus** | Umfasst verlassene Bauernhöfe. Standardmäßig aus, weil leere oder verlassene Felder auf einem Bauernhof normal sein können. |
-| [Grund: unattraktive Umgebung](features/en.md#opt-reasonlowdesirability) | **An** | Umfasst Verlassen wegen geringer Attraktivität, etwa durch Verschmutzung oder fehlende Dienste. |
-| [Grund: zu langer Arbeitsweg](features/en.md#opt-reasoncommute) | **An** | Umfasst Verlassen wegen übermäßig langer Wege zur Arbeit. |
-| [Grund: keine Nachfrage](features/en.md#opt-reasonlowdemand) | **An** | Umfasst Gebäude, die verlassen wurden, weil die Nachfrage nach diesem Typ verschwunden ist. |
-| [Grund: kein Strom](features/en.md#opt-reasonnopower) | **Aus** | Umfasst optional Gebäude, die wegen fehlenden Stroms verlassen wurden. Meist ist es besser, zuerst den Strom wiederherzustellen und zu sehen, ob das Gebäude wieder bezogen wird. |
-| [Grund: kein Wasser](features/en.md#opt-reasonnowater) | **Aus** | Umfasst optional Gebäude, die wegen fehlenden Wassers verlassen wurden. Meist ist es besser, zuerst das Wasser wiederherzustellen und zu sehen, ob das Gebäude wieder bezogen wird. |
-| [Monatliches Abrissbudget begrenzen](features/en.md#opt-budgetlimit) | **Aus** | Legt eine optionale Ausgabengrenze für den automatischen Abriss fest, zusätzlich zu den verfügbaren Mitteln der Stadtkasse. |
-| [Monatliches Budget](features/en.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Höchste Abrissausgabe pro simuliertem Monat, **wenn die Budgetgrenze eingeschaltet ist**. |
+| [Zerstörte Gebäude abreißen](technical_docs/en/options.md#opt-demolishdestroyed) | **An** | Reißt Ruinen nach einer bestimmten Zeit ab. Räumt geschützte städtische oder historische Ruinen nicht automatisch, es sei denn, die Option weiter unten erlaubt es. |
+| [Wartezeit (zerstörte Gebäude)](technical_docs/en/options.md#opt-destroyedmonths) | **1 Monat** (1–24) | Wie lange Ruinen stehen bleiben müssen, bevor sie geräumt werden dürfen; standardmäßig etwa **30 simulierte Tage**. |
+| [Zerstörte städtische und historische Gebäude abreißen](technical_docs/en/options.md#opt-demolishmunicipal) | **Aus** | Wenn eingeschaltet, werden nach der Wartezeit auch geeignete **Ruinen** städtischer, besonderer und historischer Gebäude geräumt. |
+| [Verlassene Gebäude abreißen](technical_docs/en/options.md#opt-demolishabandoned) | **An** | Räumt geeignete verlassene Gebäude nach der Wartezeit, in den gewählten Gebietsarten und aus den gewählten Gründen. |
+| [Wartezeit (verlassene Gebäude)](technical_docs/en/options.md#opt-abandonedmonths) | **12 Monate** (1–60) | Wie lange ein Gebäude verlassen sein muss, bevor es abgerissen werden darf; standardmäßig ein simuliertes Jahr. |
+| [Wohngebiet](technical_docs/en/options.md#opt-zoneresidential) | **An** | Umfasst verlassene Häuser und Mehrfamilienhäuser. |
+| [Gewerbegebiet](technical_docs/en/options.md#opt-zonecommercial) | **An** | Umfasst verlassene Läden und Büros. |
+| [Industriegebiet](technical_docs/en/options.md#opt-zoneindustrial) | **An** | Umfasst verlassene Fabriken und andere Industriegebäude. |
+| [Landwirtschaftsgebiet](technical_docs/en/options.md#opt-zoneagriculture) | **Aus** | Umfasst verlassene Bauernhöfe. Standardmäßig aus, weil leere oder verlassene Felder auf einem Bauernhof normal sein können. |
+| [Grund: unattraktive Umgebung](technical_docs/en/options.md#opt-reasonlowdesirability) | **An** | Umfasst Verlassen wegen geringer Attraktivität, etwa durch Verschmutzung oder fehlende Dienste. |
+| [Grund: zu langer Arbeitsweg](technical_docs/en/options.md#opt-reasoncommute) | **An** | Umfasst Verlassen wegen übermäßig langer Wege zur Arbeit. |
+| [Grund: keine Nachfrage](technical_docs/en/options.md#opt-reasonlowdemand) | **An** | Umfasst Gebäude, die verlassen wurden, weil die Nachfrage nach diesem Typ verschwunden ist. |
+| [Grund: kein Strom](technical_docs/en/options.md#opt-reasonnopower) | **Aus** | Umfasst optional Gebäude, die wegen fehlenden Stroms verlassen wurden. Meist ist es besser, zuerst den Strom wiederherzustellen und zu sehen, ob das Gebäude wieder bezogen wird. |
+| [Grund: kein Wasser](technical_docs/en/options.md#opt-reasonnowater) | **Aus** | Umfasst optional Gebäude, die wegen fehlenden Wassers verlassen wurden. Meist ist es besser, zuerst das Wasser wiederherzustellen und zu sehen, ob das Gebäude wieder bezogen wird. |
+| [Monatliches Abrissbudget begrenzen](technical_docs/en/options.md#opt-budgetlimit) | **Aus** | Legt eine optionale Ausgabengrenze für den automatischen Abriss fest, zusätzlich zu den verfügbaren Mitteln der Stadtkasse. |
+| [Monatliches Budget](technical_docs/en/options.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Höchste Abrissausgabe pro simuliertem Monat, **wenn die Budgetgrenze eingeschaltet ist**. |
 
 <a id="screenshots"></a>
 
@@ -240,26 +242,49 @@ Alle Screenshots zeigen die englische Version des Spiels.
 
 - **Deponiehinweis:** Erfordert genau ein Deponiegebiet. In Städten mit mehreren Deponien kann das Ministerium weiterhin geeignete fehlerhafte „Geisterfelder“ reparieren, empfiehlt aber keine Größenänderungen.
 
+<a id="source-code"></a>
+
+## Quellcode
+
+Der Quellcode des Plugins liegt im Ordner [`source/`](source/). Er wird mit CMake und Visual Studio zu einer 32-Bit-DLL (Win32) gebaut. Benötigt werden Visual Studio 2026 mit der Workload „Desktopentwicklung mit C++“ (andere Versionen sind ungetestet), CMake ab Version 3.20 und Git:
+
+```bat
+cmake -S . -B build -G "Visual Studio 18 2026" -A Win32
+cmake --build build --config Release
+```
+
+Beim Bauen wird [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in einer festen Revision (`779b669bf88112146d58fba6c7ed44f13ac6ce7d`) heruntergeladen. Um eine geänderte Kopie dieser Bibliothek zu verwenden oder ohne Internetverbindung zu bauen, fügen Sie dem ersten Befehl `-DFETCHCONTENT_SOURCE_DIR_GZCOM_DLL=<Ordner>` hinzu. Die DLL entsteht unter `build\Release\DepartmentEfficiency.dll`. Eine neu gebaute DLL ist nicht Byte für Byte identisch mit der veröffentlichten.
+
+<a id="license"></a>
+
+## Lizenz
+
+- Der Originalcode von Department of Efficiency (die Dateien in [`source/`](source/)) stammt von **Sammu89** und wird unter der **GNU General Public License, Version 3 (nur)** (GPL-3.0-only) veröffentlicht. Der vollständige Text steht in [LICENSE](LICENSE). Sie dürfen ihn nach den Bedingungen der GPLv3 studieren, ändern und weitergeben: Urheberrechtsvermerke und Danksagungen bleiben erhalten, Änderungen werden kenntlich gemacht, und Ihre Version wird unter derselben Lizenz veröffentlicht. Bitte geben Sie geänderte Versionen nicht als offizielle Versionen des Autors aus.
+
+- Die Dokumentation (diese README-Dateien und die Dateien in [`technical_docs/`](technical_docs/)) und die für dieses Projekt geschriebenen Texte (einschließlich der Texte in den drei INI-Dateien und der in `DepartmentEfficiency.dat` kompilierten) werden zusammen mit ihren Originalübersetzungen unter derselben Lizenz veröffentlicht, GPL-3.0-only.
+
+- **gzcom-dll** fällt nicht unter diese Lizenz: Sie behält ihre eigene Lizenz, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), und wird beim Bauen aus ihrem Originalrepository geladen.
+
+- **SimCity 4** und seine Originalressourcen gehören Electronic Arts / Maxis. **Department of Efficiency** ist eine inoffizielle Fan-Mod, unabhängig von EA und nicht von EA unterstützt. Vier der Dateien in `release/Department of Efficiency/` enthalten Skripte und Schnittstellendefinitionen, die aus den Ressourcen des Spiels selbst abgeleitet sind, und die Screenshots zeigen das Spiel: Sie sind nicht Eigentum des Autors, fallen nicht unter die GPL, und alle Rechte daran verbleiben bei den jeweiligen Inhabern. Dasselbe gilt für jedes andere Material Dritter.
+
 <a id="credits"></a>
 
 ## Danksagungen
 
+**Autor**
+
 - Erstellt von **Sammu89**.
 
-- Gebaut mit **gzcom-dll** von Nelson Gomez (simmaster07), verwendet unter der Lizenz LGPL-2.1-or-later und statisch in die DLL gelinkt.
+**Verwendete Bibliothek**
 
-- Nicholas Hayes (0xC0000054 / Null 45), für Forschung, Dokumentation und offene Beispiele zu SimCity-4-DLLs: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example.
+- **gzcom-dll** von Nelson Gomez (simmaster07), mit Beiträgen von Nicholas Hayes (Null 45), Casper Van Gheluwe, memo und anderen (siehe das [Repository](https://github.com/nsgomez/gzcom-dll)), verwendet unter der Lizenz LGPL-2.1-or-later und statisch in die DLL gelinkt. Die Bibliothek liegt nicht bei: Beim Bauen wird die genaue Revision aus dem Originalrepository geladen (siehe [Quellcode](#source-code)); Urheberrechtsvermerke und Lizenztext stehen in [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) und [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). Sie dürfen die Bibliothek ändern und das Plugin mit Ihrer Version neu bauen.
+
+**Konsultierte Techniken, Dokumentation und Beispiele** (daraus wurde kein Code kopiert; ihre Autoren sind keine Mitautoren von Department of Efficiency):
+
+- Nicholas Hayes (0xC0000054 / Null 45), für Forschung, Dokumentation und offene Beispiele zu SimCity-4-DLLs: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Das Optionsfenster, die Verordnung und die Hinweisdatei folgen Mechanismen aus seinen Projekten sc4-region-census, sc4-humane-society-ordinance und sc4-lua-extension-example (MIT-Lizenz); die Spielbefehle folgen sc4-auto-run-cheats und sc4-game-command-documentation.
 
 - CorinaMarie, für die Dokumentation der Urgent-Advice-Technik von SimCity 4, der die Beraterhinweise des Mods folgen.
 
-- Die SimCity-4-Modding-Community, für zwei Jahrzehnte Forschung, Werkzeuge und geteiltes Wissen.
+- Die SimCity-4-Modding-Community, für zwei Jahrzehnte Forschung, Werkzeuge und geteiltes Wissen, darunter die Dokumentation der Exemplar-Eigenschaften von SC4Devotion.
 
-<a id="lgpl-licensing"></a>
-
-## LGPL-Lizenzmaterialien
-
-Das Ministerium für Effizienz verwendet [gzcom-dll](https://github.com/nsgomez/gzcom-dll) unter der Lizenz LGPL-2.1-or-later.
-
-Der zugehörige Quellcode der Bibliothek, die Lizenzhinweise und die zum erneuten Linken benötigten Materialien sind im [LGPL-Materialpaket](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip) verfügbar.
-
-Diese Materialien werden für die Installation oder Nutzung des Mods nicht benötigt.
+<!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

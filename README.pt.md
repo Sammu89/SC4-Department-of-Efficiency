@@ -33,9 +33,11 @@ Tudo se controla dentro do jogo, em **Opções de Jogo → Ministério da Optimi
 
 - [Limitações conhecidas](#known-limitations)
 
-- [Créditos](#credits)
+- [Código-fonte](#source-code)
 
-- [Materiais de licença LGPL](#lgpl-licensing)
+- [Licença](#license)
+
+- [Créditos](#credits)
 
 <a id="download-and-installation"></a>
 
@@ -77,19 +79,19 @@ Os ficheiros Markdown e as capturas de ecrã do repositório público **não** s
 
 ## O que o Ministério faz
 
-A tabela seguinte descreve o que o Ministério faz. Para fórmulas, exemplos, salvaguardas e a mecânica por trás das decisões, consulte a **[referência detalhada das funcionalidades](features/pt.md)**.
+A tabela seguinte descreve o que o Ministério faz. Para fórmulas, exemplos, salvaguardas e a mecânica por trás das decisões, consulte a **[referência detalhada das funcionalidades](technical_docs/pt/index.md)**.
 
 | Área | O que faz |
 |---|---|
-| [Educação e saúde](features/pt.md#education-healthcare) | Ajusta o financiamento **edifício a edifício** das escolas, universidades, bibliotecas, museus, clínicas e hospitais elegíveis. Segue a frequência e a capacidade reais, com uma margem de segurança. **Não altera os raios de cobertura** nem o financiamento dos autocarros escolares e das ambulâncias. Se um edifício continuar sobrelotado com o financiamento no máximo, um conselheiro avisa que é preciso outro equipamento; **a escolha do local é sua**. |
-| [Eletricidade](features/pt.md#electricity) | Gere **cada central elétrica individualmente**, escolhendo o financiamento que cobre as necessidades da cidade e a reserva de segurança ao menor custo modelado. Tem em conta a eficiência e o estado de cada central; uma opção permite incluir também o custo económico do desgaste. |
-| [Água](features/pt.md#water) | Ajusta o financiamento da água da cidade para satisfazer a procura mais uma reserva de segurança. A proteção das canalizações vem ligada por predefinição, para evitar cortes que deixariam a rede degradar-se. Esconde também o ícone enganador de «sem água» do jogo sobre as quintas. |
-| [Saneamento e lixo](features/pt.md#garbage-landfills) | Ajusta o financiamento do saneamento a partir da produção de lixo, da reciclagem, do tratamento, do armazenamento nos aterros e dos contratos regionais, protegendo sempre as necessidades da própria cidade. |
-| [Acordos com os vizinhos](features/pt.md#neighbor-deals) | Pode **comprar ou vender eletricidade e água**, **pagar às vizinhas para tratarem o seu lixo** ou **aceitar o delas mediante pagamento**. Cria, ajusta e cancela contratos elegíveis quando o resultado global beneficia a cidade e as suas próprias necessidades e reservas ficam protegidas. |
-| [Demolição automática](features/pt.md#demolition) | Pode limpar ruínas ao fim de cerca de **30 dias simulados** e edifícios elegíveis abandonados há **um ano simulado**, por predefinição. Decide que zonas e que motivos de abandono contam, se as ruínas protegidas podem ser limpas e se quer fixar um limite mensal de gastos. |
-| [Avisos dos conselheiros](features/pt.md#notices) | Usa os próprios conselheiros do jogo para assinalar faltas comprovadas e persistentes que o financiamento ou os acordos disponíveis não conseguem resolver. Quando faz sentido, as mensagens trazem ligações que levam aos edifícios afetados. |
-| [Aviso sobre o tamanho do aterro](features/pt.md#garbage-landfills-advice) | O aviso opcional indica uma ampliação concreta do aterro, ou uma redução segura, que poderia baixar a fatura do saneamento em mais do que o limiar de poupança escolhido. **O Ministério aconselha; a decisão de alterar a zona é sua.** |
-| [Reparação de quadrados fantasma](features/pt.md#ghost-squares) | Com a gestão do saneamento ligada, repara com segurança os quadrados de aterro invisíveis elegíveis que o jogo ainda conta na manutenção. Os casos inseguros ou não verificados ficam como estão; não há interruptor próprio para esta reparação. |
+| [Educação e saúde](technical_docs/pt/education_healthcare.md#education-healthcare) | Ajusta o financiamento **edifício a edifício** das escolas, universidades, bibliotecas, museus, clínicas e hospitais elegíveis. Segue a frequência e a capacidade reais, com uma margem de segurança. **Não altera os raios de cobertura** nem o financiamento dos autocarros escolares e das ambulâncias. Se um edifício continuar sobrelotado com o financiamento no máximo, um conselheiro avisa que é preciso outro equipamento; **a escolha do local é sua**. |
+| [Eletricidade](technical_docs/pt/power.md#power) | Gere **cada central elétrica individualmente**, escolhendo o financiamento que cobre as necessidades da cidade e a reserva de segurança ao menor custo modelado. Tem em conta a eficiência e o estado de cada central; uma opção permite incluir também o custo económico do desgaste. |
+| [Água](technical_docs/pt/water.md#water) | Ajusta o financiamento da água da cidade para satisfazer a procura mais uma reserva de segurança. A proteção das canalizações vem ligada por predefinição, para evitar cortes que deixariam a rede degradar-se. Esconde também o ícone enganador de «sem água» do jogo sobre as quintas. |
+| [Saneamento e lixo](technical_docs/pt/garbage.md#garbage-landfills) | Ajusta o financiamento do saneamento a partir da produção de lixo, da reciclagem, do tratamento, do armazenamento nos aterros e dos contratos regionais, protegendo sempre as necessidades da própria cidade. |
+| [Acordos com os vizinhos](technical_docs/pt/deals.md#neighbor-deals) | Pode **comprar ou vender eletricidade e água**, **pagar às vizinhas para tratarem o seu lixo** ou **aceitar o delas mediante pagamento**. Cria, ajusta e cancela contratos elegíveis quando o resultado global beneficia a cidade e as suas próprias necessidades e reservas ficam protegidas. |
+| [Demolição automática](technical_docs/pt/demolition.md#demolition) | Pode limpar ruínas ao fim de cerca de **30 dias simulados** e edifícios elegíveis abandonados há **um ano simulado**, por predefinição. Decide que zonas e que motivos de abandono contam, se as ruínas protegidas podem ser limpas e se quer fixar um limite mensal de gastos. |
+| [Avisos dos conselheiros](technical_docs/pt/safety.md#notices) | Usa os próprios conselheiros do jogo para assinalar faltas comprovadas e persistentes que o financiamento ou os acordos disponíveis não conseguem resolver. Quando faz sentido, as mensagens trazem ligações que levam aos edifícios afetados. |
+| [Aviso sobre o tamanho do aterro](technical_docs/pt/garbage.md#garbage-landfills-advice) | O aviso opcional indica uma ampliação concreta do aterro, ou uma redução segura, que poderia baixar a fatura do saneamento em mais do que o limiar de poupança escolhido. **O Ministério aconselha; a decisão de alterar a zona é sua.** |
+| [Reparação de quadrados fantasma](technical_docs/pt/garbage.md#ghost-tiles) | Com a gestão do saneamento ligada, repara com segurança os quadrados de aterro invisíveis elegíveis que o jogo ainda conta na manutenção. Os casos inseguros ou não verificados ficam como estão; não há interruptor próprio para esta reparação. |
 
 Continua a controlar a construção, as zonas, os impostos, as estradas e os transportes, a polícia, os bombeiros e qualquer outro serviço que o Ministério não gere. Se ligar a gestão de um tipo de acordo com os vizinhos, o Ministério pode também alterar ou cancelar um contrato que tenha feito manualmente. Desligue essa opção de acordos para gerir esses contratos por si.
 
@@ -117,7 +119,7 @@ Também pode ativar ou desativar o Ministério pelas leis municipais.
 
 ## Definições
 
-Abra **Opções de Jogo → Ministério da Optimização**. A janela tem duas páginas, **Serviços** e **Demolição**. As tabelas seguintes cobrem **todas as definições que aparecem no menu**, sem as fórmulas técnicas. Clique no nome de uma opção para ler a explicação completa na [referência de funcionalidades](features/pt.md#options).
+Abra **Opções de Jogo → Ministério da Optimização**. A janela tem duas páginas, **Serviços** e **Demolição**. As tabelas seguintes cobrem **todas as definições que aparecem no menu**, sem as fórmulas técnicas. Clique no nome de uma opção para ler a explicação completa na [referência de funcionalidades](technical_docs/pt/options.md#options).
 
 **Como funcionam os controlos:** «Ligado» significa que o Ministério pode gerir essa funcionalidade. Uma definição que depende de outra fica a cinzento enquanto a principal estiver desligada. As definições em percentagem controlam margens de segurança e limiares, ajudando o Ministério a manter capacidade de reserva e a absorver as flutuações da procura.
 
@@ -125,47 +127,47 @@ Abra **Opções de Jogo → Ministério da Optimização**. A janela tem duas p�
 
 | Opção | Predefinição | O que significa |
 |---|---|---|
-| [Ministério ativo](features/pt.md#opt-master) | **Ligado** | Interruptor geral do financiamento, dos contratos com os vizinhos, da demolição e dos avisos do Ministério. Desligá-lo não anula as alterações já feitas. |
-| [Gerir a educação](features/pt.md#opt-education) | **Ligado** | Ajusta automaticamente, uma a uma, as escolas, universidades, bibliotecas e museus elegíveis. Não altera a cobertura nem o financiamento dos autocarros escolares. |
-| [Margem de segurança (educação)](features/pt.md#opt-educationreserve) | **5%** (0–50%) | Capacidade a mais acima da utilização atual da educação. Mais capacidade custa mais. Nos edifícios com pouca frequência, o Ministério pode manter uma margem adicional. Por exemplo, isto pode permitir que uma escola passe de 10 para 20 alunos (um aumento de 100%) sem greve, sobretudo no início, quando o custo extra é pequeno. |
-| [Gerir a saúde](features/pt.md#opt-health) | **Ligado** | Ajusta automaticamente, um a um, as clínicas, hospitais e outros equipamentos de saúde suportados e elegíveis. Não altera o financiamento das ambulâncias nem a cobertura. |
-| [Margem de segurança (saúde)](features/pt.md#opt-healthreserve) | **5%** (0–50%) | Funciona da mesma forma que a margem de segurança da educação. |
-| [Gerir a eletricidade](features/pt.md#opt-power) | **Ligado** | Ajusta o financiamento de cada central elétrica para fornecer eletricidade suficiente ao menor custo modelado. |
-| [Reserva de eletricidade](features/pt.md#opt-powerreserve) | **20%** (10–50%) | Capacidade de produção de reserva para a parte da procura abastecida localmente; reservas maiores dão mais folga para acompanhar um crescimento rápido e reduzem o risco de apagões, mas podem custar mais. |
-| [Ter em conta o desgaste das centrais](features/pt.md#opt-poweraging) | **Desligado** | Inclui na optimização o custo estimado do desgaste e do envelhecimento das centrais. Pode favorecer um financiamento mais alto quando o benefício, a longo prazo, de conservar a central compensa o custo de funcionamento adicional. |
-| [Gerir a água](features/pt.md#opt-water) | **Ligado** | Ajusta o financiamento do departamento da água para abastecer a cidade sem gastos desnecessários. |
-| [Reserva de água](features/pt.md#opt-waterreserve) | **10%** (10–50%) | Funciona da mesma forma que a reserva de eletricidade. |
-| [Proteger as canalizações](features/pt.md#opt-waterpipes) | **Ligado** | Mantém o financiamento igual ou acima dos 50% do jogo, para evitar danos na rede de canalizações. |
-| [Gerir o saneamento](features/pt.md#opt-sanitation) | **Ligado** | Ajusta o financiamento do departamento do lixo para cobrir as necessidades de recolha e eliminação. Repara também os quadrados fantasma (um erro do jogo que cobra manutenção por quadrados de aterro já sem zona). |
-| [Reserva de saneamento](features/pt.md#opt-sanitationreserve) | **2%** (2–20%) | Capacidade de tratamento extra para o lixo da cidade, além do que ela produz depois da reciclagem e de qualquer atraso acumulado. |
-| [Avisar-me quando rever o tamanho do aterro compensar](features/pt.md#opt-landfilladvice) | **Desligado** | Ativa o aviso opcional sobre alterações à zona do aterro, quando isso poupa dinheiro e o lixo da cidade continua a ser tratado. Exige a gestão do saneamento. |
-| [Limiar de poupança dos avisos do aterro](features/pt.md#opt-landfillthreshold) | **25%** (20–50%) | Só lhe pede que pense em alterar o tamanho do aterro se a poupança mensal modelada atingir, pelo menos, esta parte do orçamento do saneamento. |
-| [Gerir os acordos com os vizinhos](features/pt.md#opt-deals) | **Ligado** | Ativa os contratos regionais automáticos; os três interruptores individuais abaixo decidem que recursos podem ser negociados. |
-| [Comprar a uma cidade para vender a outra](features/pt.md#opt-arbitrage) | **Desligado** | Permite combinações lucrativas de compra e venda do mesmo recurso entre vizinhas, dando sempre prioridade às necessidades da cidade. |
-| [Gerir acordos de eletricidade](features/pt.md#opt-tradepower) | **Ligado** | Permite ao Ministério criar, alterar ou cancelar **importações e exportações** de eletricidade. Independente do financiamento das centrais. |
-| [Gerir acordos de água](features/pt.md#opt-tradewater) | **Ligado** | Permite ao Ministério criar, alterar ou cancelar **importações e exportações** de água. Independente do financiamento da água. |
-| [Gerir acordos de lixo](features/pt.md#opt-tradegarbage) | **Ligado** | Permite ao Ministério combinar o tratamento de lixo **nos dois sentidos**. Independente do financiamento do saneamento. |
+| [Ministério ativo](technical_docs/pt/options.md#opt-master) | **Ligado** | Interruptor geral do financiamento, dos contratos com os vizinhos, da demolição e dos avisos do Ministério. Desligá-lo não anula as alterações já feitas. |
+| [Gerir a educação](technical_docs/pt/options.md#opt-education) | **Ligado** | Ajusta automaticamente, uma a uma, as escolas, universidades, bibliotecas e museus elegíveis. Não altera a cobertura nem o financiamento dos autocarros escolares. |
+| [Margem de segurança (educação)](technical_docs/pt/options.md#opt-educationreserve) | **5%** (0–50%) | Capacidade a mais acima da utilização atual da educação. Mais capacidade custa mais. Nos edifícios com pouca frequência, o Ministério pode manter uma margem adicional. Por exemplo, isto pode permitir que uma escola passe de 10 para 20 alunos (um aumento de 100%) sem greve, sobretudo no início, quando o custo extra é pequeno. |
+| [Gerir a saúde](technical_docs/pt/options.md#opt-health) | **Ligado** | Ajusta automaticamente, um a um, as clínicas, hospitais e outros equipamentos de saúde suportados e elegíveis. Não altera o financiamento das ambulâncias nem a cobertura. |
+| [Margem de segurança (saúde)](technical_docs/pt/options.md#opt-healthreserve) | **5%** (0–50%) | Funciona da mesma forma que a margem de segurança da educação. |
+| [Gerir a eletricidade](technical_docs/pt/options.md#opt-power) | **Ligado** | Ajusta o financiamento de cada central elétrica para fornecer eletricidade suficiente ao menor custo modelado. |
+| [Reserva de eletricidade](technical_docs/pt/options.md#opt-powerreserve) | **20%** (10–50%) | Capacidade de produção de reserva para a parte da procura abastecida localmente; reservas maiores dão mais folga para acompanhar um crescimento rápido e reduzem o risco de apagões, mas podem custar mais. |
+| [Ter em conta o desgaste das centrais](technical_docs/pt/options.md#opt-poweraging) | **Desligado** | Inclui na optimização o custo estimado do desgaste e do envelhecimento das centrais. Pode favorecer um financiamento mais alto quando o benefício, a longo prazo, de conservar a central compensa o custo de funcionamento adicional. |
+| [Gerir a água](technical_docs/pt/options.md#opt-water) | **Ligado** | Ajusta o financiamento do departamento da água para abastecer a cidade sem gastos desnecessários. |
+| [Reserva de água](technical_docs/pt/options.md#opt-waterreserve) | **10%** (10–50%) | Funciona da mesma forma que a reserva de eletricidade. |
+| [Proteger as canalizações](technical_docs/pt/options.md#opt-waterpipes) | **Ligado** | Mantém o financiamento igual ou acima dos 50% do jogo, para evitar danos na rede de canalizações. |
+| [Gerir o saneamento](technical_docs/pt/options.md#opt-sanitation) | **Ligado** | Ajusta o financiamento do departamento do lixo para cobrir as necessidades de recolha e eliminação. Repara também os quadrados fantasma (um erro do jogo que cobra manutenção por quadrados de aterro já sem zona). |
+| [Reserva de saneamento](technical_docs/pt/options.md#opt-sanitationreserve) | **2%** (2–20%) | Capacidade de tratamento extra para o lixo da cidade, além do que ela produz depois da reciclagem e de qualquer atraso acumulado. |
+| [Avisar-me quando rever o tamanho do aterro compensar](technical_docs/pt/options.md#opt-landfilladvice) | **Desligado** | Ativa o aviso opcional sobre alterações à zona do aterro, quando isso poupa dinheiro e o lixo da cidade continua a ser tratado. Exige a gestão do saneamento. |
+| [Limiar de poupança dos avisos do aterro](technical_docs/pt/options.md#opt-landfillthreshold) | **25%** (20–50%) | Só lhe pede que pense em alterar o tamanho do aterro se a poupança mensal modelada atingir, pelo menos, esta parte do orçamento do saneamento. |
+| [Gerir os acordos com os vizinhos](technical_docs/pt/options.md#opt-deals) | **Ligado** | Ativa os contratos regionais automáticos; os três interruptores individuais abaixo decidem que recursos podem ser negociados. |
+| [Comprar a uma cidade para vender a outra](technical_docs/pt/options.md#opt-arbitrage) | **Desligado** | Permite combinações lucrativas de compra e venda do mesmo recurso entre vizinhas, dando sempre prioridade às necessidades da cidade. |
+| [Gerir acordos de eletricidade](technical_docs/pt/options.md#opt-tradepower) | **Ligado** | Permite ao Ministério criar, alterar ou cancelar **importações e exportações** de eletricidade. Independente do financiamento das centrais. |
+| [Gerir acordos de água](technical_docs/pt/options.md#opt-tradewater) | **Ligado** | Permite ao Ministério criar, alterar ou cancelar **importações e exportações** de água. Independente do financiamento da água. |
+| [Gerir acordos de lixo](technical_docs/pt/options.md#opt-tradegarbage) | **Ligado** | Permite ao Ministério combinar o tratamento de lixo **nos dois sentidos**. Independente do financiamento do saneamento. |
 
 ### Demolição
 
 | Opção | Predefinição | O que significa |
 |---|---|---|
-| [Demolir edifícios destruídos](features/pt.md#opt-demolishdestroyed) | **Ligado** | Demole as ruínas ao fim de um certo tempo. Não limpa automaticamente as ruínas municipais ou históricas protegidas, a não ser que a opção abaixo o permita. |
-| [Esperar (edifícios destruídos)](features/pt.md#opt-destroyedmonths) | **1 mês** (1–24) | Quanto tempo as ruínas têm de permanecer antes de poderem ser limpas; por predefinição, cerca de **30 dias simulados**. |
-| [Demolir edifícios municipais e históricos destruídos](features/pt.md#opt-demolishmunicipal) | **Desligado** | Se ligada, limpa também, depois da espera, as **ruínas** elegíveis de edifícios municipais, especiais e históricos. |
-| [Demolir edifícios abandonados](features/pt.md#opt-demolishabandoned) | **Ligado** | Limpa os edifícios abandonados elegíveis depois do tempo de espera, nos tipos de zona e pelos motivos escolhidos. |
-| [Esperar (edifícios abandonados)](features/pt.md#opt-abandonedmonths) | **12 meses** (1–60) | Quanto tempo um edifício tem de ficar abandonado antes de poder ser demolido; por predefinição, um ano simulado. |
-| [Zona residencial](features/pt.md#opt-zoneresidential) | **Ligado** | Inclui moradias e prédios de apartamentos abandonados. |
-| [Zona comercial](features/pt.md#opt-zonecommercial) | **Ligado** | Inclui lojas e escritórios abandonados. |
-| [Zona industrial](features/pt.md#opt-zoneindustrial) | **Ligado** | Inclui fábricas e outros edifícios industriais abandonados. |
-| [Zona agrícola](features/pt.md#opt-zoneagriculture) | **Desligado** | Inclui quintas abandonadas. Desligada por predefinição porque quadrados vazios ou abandonados numa quinta podem ser normais. |
-| [Motivo: zona pouco atraente](features/pt.md#opt-reasonlowdesirability) | **Ligado** | Inclui o abandono causado por pouca atratividade, como poluição ou falta de serviços. |
-| [Motivo: trajeto demasiado longo](features/pt.md#opt-reasoncommute) | **Ligado** | Inclui o abandono causado por deslocações demasiado longas para o trabalho. |
-| [Motivo: falta de procura](features/pt.md#opt-reasonlowdemand) | **Ligado** | Inclui edifícios abandonados porque a procura desse tipo desapareceu. |
-| [Motivo: sem eletricidade](features/pt.md#opt-reasonnopower) | **Desligado** | Inclui, opcionalmente, edifícios abandonados por falta de eletricidade. Normalmente é melhor restabelecer primeiro a eletricidade e ver se o edifício volta a ser ocupado. |
-| [Motivo: sem água](features/pt.md#opt-reasonnowater) | **Desligado** | Inclui, opcionalmente, edifícios abandonados por falta de água. Normalmente é melhor restabelecer primeiro a água e ver se o edifício volta a ser ocupado. |
-| [Limitar o orçamento mensal de demolição](features/pt.md#opt-budgetlimit) | **Desligado** | Fixa um limite opcional de gastos para a demolição automática, além do dinheiro disponível no tesouro da cidade. |
-| [Orçamento mensal](features/pt.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Gasto máximo em demolições por mês simulado **quando o limite de orçamento está ligado**. |
+| [Demolir edifícios destruídos](technical_docs/pt/options.md#opt-demolishdestroyed) | **Ligado** | Demole as ruínas ao fim de um certo tempo. Não limpa automaticamente as ruínas municipais ou históricas protegidas, a não ser que a opção abaixo o permita. |
+| [Esperar (edifícios destruídos)](technical_docs/pt/options.md#opt-destroyedmonths) | **1 mês** (1–24) | Quanto tempo as ruínas têm de permanecer antes de poderem ser limpas; por predefinição, cerca de **30 dias simulados**. |
+| [Demolir edifícios municipais e históricos destruídos](technical_docs/pt/options.md#opt-demolishmunicipal) | **Desligado** | Se ligada, limpa também, depois da espera, as **ruínas** elegíveis de edifícios municipais, especiais e históricos. |
+| [Demolir edifícios abandonados](technical_docs/pt/options.md#opt-demolishabandoned) | **Ligado** | Limpa os edifícios abandonados elegíveis depois do tempo de espera, nos tipos de zona e pelos motivos escolhidos. |
+| [Esperar (edifícios abandonados)](technical_docs/pt/options.md#opt-abandonedmonths) | **12 meses** (1–60) | Quanto tempo um edifício tem de ficar abandonado antes de poder ser demolido; por predefinição, um ano simulado. |
+| [Zona residencial](technical_docs/pt/options.md#opt-zoneresidential) | **Ligado** | Inclui moradias e prédios de apartamentos abandonados. |
+| [Zona comercial](technical_docs/pt/options.md#opt-zonecommercial) | **Ligado** | Inclui lojas e escritórios abandonados. |
+| [Zona industrial](technical_docs/pt/options.md#opt-zoneindustrial) | **Ligado** | Inclui fábricas e outros edifícios industriais abandonados. |
+| [Zona agrícola](technical_docs/pt/options.md#opt-zoneagriculture) | **Desligado** | Inclui quintas abandonadas. Desligada por predefinição porque quadrados vazios ou abandonados numa quinta podem ser normais. |
+| [Motivo: zona pouco atraente](technical_docs/pt/options.md#opt-reasonlowdesirability) | **Ligado** | Inclui o abandono causado por pouca atratividade, como poluição ou falta de serviços. |
+| [Motivo: trajeto demasiado longo](technical_docs/pt/options.md#opt-reasoncommute) | **Ligado** | Inclui o abandono causado por deslocações demasiado longas para o trabalho. |
+| [Motivo: falta de procura](technical_docs/pt/options.md#opt-reasonlowdemand) | **Ligado** | Inclui edifícios abandonados porque a procura desse tipo desapareceu. |
+| [Motivo: sem eletricidade](technical_docs/pt/options.md#opt-reasonnopower) | **Desligado** | Inclui, opcionalmente, edifícios abandonados por falta de eletricidade. Normalmente é melhor restabelecer primeiro a eletricidade e ver se o edifício volta a ser ocupado. |
+| [Motivo: sem água](technical_docs/pt/options.md#opt-reasonnowater) | **Desligado** | Inclui, opcionalmente, edifícios abandonados por falta de água. Normalmente é melhor restabelecer primeiro a água e ver se o edifício volta a ser ocupado. |
+| [Limitar o orçamento mensal de demolição](technical_docs/pt/options.md#opt-budgetlimit) | **Desligado** | Fixa um limite opcional de gastos para a demolição automática, além do dinheiro disponível no tesouro da cidade. |
+| [Orçamento mensal](technical_docs/pt/options.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Gasto máximo em demolições por mês simulado **quando o limite de orçamento está ligado**. |
 
 <a id="screenshots"></a>
 
@@ -240,26 +242,49 @@ Todas as capturas de ecrã mostram a versão inglesa do jogo.
 
 - **Aviso sobre o aterro:** exige exatamente uma zona de aterro. Em cidades com vários aterros, o Ministério continua a poder reparar os «quadrados fantasma» elegíveis, mas não recomenda alterações de tamanho.
 
+<a id="source-code"></a>
+
+## Código-fonte
+
+O código-fonte do plugin está na pasta [`source/`](source/). Compila-se com CMake e Visual Studio numa DLL de 32 bits (Win32). É necessário o Visual Studio 2026 com a carga de trabalho de ambiente de trabalho com C++ (outras versões não foram testadas), o CMake 3.20 ou superior e o Git:
+
+```bat
+cmake -S . -B build -G "Visual Studio 18 2026" -A Win32
+cmake --build build --config Release
+```
+
+A compilação descarrega a [gzcom-dll](https://github.com/nsgomez/gzcom-dll) numa revisão fixa (`779b669bf88112146d58fba6c7ed44f13ac6ce7d`). Para usar uma cópia modificada dessa biblioteca, ou para compilar sem ligação à Internet, acrescente `-DFETCHCONTENT_SOURCE_DIR_GZCOM_DLL=<pasta>` ao primeiro comando. A DLL é criada em `build\Release\DepartmentEfficiency.dll`. Uma DLL recompilada não é idêntica, byte a byte, à publicada.
+
+<a id="license"></a>
+
+## Licença
+
+- O código original do Department of Efficiency (os ficheiros de [`source/`](source/)) foi escrito por **Sammu89** e é disponibilizado sob a **GNU General Public License, versão 3 apenas** (GPL-3.0-only). O texto integral está em [LICENSE](LICENSE). Pode estudá-lo, modificá-lo e redistribuí-lo nos termos da GPLv3: preserve os avisos de copyright e os créditos, assinale as suas alterações e disponibilize a sua versão sob a mesma licença. Não apresente versões modificadas como versões oficiais do autor.
+
+- A documentação (estes README e os ficheiros de [`technical_docs/`](technical_docs/)) e os textos escritos para este projeto (incluindo os dos três ficheiros INI e os compilados em `DepartmentEfficiency.dat`), juntamente com as suas traduções originais, são disponibilizados sob a mesma licença, GPL-3.0-only.
+
+- A **gzcom-dll** não é abrangida por esta licença: mantém a sua própria licença, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), e é descarregada do repositório original durante a compilação.
+
+- O **SimCity 4** e os seus recursos originais pertencem à Electronic Arts / Maxis. O **Department of Efficiency** é um mod não oficial feito por um fã, independente da EA e sem o seu apoio. Quatro dos ficheiros de `release/Department of Efficiency/` contêm scripts e definições de interface derivados dos recursos do próprio jogo, e as capturas de ecrã mostram o jogo: não são propriedade do autor, não estão abrangidos pela GPL e todos os direitos sobre eles pertencem aos respetivos titulares. O mesmo vale para qualquer outro material de terceiros.
+
 <a id="credits"></a>
 
 ## Créditos
 
+**Autor**
+
 - Criado por **Sammu89**.
 
-- Construído com a **gzcom-dll** de Nelson Gomez (simmaster07), usada sob a licença LGPL-2.1-or-later e ligada estaticamente à DLL.
+**Biblioteca utilizada**
 
-- Nicholas Hayes (0xC0000054 / Null 45), pela investigação, documentação e exemplos abertos sobre DLL do SimCity 4: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example.
+- **gzcom-dll**, de Nelson Gomez (simmaster07), com contribuições de Nicholas Hayes (Null 45), Casper Van Gheluwe, memo e outros (ver o seu [repositório](https://github.com/nsgomez/gzcom-dll)), usada sob a licença LGPL-2.1-or-later e ligada estaticamente à DLL. A biblioteca não está incluída: a compilação descarrega a revisão exata do repositório original (ver [Código-fonte](#source-code)); os avisos de copyright e o texto da licença estão em [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) e [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). Pode modificar a biblioteca e recompilar o plugin com a sua versão.
+
+**Técnicas, documentação e exemplos consultados** (não foi copiado código destes projetos; os seus autores não são coautores do Department of Efficiency):
+
+- Nicholas Hayes (0xC0000054 / Null 45), pela investigação, documentação e exemplos abertos sobre DLL do SimCity 4: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. A janela de opções, a ordenança e o ficheiro de avisos seguem mecanismos publicados nos seus projetos sc4-region-census, sc4-humane-society-ordinance e sc4-lua-extension-example (licença MIT); os comandos do jogo seguem sc4-auto-run-cheats e sc4-game-command-documentation.
 
 - CorinaMarie, por documentar a técnica de Urgent Advice do SimCity 4 que os avisos de conselheiro do mod seguem.
 
-- A comunidade de modding do SimCity 4, por duas décadas de investigação, ferramentas e conhecimento partilhado.
+- A comunidade de modding do SimCity 4, por duas décadas de investigação, ferramentas e conhecimento partilhado, incluindo a documentação de propriedades de exemplares do SC4Devotion.
 
-<a id="lgpl-licensing"></a>
-
-## Materiais de licença LGPL
-
-O Ministério da Optimização utiliza [gzcom-dll](https://github.com/nsgomez/gzcom-dll), disponibilizado sob a licença LGPL-2.1-or-later.
-
-O código-fonte correspondente da biblioteca, os avisos de licença e os materiais necessários para a religação estão disponíveis no [pacote de materiais LGPL](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
-
-Estes materiais não são necessários para instalar ou utilizar o mod.
+<!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

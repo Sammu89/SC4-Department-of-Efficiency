@@ -33,9 +33,11 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 - [Bekende beperkingen](#known-limitations)
 
-- [Dankbetuigingen](#credits)
+- [Broncode](#source-code)
 
-- [LGPL-licentiemateriaal](#lgpl-licensing)
+- [Licentie](#license)
+
+- [Dankbetuigingen](#credits)
 
 <a id="download-and-installation"></a>
 
@@ -77,19 +79,19 @@ De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **ni
 
 ## Wat het Ministerie doet
 
-De tabel hieronder beschrijft wat het Ministerie doet. Voor formules, voorbeelden, waarborgen en de mechanica achter de beslissingen, zie de **[uitgebreide functiereferentie (in het Engels)](features/en.md)**.
+De tabel hieronder beschrijft wat het Ministerie doet. Voor formules, voorbeelden, waarborgen en de mechanica achter de beslissingen, zie de **[uitgebreide functiereferentie (in het Engels)](technical_docs/en/index.md)**.
 
 | Gebied | Wat het doet |
 |---|---|
-| [Onderwijs en zorg](features/en.md#education-healthcare) | Past de financiering **gebouw voor gebouw** aan voor geschikte scholen, hogescholen, universiteiten, bibliotheken, musea, klinieken en ziekenhuizen. Het volgt het werkelijke gebruik en de capaciteit, met een veiligheidsmarge. Het **wijzigt geen dekkingsgebieden** en ook niet de financiering van schoolbussen en ambulances. Is een gebouw bij maximale financiering nog steeds overvol, dan meldt een adviseur dat er een extra voorziening nodig is; **u kiest waar die komt**. |
-| [Elektriciteit](features/en.md#electricity) | Beheert **elke elektriciteitscentrale afzonderlijk** en kiest de financiering die de behoefte van de stad en de veiligheidsreserve dekt tegen de laagste gemodelleerde kosten. Het houdt rekening met rendement en staat van de centrales; een optionele instelling neemt ook de economische kosten van veroudering mee. |
-| [Water](features/en.md#water) | Past de waterfinanciering van de stad aan op de vraag plus een veiligheidsreserve. Bescherming van de waterleidingen staat standaard aan, om bezuinigingen te voorkomen waardoor het netwerk zou verslechteren. Het verbergt ook het misleidende „geen water”-pictogram van het spel boven boerderijen. |
-| [Afvalverwerking](features/en.md#garbage-landfills) | Past de financiering van de afvalverwerking aan op basis van afvalproductie, recycling, verwerking, opslag in stortplaatsen en regionale contracten, en beschermt daarbij de eigen verwerkingsbehoefte van de stad. |
-| [Contracten met buursteden](features/en.md#neighbor-deals) | Kan **elektriciteit en water kopen of verkopen**, **buren betalen om uw afval over te nemen** of **hun afval tegen betaling accepteren**. Het sluit, past aan en zegt geschikte contracten op als het totaalresultaat de stad ten goede komt en de eigen behoeften en reserves beschermd blijven. |
-| [Automatisch slopen](features/en.md#demolition) | Kan standaard ruïnes na ongeveer **30 gesimuleerde dagen** opruimen en geschikte gebouwen die **een gesimuleerd jaar** verlaten zijn. U bepaalt welke zones en welke redenen van verlating meetellen, of beschermde ruïnes mogen worden opgeruimd en of u een maandelijkse bestedingslimiet instelt. |
-| [Meldingen van adviseurs](features/en.md#notices) | Gebruikt de eigen adviseurs van het spel om bewezen, aanhoudende tekorten te melden die financiering of beschikbare contracten niet kunnen verhelpen. Waar nuttig bevatten de berichten links naar de betrokken gebouwen. |
-| [Advies over de omvang van de stortplaats](features/en.md#garbage-landfills-advice) | Het optionele advies wijst een concrete uitbreiding of veilige verkleining van de stortplaats aan die de afvalrekening met meer dan uw gekozen besparingsdrempel zou kunnen verlagen. **Het Ministerie adviseert; u beslist of u de zonering wijzigt.** |
-| [Herstel van spookvakjes](features/en.md#ghost-squares) | Als het beheer van de afvalverwerking aanstaat, herstelt het veilig geschikte onzichtbare stortplaatsvakjes die het spel nog in het onderhoud meetelt. Onveilige of niet-geverifieerde gevallen blijven met rust; voor dit herstel bestaat geen aparte schakelaar. |
+| [Onderwijs en zorg](technical_docs/en/education_healthcare.md#education-healthcare) | Past de financiering **gebouw voor gebouw** aan voor geschikte scholen, hogescholen, universiteiten, bibliotheken, musea, klinieken en ziekenhuizen. Het volgt het werkelijke gebruik en de capaciteit, met een veiligheidsmarge. Het **wijzigt geen dekkingsgebieden** en ook niet de financiering van schoolbussen en ambulances. Is een gebouw bij maximale financiering nog steeds overvol, dan meldt een adviseur dat er een extra voorziening nodig is; **u kiest waar die komt**. |
+| [Elektriciteit](technical_docs/en/power.md#power) | Beheert **elke elektriciteitscentrale afzonderlijk** en kiest de financiering die de behoefte van de stad en de veiligheidsreserve dekt tegen de laagste gemodelleerde kosten. Het houdt rekening met rendement en staat van de centrales; een optionele instelling neemt ook de economische kosten van veroudering mee. |
+| [Water](technical_docs/en/water.md#water) | Past de waterfinanciering van de stad aan op de vraag plus een veiligheidsreserve. Bescherming van de waterleidingen staat standaard aan, om bezuinigingen te voorkomen waardoor het netwerk zou verslechteren. Het verbergt ook het misleidende „geen water”-pictogram van het spel boven boerderijen. |
+| [Afvalverwerking](technical_docs/en/garbage.md#garbage-landfills) | Past de financiering van de afvalverwerking aan op basis van afvalproductie, recycling, verwerking, opslag in stortplaatsen en regionale contracten, en beschermt daarbij de eigen verwerkingsbehoefte van de stad. |
+| [Contracten met buursteden](technical_docs/en/deals.md#neighbor-deals) | Kan **elektriciteit en water kopen of verkopen**, **buren betalen om uw afval over te nemen** of **hun afval tegen betaling accepteren**. Het sluit, past aan en zegt geschikte contracten op als het totaalresultaat de stad ten goede komt en de eigen behoeften en reserves beschermd blijven. |
+| [Automatisch slopen](technical_docs/en/demolition.md#demolition) | Kan standaard ruïnes na ongeveer **30 gesimuleerde dagen** opruimen en geschikte gebouwen die **een gesimuleerd jaar** verlaten zijn. U bepaalt welke zones en welke redenen van verlating meetellen, of beschermde ruïnes mogen worden opgeruimd en of u een maandelijkse bestedingslimiet instelt. |
+| [Meldingen van adviseurs](technical_docs/en/safety.md#notices) | Gebruikt de eigen adviseurs van het spel om bewezen, aanhoudende tekorten te melden die financiering of beschikbare contracten niet kunnen verhelpen. Waar nuttig bevatten de berichten links naar de betrokken gebouwen. |
+| [Advies over de omvang van de stortplaats](technical_docs/en/garbage.md#garbage-landfills-advice) | Het optionele advies wijst een concrete uitbreiding of veilige verkleining van de stortplaats aan die de afvalrekening met meer dan uw gekozen besparingsdrempel zou kunnen verlagen. **Het Ministerie adviseert; u beslist of u de zonering wijzigt.** |
+| [Herstel van spookvakjes](technical_docs/en/garbage.md#ghost-tiles) | Als het beheer van de afvalverwerking aanstaat, herstelt het veilig geschikte onzichtbare stortplaatsvakjes die het spel nog in het onderhoud meetelt. Onveilige of niet-geverifieerde gevallen blijven met rust; voor dit herstel bestaat geen aparte schakelaar. |
 
 U houdt de controle over bouw, zonering, belastingen, wegen en vervoer, politie, brandweer en elke andere dienst die het Ministerie niet beheert. Schakelt u het beheer van een soort contract met buren in, dan kan het Ministerie ook een contract wijzigen of opzeggen dat u eerder handmatig hebt gesloten. Schakel die contractoptie uit om die contracten zelf te beheren.
 
@@ -117,7 +119,7 @@ U kunt het Ministerie ook in- of uitschakelen via de verordeningen van de stad.
 
 ## Instellingen
 
-Open **Spelopties → Ministerie van Efficiëntie**. Het venster heeft twee pagina's, **Diensten** en **Sloop**. De tabellen hieronder behandelen **elke instelling die in het menu staat**, zonder de technische formules. Klik op de naam van een optie om de volledige uitleg in de [functiereferentie](features/en.md#options) te lezen.
+Open **Spelopties → Ministerie van Efficiëntie**. Het venster heeft twee pagina's, **Diensten** en **Sloop**. De tabellen hieronder behandelen **elke instelling die in het menu staat**, zonder de technische formules. Klik op de naam van een optie om de volledige uitleg in de [functiereferentie](technical_docs/en/options.md#options) te lezen.
 
 **Hoe de bediening werkt:** „Aan” betekent dat het Ministerie die functie mag beheren. Een instelling die van een andere afhangt, is grijs zolang de bovenliggende uitstaat. Instellingen in procenten bepalen veiligheidsmarges en drempels en helpen het Ministerie reservecapaciteit aan te houden en schommelingen in de vraag op te vangen.
 
@@ -125,47 +127,47 @@ Open **Spelopties → Ministerie van Efficiëntie**. Het venster heeft twee pagi
 
 | Optie | Standaard | Wat het betekent |
 |---|---|---|
-| [Ministerie actief](features/en.md#opt-master) | **Aan** | Hoofdschakelaar voor financiering, contracten met buursteden, sloop en meldingen van het Ministerie. Uitschakelen maakt reeds doorgevoerde wijzigingen niet ongedaan. |
-| [Onderwijs beheren](features/en.md#opt-education) | **Aan** | Past geschikte scholen, universiteiten, bibliotheken en musea automatisch afzonderlijk aan. Wijzigt noch hun dekking noch de financiering van schoolbussen. |
-| [Veiligheidsmarge (onderwijs)](features/en.md#opt-educationreserve) | **5%** (0–50%) | Extra capaciteit boven het huidige gebruik van het onderwijs. Meer capaciteit kost meer. Bij gebouwen met weinig bezoekers kan het Ministerie een extra marge aanhouden. Zo kan een school bijvoorbeeld van 10 naar 20 leerlingen (+100%) groeien zonder staking, vooral in het begin, wanneer de extra kosten klein zijn. |
-| [Gezondheidszorg beheren](features/en.md#opt-health) | **Aan** | Past geschikte klinieken, ziekenhuizen en andere ondersteunde zorggebouwen automatisch afzonderlijk aan. Wijzigt noch de financiering van ambulances noch de dekking. |
-| [Veiligheidsmarge (zorg)](features/en.md#opt-healthreserve) | **5%** (0–50%) | Werkt op dezelfde manier als de veiligheidsmarge van het onderwijs. |
-| [Stroom beheren](features/en.md#opt-power) | **Aan** | Past de financiering van afzonderlijke centrales aan om tegen de laagste gemodelleerde kosten voldoende elektriciteit te leveren. |
-| [Stroomreserve](features/en.md#opt-powerreserve) | **20%** (10–50%) | Reserve-opwekkingscapaciteit voor het deel van de vraag dat lokaal wordt geleverd; hogere reserves geven meer ruimte voor snelle groei en verkleinen de kans op stroomuitval, maar kunnen meer kosten. |
-| [Slijtage van elektriciteitscentrales meewegen](features/en.md#opt-poweraging) | **Uit** | Neemt de geschatte kosten van slijtage en veroudering van centrales mee bij het optimaliseren. Kan hogere financiering bevoordelen als het langetermijnvoordeel van het behoud van de centrale zwaarder weegt dan de extra bedrijfskosten. |
-| [Water beheren](features/en.md#opt-water) | **Aan** | Past de financiering van de waterdienst aan om de stad zonder onnodige uitgaven te bevoorraden. |
-| [Waterreserve](features/en.md#opt-waterreserve) | **10%** (10–50%) | Werkt op dezelfde manier als de stroomreserve. |
-| [Waterleidingen beschermen](features/en.md#opt-waterpipes) | **Aan** | Houdt de financiering op of boven de 50% van het spel, om schade aan het leidingnet te voorkomen. |
-| [Afvalverwerking beheren](features/en.md#opt-sanitation) | **Aan** | Past de financiering van de afvaldienst aan om de behoefte aan ophaling en verwerking te dekken. Herstelt ook spookvakjes (een fout in het spel die onderhoud rekent voor stortplaatsvakjes zonder zone). |
-| [Reserve afvalverwerking](features/en.md#opt-sanitationreserve) | **2%** (2–20%) | Extra verwerkingscapaciteit voor het afval van de stad, bovenop wat die na recycling produceert en een eventuele achterstand. |
-| [Waarschuw me als de stortplaats aanpassen geld bespaart](features/en.md#opt-landfilladvice) | **Uit** | Schakelt het optionele advies in over wijzigingen in de zonering van de stortplaats, als dat geld bespaart en het afval van de stad toch wordt verwerkt. Vereist beheer van de afvalverwerking. |
-| [Besparingsdrempel voor de stortplaats](features/en.md#opt-landfillthreshold) | **25%** (20–50%) | Vraagt u alleen om een andere omvang van de stortplaats te overwegen als de gemodelleerde maandelijkse besparing minstens dit deel van het budget voor afvalverwerking bedraagt. |
-| [Contracten met buursteden beheren](features/en.md#opt-deals) | **Aan** | Schakelt automatische regionale contracten in; de drie afzonderlijke schakelaars hieronder bepalen welke grondstoffen verhandeld mogen worden. |
-| [Bij de ene stad inkopen, aan de andere verkopen](features/en.md#opt-arbitrage) | **Uit** | Staat winstgevende combinaties van inkoop en verkoop van dezelfde grondstof tussen buren toe, waarbij de behoeften van de stad voorgaan. |
-| [Stroomcontracten beheren](features/en.md#opt-tradepower) | **Aan** | Staat het Ministerie toe **import en export** van elektriciteit te sluiten, te wijzigen of op te zeggen. Los van de financiering van de centrales. |
-| [Watercontracten beheren](features/en.md#opt-tradewater) | **Aan** | Staat het Ministerie toe **import en export** van water te sluiten, te wijzigen of op te zeggen. Los van de waterfinanciering. |
-| [Afvalcontracten beheren](features/en.md#opt-tradegarbage) | **Aan** | Staat het Ministerie toe afvalverwerking **in beide richtingen** te regelen. Los van de financiering van de afvalverwerking. |
+| [Ministerie actief](technical_docs/en/options.md#opt-master) | **Aan** | Hoofdschakelaar voor financiering, contracten met buursteden, sloop en meldingen van het Ministerie. Uitschakelen maakt reeds doorgevoerde wijzigingen niet ongedaan. |
+| [Onderwijs beheren](technical_docs/en/options.md#opt-education) | **Aan** | Past geschikte scholen, universiteiten, bibliotheken en musea automatisch afzonderlijk aan. Wijzigt noch hun dekking noch de financiering van schoolbussen. |
+| [Veiligheidsmarge (onderwijs)](technical_docs/en/options.md#opt-educationreserve) | **5%** (0–50%) | Extra capaciteit boven het huidige gebruik van het onderwijs. Meer capaciteit kost meer. Bij gebouwen met weinig bezoekers kan het Ministerie een extra marge aanhouden. Zo kan een school bijvoorbeeld van 10 naar 20 leerlingen (+100%) groeien zonder staking, vooral in het begin, wanneer de extra kosten klein zijn. |
+| [Gezondheidszorg beheren](technical_docs/en/options.md#opt-health) | **Aan** | Past geschikte klinieken, ziekenhuizen en andere ondersteunde zorggebouwen automatisch afzonderlijk aan. Wijzigt noch de financiering van ambulances noch de dekking. |
+| [Veiligheidsmarge (zorg)](technical_docs/en/options.md#opt-healthreserve) | **5%** (0–50%) | Werkt op dezelfde manier als de veiligheidsmarge van het onderwijs. |
+| [Stroom beheren](technical_docs/en/options.md#opt-power) | **Aan** | Past de financiering van afzonderlijke centrales aan om tegen de laagste gemodelleerde kosten voldoende elektriciteit te leveren. |
+| [Stroomreserve](technical_docs/en/options.md#opt-powerreserve) | **20%** (10–50%) | Reserve-opwekkingscapaciteit voor het deel van de vraag dat lokaal wordt geleverd; hogere reserves geven meer ruimte voor snelle groei en verkleinen de kans op stroomuitval, maar kunnen meer kosten. |
+| [Slijtage van elektriciteitscentrales meewegen](technical_docs/en/options.md#opt-poweraging) | **Uit** | Neemt de geschatte kosten van slijtage en veroudering van centrales mee bij het optimaliseren. Kan hogere financiering bevoordelen als het langetermijnvoordeel van het behoud van de centrale zwaarder weegt dan de extra bedrijfskosten. |
+| [Water beheren](technical_docs/en/options.md#opt-water) | **Aan** | Past de financiering van de waterdienst aan om de stad zonder onnodige uitgaven te bevoorraden. |
+| [Waterreserve](technical_docs/en/options.md#opt-waterreserve) | **10%** (10–50%) | Werkt op dezelfde manier als de stroomreserve. |
+| [Waterleidingen beschermen](technical_docs/en/options.md#opt-waterpipes) | **Aan** | Houdt de financiering op of boven de 50% van het spel, om schade aan het leidingnet te voorkomen. |
+| [Afvalverwerking beheren](technical_docs/en/options.md#opt-sanitation) | **Aan** | Past de financiering van de afvaldienst aan om de behoefte aan ophaling en verwerking te dekken. Herstelt ook spookvakjes (een fout in het spel die onderhoud rekent voor stortplaatsvakjes zonder zone). |
+| [Reserve afvalverwerking](technical_docs/en/options.md#opt-sanitationreserve) | **2%** (2–20%) | Extra verwerkingscapaciteit voor het afval van de stad, bovenop wat die na recycling produceert en een eventuele achterstand. |
+| [Waarschuw me als de stortplaats aanpassen geld bespaart](technical_docs/en/options.md#opt-landfilladvice) | **Uit** | Schakelt het optionele advies in over wijzigingen in de zonering van de stortplaats, als dat geld bespaart en het afval van de stad toch wordt verwerkt. Vereist beheer van de afvalverwerking. |
+| [Besparingsdrempel voor de stortplaats](technical_docs/en/options.md#opt-landfillthreshold) | **25%** (20–50%) | Vraagt u alleen om een andere omvang van de stortplaats te overwegen als de gemodelleerde maandelijkse besparing minstens dit deel van het budget voor afvalverwerking bedraagt. |
+| [Contracten met buursteden beheren](technical_docs/en/options.md#opt-deals) | **Aan** | Schakelt automatische regionale contracten in; de drie afzonderlijke schakelaars hieronder bepalen welke grondstoffen verhandeld mogen worden. |
+| [Bij de ene stad inkopen, aan de andere verkopen](technical_docs/en/options.md#opt-arbitrage) | **Uit** | Staat winstgevende combinaties van inkoop en verkoop van dezelfde grondstof tussen buren toe, waarbij de behoeften van de stad voorgaan. |
+| [Stroomcontracten beheren](technical_docs/en/options.md#opt-tradepower) | **Aan** | Staat het Ministerie toe **import en export** van elektriciteit te sluiten, te wijzigen of op te zeggen. Los van de financiering van de centrales. |
+| [Watercontracten beheren](technical_docs/en/options.md#opt-tradewater) | **Aan** | Staat het Ministerie toe **import en export** van water te sluiten, te wijzigen of op te zeggen. Los van de waterfinanciering. |
+| [Afvalcontracten beheren](technical_docs/en/options.md#opt-tradegarbage) | **Aan** | Staat het Ministerie toe afvalverwerking **in beide richtingen** te regelen. Los van de financiering van de afvalverwerking. |
 
 ### Sloop
 
 | Optie | Standaard | Wat het betekent |
 |---|---|---|
-| [Verwoeste gebouwen slopen](features/en.md#opt-demolishdestroyed) | **Aan** | Sloopt ruïnes na een bepaalde tijd. Ruimt beschermde gemeentelijke of historische ruïnes niet automatisch op, tenzij de optie hieronder dat toestaat. |
-| [Wachttijd (verwoeste gebouwen)](features/en.md#opt-destroyedmonths) | **1 maand** (1–24) | Hoe lang ruïnes moeten blijven staan voordat ze kunnen worden opgeruimd; standaard ongeveer **30 gesimuleerde dagen**. |
-| [Verwoeste gemeentelijke en historische gebouwen slopen](features/en.md#opt-demolishmunicipal) | **Uit** | Indien ingeschakeld worden na de wachttijd ook geschikte **ruïnes** van gemeentelijke, speciale en historische gebouwen opgeruimd. |
-| [Verlaten gebouwen slopen](features/en.md#opt-demolishabandoned) | **Aan** | Ruimt geschikte verlaten gebouwen op na de wachttijd, in de gekozen zonetypen en om de gekozen redenen. |
-| [Wachttijd (verlaten gebouwen)](features/en.md#opt-abandonedmonths) | **12 maanden** (1–60) | Hoe lang een gebouw verlaten moet zijn voordat het gesloopt mag worden; standaard een gesimuleerd jaar. |
-| [Woonzone](features/en.md#opt-zoneresidential) | **Aan** | Omvat verlaten huizen en appartementsgebouwen. |
-| [Commerciële zone](features/en.md#opt-zonecommercial) | **Aan** | Omvat verlaten winkels en kantoren. |
-| [Industriezone](features/en.md#opt-zoneindustrial) | **Aan** | Omvat verlaten fabrieken en andere industriële gebouwen. |
-| [Landbouwzone](features/en.md#opt-zoneagriculture) | **Uit** | Omvat verlaten boerderijen. Standaard uit omdat lege of verlaten vakjes op een boerderij normaal kunnen zijn. |
-| [Reden: onaantrekkelijke omgeving](features/en.md#opt-reasonlowdesirability) | **Aan** | Omvat verlating door lage aantrekkelijkheid, zoals vervuiling of gebrek aan voorzieningen. |
-| [Reden: te lange reistijd](features/en.md#opt-reasoncommute) | **Aan** | Omvat verlating door te lange reistijden naar het werk. |
-| [Reden: geen vraag](features/en.md#opt-reasonlowdemand) | **Aan** | Omvat gebouwen die verlaten zijn omdat de vraag naar dat type is verdwenen. |
-| [Reden: geen stroom](features/en.md#opt-reasonnopower) | **Uit** | Omvat optioneel gebouwen die verlaten zijn door een tekort aan elektriciteit. Meestal is het beter eerst de stroom te herstellen en te kijken of het gebouw weer bewoond raakt. |
-| [Reden: geen water](features/en.md#opt-reasonnowater) | **Uit** | Omvat optioneel gebouwen die verlaten zijn door een tekort aan water. Meestal is het beter eerst het water te herstellen en te kijken of het gebouw weer bewoond raakt. |
-| [Maandelijks sloopbudget begrenzen](features/en.md#opt-budgetlimit) | **Uit** | Stelt een optioneel bestedingsplafond in voor automatisch slopen, naast de beschikbare middelen in de stadskas. |
-| [Maandbudget](features/en.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Maximale sloopuitgaven per gesimuleerde maand **als de budgetgrens is ingeschakeld**. |
+| [Verwoeste gebouwen slopen](technical_docs/en/options.md#opt-demolishdestroyed) | **Aan** | Sloopt ruïnes na een bepaalde tijd. Ruimt beschermde gemeentelijke of historische ruïnes niet automatisch op, tenzij de optie hieronder dat toestaat. |
+| [Wachttijd (verwoeste gebouwen)](technical_docs/en/options.md#opt-destroyedmonths) | **1 maand** (1–24) | Hoe lang ruïnes moeten blijven staan voordat ze kunnen worden opgeruimd; standaard ongeveer **30 gesimuleerde dagen**. |
+| [Verwoeste gemeentelijke en historische gebouwen slopen](technical_docs/en/options.md#opt-demolishmunicipal) | **Uit** | Indien ingeschakeld worden na de wachttijd ook geschikte **ruïnes** van gemeentelijke, speciale en historische gebouwen opgeruimd. |
+| [Verlaten gebouwen slopen](technical_docs/en/options.md#opt-demolishabandoned) | **Aan** | Ruimt geschikte verlaten gebouwen op na de wachttijd, in de gekozen zonetypen en om de gekozen redenen. |
+| [Wachttijd (verlaten gebouwen)](technical_docs/en/options.md#opt-abandonedmonths) | **12 maanden** (1–60) | Hoe lang een gebouw verlaten moet zijn voordat het gesloopt mag worden; standaard een gesimuleerd jaar. |
+| [Woonzone](technical_docs/en/options.md#opt-zoneresidential) | **Aan** | Omvat verlaten huizen en appartementsgebouwen. |
+| [Commerciële zone](technical_docs/en/options.md#opt-zonecommercial) | **Aan** | Omvat verlaten winkels en kantoren. |
+| [Industriezone](technical_docs/en/options.md#opt-zoneindustrial) | **Aan** | Omvat verlaten fabrieken en andere industriële gebouwen. |
+| [Landbouwzone](technical_docs/en/options.md#opt-zoneagriculture) | **Uit** | Omvat verlaten boerderijen. Standaard uit omdat lege of verlaten vakjes op een boerderij normaal kunnen zijn. |
+| [Reden: onaantrekkelijke omgeving](technical_docs/en/options.md#opt-reasonlowdesirability) | **Aan** | Omvat verlating door lage aantrekkelijkheid, zoals vervuiling of gebrek aan voorzieningen. |
+| [Reden: te lange reistijd](technical_docs/en/options.md#opt-reasoncommute) | **Aan** | Omvat verlating door te lange reistijden naar het werk. |
+| [Reden: geen vraag](technical_docs/en/options.md#opt-reasonlowdemand) | **Aan** | Omvat gebouwen die verlaten zijn omdat de vraag naar dat type is verdwenen. |
+| [Reden: geen stroom](technical_docs/en/options.md#opt-reasonnopower) | **Uit** | Omvat optioneel gebouwen die verlaten zijn door een tekort aan elektriciteit. Meestal is het beter eerst de stroom te herstellen en te kijken of het gebouw weer bewoond raakt. |
+| [Reden: geen water](technical_docs/en/options.md#opt-reasonnowater) | **Uit** | Omvat optioneel gebouwen die verlaten zijn door een tekort aan water. Meestal is het beter eerst het water te herstellen en te kijken of het gebouw weer bewoond raakt. |
+| [Maandelijks sloopbudget begrenzen](technical_docs/en/options.md#opt-budgetlimit) | **Uit** | Stelt een optioneel bestedingsplafond in voor automatisch slopen, naast de beschikbare middelen in de stadskas. |
+| [Maandbudget](technical_docs/en/options.md#opt-demolitionbudget) | **§1.000** (§0–§200.000) | Maximale sloopuitgaven per gesimuleerde maand **als de budgetgrens is ingeschakeld**. |
 
 <a id="screenshots"></a>
 
@@ -240,26 +242,49 @@ Alle schermafbeeldingen tonen de Engelse versie van het spel.
 
 - **Advies over de stortplaats:** vereist precies één stortplaatszone. In steden met meerdere stortplaatsen kan het Ministerie nog wel geschikte foutieve „spookvakjes” herstellen, maar het doet geen aanbevelingen over de omvang.
 
+<a id="source-code"></a>
+
+## Broncode
+
+De broncode van de plug-in staat in de map [`source/`](source/). Hij wordt met CMake en Visual Studio gebouwd tot een 32-bits (Win32) DLL. Je hebt Visual Studio 2026 met de workload voor desktopontwikkeling met C++ nodig (andere versies zijn niet getest), CMake 3.20 of nieuwer en Git:
+
+```bat
+cmake -S . -B build -G "Visual Studio 18 2026" -A Win32
+cmake --build build --config Release
+```
+
+Tijdens het bouwen wordt [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in een vaste revisie (`779b669bf88112146d58fba6c7ed44f13ac6ce7d`) gedownload. Om een aangepaste kopie van die bibliotheek te gebruiken, of om zonder internetverbinding te bouwen, voeg je `-DFETCHCONTENT_SOURCE_DIR_GZCOM_DLL=<map>` toe aan het eerste commando. De DLL wordt aangemaakt in `build\Release\DepartmentEfficiency.dll`. Een opnieuw gebouwde DLL is niet byte voor byte identiek aan de gepubliceerde.
+
+<a id="license"></a>
+
+## Licentie
+
+- De originele code van Department of Efficiency (de bestanden in [`source/`](source/)) is geschreven door **Sammu89** en wordt uitgebracht onder de **GNU General Public License, versie 3 uitsluitend** (GPL-3.0-only). De volledige tekst staat in [LICENSE](LICENSE). Je mag de code bestuderen, aanpassen en herdistribueren onder de voorwaarden van de GPLv3: behoud de copyrightvermeldingen en dankbetuigingen, geef je wijzigingen aan en publiceer je versie onder dezelfde licentie. Presenteer aangepaste versies alsjeblieft niet als officiële versies van de auteur.
+
+- De documentatie (deze README's en de bestanden in [`technical_docs/`](technical_docs/)) en de voor dit project geschreven teksten (inclusief die in de drie INI-bestanden en die welke in `DepartmentEfficiency.dat` zijn gecompileerd), samen met hun oorspronkelijke vertalingen, worden onder dezelfde licentie uitgebracht, GPL-3.0-only.
+
+- **gzcom-dll** valt niet onder deze licentie: de bibliotheek behoudt haar eigen licentie, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), en wordt bij het bouwen uit de oorspronkelijke repository gedownload.
+
+- **SimCity 4** en de originele bestanden ervan zijn eigendom van Electronic Arts / Maxis. **Department of Efficiency** is een onofficiële fanmod, onafhankelijk van EA en niet door EA goedgekeurd. Vier van de bestanden in `release/Department of Efficiency/` bevatten scripts en interfacedefinities die zijn afgeleid van de bronnen van het spel zelf, en de screenshots tonen het spel: ze zijn geen eigendom van de auteur, vallen niet onder de GPL en alle rechten erop blijven bij de rechthebbenden. Hetzelfde geldt voor ander materiaal van derden.
+
 <a id="credits"></a>
 
 ## Dankbetuigingen
 
+**Auteur**
+
 - Gemaakt door **Sammu89**.
 
-- Gebouwd met **gzcom-dll** van Nelson Gomez (simmaster07), gebruikt onder de licentie LGPL-2.1-or-later en statisch in de DLL gelinkt.
+**Gebruikte bibliotheek**
 
-- Nicholas Hayes (0xC0000054 / Null 45), voor onderzoek, documentatie en open voorbeelden over SimCity 4-DLL's: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example.
+- **gzcom-dll** van Nelson Gomez (simmaster07), met bijdragen van Nicholas Hayes (Null 45), Casper Van Gheluwe, memo en anderen (zie de [repository](https://github.com/nsgomez/gzcom-dll)), gebruikt onder de licentie LGPL-2.1-or-later en statisch in de DLL gelinkt. De bibliotheek is niet meegeleverd: bij het bouwen wordt de exacte revisie uit de oorspronkelijke repository gedownload (zie [Broncode](#source-code)); de copyrightvermeldingen en de licentietekst staan in [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) en [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). Je mag de bibliotheek aanpassen en de plug-in met jouw versie opnieuw bouwen.
+
+**Geraadpleegde technieken, documentatie en voorbeelden** (er is geen code uit gekopieerd; hun auteurs zijn geen coauteurs van Department of Efficiency):
+
+- Nicholas Hayes (0xC0000054 / Null 45), voor onderzoek, documentatie en open voorbeelden over SimCity 4-DLL's: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Het optievenster, de verordening en het meldingsbestand volgen mechanismen uit zijn projecten sc4-region-census, sc4-humane-society-ordinance en sc4-lua-extension-example (MIT-licentie); de spelcommando's volgen sc4-auto-run-cheats en sc4-game-command-documentation.
 
 - CorinaMarie, voor het documenteren van de Urgent Advice-techniek van SimCity 4 waarop de adviseurmeldingen van de mod zijn gebaseerd.
 
-- De SimCity 4-moddinggemeenschap, voor twee decennia onderzoek, hulpmiddelen en gedeelde kennis.
+- De SimCity 4-moddinggemeenschap, voor twee decennia onderzoek, hulpmiddelen en gedeelde kennis, waaronder de documentatie van exemplar-eigenschappen van SC4Devotion.
 
-<a id="lgpl-licensing"></a>
-
-## LGPL-licentiemateriaal
-
-Het Ministerie van Efficiëntie gebruikt [gzcom-dll](https://github.com/nsgomez/gzcom-dll), onder de licentie LGPL-2.1-or-later.
-
-De bijbehorende broncode van de bibliotheek, licentievermeldingen en materialen voor het opnieuw linken zijn beschikbaar in het [LGPL-materiaalpakket](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
-
-Dit materiaal is niet nodig om de mod te installeren of te gebruiken.
+<!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

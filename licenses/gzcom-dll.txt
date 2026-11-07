@@ -1,0 +1,29 @@
+gzcom-dll: notice for the library linked into DepartmentEfficiency.dll
+=====================================================================
+
+Project:   gzcom-dll, a GZCOM director and SimCity 4 interface library
+Upstream:  https://github.com/nsgomez/gzcom-dll
+Revision:  779b669bf88112146d58fba6c7ed44f13ac6ce7d
+           (fetched from upstream by CMake when the plugin is built; it is not
+           stored in this repository and it is not modified)
+License:   GNU Lesser General Public License, version 2.1 or (at your option)
+           any later version (LGPL-2.1-or-later). The license text is in
+           LGPL-2.1.txt, next to this file.
+
+The source files of that revision carry these copyright notices (this list is a
+summary; the notices in the files themselves are authoritative):
+
+  Copyright (C) 2016-2018, 2025 Nelson Gomez (simmaster07)
+  Copyright (C) 2023-2026 Nicholas Hayes (Null 45)
+  Copyright (C) 2025-2026 Casper Van Gheluwe
+  Copyright (C) 2024 memo
+
+Other contributors listed by the project's repository: Joe LiTrenta, Sansero.
+
+The library is statically linked into DepartmentEfficiency.dll. You may modify
+it and rebuild the plugin with your version: see "Source code" in README.md
+(the FETCHCONTENT_SOURCE_DIR_GZCOM_DLL option of CMakeLists.txt).
+
+The original code of Department of Efficiency is a separate work, released
+under the GNU General Public License, version 3 only (see ../LICENSE); it is
+not part of gzcom-dll and gzcom-dll is not covered by that license.

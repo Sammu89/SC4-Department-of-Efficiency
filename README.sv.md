@@ -33,9 +33,11 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 - [Kända begränsningar](#known-limitations)
 
-- [Tack till](#credits)
+- [Källkod](#source-code)
 
-- [LGPL-licensmaterial](#lgpl-licensing)
+- [Licens](#license)
+
+- [Tack till](#credits)
 
 <a id="download-and-installation"></a>
 
@@ -77,19 +79,19 @@ Det offentliga arkivets Markdown-filer och skärmbilder behövs **inte** av spel
 
 ## Vad Departementet gör
 
-Tabellen nedan beskriver vad Departementet gör. För formler, exempel, skyddsåtgärder och mekaniken bakom besluten, se den **[utförliga funktionsreferensen (på engelska)](features/en.md)**.
+Tabellen nedan beskriver vad Departementet gör. För formler, exempel, skyddsåtgärder och mekaniken bakom besluten, se den **[utförliga funktionsreferensen (på engelska)](technical_docs/en/index.md)**.
 
 | Område | Vad det gör |
 |---|---|
-| [Utbildning och sjukvård](features/en.md#education-healthcare) | Justerar finansieringen **byggnad för byggnad** för lämpliga skolor, universitet, bibliotek, museer, kliniker och sjukhus. Det följer verklig beläggning och kapacitet, med en säkerhetsmarginal. Det **ändrar inte täckningsradier** eller finansieringen av skolbussar och ambulanser. Om en byggnad fortfarande är överfull vid maximal finansiering meddelar en rådgivare att ytterligare en anläggning behövs; **du väljer var den ska ligga**. |
-| [El](features/en.md#electricity) | Sköter **varje kraftverk för sig** och väljer den finansiering som täcker stadens behov och säkerhetsreserven till lägsta modellerade kostnad. Det tar hänsyn till kraftverkens verkningsgrad och skick; en valfri inställning räknar också med de ekonomiska kostnaderna för kraftverkens åldrande. |
-| [Vatten](features/en.md#water) | Justerar stadens vattenfinansiering så att den täcker behovet plus en säkerhetsreserv. Skydd av vattenledningarna är påslaget som standard för att undvika nedskärningar som skulle låta nätet förfalla. Det döljer också spelets vilseledande ikon „inget vatten“ över gårdar. |
-| [Sophantering](features/en.md#garbage-landfills) | Justerar finansieringen av sophanteringen utifrån sopproduktion, återvinning, behandling, soptippens lagringsutrymme och regionala avtal, samtidigt som stadens eget behov av bortskaffning skyddas. |
-| [Grannavtal](features/en.md#neighbor-deals) | Kan **köpa eller sälja el och vatten**, **betala grannar för att ta emot ditt avfall** eller **ta emot deras mot betalning**. Det skapar, justerar och säger upp lämpliga avtal när det samlade resultatet gynnar staden och dess egna behov och reserver förblir skyddade. |
-| [Automatisk rivning](features/en.md#demolition) | Kan som standard röja ruiner efter ungefär **30 simulerade dagar** och lämpliga byggnader som varit övergivna i **ett simulerat år**. Du bestämmer vilka zoner och vilka orsaker till övergivenhet som räknas, om skyddade ruiner får röjas och om en månatlig utgiftsgräns ska gälla. |
-| [Rådgivarnas meddelanden](features/en.md#notices) | Använder spelets egna rådgivare för att flagga styrkta, ihållande brister som varken finansiering eller tillgängliga avtal kan åtgärda. Där det passar innehåller meddelandena länkar som tar dig till de berörda byggnaderna. |
-| [Råd om soptippens storlek](features/en.md#garbage-landfills-advice) | Det valfria rådet pekar ut en bestämd utvidgning av soptippen, eller en säker minskning, som kan sänka sophanteringsräkningen med mer än din valda spargräns. **Departementet ger råd; du avgör om zonindelningen ska ändras.** |
-| [Reparation av spökrutor](features/en.md#ghost-squares) | När skötseln av sophanteringen är påslagen repareras lämpliga osynliga soptippsrutor som spelet fortfarande räknar med i underhållet, på ett säkert sätt. Osäkra eller overifierade fall lämnas ifred; det finns ingen separat strömbrytare för den här reparationen. |
+| [Utbildning och sjukvård](technical_docs/en/education_healthcare.md#education-healthcare) | Justerar finansieringen **byggnad för byggnad** för lämpliga skolor, universitet, bibliotek, museer, kliniker och sjukhus. Det följer verklig beläggning och kapacitet, med en säkerhetsmarginal. Det **ändrar inte täckningsradier** eller finansieringen av skolbussar och ambulanser. Om en byggnad fortfarande är överfull vid maximal finansiering meddelar en rådgivare att ytterligare en anläggning behövs; **du väljer var den ska ligga**. |
+| [El](technical_docs/en/power.md#power) | Sköter **varje kraftverk för sig** och väljer den finansiering som täcker stadens behov och säkerhetsreserven till lägsta modellerade kostnad. Det tar hänsyn till kraftverkens verkningsgrad och skick; en valfri inställning räknar också med de ekonomiska kostnaderna för kraftverkens åldrande. |
+| [Vatten](technical_docs/en/water.md#water) | Justerar stadens vattenfinansiering så att den täcker behovet plus en säkerhetsreserv. Skydd av vattenledningarna är påslaget som standard för att undvika nedskärningar som skulle låta nätet förfalla. Det döljer också spelets vilseledande ikon „inget vatten“ över gårdar. |
+| [Sophantering](technical_docs/en/garbage.md#garbage-landfills) | Justerar finansieringen av sophanteringen utifrån sopproduktion, återvinning, behandling, soptippens lagringsutrymme och regionala avtal, samtidigt som stadens eget behov av bortskaffning skyddas. |
+| [Grannavtal](technical_docs/en/deals.md#neighbor-deals) | Kan **köpa eller sälja el och vatten**, **betala grannar för att ta emot ditt avfall** eller **ta emot deras mot betalning**. Det skapar, justerar och säger upp lämpliga avtal när det samlade resultatet gynnar staden och dess egna behov och reserver förblir skyddade. |
+| [Automatisk rivning](technical_docs/en/demolition.md#demolition) | Kan som standard röja ruiner efter ungefär **30 simulerade dagar** och lämpliga byggnader som varit övergivna i **ett simulerat år**. Du bestämmer vilka zoner och vilka orsaker till övergivenhet som räknas, om skyddade ruiner får röjas och om en månatlig utgiftsgräns ska gälla. |
+| [Rådgivarnas meddelanden](technical_docs/en/safety.md#notices) | Använder spelets egna rådgivare för att flagga styrkta, ihållande brister som varken finansiering eller tillgängliga avtal kan åtgärda. Där det passar innehåller meddelandena länkar som tar dig till de berörda byggnaderna. |
+| [Råd om soptippens storlek](technical_docs/en/garbage.md#garbage-landfills-advice) | Det valfria rådet pekar ut en bestämd utvidgning av soptippen, eller en säker minskning, som kan sänka sophanteringsräkningen med mer än din valda spargräns. **Departementet ger råd; du avgör om zonindelningen ska ändras.** |
+| [Reparation av spökrutor](technical_docs/en/garbage.md#ghost-tiles) | När skötseln av sophanteringen är påslagen repareras lämpliga osynliga soptippsrutor som spelet fortfarande räknar med i underhållet, på ett säkert sätt. Osäkra eller overifierade fall lämnas ifred; det finns ingen separat strömbrytare för den här reparationen. |
 
 Du styr fortfarande över byggande, zonindelning, skatter, vägar och transporter, polis, brandkår och alla andra tjänster som Departementet inte sköter. Om du slår på skötseln av en typ av grannavtal kan Departementet också ändra eller säga upp ett avtal som du tidigare gjort för hand. Stäng av det avtalsalternativet om du vill sköta de avtalen själv.
 
@@ -117,7 +119,7 @@ Du kan också slå på eller stänga av Departementet via stadens förordningar.
 
 ## Inställningar
 
-Öppna **Spelalternativ → Effektivitetsdepartementet**. Fönstret har två sidor, **Samhällsservice** och **Rivning**. Tabellerna nedan täcker **alla inställningar som visas i menyn**, utan de tekniska formlerna. Klicka på ett alternativs namn för att läsa hela förklaringen i [funktionsreferensen](features/en.md#options).
+Öppna **Spelalternativ → Effektivitetsdepartementet**. Fönstret har två sidor, **Samhällsservice** och **Rivning**. Tabellerna nedan täcker **alla inställningar som visas i menyn**, utan de tekniska formlerna. Klicka på ett alternativs namn för att läsa hela förklaringen i [funktionsreferensen](technical_docs/en/options.md#options).
 
 **Så fungerar reglagen:** „På“ betyder att Departementet får sköta den funktionen. En inställning som beror på en annan är nedtonad så länge den överordnade är avstängd. Procentinställningar styr säkerhetsmarginaler och gränsvärden och hjälper Departementet att hålla reservkapacitet och hantera svängningar i efterfrågan.
 
@@ -125,47 +127,47 @@ Du kan också slå på eller stänga av Departementet via stadens förordningar.
 
 | Alternativ | Standard | Vad det betyder |
 |---|---|---|
-| [Departementet aktivt](features/en.md#opt-master) | **På** | Huvudströmbrytare för finansiering, grannavtal, rivning och Departementets meddelanden. Att stänga av det ångrar inte ändringar som redan gjorts. |
-| [Sköt utbildningen](features/en.md#opt-education) | **På** | Justerar automatiskt lämpliga skolor, universitet, bibliotek och museer en och en. Ändrar varken deras täckning eller finansieringen av skolbussar. |
-| [Säkerhetsmarginal (utbildning)](features/en.md#opt-educationreserve) | **5 %** (0–50 %) | Extra kapacitet utöver utbildningens nuvarande användning. Mer kapacitet kostar mer. För byggnader med låg beläggning kan Departementet hålla en extra marginal. Det kan till exempel låta en skola växa från 10 till 20 elever (+100 %) utan strejk, särskilt i början när merkostnaden är liten. |
-| [Sköt sjukvården](features/en.md#opt-health) | **På** | Justerar automatiskt lämpliga kliniker, sjukhus och andra stödda vårdbyggnader en och en. Ändrar varken ambulansernas finansiering eller täckningen. |
-| [Säkerhetsmarginal (sjukvård)](features/en.md#opt-healthreserve) | **5 %** (0–50 %) | Fungerar på samma sätt som utbildningens säkerhetsmarginal. |
-| [Sköt elförsörjningen](features/en.md#opt-power) | **På** | Justerar finansieringen av enskilda kraftverk för att leverera tillräckligt med el till lägsta modellerade kostnad. |
-| [Elreserv](features/en.md#opt-powerreserve) | **20 %** (10–50 %) | Reservproduktionskapacitet för den del av efterfrågan som täcks lokalt; större reserver ger mer utrymme för snabb tillväxt och minskar risken för strömavbrott, men kan kosta mer. |
-| [Ta hänsyn till kraftverkens åldrande](features/en.md#opt-poweraging) | **Av** | Räknar med den uppskattade kostnaden för kraftverkens slitage och åldrande i optimeringen. Kan gynna högre finansiering när den långsiktiga vinsten av att bevara kraftverket överstiger den extra driftkostnaden. |
-| [Sköt vattenförsörjningen](features/en.md#opt-water) | **På** | Justerar vattenverkets finansiering för att förse staden utan onödiga utgifter. |
-| [Vattenreserv](features/en.md#opt-waterreserve) | **10 %** (10–50 %) | Fungerar på samma sätt som elreserven. |
-| [Skydda vattenledningarna](features/en.md#opt-waterpipes) | **På** | Håller finansieringen på eller över spelets 50 % för att undvika skador på ledningsnätet. |
-| [Sköt sophanteringen](features/en.md#opt-sanitation) | **På** | Justerar sophanteringens finansiering för att täcka behovet av insamling och bortskaffning. Reparerar också spökrutor (ett fel i spelet som tar ut underhåll för soptippsrutor som inte längre är zonade). |
-| [Reserv för sophantering](features/en.md#opt-sanitationreserve) | **2 %** (2–20 %) | Extra behandlingskapacitet för stadens sopor, utöver det den producerar efter återvinning och eventuell eftersläpning. |
-| [Varna mig när soptippens storlek kan spara pengar](features/en.md#opt-landfilladvice) | **Av** | Slår på det valfria rådet om ändringar i soptippens zonindelning när det sparar pengar och stadens sopor ändå hanteras. Kräver att sophanteringen sköts. |
-| [Spargräns för soptippsmeddelanden](features/en.md#opt-landfillthreshold) | **25 %** (20–50 %) | Ber dig bara överväga en ändring av soptippens storlek om den modellerade månatliga besparingen uppgår till minst denna andel av sophanteringsbudgeten. |
-| [Sköt grannavtal](features/en.md#opt-deals) | **På** | Slår på automatiska regionala avtal; de tre enskilda reglagen nedan avgör vilka resurser som får handlas. |
-| [Köp från en stad och sälj till en annan](features/en.md#opt-arbitrage) | **Av** | Tillåter lönsamma kombinationer av köp och försäljning av samma resurs mellan grannar, med stadens egna behov främst. |
-| [Sköt elavtal](features/en.md#opt-tradepower) | **På** | Låter Departementet skapa, ändra eller säga upp **import och export** av el. Oberoende av finansieringen av kraftverken. |
-| [Sköt vattenavtal](features/en.md#opt-tradewater) | **På** | Låter Departementet skapa, ändra eller säga upp **import och export** av vatten. Oberoende av vattenfinansieringen. |
-| [Sköt sopavtal](features/en.md#opt-tradegarbage) | **På** | Låter Departementet ordna sopbehandling **i båda riktningarna**. Oberoende av sophanteringens finansiering. |
+| [Departementet aktivt](technical_docs/en/options.md#opt-master) | **På** | Huvudströmbrytare för finansiering, grannavtal, rivning och Departementets meddelanden. Att stänga av det ångrar inte ändringar som redan gjorts. |
+| [Sköt utbildningen](technical_docs/en/options.md#opt-education) | **På** | Justerar automatiskt lämpliga skolor, universitet, bibliotek och museer en och en. Ändrar varken deras täckning eller finansieringen av skolbussar. |
+| [Säkerhetsmarginal (utbildning)](technical_docs/en/options.md#opt-educationreserve) | **5 %** (0–50 %) | Extra kapacitet utöver utbildningens nuvarande användning. Mer kapacitet kostar mer. För byggnader med låg beläggning kan Departementet hålla en extra marginal. Det kan till exempel låta en skola växa från 10 till 20 elever (+100 %) utan strejk, särskilt i början när merkostnaden är liten. |
+| [Sköt sjukvården](technical_docs/en/options.md#opt-health) | **På** | Justerar automatiskt lämpliga kliniker, sjukhus och andra stödda vårdbyggnader en och en. Ändrar varken ambulansernas finansiering eller täckningen. |
+| [Säkerhetsmarginal (sjukvård)](technical_docs/en/options.md#opt-healthreserve) | **5 %** (0–50 %) | Fungerar på samma sätt som utbildningens säkerhetsmarginal. |
+| [Sköt elförsörjningen](technical_docs/en/options.md#opt-power) | **På** | Justerar finansieringen av enskilda kraftverk för att leverera tillräckligt med el till lägsta modellerade kostnad. |
+| [Elreserv](technical_docs/en/options.md#opt-powerreserve) | **20 %** (10–50 %) | Reservproduktionskapacitet för den del av efterfrågan som täcks lokalt; större reserver ger mer utrymme för snabb tillväxt och minskar risken för strömavbrott, men kan kosta mer. |
+| [Ta hänsyn till kraftverkens åldrande](technical_docs/en/options.md#opt-poweraging) | **Av** | Räknar med den uppskattade kostnaden för kraftverkens slitage och åldrande i optimeringen. Kan gynna högre finansiering när den långsiktiga vinsten av att bevara kraftverket överstiger den extra driftkostnaden. |
+| [Sköt vattenförsörjningen](technical_docs/en/options.md#opt-water) | **På** | Justerar vattenverkets finansiering för att förse staden utan onödiga utgifter. |
+| [Vattenreserv](technical_docs/en/options.md#opt-waterreserve) | **10 %** (10–50 %) | Fungerar på samma sätt som elreserven. |
+| [Skydda vattenledningarna](technical_docs/en/options.md#opt-waterpipes) | **På** | Håller finansieringen på eller över spelets 50 % för att undvika skador på ledningsnätet. |
+| [Sköt sophanteringen](technical_docs/en/options.md#opt-sanitation) | **På** | Justerar sophanteringens finansiering för att täcka behovet av insamling och bortskaffning. Reparerar också spökrutor (ett fel i spelet som tar ut underhåll för soptippsrutor som inte längre är zonade). |
+| [Reserv för sophantering](technical_docs/en/options.md#opt-sanitationreserve) | **2 %** (2–20 %) | Extra behandlingskapacitet för stadens sopor, utöver det den producerar efter återvinning och eventuell eftersläpning. |
+| [Varna mig när soptippens storlek kan spara pengar](technical_docs/en/options.md#opt-landfilladvice) | **Av** | Slår på det valfria rådet om ändringar i soptippens zonindelning när det sparar pengar och stadens sopor ändå hanteras. Kräver att sophanteringen sköts. |
+| [Spargräns för soptippsmeddelanden](technical_docs/en/options.md#opt-landfillthreshold) | **25 %** (20–50 %) | Ber dig bara överväga en ändring av soptippens storlek om den modellerade månatliga besparingen uppgår till minst denna andel av sophanteringsbudgeten. |
+| [Sköt grannavtal](technical_docs/en/options.md#opt-deals) | **På** | Slår på automatiska regionala avtal; de tre enskilda reglagen nedan avgör vilka resurser som får handlas. |
+| [Köp från en stad och sälj till en annan](technical_docs/en/options.md#opt-arbitrage) | **Av** | Tillåter lönsamma kombinationer av köp och försäljning av samma resurs mellan grannar, med stadens egna behov främst. |
+| [Sköt elavtal](technical_docs/en/options.md#opt-tradepower) | **På** | Låter Departementet skapa, ändra eller säga upp **import och export** av el. Oberoende av finansieringen av kraftverken. |
+| [Sköt vattenavtal](technical_docs/en/options.md#opt-tradewater) | **På** | Låter Departementet skapa, ändra eller säga upp **import och export** av vatten. Oberoende av vattenfinansieringen. |
+| [Sköt sopavtal](technical_docs/en/options.md#opt-tradegarbage) | **På** | Låter Departementet ordna sopbehandling **i båda riktningarna**. Oberoende av sophanteringens finansiering. |
 
 ### Rivning
 
 | Alternativ | Standard | Vad det betyder |
 |---|---|---|
-| [Riv förstörda byggnader](features/en.md#opt-demolishdestroyed) | **På** | River ruiner efter en viss tid. Röjer inte automatiskt skyddade kommunala eller historiska ruiner om inte alternativet nedan tillåter det. |
-| [Väntetid (förstörda byggnader)](features/en.md#opt-destroyedmonths) | **1 månad** (1–24) | Hur länge ruiner måste ligga kvar innan de kan röjas; som standard ungefär **30 simulerade dagar**. |
-| [Riv förstörda kommunala och historiska byggnader](features/en.md#opt-demolishmunicipal) | **Av** | Om påslaget röjs efter väntetiden även lämpliga **ruiner** av kommunala, speciella och historiska byggnader. |
-| [Riv övergivna byggnader](features/en.md#opt-demolishabandoned) | **På** | Röjer lämpliga övergivna byggnader efter väntetiden, i de valda zontyperna och av de valda orsakerna. |
-| [Väntetid (övergivna byggnader)](features/en.md#opt-abandonedmonths) | **12 månader** (1–60) | Hur länge en byggnad måste stå övergiven innan den får rivas; som standard ett simulerat år. |
-| [Bostadszon](features/en.md#opt-zoneresidential) | **På** | Omfattar övergivna hus och flerbostadshus. |
-| [Handelszon](features/en.md#opt-zonecommercial) | **På** | Omfattar övergivna butiker och kontor. |
-| [Industrizon](features/en.md#opt-zoneindustrial) | **På** | Omfattar övergivna fabriker och andra industribyggnader. |
-| [Jordbrukszon](features/en.md#opt-zoneagriculture) | **Av** | Omfattar övergivna gårdar. Avstängd som standard eftersom tomma eller övergivna rutor på en gård kan vara normala. |
-| [Orsak: oattraktivt område](features/en.md#opt-reasonlowdesirability) | **På** | Omfattar övergivenhet som beror på låg attraktivitet, till exempel föroreningar eller brist på service. |
-| [Orsak: för lång arbetsresa](features/en.md#opt-reasoncommute) | **På** | Omfattar övergivenhet som beror på alltför långa resor till arbetet. |
-| [Orsak: ingen efterfrågan](features/en.md#opt-reasonlowdemand) | **På** | Omfattar byggnader som övergivits för att efterfrågan på den typen har försvunnit. |
-| [Orsak: ingen el](features/en.md#opt-reasonnopower) | **Av** | Omfattar som tillval byggnader som övergivits på grund av elbrist. Oftast är det bättre att först återställa elen och se om byggnaden fylls på igen. |
-| [Orsak: inget vatten](features/en.md#opt-reasonnowater) | **Av** | Omfattar som tillval byggnader som övergivits på grund av vattenbrist. Oftast är det bättre att först återställa vattnet och se om byggnaden fylls på igen. |
-| [Begränsa den månatliga rivningsbudgeten](features/en.md#opt-budgetlimit) | **Av** | Sätter ett valfritt utgiftstak för automatisk rivning, utöver de medel som finns i stadens kassa. |
-| [Månadsbudget](features/en.md#opt-demolitionbudget) | **§1 000** (§0–§200 000) | Högsta rivningsutgift per simulerad månad **när budgetgränsen är påslagen**. |
+| [Riv förstörda byggnader](technical_docs/en/options.md#opt-demolishdestroyed) | **På** | River ruiner efter en viss tid. Röjer inte automatiskt skyddade kommunala eller historiska ruiner om inte alternativet nedan tillåter det. |
+| [Väntetid (förstörda byggnader)](technical_docs/en/options.md#opt-destroyedmonths) | **1 månad** (1–24) | Hur länge ruiner måste ligga kvar innan de kan röjas; som standard ungefär **30 simulerade dagar**. |
+| [Riv förstörda kommunala och historiska byggnader](technical_docs/en/options.md#opt-demolishmunicipal) | **Av** | Om påslaget röjs efter väntetiden även lämpliga **ruiner** av kommunala, speciella och historiska byggnader. |
+| [Riv övergivna byggnader](technical_docs/en/options.md#opt-demolishabandoned) | **På** | Röjer lämpliga övergivna byggnader efter väntetiden, i de valda zontyperna och av de valda orsakerna. |
+| [Väntetid (övergivna byggnader)](technical_docs/en/options.md#opt-abandonedmonths) | **12 månader** (1–60) | Hur länge en byggnad måste stå övergiven innan den får rivas; som standard ett simulerat år. |
+| [Bostadszon](technical_docs/en/options.md#opt-zoneresidential) | **På** | Omfattar övergivna hus och flerbostadshus. |
+| [Handelszon](technical_docs/en/options.md#opt-zonecommercial) | **På** | Omfattar övergivna butiker och kontor. |
+| [Industrizon](technical_docs/en/options.md#opt-zoneindustrial) | **På** | Omfattar övergivna fabriker och andra industribyggnader. |
+| [Jordbrukszon](technical_docs/en/options.md#opt-zoneagriculture) | **Av** | Omfattar övergivna gårdar. Avstängd som standard eftersom tomma eller övergivna rutor på en gård kan vara normala. |
+| [Orsak: oattraktivt område](technical_docs/en/options.md#opt-reasonlowdesirability) | **På** | Omfattar övergivenhet som beror på låg attraktivitet, till exempel föroreningar eller brist på service. |
+| [Orsak: för lång arbetsresa](technical_docs/en/options.md#opt-reasoncommute) | **På** | Omfattar övergivenhet som beror på alltför långa resor till arbetet. |
+| [Orsak: ingen efterfrågan](technical_docs/en/options.md#opt-reasonlowdemand) | **På** | Omfattar byggnader som övergivits för att efterfrågan på den typen har försvunnit. |
+| [Orsak: ingen el](technical_docs/en/options.md#opt-reasonnopower) | **Av** | Omfattar som tillval byggnader som övergivits på grund av elbrist. Oftast är det bättre att först återställa elen och se om byggnaden fylls på igen. |
+| [Orsak: inget vatten](technical_docs/en/options.md#opt-reasonnowater) | **Av** | Omfattar som tillval byggnader som övergivits på grund av vattenbrist. Oftast är det bättre att först återställa vattnet och se om byggnaden fylls på igen. |
+| [Begränsa den månatliga rivningsbudgeten](technical_docs/en/options.md#opt-budgetlimit) | **Av** | Sätter ett valfritt utgiftstak för automatisk rivning, utöver de medel som finns i stadens kassa. |
+| [Månadsbudget](technical_docs/en/options.md#opt-demolitionbudget) | **§1 000** (§0–§200 000) | Högsta rivningsutgift per simulerad månad **när budgetgränsen är påslagen**. |
 
 <a id="screenshots"></a>
 
@@ -240,26 +242,49 @@ Alla skärmbilder visar den engelska versionen av spelet.
 
 - **Råd om soptippen:** kräver exakt en soptippszon. I städer med flera soptippar kan Departementet fortfarande reparera lämpliga buggade „spökrutor“ men rekommenderar inga storleksändringar.
 
+<a id="source-code"></a>
+
+## Källkod
+
+Pluginets källkod finns i mappen [`source/`](source/). Den byggs med CMake och Visual Studio till en 32-bitars (Win32) DLL. Du behöver Visual Studio 2026 med arbetsbelastningen för skrivbordsutveckling med C++ (andra versioner är inte testade), CMake 3.20 eller senare och Git:
+
+```bat
+cmake -S . -B build -G "Visual Studio 18 2026" -A Win32
+cmake --build build --config Release
+```
+
+Vid bygget hämtas [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fast revision (`779b669bf88112146d58fba6c7ed44f13ac6ce7d`). Om du vill använda en ändrad kopia av biblioteket, eller bygga utan internetanslutning, lägg till `-DFETCHCONTENT_SOURCE_DIR_GZCOM_DLL=<mapp>` i det första kommandot. DLL-filen skapas i `build\Release\DepartmentEfficiency.dll`. En ombyggd DLL är inte byte för byte identisk med den publicerade.
+
+<a id="license"></a>
+
+## Licens
+
+- Den ursprungliga koden i Department of Efficiency (filerna i [`source/`](source/)) är skriven av **Sammu89** och ges ut under **GNU General Public License, version 3 endast** (GPL-3.0-only). Hela texten finns i [LICENSE](LICENSE). Du får studera, ändra och vidaredistribuera den enligt GPLv3: behåll upphovsrättsmeddelanden och tack, ange dina ändringar och publicera din version under samma licens. Presentera inte ändrade versioner som officiella versioner från upphovspersonen.
+
+- Dokumentationen (dessa README-filer och filerna i [`technical_docs/`](technical_docs/)) och de texter som skrivits för detta projekt (inklusive de i de tre INI-filerna och de som kompilerats i `DepartmentEfficiency.dat`), tillsammans med deras ursprungliga översättningar, ges ut under samma licens, GPL-3.0-only.
+
+- **gzcom-dll** omfattas inte av denna licens: biblioteket behåller sin egen licens, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), och hämtas från sitt ursprungliga arkiv vid bygget.
+
+- **SimCity 4** och dess originalresurser tillhör Electronic Arts / Maxis. **Department of Efficiency** är en inofficiell fanmod, oberoende av EA och inte godkänd av EA. Fyra av filerna i `release/Department of Efficiency/` innehåller skript och gränssnittsdefinitioner som härrör från själva spelets resurser, och skärmbilderna visar spelet: de ägs inte av upphovspersonen, omfattas inte av GPL och alla rättigheter till dem ligger kvar hos deras ägare. Detsamma gäller allt annat material från tredje part.
+
 <a id="credits"></a>
 
 ## Tack till
 
+**Upphovsperson**
+
 - Skapad av **Sammu89**.
 
-- Byggd med **gzcom-dll** av Nelson Gomez (simmaster07), använd under licensen LGPL-2.1-or-later och statiskt länkad i DLL-filen.
+**Använt bibliotek**
 
-- Nicholas Hayes (0xC0000054 / Null 45), för forskning, dokumentation och öppna exempel om SimCity 4-DLL:er: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example.
+- **gzcom-dll** av Nelson Gomez (simmaster07), med bidrag från Nicholas Hayes (Null 45), Casper Van Gheluwe, memo och andra (se dess [arkiv](https://github.com/nsgomez/gzcom-dll)), använd under licensen LGPL-2.1-or-later och statiskt länkad i DLL-filen. Biblioteket medföljer inte: bygget hämtar den exakta revisionen från det ursprungliga arkivet (se [Källkod](#source-code)); upphovsrättsmeddelandena och licenstexten finns i [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) och [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). Du får ändra biblioteket och bygga om pluginet med din version.
+
+**Konsulterade tekniker, dokumentation och exempel** (ingen kod har kopierats från dem; deras upphovspersoner är inte medförfattare till Department of Efficiency):
+
+- Nicholas Hayes (0xC0000054 / Null 45), för forskning, dokumentation och öppna exempel om SimCity 4-DLL:er: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Inställningsfönstret, förordningen och meddelandefilen följer mekanismer publicerade i hans projekt sc4-region-census, sc4-humane-society-ordinance och sc4-lua-extension-example (MIT-licens); spelkommandona följer sc4-auto-run-cheats och sc4-game-command-documentation.
 
 - CorinaMarie, för att ha dokumenterat SimCity 4:s Urgent Advice-teknik som moddens rådgivarmeddelanden följer.
 
-- SimCity 4-modding-gemenskapen, för två decennier av forskning, verktyg och delad kunskap.
+- SimCity 4-modding-gemenskapen, för två decennier av forskning, verktyg och delad kunskap, inklusive SC4Devotions dokumentation av exemplar-egenskaper.
 
-<a id="lgpl-licensing"></a>
-
-## LGPL-licensmaterial
-
-Effektivitetsdepartementet använder [gzcom-dll](https://github.com/nsgomez/gzcom-dll), licensierat under LGPL-2.1-or-later.
-
-Bibliotekets motsvarande källkod, licensmeddelanden och material för omlänkning finns i [paketet med LGPL-material](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/DepartmentEfficiency-LGPL-Compliance-1.0.0.zip).
-
-Detta material behövs inte för att installera eller använda modden.
+<!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->
