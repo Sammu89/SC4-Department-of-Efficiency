@@ -182,7 +182,7 @@ O jogo cobra estes custos em proporção do financiamento.
 **Despesa mensal da água (jogo base)**
 
 ```math
-X(f) = \operatorname{round}\left(I\times\frac{f}{100}\right)
+X(f) = \mathrm{round}\left(I\times\frac{f}{100}\right)
 ```
 
 Onde:

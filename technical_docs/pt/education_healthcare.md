@@ -5,9 +5,7 @@
 <a id="education-healthcare"></a>
 ## A. Educação e saúde
 
-O Ministério ajusta automaticamente o financiamento de cada escola, faculdade, universidade, biblioteca, museu, clínica e hospital que consiga gerir.
-
-O seu objetivo é simples: **dar capacidade suficiente a todos os que precisam do serviço, com uma margem de segurança, gastando o menos possível.**
+O Ministério ajusta automaticamente o financiamento de cada escola, faculdade, universidade, biblioteca, museu, clínica e hospital que consiga gerir. O seu objetivo é simples: **dar capacidade suficiente a todos os que precisam do serviço, com uma margem de segurança, gastando o menos possível.**
 
 Cada edifício é gerido individualmente. Uma escola com 200 alunos não precisa do mesmo orçamento que uma com 2.000 alunos.
 

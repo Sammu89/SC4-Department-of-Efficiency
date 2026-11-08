@@ -10,8 +10,11 @@ El Ministerio ayuda a tu ciudad a gestionar la basura con eficiencia, manteniend
 Ofrece cuatro funciones independientes:
 
 1. **Financiación automática de la limpieza:** ajusta el presupuesto de limpieza para tratar la basura de la ciudad, incluida la reserva de seguridad que hayas elegido.
+
 2. **Contratos regionales de basura:** gestiona las importaciones y exportaciones de basura cuando la gestión de acuerdos con vecinos está activada. Consulta [Acuerdos con vecinos](deals.md#neighbor-deals).
+
 3. **Consejo sobre el tamaño del vertedero (opcional):** recomienda ampliar o reducir las zonas de vertedero cuando hacerlo podría reducir de forma notable tus gastos mensuales. **El Ministerio nunca cambia por sí mismo la zonificación del vertedero con este fin.**
+
 4. **Reparación de casillas fantasma de vertedero:** corrige automáticamente un error del juego por el que algunas casillas que antes eran de vertedero se siguen contando y cobrando como vertedero activo. Usa el propio mecanismo de zonificación del juego y no tiene una opción independiente.
 
 Para entender cómo funcionan estas funciones, es importante distinguir entre **producción de basura, capacidad de tratamiento, admisión de los vertederos y almacenamiento a largo plazo**.
@@ -82,7 +85,7 @@ En cambio, el juego normalmente mueve cada día simulado aproximadamente el 10% 
 **Entrega diaria de un contrato de basura (juego base)**
 
 ```math
-s = \operatorname{round}(0.1 \times A)
+s = \mathrm{round}(0.1 \times A)
 \qquad
 \text{mientras } A-U>0
 ```
@@ -252,7 +255,7 @@ Un vertedero puede tener mucho espacio de almacenamiento vacío y aun así no po
 ```math
 \text{taken} =
 \min\left(
-G,\ F,\ \operatorname{round}(5000 \times L \times e)-S
+G,\ F,\ \mathrm{round}(5000 \times L \times e)-S
 \right)
 ```
 
@@ -340,7 +343,7 @@ d =
 1,
 \min\left(
 1500,
-\operatorname{round}(0.07 \times \text{stock})
+\mathrm{round}(0.07 \times \text{stock})
 \right)
 \right)
 \right)
@@ -564,7 +567,7 @@ Esa capacidad depende de:
 **Capacidad de almacenamiento del vertedero (juego base)**
 
 ```math
-C = \operatorname{round}\left(\frac{T\times30000}{N}\right)
+C = \mathrm{round}\left(\frac{T\times30000}{N}\right)
 \qquad
 T_{\mathrm{cap}}=N\times C
 ```
@@ -985,7 +988,7 @@ Si el uso notificado es mayor de lo que el contrato podría haber entregado como
 **Prueba de lectura obsoleta**
 
 ```math
-U > (\text{día del mes}-1)\times\operatorname{round}(0.1\times A)
+U > (\text{día del mes}-1)\times\mathrm{round}(0.1\times A)
 ```
 
 Donde:
@@ -1145,7 +1148,7 @@ El Ministerio usa ese valor para estimar cuál sería la capacidad con otro porc
 **Capacidad de tratamiento proyectada**
 
 ```math
-K(p)=\operatorname{round}\left(K_{\mathrm{act}}\times\frac{e(p)}{e_{\mathrm{act}}}\right)
+K(p)=\mathrm{round}\left(K_{\mathrm{act}}\times\frac{e(p)}{e_{\mathrm{act}}}\right)
 ```
 
 Donde:
@@ -1173,7 +1176,7 @@ El Ministerio también estima cuánta basura más pueden aceptar los vertederos 
 V_0(p)=
 \max\left(
 0,\min\left(
-F,\operatorname{round}(5000\times L\times e(p))-S
+F,\mathrm{round}(5000\times L\times e(p))-S
 \right)
 \right)
 ```
@@ -1304,7 +1307,7 @@ Los gastos de limpieza aumentan en proporción a la financiación.
 **Gasto mensual de limpieza**
 
 ```math
-E(p)=\operatorname{round}\left(I\times\frac{p}{100}\right)
+E(p)=\mathrm{round}\left(I\times\frac{p}{100}\right)
 ```
 
 Donde:
@@ -1620,7 +1623,7 @@ Una ampliación también puede eliminar casillas fantasma que ya cuestan dinero,
 El Ministerio también recalcula la capacidad de almacenamiento del vertedero:
 
 ```math
-C'=\operatorname{round}\left(\frac{T'\times30000}{N'}\right)
+C'=\mathrm{round}\left(\frac{T'\times30000}{N'}\right)
 \qquad
 T'_{\mathrm{cap}}=N'\times C'
 ```
@@ -1643,8 +1646,8 @@ También recalcula **la financiación de limpieza más barata necesaria tras el 
 
 ```math
 \begin{aligned}
-E_0 &= \operatorname{round}\left(I\times\frac{p_0}{100}\right)\\
-E_1 &= \operatorname{round}\left(I'\times\frac{p_1}{100}\right)\\
+E_0 &= \mathrm{round}\left(I\times\frac{p_0}{100}\right)\\
+E_1 &= \mathrm{round}\left(I'\times\frac{p_1}{100}\right)\\
 \text{Ahorro} &= E_0-E_1
 \end{aligned}
 ```
@@ -2055,7 +2058,7 @@ Estas opciones también se guardan en el archivo de configuración de servicios 
 
 Los ejemplos siguientes muestran cómo funcionan en la práctica la financiación de la limpieza, el almacenamiento de los vertederos y las reglas de seguridad del Ministerio.
 
-Varios ejemplos usan **Aqua**, una ciudad de prueba en la que se midió el comportamiento de los vertederos del juego.
+Varios ejemplos usan una ciudad de prueba en la que se midió el comportamiento de los vertederos del juego.
 
 #### Ejemplo 1: un vertedero con mucho almacenamiento pero una admisión mensual limitada
 
@@ -2159,7 +2162,7 @@ Esta protección evita que unas estadísticas de contrato desactualizadas provoq
 
 #### Ejemplo 3: cómo desaparece con el tiempo la basura almacenada
 
-Este ejemplo procede de la **ciudad de prueba Aqua**.
+Este ejemplo procede de la **ciudad de prueba**.
 
 El vertedero tiene:
 
@@ -2209,9 +2212,9 @@ El almacenamiento de un vertedero no es completamente permanente. Cada mes desap
 
 El Ministerio aprovecha este comportamiento al predecir cuánta basura puede contener un vertedero con el tiempo.
 
-#### Ejemplo 4: reparar casillas fantasma en Aqua
+#### Ejemplo 4: reparar casillas fantasma en una ciudad de prueba
 
-En la ciudad de prueba Aqua, el vertedero contenía **siete casillas fantasma**.
+En la ciudad de prueba, el vertedero contenía **siete casillas fantasma**.
 
 Eran casillas que el juego seguía contando como parte del vertedero aunque ya no estuvieran zonificadas como vertedero.
 
@@ -2276,7 +2279,7 @@ Todos los resultados coincidieron con la predicción del Ministerio.
 
 **Pero las casillas fantasma volvieron al reabrir la ciudad.**
 
-Una copia de Aqua guardada después de la reparación recreó las mismas siete casillas fantasma al cargarse de nuevo.
+Una copia de la ciudad de prueba guardada después de la reparación recreó las mismas siete casillas fantasma al cargarse de nuevo.
 
 Esto confirmó el error de guardado y carga del juego descrito anteriormente.
 
@@ -2286,7 +2289,7 @@ El Ministerio pudo repararlas otra vez durante la nueva sesión de la ciudad.
 
 #### Ejemplo 5: una ampliación que ahorra dinero, pero no lo bastante para recomendarla
 
-El Ministerio también probó a ampliar el vertedero de Aqua.
+El Ministerio también probó a ampliar el vertedero de la ciudad de prueba.
 
 Al principio, una calle recorría su borde derecho.
 
@@ -2358,7 +2361,7 @@ Esto ilustra por qué el Ministerio no recomienda todos los cambios de zonificac
 
 #### Ejemplo 6: por qué el Ministerio a veces se niega a reparar casillas fantasma
 
-Otro experimento en Aqua mostró por qué la reparación de casillas fantasma tiene que ser conservadora.
+Otro experimento en la ciudad de prueba mostró por qué la reparación de casillas fantasma tiene que ser conservadora.
 
 El vertedero original tenía:
 
@@ -2465,7 +2468,7 @@ El modelo de limpieza del Ministerio se basa en observaciones detalladas de SimC
 #### Producción de basura y financiación
 
 - **La producción futura de basura es una estimación.** El Ministerio usa la producción del mes anterior menos el reciclaje y supone que la cantidad resultante se produce de forma uniforme durante los días que quedan del mes en curso y el siguiente. No predice el crecimiento futuro de la ciudad. Los cambios se incorporan cuando hay información nueva.
-- **La financiación puede cambiar durante el mes.** Las importaciones y exportaciones de basura y la admisión de los vertederos no siguen un calendario perfectamente uniforme. Por eso el nivel de financiación más barato puede cambiar a medida que avanza el mes. En Aqua, las decisiones observadas incluyeron **47%, 63% y 53%** en momentos distintos. Es un comportamiento esperado, no necesariamente un fallo.
+- **La financiación puede cambiar durante el mes.** Las importaciones y exportaciones de basura y la admisión de los vertederos no siguen un calendario perfectamente uniforme. Por eso el nivel de financiación más barato puede cambiar a medida que avanza el mes. En la ciudad de prueba, las decisiones observadas incluyeron **47%, 63% y 53%** en momentos distintos. Es un comportamiento esperado, no necesariamente un fallo.
 - **El Ministerio usa las curvas de limpieza del juego original.** Sus predicciones suponen la curva de eficiencia estándar, una admisión de los vertederos de 5.000 unidades por casilla y mes, un almacenamiento de aproximadamente 30.000 unidades por casilla, las reglas de descomposición estándar y un mantenimiento de §5 por casilla vacía. Los mods que cambian esta mecánica pueden hacer que los cálculos sean inexactos. Si la eficiencia del juego no coincide con el valor esperado, el Ministerio deja de hacer cambios de financiación en lugar de seguir con datos poco fiables.
 
 #### Predicción del mes siguiente

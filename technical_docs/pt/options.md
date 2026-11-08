@@ -5,9 +5,7 @@
 <a id="options"></a>
 ## H. Referência das opções
 
-Este capítulo explica como abrir as definições do Ministério e como as alterações de configuração são guardadas.
-
-As descrições detalhadas de cada opção encontram-se nas secções seguintes.
+Este capítulo explica como abrir as definições do Ministério e como as alterações de configuração são guardadas. As descrições detalhadas de cada opção encontram-se nas secções seguintes.
 
 <a id="options-open"></a>
 ### Abrir a janela de opções
@@ -855,7 +853,7 @@ A conversão usa:
 
 ```math
 \text{Dias}=
-\operatorname{round}\left(\frac{\text{Meses}\times365}{12}\right)
+\mathrm{round}\left(\frac{\text{Meses}\times365}{12}\right)
 ```
 
 Exemplos:

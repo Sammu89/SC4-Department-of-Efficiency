@@ -361,7 +361,7 @@ O Ministério converte, por isso, o número de meses escolhido em dias.
 **Conversão do período de espera**
 
 ```math
-D=\operatorname{round}\left(\frac{M\times365}{12}\right)
+D=\mathrm{round}\left(\frac{M\times365}{12}\right)
 ```
 
 Em que:
@@ -428,7 +428,7 @@ M_{\mathrm{shown}}=
 \min\left(
 M_{\max},
 \max\left(
-1,\operatorname{round}\left(\frac{D\times12}{365}\right)
+1,\mathrm{round}\left(\frac{D\times12}{365}\right)
 \right)
 \right)
 ```

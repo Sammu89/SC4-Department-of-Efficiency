@@ -5,9 +5,7 @@
 <a id="safety"></a>
 ## G. Segurança, automatização e tomada de decisões
 
-O Ministério pode alterar orçamentos, gerir contratos regionais, limpar edifícios abandonados e corrigir certos problemas dos aterros.
-
-Como estas ações afetam diretamente a sua cidade, **proteger os serviços essenciais e respeitar as suas decisões tem de vir sempre antes de poupar dinheiro**.
+O Ministério pode alterar orçamentos, gerir contratos regionais, limpar edifícios abandonados e corrigir certos problemas dos aterros. Como estas ações afetam diretamente a sua cidade, **proteger os serviços essenciais e respeitar as suas decisões tem de vir sempre antes de poupar dinheiro**.
 
 Este capítulo explica as regras partilhadas pelas funcionalidades automáticas do Ministério:
 

@@ -425,7 +425,7 @@ O valor exato depende do abastecimento disponível do comprador e do excedente q
 **Preço mensal do contrato (jogo base)**
 
 ```math
-P(q)=q\times\operatorname{clamp}\left(
+P(q)=q\times\mathrm{clamp}\left(
 u(1+m_{\min})+
 \frac{g(V/q)+g(R/S_{\mathrm{sup}})}{2}
 \,u(m_{\max}-m_{\min}),
@@ -733,7 +733,7 @@ Os contratos de lixo funcionam através de entregas diárias.
 
 ```math
 \text{passo diário}=
-\max\left(1,\operatorname{round}(0.1\times A)\right)
+\max\left(1,\mathrm{round}(0.1\times A)\right)
 ```
 
 A entrega diária continua enquanto:
@@ -756,7 +756,7 @@ Consequentemente, **a maior parte dos contratos de lixo entrega toda a sua quant
 A quantidade diária é:
 
 ```math
-\operatorname{round}(25004\times0.1)=2500
+\mathrm{round}(25004\times0.1)=2500
 ```
 
 Passados dez dias, o jogo entregou:
@@ -1004,7 +1004,7 @@ Considera em conjunto **os rendimentos, as despesas dos contratos e o custo de a
 **Objetivo da carteira de contratos regionais**
 
 ```math
-\max_x\ \operatorname{Net}(x)=
+\max_x\ \mathrm{Net}(x)=
 \sum_{i\in\mathrm{sell\text{-}like}}P_i(x_i\mid x)
 -
 \sum_{j\in\mathrm{buy\text{-}like}}P_j(x_j\mid x)
@@ -1216,7 +1216,7 @@ O cálculo da carteira também se pode entender olhando para um único contrato.
 O Ministério compara o pagamento recebido com o custo de funcionamento local adicional.
 
 ```math
-\operatorname{Profit}(q)=
+\mathrm{Profit}(q)=
 P(q)-
 \left[
 C_{\mathrm{local}}(N+q)
@@ -1236,7 +1236,7 @@ A venda é rentável.
 O Ministério compara o preço do contrato com a despesa local que evita.
 
 ```math
-\operatorname{Saving}(q)=
+\mathrm{Saving}(q)=
 \left[
 C_{\mathrm{local}}(N(0))
 -
@@ -1332,10 +1332,10 @@ Em vez disso, o Ministério pergunta:
 
 ```math
 \Delta_k=
-\operatorname{Net}(x^*)
+\mathrm{Net}(x^*)
 -
 \max_{x:\,x_k=x_k^{\mathrm{now}}}
-\operatorname{Net}(x)
+\mathrm{Net}(x)
 ```
 
 Em que:
@@ -2006,7 +2006,7 @@ Em vez de rejeitar todos os arranjos possíveis por não conseguirem satisfazer 
 **Procura servida durante uma emergência**
 
 ```math
-\operatorname{served}(B,S)=
+\mathrm{served}(B,S)=
 D-\max\left(
 0,\max(0,D-B)+S-C_{\max}
 \right)

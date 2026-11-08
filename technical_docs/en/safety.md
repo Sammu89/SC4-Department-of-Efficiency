@@ -5,9 +5,7 @@
 <a id="safety"></a>
 ## G. Safety, Automation & Decision-Making
 
-The Department can change budgets, manage regional contracts, clear abandoned buildings and correct certain landfill problems.
-
-Because these actions affect your city directly, **protecting essential services and respecting your decisions must always come before saving money**.
+The Department can change budgets, manage regional contracts, clear abandoned buildings and correct certain landfill problems. Because these actions affect your city directly, **protecting essential services and respecting your decisions must always come before saving money**.
 
 This chapter explains the rules shared by the Department's automatic features:
 

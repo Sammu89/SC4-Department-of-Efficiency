@@ -182,7 +182,7 @@ The game charges these costs in proportion to funding.
 **Monthly water expense (base game)**
 
 ```math
-X(f) = \operatorname{round}\left(I\times\frac{f}{100}\right)
+X(f) = \mathrm{round}\left(I\times\frac{f}{100}\right)
 ```
 
 Where:

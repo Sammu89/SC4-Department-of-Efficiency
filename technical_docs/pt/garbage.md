@@ -10,8 +10,11 @@ O Ministério ajuda a gerir o lixo da cidade de forma eficiente, mantendo os cus
 Oferece quatro funções distintas:
 
 1. **Financiamento automático do saneamento:** ajusta o orçamento do saneamento para tratar o lixo da cidade, incluindo a reserva de segurança escolhida.
+
 2. **Contratos regionais de lixo:** gere as importações e exportações de lixo quando a gestão dos acordos com os vizinhos está ativada. Ver [Acordos com os vizinhos](deals.md#neighbor-deals).
+
 3. **Aviso sobre o tamanho do aterro (opcional):** recomenda ampliar ou reduzir as zonas de aterro quando isso puder baixar de forma significativa as despesas mensais. **O Ministério nunca altera automaticamente a zona do aterro com este fim.**
+
 4. **Reparação dos quadrados fantasma do aterro:** corrige automaticamente um erro do jogo em que alguns antigos quadrados de aterro continuam a ser contados e cobrados como aterro ativo. Usa o mecanismo de zonamento do próprio jogo e não tem uma opção separada.
 
 Para perceber como funcionam estas funcionalidades, é importante distinguir **produção de lixo, capacidade de tratamento, entrada nos aterros e armazenamento a longo prazo**.
@@ -82,7 +85,7 @@ Em vez disso, o jogo move normalmente cerca de 10% da quantidade mensal do contr
 **Entrega diária do contrato de lixo (jogo base)**
 
 ```math
-s = \operatorname{round}(0.1 \times A)
+s = \mathrm{round}(0.1 \times A)
 \qquad
 \text{enquanto } A-U>0
 ```
@@ -252,7 +255,7 @@ Um aterro pode ter muito espaço de armazenamento vazio e, mesmo assim, não con
 ```math
 \text{aceite} =
 \min\left(
-G,\ F,\ \operatorname{round}(5000 \times L \times e)-S
+G,\ F,\ \mathrm{round}(5000 \times L \times e)-S
 \right)
 ```
 
@@ -340,7 +343,7 @@ d =
 1,
 \min\left(
 1500,
-\operatorname{round}(0.07 \times \text{armazenado})
+\mathrm{round}(0.07 \times \text{armazenado})
 \right)
 \right)
 \right)
@@ -564,7 +567,7 @@ Essa capacidade depende de:
 **Capacidade de armazenamento do aterro (jogo base)**
 
 ```math
-C = \operatorname{round}\left(\frac{T\times30000}{N}\right)
+C = \mathrm{round}\left(\frac{T\times30000}{N}\right)
 \qquad
 T_{\mathrm{cap}}=N\times C
 ```
@@ -985,7 +988,7 @@ Se a utilização comunicada for superior ao que o contrato poderia ter entregue
 **Teste de leitura desatualizada**
 
 ```math
-U > (\text{dia do mês}-1)\times\operatorname{round}(0.1\times A)
+U > (\text{dia do mês}-1)\times\mathrm{round}(0.1\times A)
 ```
 
 Em que:
@@ -1145,7 +1148,7 @@ O Ministério usa esse valor para estimar qual seria a capacidade com outra perc
 **Capacidade de tratamento projetada**
 
 ```math
-K(p)=\operatorname{round}\left(K_{\mathrm{now}}\times\frac{e(p)}{e_{\mathrm{now}}}\right)
+K(p)=\mathrm{round}\left(K_{\mathrm{now}}\times\frac{e(p)}{e_{\mathrm{now}}}\right)
 ```
 
 Em que:
@@ -1173,7 +1176,7 @@ O Ministério estima também quanto lixo mais os aterros podem aceitar durante o
 V_0(p)=
 \max\left(
 0,\min\left(
-F,\operatorname{round}(5000\times L\times e(p))-S
+F,\mathrm{round}(5000\times L\times e(p))-S
 \right)
 \right)
 ```
@@ -1304,7 +1307,7 @@ As despesas de saneamento aumentam em proporção com o financiamento.
 **Despesa mensal de saneamento**
 
 ```math
-E(p)=\operatorname{round}\left(I\times\frac{p}{100}\right)
+E(p)=\mathrm{round}\left(I\times\frac{p}{100}\right)
 ```
 
 Em que:
@@ -1620,7 +1623,7 @@ Uma ampliação pode também eliminar quadrados fantasma que já custam dinheiro
 O Ministério recalcula também a capacidade de armazenamento do aterro:
 
 ```math
-C'=\operatorname{round}\left(\frac{T'\times30000}{N'}\right)
+C'=\mathrm{round}\left(\frac{T'\times30000}{N'}\right)
 \qquad
 T'_{\mathrm{cap}}=N'\times C'
 ```
@@ -1643,8 +1646,8 @@ Recalcula também **o financiamento de saneamento mais barato necessário depois
 
 ```math
 \begin{aligned}
-E_0 &= \operatorname{round}\left(I\times\frac{p_0}{100}\right)\\
-E_1 &= \operatorname{round}\left(I'\times\frac{p_1}{100}\right)\\
+E_0 &= \mathrm{round}\left(I\times\frac{p_0}{100}\right)\\
+E_1 &= \mathrm{round}\left(I'\times\frac{p_1}{100}\right)\\
 \text{Poupança} &= E_0-E_1
 \end{aligned}
 ```
@@ -2055,7 +2058,7 @@ Estas opções ficam também guardadas no ficheiro de configuração de infraest
 
 Os exemplos seguintes mostram, na prática, como funcionam o financiamento do saneamento, o armazenamento nos aterros e as regras de segurança do Ministério.
 
-Vários exemplos usam a **Aqua**, uma cidade de teste onde foi medido o comportamento dos aterros do jogo.
+Vários exemplos usam uma cidade de teste onde foi medido o comportamento dos aterros do jogo.
 
 #### Exemplo 1: Um aterro com muito armazenamento, mas com entrada mensal limitada
 
@@ -2159,7 +2162,7 @@ Esta proteção evita que estatísticas de contratos desatualizadas provoquem c�
 
 #### Exemplo 3: Como desaparece o lixo armazenado ao longo do tempo
 
-Este exemplo provém da **cidade de teste Aqua**.
+Este exemplo provém da **cidade de teste**.
 
 O aterro tem:
 
@@ -2209,9 +2212,9 @@ O armazenamento dos aterros não é totalmente permanente. Todos os meses desapa
 
 O Ministério usa este comportamento para prever quanto lixo um aterro consegue conter ao longo do tempo.
 
-#### Exemplo 4: Reparar quadrados fantasma na Aqua
+#### Exemplo 4: Reparar quadrados fantasma na cidade de teste
 
-Na cidade de teste Aqua, o aterro continha **sete quadrados fantasma**.
+Na cidade de teste, o aterro continha **sete quadrados fantasma**.
 
 Eram quadrados que o jogo continuava a contar como parte do aterro, embora já não estivessem realmente zonados como aterro.
 
@@ -2276,7 +2279,7 @@ Todos os resultados coincidiram com a previsão do Ministério.
 
 **Mas os fantasmas voltaram depois de reabrir a cidade.**
 
-Uma cópia da Aqua gravada depois da reparação recriou os mesmos sete quadrados fantasma quando foi carregada de novo.
+Uma cópia da cidade de teste gravada depois da reparação recriou os mesmos sete quadrados fantasma quando foi carregada de novo.
 
 Isto confirmou o erro de gravação/carregamento do jogo descrito anteriormente.
 
@@ -2286,7 +2289,7 @@ O Ministério conseguiu repará-los outra vez durante a nova sessão da cidade.
 
 #### Exemplo 5: Uma ampliação que poupa dinheiro, mas não o suficiente para ser recomendada
 
-O Ministério testou também a ampliação do aterro da Aqua.
+O Ministério testou também a ampliação do aterro da cidade de teste.
 
 Inicialmente, passava uma rua ao longo do seu limite direito.
 
@@ -2358,7 +2361,7 @@ Isto ilustra por que razão o Ministério não recomenda todas as alterações d
 
 #### Exemplo 6: Por que razão o Ministério recusa por vezes reparar fantasmas
 
-Uma experiência diferente na Aqua mostrou por que motivo a reparação de quadrados fantasma tem de ser conservadora.
+Uma experiência diferente na cidade de teste mostrou por que motivo a reparação de quadrados fantasma tem de ser conservadora.
 
 O aterro original tinha:
 
@@ -2465,7 +2468,7 @@ O modelo de saneamento do Ministério baseia-se em observações detalhadas do S
 #### Produção e financiamento do lixo
 
 - **A produção futura de lixo é estimada.** O Ministério usa a produção do mês anterior menos a reciclagem e assume que a quantidade resultante é produzida de forma uniforme ao longo dos dias restantes do mês atual e do seguinte. Não prevê o crescimento futuro da cidade. As alterações são incorporadas quando surge informação nova.
-- **O financiamento pode mudar durante o mês.** As importações e exportações de lixo e a entrada nos aterros não seguem um calendário perfeitamente uniforme. O nível de financiamento mais barato pode, por isso, mudar à medida que o mês avança. Na Aqua, as decisões observadas incluíram **47%, 63% e 53%** em momentos diferentes. Este é um comportamento esperado, não necessariamente uma falha.
+- **O financiamento pode mudar durante o mês.** As importações e exportações de lixo e a entrada nos aterros não seguem um calendário perfeitamente uniforme. O nível de financiamento mais barato pode, por isso, mudar à medida que o mês avança. Na cidade de teste, as decisões observadas incluíram **47%, 63% e 53%** em momentos diferentes. Este é um comportamento esperado, não necessariamente uma falha.
 - **O Ministério usa as curvas de saneamento do jogo original.** As suas previsões assumem a curva de eficiência padrão, uma entrada nos aterros de 5.000 unidades por quadrado e por mês, um armazenamento de aproximadamente 30.000 unidades por quadrado, as regras de decomposição padrão e uma manutenção de §5 para os quadrados vazios. Mods que alterem estas mecânicas podem tornar os cálculos imprecisos. Se a eficiência do jogo não coincidir com o valor esperado, o Ministério deixa de fazer alterações de financiamento em vez de continuar com dados pouco fiáveis.
 
 #### Previsão do mês seguinte

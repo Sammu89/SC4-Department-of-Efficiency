@@ -425,7 +425,7 @@ La valeur exacte dépend de l’approvisionnement disponible de l’acheteur et 
 **Prix mensuel du contrat (jeu de base)**
 
 ```math
-P(q)=q\times\operatorname{clamp}\left(
+P(q)=q\times\mathrm{clamp}\left(
 u(1+m_{\min})+
 \frac{g(V/q)+g(R/S_{\mathrm{sup}})}{2}
 \,u(m_{\max}-m_{\min}),
@@ -733,7 +733,7 @@ Les contrats de déchets fonctionnent par livraisons quotidiennes.
 
 ```math
 \text{daily step}=
-\max\left(1,\operatorname{round}(0.1\times A)\right)
+\max\left(1,\mathrm{round}(0.1\times A)\right)
 ```
 
 La livraison quotidienne se poursuit tant que :
@@ -756,7 +756,7 @@ Par conséquent, **la plupart des contrats de déchets livrent toute leur quanti
 La quantité quotidienne est de :
 
 ```math
-\operatorname{round}(25004\times0.1)=2500
+\mathrm{round}(25004\times0.1)=2500
 ```
 
 Au bout de dix jours, le jeu a livré :
@@ -1004,7 +1004,7 @@ Il considère **ensemble les revenus, les dépenses des contrats et le coût d�
 **Objectif du portefeuille de contrats régionaux**
 
 ```math
-\max_x\ \operatorname{Net}(x)=
+\max_x\ \mathrm{Net}(x)=
 \sum_{i\in\mathrm{sell\text{-}like}}P_i(x_i\mid x)
 -
 \sum_{j\in\mathrm{buy\text{-}like}}P_j(x_j\mid x)
@@ -1216,7 +1216,7 @@ Le calcul du portefeuille peut aussi se comprendre en regardant un seul contrat.
 Le Ministère compare le paiement reçu au coût d’exploitation local supplémentaire.
 
 ```math
-\operatorname{Profit}(q)=
+\mathrm{Profit}(q)=
 P(q)-
 \left[
 C_{\mathrm{local}}(N+q)
@@ -1236,7 +1236,7 @@ La vente est rentable.
 Le Ministère compare le prix du contrat à la dépense locale qu’il évite.
 
 ```math
-\operatorname{Saving}(q)=
+\mathrm{Saving}(q)=
 \left[
 C_{\mathrm{local}}(N(0))
 -
@@ -1332,10 +1332,10 @@ Quand plusieurs contrats interagissent, regarder uniquement le revenu ou la dép
 
 ```math
 \Delta_k=
-\operatorname{Net}(x^*)
+\mathrm{Net}(x^*)
 -
 \max_{x:\,x_k=x_k^{\mathrm{now}}}
-\operatorname{Net}(x)
+\mathrm{Net}(x)
 ```
 
 Où :
@@ -2006,7 +2006,7 @@ Au lieu de rejeter tous les arrangements possibles parce qu’aucun ne satisfait
 **Demande couverte en situation d’urgence**
 
 ```math
-\operatorname{served}(B,S)=
+\mathrm{served}(B,S)=
 D-\max\left(
 0,\max(0,D-B)+S-C_{\max}
 \right)

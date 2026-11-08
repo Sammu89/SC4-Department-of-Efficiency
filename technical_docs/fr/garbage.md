@@ -10,8 +10,11 @@ Le Ministère aide votre ville à gérer efficacement ses déchets, en gardant l
 Il assure quatre fonctions distinctes :
 
 1. **Financement automatique de la gestion des déchets :** ajuste le budget de la gestion des déchets pour traiter les déchets de la ville, y compris la réserve de sécurité que vous avez choisie.
+
 2. **Accords régionaux sur les déchets :** gère les importations et exportations de déchets lorsque la gestion des accords avec les voisins est activée. Voir [Accords avec les voisins](deals.md#neighbor-deals).
+
 3. **Conseil sur la taille de la décharge (facultatif) :** recommande d’agrandir ou de réduire les zones de décharge lorsque cela pourrait réduire sensiblement vos dépenses mensuelles. **Le Ministère ne modifie jamais automatiquement le zonage des décharges à cette fin.**
+
 4. **Réparation des cases fantômes de décharge :** corrige automatiquement un bogue du jeu où d’anciennes cases de décharge continuent d’être comptées et facturées comme des décharges actives. Cela passe par le mécanisme de zonage du jeu lui-même et n’a pas d’option distincte.
 
 Pour comprendre le fonctionnement de ces fonctions, il est important de distinguer **la production de déchets, la capacité de traitement, l’admission en décharge et le stockage à long terme**.
@@ -82,7 +85,7 @@ Le jeu déplace normalement environ 10 % de la quantité mensuelle de l’accord
 **Livraison quotidienne d’un accord sur les déchets (jeu de base)**
 
 ```math
-s = \operatorname{round}(0.1 \times A)
+s = \mathrm{round}(0.1 \times A)
 \qquad
 \text{tant que } A-U>0
 ```
@@ -252,7 +255,7 @@ Une décharge peut avoir beaucoup d’espace de stockage vide et pourtant ne plu
 ```math
 \text{admis} =
 \min\left(
-G,\ F,\ \operatorname{round}(5000 \times L \times e)-S
+G,\ F,\ \mathrm{round}(5000 \times L \times e)-S
 \right)
 ```
 
@@ -340,7 +343,7 @@ d =
 1,
 \min\left(
 1500,
-\operatorname{round}(0.07 \times \text{stock})
+\mathrm{round}(0.07 \times \text{stock})
 \right)
 \right)
 \right)
@@ -564,7 +567,7 @@ Cette capacité dépend :
 **Capacité de stockage d’une décharge (jeu de base)**
 
 ```math
-C = \operatorname{round}\left(\frac{T\times30000}{N}\right)
+C = \mathrm{round}\left(\frac{T\times30000}{N}\right)
 \qquad
 T_{\mathrm{cap}}=N\times C
 ```
@@ -985,7 +988,7 @@ Si l’utilisation indiquée est supérieure à ce que l’accord aurait pu livr
 **Test de lecture périmée**
 
 ```math
-U > (\text{jour du mois}-1)\times\operatorname{round}(0.1\times A)
+U > (\text{jour du mois}-1)\times\mathrm{round}(0.1\times A)
 ```
 
 Où :
@@ -1145,7 +1148,7 @@ Le Ministère utilise cette valeur pour estimer la capacité à un autre pourcen
 **Capacité de traitement projetée**
 
 ```math
-K(p)=\operatorname{round}\left(K_{\mathrm{act}}\times\frac{e(p)}{e_{\mathrm{act}}}\right)
+K(p)=\mathrm{round}\left(K_{\mathrm{act}}\times\frac{e(p)}{e_{\mathrm{act}}}\right)
 ```
 
 Où :
@@ -1173,7 +1176,7 @@ Le Ministère estime aussi la quantité de déchets que les décharges peuvent e
 V_0(p)=
 \max\left(
 0,\min\left(
-F,\operatorname{round}(5000\times L\times e(p))-S
+F,\mathrm{round}(5000\times L\times e(p))-S
 \right)
 \right)
 ```
@@ -1304,7 +1307,7 @@ Les dépenses de gestion des déchets augmentent proportionnellement au financem
 **Dépense mensuelle de gestion des déchets**
 
 ```math
-E(p)=\operatorname{round}\left(I\times\frac{p}{100}\right)
+E(p)=\mathrm{round}\left(I\times\frac{p}{100}\right)
 ```
 
 Où :
@@ -1620,7 +1623,7 @@ Un agrandissement peut aussi supprimer des cases fantômes qui coûtent déjà d
 Le Ministère recalcule aussi la capacité de stockage de la décharge :
 
 ```math
-C'=\operatorname{round}\left(\frac{T'\times30000}{N'}\right)
+C'=\mathrm{round}\left(\frac{T'\times30000}{N'}\right)
 \qquad
 T'_{\mathrm{cap}}=N'\times C'
 ```
@@ -1643,8 +1646,8 @@ Il recalcule aussi **le financement des déchets le moins cher requis après la 
 
 ```math
 \begin{aligned}
-E_0 &= \operatorname{round}\left(I\times\frac{p_0}{100}\right)\\
-E_1 &= \operatorname{round}\left(I'\times\frac{p_1}{100}\right)\\
+E_0 &= \mathrm{round}\left(I\times\frac{p_0}{100}\right)\\
+E_1 &= \mathrm{round}\left(I'\times\frac{p_1}{100}\right)\\
 \text{Économie} &= E_0-E_1
 \end{aligned}
 ```
@@ -2055,7 +2058,7 @@ Ces options sont aussi enregistrées dans le fichier de configuration des servic
 
 Les exemples suivants montrent comment le financement de la gestion des déchets, le stockage des décharges et les règles de sécurité du Ministère fonctionnent en pratique.
 
-Plusieurs exemples utilisent **Aqua**, une ville de test où le comportement des décharges du jeu a été mesuré.
+Plusieurs exemples utilisent une ville de test où le comportement des décharges du jeu a été mesuré.
 
 #### Exemple 1 : Une décharge avec beaucoup d’espace de stockage mais une admission mensuelle limitée
 
@@ -2159,7 +2162,7 @@ Cette protection évite que des statistiques de contrat périmées ne faussent l
 
 #### Exemple 3 : Comment les déchets stockés disparaissent avec le temps
 
-Cet exemple provient de la **ville de test Aqua**.
+Cet exemple provient de la **ville de test**.
 
 La décharge présente :
 
@@ -2209,9 +2212,9 @@ Le stockage d’une décharge n’est pas entièrement permanent. Une partie des
 
 Le Ministère utilise ce comportement lorsqu’il prédit la quantité de déchets qu’une décharge pourra contenir au fil du temps.
 
-#### Exemple 4 : Réparer les cases fantômes à Aqua
+#### Exemple 4 : Réparer les cases fantômes dans une ville de test
 
-Dans la ville de test Aqua, la décharge contenait **sept cases fantômes**.
+Dans la ville de test, la décharge contenait **sept cases fantômes**.
 
 Il s’agissait de cases que le jeu comptait encore comme faisant partie de la décharge alors qu’elles n’étaient plus réellement zonées en décharge.
 
@@ -2276,7 +2279,7 @@ Tous les résultats correspondaient à la prédiction du Ministère.
 
 **Mais les fantômes sont revenus après la réouverture de la ville.**
 
-Une copie d’Aqua sauvegardée après la réparation a recréé les mêmes sept cases fantômes lorsqu’elle a été rechargée.
+Une copie de la ville de test sauvegardée après la réparation a recréé les mêmes sept cases fantômes lorsqu’elle a été rechargée.
 
 Cela a confirmé le bogue de sauvegarde et de chargement du jeu décrit plus haut.
 
@@ -2286,7 +2289,7 @@ Le Ministère a pu les réparer à nouveau pendant la nouvelle session de la vil
 
 #### Exemple 5 : Un agrandissement qui fait économiser de l’argent, mais pas assez pour être recommandé
 
-Le Ministère a aussi testé l’agrandissement de la décharge d’Aqua.
+Le Ministère a aussi testé l’agrandissement de la décharge de la ville de test.
 
 Au départ, une rue longeait son bord droit.
 
@@ -2358,7 +2361,7 @@ Cela illustre pourquoi le Ministère ne recommande pas tous les changements de z
 
 #### Exemple 6 : Pourquoi le Ministère refuse parfois de réparer les fantômes
 
-Une autre expérience à Aqua a montré pourquoi la réparation des cases fantômes doit rester prudente.
+Une autre expérience dans la ville de test a montré pourquoi la réparation des cases fantômes doit rester prudente.
 
 La décharge d’origine comptait :
 
@@ -2465,7 +2468,7 @@ Le modèle de gestion des déchets du Ministère repose sur des observations dé
 #### Production de déchets et financement
 
 - **La production future de déchets est estimée.** Le Ministère utilise la production du mois précédent moins le recyclage et suppose que la quantité obtenue est produite uniformément sur les jours restants du mois en cours et du mois suivant. Il ne prédit pas la croissance future de la ville. Les changements sont pris en compte dès que de nouvelles informations sont disponibles.
-- **Le financement peut changer pendant le mois.** Les importations, les exportations et l’admission en décharge ne suivent pas un calendrier parfaitement uniforme. Le niveau de financement le moins cher peut donc évoluer au fil du mois. À Aqua, les décisions observées comprenaient **47 %, 63 % et 53 %** à différents moments. C’est un comportement attendu, pas nécessairement une anomalie.
+- **Le financement peut changer pendant le mois.** Les importations, les exportations et l’admission en décharge ne suivent pas un calendrier parfaitement uniforme. Le niveau de financement le moins cher peut donc évoluer au fil du mois. Dans la ville de test, les décisions observées comprenaient **47 %, 63 % et 53 %** à différents moments. C’est un comportement attendu, pas nécessairement une anomalie.
 - **Le Ministère utilise les courbes de gestion des déchets du jeu original.** Ses prédictions supposent la courbe d’efficacité standard, une admission en décharge de 5 000 unités par case et par mois, un stockage d’environ 30 000 unités par case, les règles de décomposition standard et un entretien de 5 § pour les cases vides. Les mods qui modifient ces mécanismes peuvent rendre les calculs inexacts. Si l’efficacité du jeu ne correspond pas à la valeur attendue, le Ministère cesse de modifier le financement plutôt que de poursuivre avec des données peu fiables.
 
 #### Prédire le mois suivant

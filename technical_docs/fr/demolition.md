@@ -361,7 +361,7 @@ Le Ministère convertit donc le nombre de mois sélectionné en jours.
 **Conversion du délai d’attente**
 
 ```math
-D=\operatorname{round}\left(\frac{M\times365}{12}\right)
+D=\mathrm{round}\left(\frac{M\times365}{12}\right)
 ```
 
 Où :
@@ -428,7 +428,7 @@ M_{\mathrm{affiché}}=
 \min\left(
 M_{\max},
 \max\left(
-1,\operatorname{round}\left(\frac{D\times12}{365}\right)
+1,\mathrm{round}\left(\frac{D\times12}{365}\right)
 \right)
 \right)
 ```

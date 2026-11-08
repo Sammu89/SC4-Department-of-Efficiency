@@ -425,7 +425,7 @@ The exact value depends on the buyer's available supply and how much surplus the
 **Monthly contract price (base game)**
 
 ```math
-P(q)=q\times\operatorname{clamp}\left(
+P(q)=q\times\mathrm{clamp}\left(
 u(1+m_{\min})+
 \frac{g(V/q)+g(R/S_{\mathrm{sup}})}{2}
 \,u(m_{\max}-m_{\min}),
@@ -733,7 +733,7 @@ Garbage contracts operate through daily deliveries.
 
 ```math
 \text{daily step}=
-\max\left(1,\operatorname{round}(0.1\times A)\right)
+\max\left(1,\mathrm{round}(0.1\times A)\right)
 ```
 
 The daily delivery continues while:
@@ -756,7 +756,7 @@ Consequently, **most garbage contracts deliver their entire monthly amount durin
 The daily quantity is:
 
 ```math
-\operatorname{round}(25004\times0.1)=2500
+\mathrm{round}(25004\times0.1)=2500
 ```
 
 After ten days, the game has delivered:
@@ -1004,7 +1004,7 @@ It considers **income, contract expenses and the cost of supplying the city's ow
 **Regional contract portfolio objective**
 
 ```math
-\max_x\ \operatorname{Net}(x)=
+\max_x\ \mathrm{Net}(x)=
 \sum_{i\in\mathrm{sell\text{-}like}}P_i(x_i\mid x)
 -
 \sum_{j\in\mathrm{buy\text{-}like}}P_j(x_j\mid x)
@@ -1216,7 +1216,7 @@ The portfolio calculation can also be understood by looking at a single contract
 The Department compares the payment received with the additional local operating cost.
 
 ```math
-\operatorname{Profit}(q)=
+\mathrm{Profit}(q)=
 P(q)-
 \left[
 C_{\mathrm{local}}(N+q)
@@ -1236,7 +1236,7 @@ The sale is profitable.
 The Department compares the contract price with the local expense it avoids.
 
 ```math
-\operatorname{Saving}(q)=
+\mathrm{Saving}(q)=
 \left[
 C_{\mathrm{local}}(N(0))
 -
@@ -1332,10 +1332,10 @@ Instead, the Department asks:
 
 ```math
 \Delta_k=
-\operatorname{Net}(x^*)
+\mathrm{Net}(x^*)
 -
 \max_{x:\,x_k=x_k^{\mathrm{now}}}
-\operatorname{Net}(x)
+\mathrm{Net}(x)
 ```
 
 Where:
@@ -2006,7 +2006,7 @@ Instead of rejecting every possible arrangement because it cannot satisfy the fu
 **Served demand during an emergency**
 
 ```math
-\operatorname{served}(B,S)=
+\mathrm{served}(B,S)=
 D-\max\left(
 0,\max(0,D-B)+S-C_{\max}
 \right)

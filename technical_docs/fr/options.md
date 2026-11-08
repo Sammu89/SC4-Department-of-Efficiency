@@ -5,9 +5,7 @@
 <a id="options"></a>
 ## H. Référence des options
 
-Ce chapitre explique comment ouvrir les réglages du Ministère et comment les changements de configuration sont enregistrés.
-
-Les descriptions détaillées de chaque option figurent dans les sections suivantes.
+Ce chapitre explique comment ouvrir les réglages du Ministère et comment les changements de configuration sont enregistrés. Les descriptions détaillées de chaque option figurent dans les sections suivantes.
 
 <a id="options-open"></a>
 ### Ouvrir la fenêtre des options
@@ -855,7 +853,7 @@ La conversion utilise :
 
 ```math
 \text{Jours}=
-\operatorname{round}\left(\frac{\text{Mois}\times365}{12}\right)
+\mathrm{round}\left(\frac{\text{Mois}\times365}{12}\right)
 ```
 
 Exemples :

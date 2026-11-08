@@ -5,9 +5,7 @@
 <a id="safety"></a>
 ## G. Sécurité, automatisation et prise de décision
 
-Le Ministère peut modifier des budgets, gérer des contrats régionaux, déblayer des bâtiments abandonnés et corriger certains problèmes de décharge.
-
-Comme ces actions touchent directement votre ville, **la protection des services essentiels et le respect de vos décisions doivent toujours passer avant les économies**.
+Le Ministère peut modifier des budgets, gérer des contrats régionaux, déblayer des bâtiments abandonnés et corriger certains problèmes de décharge. Comme ces actions touchent directement votre ville, **la protection des services essentiels et le respect de vos décisions doivent toujours passer avant les économies**.
 
 Ce chapitre explique les règles communes aux fonctions automatiques du Ministère :
 

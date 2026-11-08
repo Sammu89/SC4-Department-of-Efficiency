@@ -10,8 +10,11 @@ The Department helps your city manage garbage efficiently, keeping sanitation co
 It provides four separate functions:
 
 1. **Automatic sanitation funding:** Adjusts the sanitation budget to handle the city's garbage, including your chosen safety reserve.
+
 2. **Regional garbage contracts:** Manages garbage imports and exports when neighbor deal management is enabled. See [Neighbor Deals](deals.md#neighbor-deals).
+
 3. **Landfill size advice (optional):** Recommends expanding or reducing landfill areas when doing so could significantly lower your monthly expenses. **The Department never changes landfill zoning automatically for this purpose.**
+
 4. **Ghost landfill square repair:** Automatically corrects a game bug where some former landfill squares continue to be counted and charged as active landfill. This uses the game's own zoning mechanism and does not have a separate option.
 
 To understand how these features work, it is important to distinguish between **garbage production, treatment capacity, landfill intake and long-term storage**.
@@ -82,7 +85,7 @@ Instead, the game normally moves approximately 10% of the contract's monthly qua
 **Daily garbage contract delivery (base game)**
 
 ```math
-s = \operatorname{round}(0.1 \times A)
+s = \mathrm{round}(0.1 \times A)
 \qquad
 \text{while } A-U>0
 ```
@@ -252,7 +255,7 @@ A landfill may have plenty of empty storage space and still be unable to accept 
 ```math
 \text{taken} =
 \min\left(
-G,\ F,\ \operatorname{round}(5000 \times L \times e)-S
+G,\ F,\ \mathrm{round}(5000 \times L \times e)-S
 \right)
 ```
 
@@ -340,7 +343,7 @@ d =
 1,
 \min\left(
 1500,
-\operatorname{round}(0.07 \times \text{stock})
+\mathrm{round}(0.07 \times \text{stock})
 \right)
 \right)
 \right)
@@ -564,7 +567,7 @@ That capacity depends on:
 **Landfill storage capacity (base game)**
 
 ```math
-C = \operatorname{round}\left(\frac{T\times30000}{N}\right)
+C = \mathrm{round}\left(\frac{T\times30000}{N}\right)
 \qquad
 T_{\mathrm{cap}}=N\times C
 ```
@@ -985,7 +988,7 @@ If the reported usage is greater than the contract could possibly have delivered
 **Outdated reading test**
 
 ```math
-U > (\text{day of month}-1)\times\operatorname{round}(0.1\times A)
+U > (\text{day of month}-1)\times\mathrm{round}(0.1\times A)
 ```
 
 Where:
@@ -1145,7 +1148,7 @@ The Department uses that value to estimate what the capacity would be at another
 **Projected treatment capacity**
 
 ```math
-K(p)=\operatorname{round}\left(K_{\mathrm{now}}\times\frac{e(p)}{e_{\mathrm{now}}}\right)
+K(p)=\mathrm{round}\left(K_{\mathrm{now}}\times\frac{e(p)}{e_{\mathrm{now}}}\right)
 ```
 
 Where:
@@ -1173,7 +1176,7 @@ The Department also estimates how much more garbage the landfills can accept dur
 V_0(p)=
 \max\left(
 0,\min\left(
-F,\operatorname{round}(5000\times L\times e(p))-S
+F,\mathrm{round}(5000\times L\times e(p))-S
 \right)
 \right)
 ```
@@ -1304,7 +1307,7 @@ Sanitation expenses increase in proportion to funding.
 **Monthly sanitation expense**
 
 ```math
-E(p)=\operatorname{round}\left(I\times\frac{p}{100}\right)
+E(p)=\mathrm{round}\left(I\times\frac{p}{100}\right)
 ```
 
 Where:
@@ -1620,7 +1623,7 @@ An expansion can also remove ghost tiles already costing money, which may partia
 The Department also recalculates the landfill's storage capacity:
 
 ```math
-C'=\operatorname{round}\left(\frac{T'\times30000}{N'}\right)
+C'=\mathrm{round}\left(\frac{T'\times30000}{N'}\right)
 \qquad
 T'_{\mathrm{cap}}=N'\times C'
 ```
@@ -1643,8 +1646,8 @@ It also recalculates **the cheapest sanitation funding required after the propos
 
 ```math
 \begin{aligned}
-E_0 &= \operatorname{round}\left(I\times\frac{p_0}{100}\right)\\
-E_1 &= \operatorname{round}\left(I'\times\frac{p_1}{100}\right)\\
+E_0 &= \mathrm{round}\left(I\times\frac{p_0}{100}\right)\\
+E_1 &= \mathrm{round}\left(I'\times\frac{p_1}{100}\right)\\
 \text{Saving} &= E_0-E_1
 \end{aligned}
 ```
@@ -2055,7 +2058,7 @@ These options are also stored in the Department's utility configuration file:
 
 The following examples show how sanitation funding, landfill storage and the Department's safety rules work in practice.
 
-Several examples use **Aqua**, a test city where the game's landfill behavior was measured.
+Several examples use a test city where the game's landfill behavior was measured.
 
 #### Example 1: A landfill with plenty of storage but limited monthly intake
 
@@ -2159,7 +2162,7 @@ This protection prevents outdated contract statistics from causing incorrect san
 
 #### Example 3: How stored garbage disappears over time
 
-This example comes from the **Aqua test city**.
+This example comes from the **test city**.
 
 The landfill has:
 
@@ -2209,9 +2212,9 @@ Landfill storage is not completely permanent. Some stored garbage disappears eve
 
 The Department uses this behavior when predicting how much garbage a landfill can hold over time.
 
-#### Example 4: Repairing ghost tiles in Aqua
+#### Example 4: Repairing ghost tiles in a test city
 
-In the Aqua test city, the landfill contained **seven ghost tiles**.
+In the test city, the landfill contained **seven ghost tiles**.
 
 These were squares that the game still counted as part of the landfill even though they were no longer actually zoned as landfill.
 
@@ -2276,7 +2279,7 @@ Every result matched the Department's prediction.
 
 **But the ghosts returned after reopening the city.**
 
-A copy of Aqua saved after the repair recreated the same seven ghost tiles when loaded again.
+A copy of the test city saved after the repair recreated the same seven ghost tiles when loaded again.
 
 This confirmed the game's save/load bug described earlier.
 
@@ -2286,7 +2289,7 @@ The Department was able to repair them again during the new city session.
 
 #### Example 5: An expansion that saves money, but not enough to recommend
 
-The Department also tested expanding Aqua's landfill.
+The Department also tested expanding the test city's landfill.
 
 Initially, a street ran along its right-hand edge.
 
@@ -2358,7 +2361,7 @@ This illustrates why the Department does not recommend every technically benefic
 
 #### Example 6: Why the Department sometimes refuses to repair ghosts
 
-A different experiment in Aqua showed why ghost-tile repair must be conservative.
+A different experiment in the test city showed why ghost-tile repair must be conservative.
 
 The original landfill had:
 
@@ -2465,7 +2468,7 @@ The Department's sanitation model is based on detailed observations of SimCity 4
 #### Garbage production and funding
 
 - **Future garbage production is estimated.** The Department uses the previous month's production minus recycling and assumes that the resulting quantity is produced evenly over the remaining days of the current month and the next one. It does not predict future city growth. Changes are incorporated when new information becomes available.
-- **Funding can change during the month.** Garbage imports, exports and landfill intake do not follow a perfectly uniform schedule. The cheapest funding level may therefore change as the month progresses. In Aqua, observed decisions included **47%, 63% and 53%** at different times. This is expected behavior, not necessarily a fault.
+- **Funding can change during the month.** Garbage imports, exports and landfill intake do not follow a perfectly uniform schedule. The cheapest funding level may therefore change as the month progresses. In the test city, observed decisions included **47%, 63% and 53%** at different times. This is expected behavior, not necessarily a fault.
 - **The Department uses the original game's sanitation curves.** Its predictions assume the standard efficiency curve, landfill intake of 5,000 units per square per month, storage of approximately 30,000 units per square, standard decay rules and §5 maintenance for empty squares. Mods that change these mechanics can make the calculations inaccurate. If the game's efficiency does not match the expected value, the Department stops making funding changes rather than continuing with unreliable data.
 
 #### Predicting the following month

@@ -196,7 +196,7 @@ El coste de funcionamiento cambia en proporción al porcentaje de financiación.
 **Gasto mensual de la central (juego base)**
 
 ```math
-E(f) = \operatorname{round}\left(C \times \frac{f}{100}\right)
+E(f) = \mathrm{round}\left(C \times \frac{f}{100}\right)
 ```
 
 Donde:
@@ -799,7 +799,7 @@ El Ministerio estima qué parte del estado útil restante de la central se consu
 **Coste mensual estimado de desgaste**
 
 ```math
-W(f) = \operatorname{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
+W(f) = \mathrm{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
 ```
 
 Esta fórmula se aplica mientras el estado de la central esté por encima de su umbral de envejecimiento. En caso contrario, el coste de desgaste modelado es cero.
@@ -1197,11 +1197,11 @@ Juntas aportan **6.024 unidades**, suficientes para cumplir el requisito.
 Los gastos mensuales son:
 
 ```math
-\text{Coal} = \operatorname{round}(253\times0.91)=230
+\text{Coal} = \mathrm{round}(253\times0.91)=230
 ```
 
 ```math
-\text{Gas} = \operatorname{round}(230\times0.61)=140
+\text{Gas} = \mathrm{round}(230\times0.61)=140
 ```
 
 <grid columns={2} gap={3}>

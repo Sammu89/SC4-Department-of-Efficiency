@@ -196,7 +196,7 @@ The operating cost changes in proportion to the funding percentage.
 **Monthly plant expense (base game)**
 
 ```math
-E(f) = \operatorname{round}\left(C \times \frac{f}{100}\right)
+E(f) = \mathrm{round}\left(C \times \frac{f}{100}\right)
 ```
 
 Where:
@@ -799,7 +799,7 @@ The Department estimates how much of the plant's remaining useful condition is c
 **Estimated monthly wear cost**
 
 ```math
-W(f) = \operatorname{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
+W(f) = \mathrm{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
 ```
 
 This formula applies while the plant's condition is above its aged threshold. Otherwise, the modeled wear cost is zero.
@@ -1197,11 +1197,11 @@ Together, they provide **6,024 units**, enough to satisfy the requirement.
 Monthly expenses are:
 
 ```math
-\text{Coal} = \operatorname{round}(253\times0.91)=230
+\text{Coal} = \mathrm{round}(253\times0.91)=230
 ```
 
 ```math
-\text{Gas} = \operatorname{round}(230\times0.61)=140
+\text{Gas} = \mathrm{round}(230\times0.61)=140
 ```
 
 <grid columns={2} gap={3}>

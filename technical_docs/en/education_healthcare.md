@@ -5,9 +5,7 @@
 <a id="education-healthcare"></a>
 ## A. Education & Healthcare
 
-The Department automatically adjusts the funding of each school, college, university, library, museum, clinic and hospital it can manage.
-
-Its goal is simple: **provide enough capacity for everyone who needs the service, with a safety margin, while spending as little as possible.**
+The Department automatically adjusts the funding of each school, college, university, library, museum, clinic and hospital it can manage. Its goal is simple: **provide enough capacity for everyone who needs the service, with a safety margin, while spending as little as possible.**
 
 Each building is managed individually. A school with 200 students does not need the same budget as one with 2,000 students.
 

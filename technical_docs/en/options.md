@@ -5,9 +5,7 @@
 <a id="options"></a>
 ## H. Option Reference
 
-This chapter explains how to open the Department's settings and how configuration changes are saved.
-
-The detailed descriptions of individual options are provided in the following sections.
+This chapter explains how to open the Department's settings and how configuration changes are saved. The detailed descriptions of individual options are provided in the following sections.
 
 <a id="options-open"></a>
 ### Opening the options window
@@ -855,7 +853,7 @@ The conversion uses:
 
 ```math
 \text{Days}=
-\operatorname{round}\left(\frac{\text{Months}\times365}{12}\right)
+\mathrm{round}\left(\frac{\text{Months}\times365}{12}\right)
 ```
 
 Examples:

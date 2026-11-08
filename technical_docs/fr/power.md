@@ -196,7 +196,7 @@ Le coût de fonctionnement varie proportionnellement au pourcentage de financeme
 **Dépense mensuelle d’une centrale (jeu de base)**
 
 ```math
-E(f) = \operatorname{round}\left(C \times \frac{f}{100}\right)
+E(f) = \mathrm{round}\left(C \times \frac{f}{100}\right)
 ```
 
 Où :
@@ -799,7 +799,7 @@ Le Ministère estime quelle part de l’état utile restant de la centrale est c
 **Coût d’usure mensuel estimé**
 
 ```math
-W(f) = \operatorname{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
+W(f) = \mathrm{round}\left(P \times \frac{\min\left(A(f),\ \text{Cond}-T\right)}{1-T}\right)
 ```
 
 Cette formule s’applique tant que l’état de la centrale est au-dessus de son seuil de vieillissement. Sinon, le coût d’usure modélisé est nul.
@@ -1197,11 +1197,11 @@ Ensemble, elles fournissent **6 024 unités**, ce qui suffit pour satisfaire l�
 Les dépenses mensuelles sont :
 
 ```math
-\text{Charbon} = \operatorname{round}(253\times0.91)=230
+\text{Charbon} = \mathrm{round}(253\times0.91)=230
 ```
 
 ```math
-\text{Gaz} = \operatorname{round}(230\times0.61)=140
+\text{Gaz} = \mathrm{round}(230\times0.61)=140
 ```
 
 <grid columns={2} gap={3}>

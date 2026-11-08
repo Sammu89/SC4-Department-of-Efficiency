@@ -425,7 +425,7 @@ El valor exacto depende del suministro disponible del comprador y del excedente 
 **Precio mensual del contrato (juego base)**
 
 ```math
-P(q)=q\times\operatorname{clamp}\left(
+P(q)=q\times\mathrm{clamp}\left(
 u(1+m_{\min})+
 \frac{g(V/q)+g(R/S_{\mathrm{sup}})}{2}
 \,u(m_{\max}-m_{\min}),
@@ -733,7 +733,7 @@ Los contratos de basura funcionan mediante entregas diarias.
 
 ```math
 \text{paso diario}=
-\max\left(1,\operatorname{round}(0.1\times A)\right)
+\max\left(1,\mathrm{round}(0.1\times A)\right)
 ```
 
 La entrega diaria continúa mientras:
@@ -756,7 +756,7 @@ Por consiguiente, **la mayoría de los contratos de basura entregan toda su cant
 La cantidad diaria es:
 
 ```math
-\operatorname{round}(25004\times0.1)=2500
+\mathrm{round}(25004\times0.1)=2500
 ```
 
 Después de diez días, el juego ha entregado:
@@ -1004,7 +1004,7 @@ Considera **conjuntamente los ingresos, los gastos de los contratos y el coste d
 **Objetivo de la cartera de contratos regionales**
 
 ```math
-\max_x\ \operatorname{Net}(x)=
+\max_x\ \mathrm{Net}(x)=
 \sum_{i\in\mathrm{sell\text{-}like}}P_i(x_i\mid x)
 -
 \sum_{j\in\mathrm{buy\text{-}like}}P_j(x_j\mid x)
@@ -1216,7 +1216,7 @@ El cálculo de la cartera también se puede entender mirando un solo contrato.
 El Ministerio compara el pago recibido con el coste de explotación local adicional.
 
 ```math
-\operatorname{Profit}(q)=
+\mathrm{Profit}(q)=
 P(q)-
 \left[
 C_{\mathrm{local}}(N+q)
@@ -1236,7 +1236,7 @@ La venta es rentable.
 El Ministerio compara el precio del contrato con el gasto local que evita.
 
 ```math
-\operatorname{Saving}(q)=
+\mathrm{Saving}(q)=
 \left[
 C_{\mathrm{local}}(N(0))
 -
@@ -1332,10 +1332,10 @@ En su lugar, el Ministerio se pregunta:
 
 ```math
 \Delta_k=
-\operatorname{Net}(x^*)
+\mathrm{Net}(x^*)
 -
 \max_{x:\,x_k=x_k^{\mathrm{now}}}
-\operatorname{Net}(x)
+\mathrm{Net}(x)
 ```
 
 Donde:
@@ -2006,7 +2006,7 @@ En lugar de rechazar todos los arreglos posibles porque no pueden cubrir el requ
 **Demanda atendida durante una emergencia**
 
 ```math
-\operatorname{served}(B,S)=
+\mathrm{served}(B,S)=
 D-\max\left(
 0,\max(0,D-B)+S-C_{\max}
 \right)

@@ -5,9 +5,7 @@
 <a id="safety"></a>
 ## G. Seguridad, automatización y toma de decisiones
 
-El Ministerio puede cambiar presupuestos, gestionar contratos regionales, despejar edificios abandonados y corregir ciertos problemas de vertederos.
-
-Como estas acciones afectan directamente a tu ciudad, **proteger los servicios esenciales y respetar tus decisiones debe pasar siempre por delante de ahorrar dinero**.
+El Ministerio puede cambiar presupuestos, gestionar contratos regionales, despejar edificios abandonados y corregir ciertos problemas de vertederos. Como estas acciones afectan directamente a tu ciudad, **proteger los servicios esenciales y respetar tus decisiones debe pasar siempre por delante de ahorrar dinero**.
 
 Este capítulo explica las reglas que comparten las funciones automáticas del Ministerio:
 

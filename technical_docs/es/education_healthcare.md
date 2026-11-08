@@ -5,9 +5,7 @@
 <a id="education-healthcare"></a>
 ## A. Educación y sanidad
 
-El Ministerio ajusta automáticamente la financiación de cada escuela, instituto, universidad, biblioteca, museo, clínica y hospital que puede gestionar.
-
-Su objetivo es sencillo: **ofrecer capacidad suficiente para todos los que necesitan el servicio, con un margen de seguridad, gastando lo mínimo posible.**
+El Ministerio ajusta automáticamente la financiación de cada escuela, instituto, universidad, biblioteca, museo, clínica y hospital que puede gestionar. Su objetivo es sencillo: **ofrecer capacidad suficiente para todos los que necesitan el servicio, con un margen de seguridad, gastando lo mínimo posible.**
 
 Cada edificio se gestiona de forma individual. Una escuela con 200 alumnos no necesita el mismo presupuesto que una con 2.000.
 
