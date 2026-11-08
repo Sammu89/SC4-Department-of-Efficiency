@@ -279,7 +279,7 @@ The build downloads [gzcom-dll](https://github.com/nsgomez/gzcom-dll) at a fixed
 
 - **gzcom-dll**, by Nelson Gomez (simmaster07), with contributions from Nicholas Hayes (Null 45), Casper Van Gheluwe, memo and others (see its [repository](https://github.com/nsgomez/gzcom-dll)), used under the LGPL-2.1-or-later license and statically linked into the DLL. The library is not bundled: the build downloads the exact revision from its original repository (see [Source code](#source-code)); its copyright notices and the license text are in [licenses/gzcom-dll.txt](licenses/gzcom-dll.txt) and [licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt). You may modify the library and rebuild the plugin with your version.
 
-**Techniques, documentation and examples consulted** (no code was copied from them; their authors are not co-authors of Department of Efficiency):
+**Techniques, documentation and examples consulted**:
 
 - Nicholas Hayes (0xC0000054 / Null 45), for SimCity 4 DLL research, documentation and open examples: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. The options window, the ordinance and the notice file follow mechanisms published in his projects sc4-region-census, sc4-humane-society-ordinance and sc4-lua-extension-example (MIT license); game commands follow sc4-auto-run-cheats and sc4-game-command-documentation.
 
