@@ -22,11 +22,14 @@ The table describes addresses whose roles have been identified in the research. 
 | Civic queries | `0x004C81B0` | Hospital patients query handler | Static mapping and runtime comparison |
 | Civic queries | `0x006F8360` | Get occupant funding percentages | Static mapping; readback caveats |
 | Civic queries | `0x006F8290` | Set occupant funding percentages | Static mapping |
+| Civic queries | `0x006FA280` | Calculate the strike roll using the facility coverage response curve | Static mapping |
 | Budget and power | `0x006AC1B0` | Department funding setter entry | Static mapping and water runtime test |
 | Budget and power | `0x006AB810` | Department funding setter implementation | Static mapping and water runtime test |
 | Budget and power | `0x006EB520` | Read a power plant funding percentage | Static mapping |
 | Budget and power | `0x006EB580` | Set a power plant funding percentage | Static mapping and runtime test |
 | Budget and power | `0x006EB5F0` | Power plant efficiency calculation | Static mapping and runtime test |
+| Budget and power | `0x006EB2F0` | Read a power plant’s nominal monthly generation cost before applying its funding percentage | Static mapping and runtime comparison |
+| Budget and power | `0x006EC8F0` | Update power plant aging | Static mapping |
 | Sanitation | `0x006E3340` | Get garbage supply | Static mapping |
 | Sanitation | `0x006E32E0` | Add to garbage supply | Static mapping |
 | Sanitation | `0x006E4F10` | Get landfill tile capacity | Static mapping |
@@ -43,6 +46,7 @@ The table describes addresses whose roles have been identified in the research. 
 | Sanitation | `0x006E7B60` | Monthly garbage accounting rollover | Static mapping |
 | Sanitation | `0x006E3820` | Garbage disposal pipeline | Static mapping |
 | Sanitation | `0x006E4300` | Per-building treatment capacity calculation | Static mapping |
+| Sanitation | `0x006E4F20` | Read the amount of garbage abducted during the previous month | Static mapping |
 | Landfills | `0x006B8C70` | Landfill tuning loader | Static mapping |
 | Landfills | `0x006B91D0` | Monthly landfill developer update | Static mapping |
 | Landfills | `0x006BD390` | Monthly processing of one landfill zone | Static mapping |
@@ -54,6 +58,9 @@ The table describes addresses whose roles have been identified in the research. 
 | Landfills | `0x006BAB30` | Get count of tiles in a zone | Static mapping and runtime measurements |
 | Landfills | `0x00AB1610` | Landfill zone vtable (data) | Guarded object identification |
 | Landfills | `0x00AB15DC` | Landfill cell-record vtable (data) | Guarded object identification |
+| Landfills | `0x006B9239` | Distribute the monthly supply among landfill zones and update available capacity | Static mapping |
+| Landfills | `0x006B96E0` | Merge landfill zones when zoning overlaps them | Static mapping |
+| Landfills | `0x006BC150` | Add tiles to a landfill zone and rebuild its cell grid | Static mapping and runtime measurements |
 | Neighbor deals | `0x006D1FC0` | Find a connection suitable for a deal | Static mapping |
 | Neighbor deals | `0x006CF780` | Propose a deal | Static mapping |
 | Neighbor deals | `0x006D21A0` | Generate deal proposals | Static mapping |
@@ -71,22 +78,14 @@ The table describes addresses whose roles have been identified in the research. 
 | Neighbor deals | `0x0078BCA0` | Neighbor deals window message handler | Static mapping |
 | Neighbor deals | `0x0077E600` | Build neighbor deals window | Static mapping |
 | Neighbor deals | `0x00781C90` | Refresh neighbor deal rows | Static mapping |
-| Other | `0x006CAE30` | Water shortage icon decision for a lot | Static mapping; see runtime caveat |
-| Other | `0x006CAF27` | Water shortage icon conditional patch site | Static mapping; guarded patch |
-| Other | `0x0040E9B0` | Retire an advisor notice | Static analysis and measured flags |
-
-| Civic queries | `0x006FA280` | Calculate the strike roll using the facility coverage response curve | Static mapping |
-| Budget and power | `0x006EB2F0` | Read a power plant’s nominal monthly generation cost before applying its funding percentage | Static mapping and runtime comparison |
-| Budget and power | `0x006EC8F0` | Update power plant aging | Static mapping |
-| Sanitation | `0x006E4F20` | Read the amount of garbage abducted during the previous month | Static mapping |
-| Landfills | `0x006B9239` | Distribute the monthly supply among landfill zones and update available capacity | Static mapping |
-| Landfills | `0x006B96E0` | Merge landfill zones when zoning overlaps them | Static mapping |
-| Landfills | `0x006BC150` | Add tiles to a landfill zone and rebuild its cell grid | Static mapping and runtime measurements |
 | Neighbor deals | `0x004AA200` | Recalculate a regional city’s import and export flows from its deal list | Static mapping |
 | Neighbor deals | `0x004AA0E0` | Add one deal’s contribution to a regional city’s import and export flows | Static mapping |
 | Neighbor deals | `0x006CF860` | Sum monthly income from eligible neighbor deals | Static mapping |
 | Neighbor deals | `0x006CF8D0` | Sum monthly expenses from eligible neighbor deals | Static mapping |
 | Neighbor deals | `0x0077DAB0` | Build the quantity choices for a neighbor deal row | Static mapping |
+| Other | `0x006CAE30` | Water shortage icon decision for a lot | Static mapping; see runtime caveat |
+| Other | `0x006CAF27` | Water shortage icon conditional patch site | Static mapping; guarded patch |
+| Other | `0x0040E9B0` | Retire an advisor notice | Static analysis and measured flags |
 
 ## References in the published source
 
