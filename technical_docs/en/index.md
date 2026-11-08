@@ -36,4 +36,6 @@ This guide explains how SimCity 4 works behind the scenes and how the Department
   * [Advisor notices](safety.md#notices)
 * [H. Option reference](options.md#options)
 
+* [I. Game executable address reference](../en/game_addresses.md)
+
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

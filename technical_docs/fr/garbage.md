@@ -5,6 +5,8 @@
 <a id="garbage-landfills"></a>
 ## D. Déchets et décharges
 
+Les adresses de l’exécutable liées à ce chapitre figurent dans la [référence des adresses du jeu](../en/game_addresses.md) (en anglais).
+
 Le Ministère aide votre ville à gérer efficacement ses déchets, en gardant les coûts de la gestion des déchets aussi bas que possible sans laisser les ordures s’accumuler inutilement.
 
 Il assure quatre fonctions distinctes :

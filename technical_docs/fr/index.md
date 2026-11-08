@@ -36,4 +36,6 @@ Ce guide explique comment SimCity 4 fonctionne en coulisses et comment le Minist
   * [Avis des conseillers](safety.md#notices)
 * [H. Référence des options](options.md#options)
 
+* [I. Référence des adresses de l’exécutable](../en/game_addresses.md) (en anglais)
+
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

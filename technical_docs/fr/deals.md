@@ -5,6 +5,8 @@
 <a id="neighbor-deals"></a>
 ## E. Accords avec les voisins
 
+Les adresses de l’exécutable liées à ce chapitre figurent dans la [référence des adresses du jeu](../en/game_addresses.md) (en anglais).
+
 Le Ministère peut gérer automatiquement les **contrats d’électricité, d’eau et de déchets entre votre ville et ses voisines**.
 
 Il décide quand :

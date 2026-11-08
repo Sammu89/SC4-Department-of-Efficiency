@@ -5,6 +5,8 @@
 <a id="water"></a>
 ## C. Water
 
+Reverse-engineered executable addresses related to this chapter are listed in the [game address reference](../en/game_addresses.md).
+
 The Department automatically manages your city's **water supply budget**, ensuring that enough water is available for your buildings while keeping operating costs as low as possible.
 
 It considers:

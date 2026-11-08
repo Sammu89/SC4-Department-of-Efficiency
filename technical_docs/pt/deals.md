@@ -5,6 +5,8 @@
 <a id="neighbor-deals"></a>
 ## E. Acordos com os vizinhos
 
+Os endereços do executável relacionados com este capítulo constam da [referência de endereços do jogo](../en/game_addresses.md) (em inglês).
+
 O Ministério pode gerir automaticamente os **contratos de eletricidade, água e lixo entre a sua cidade e as cidades vizinhas**.
 
 Decide quando:

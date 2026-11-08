@@ -5,6 +5,8 @@
 <a id="garbage-landfills"></a>
 ## D. Lixo e aterros
 
+Os endereços do executável relacionados com este capítulo constam da [referência de endereços do jogo](../en/game_addresses.md) (em inglês).
+
 O Ministério ajuda a gerir o lixo da cidade de forma eficiente, mantendo os custos de saneamento o mais baixos possível sem deixar que os resíduos se acumulem desnecessariamente.
 
 Oferece quatro funções distintas:

@@ -5,6 +5,8 @@
 <a id="power"></a>
 ## B. Électricité
 
+Les adresses de l’exécutable liées à ce chapitre figurent dans la [référence des adresses du jeu](../en/game_addresses.md) (en anglais).
+
 Le Ministère gère automatiquement **chaque centrale électrique individuellement**, en ajustant son financement pour fournir assez d’électricité à la ville tout en gardant les coûts de fonctionnement aussi bas que possible.
 
 Il prend en compte :

@@ -5,6 +5,8 @@
 <a id="power"></a>
 ## B. Eletricidade
 
+Os endereços do executável relacionados com este capítulo constam da [referência de endereços do jogo](../en/game_addresses.md) (em inglês).
+
 O Ministério gere automaticamente **cada central elétrica individualmente**, ajustando o seu financiamento para dar eletricidade suficiente à cidade e manter os custos de funcionamento o mais baixos possível.
 
 Tem em conta:

@@ -5,6 +5,8 @@
 <a id="garbage-landfills"></a>
 ## D. Basura y vertederos
 
+Las direcciones del ejecutable relacionadas con este capítulo figuran en la [referencia de direcciones del juego](../en/game_addresses.md) (en inglés).
+
 El Ministerio ayuda a tu ciudad a gestionar la basura con eficiencia, manteniendo los costes de limpieza lo más bajos posible sin dejar que los residuos se acumulen de forma innecesaria.
 
 Ofrece cuatro funciones independientes:

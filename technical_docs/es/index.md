@@ -36,4 +36,6 @@ Esta guía explica cómo funciona SimCity 4 entre bambalinas y cómo toma el Min
   * [Avisos de los asesores](safety.md#notices)
 * [H. Referencia de opciones](options.md#options)
 
+* [I. Referencia de direcciones del ejecutable](../en/game_addresses.md) (en inglés)
+
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

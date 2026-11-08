@@ -5,6 +5,8 @@
 <a id="neighbor-deals"></a>
 ## E. Neighbor Deals
 
+Reverse-engineered executable addresses related to this chapter are listed in the [game address reference](../en/game_addresses.md).
+
 The Department can automatically manage **power, water and garbage contracts between your city and its neighbors**.
 
 It decides when to:

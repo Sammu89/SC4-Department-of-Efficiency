@@ -36,4 +36,6 @@ Este guia explica como funciona o SimCity 4 nos bastidores e como o Ministério 
   * [Avisos dos conselheiros](safety.md#notices)
 * [H. Referência das opções](options.md#options)
 
+* [I. Referência dos endereços do executável](../en/game_addresses.md) (em inglês)
+
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

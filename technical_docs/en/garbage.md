@@ -5,6 +5,8 @@
 <a id="garbage-landfills"></a>
 ## D. Garbage & Landfills
 
+Reverse-engineered executable addresses related to this chapter are listed in the [game address reference](../en/game_addresses.md).
+
 The Department helps your city manage garbage efficiently, keeping sanitation costs as low as possible without allowing waste to accumulate unnecessarily.
 
 It provides four separate functions:

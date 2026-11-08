@@ -5,6 +5,8 @@
 <a id="water"></a>
 ## C. Água
 
+Os endereços do executável relacionados com este capítulo constam da [referência de endereços do jogo](../en/game_addresses.md) (em inglês).
+
 O Ministério gere automaticamente o **orçamento de abastecimento de água** da cidade, garantindo que há água suficiente para os edifícios e mantendo os custos operacionais o mais baixos possível.
 
 Tem em conta:

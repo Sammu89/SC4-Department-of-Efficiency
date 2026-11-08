@@ -5,6 +5,8 @@
 <a id="water"></a>
 ## C. Eau
 
+Les adresses de l’exécutable liées à ce chapitre figurent dans la [référence des adresses du jeu](../en/game_addresses.md) (en anglais).
+
 Le Ministère gère automatiquement le **budget d’approvisionnement en eau** de votre ville, afin de garantir qu’il y a assez d’eau pour vos bâtiments tout en maintenant les coûts de fonctionnement aussi bas que possible.
 
 Il tient compte de :

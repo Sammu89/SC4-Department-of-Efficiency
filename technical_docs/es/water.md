@@ -5,6 +5,8 @@
 <a id="water"></a>
 ## C. Agua
 
+Las direcciones del ejecutable relacionadas con este capítulo figuran en la [referencia de direcciones del juego](../en/game_addresses.md) (en inglés).
+
 El Ministerio gestiona automáticamente el **presupuesto del suministro de agua** de tu ciudad, asegurándose de que haya agua suficiente para tus edificios y manteniendo los costes de funcionamiento lo más bajos posible.
 
 Tiene en cuenta:

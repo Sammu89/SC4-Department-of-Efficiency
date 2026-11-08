@@ -5,6 +5,8 @@
 <a id="neighbor-deals"></a>
 ## E. Acuerdos con vecinos
 
+Las direcciones del ejecutable relacionadas con este capítulo figuran en la [referencia de direcciones del juego](../en/game_addresses.md) (en inglés).
+
 El Ministerio puede gestionar automáticamente los **contratos de electricidad, agua y basura entre tu ciudad y sus vecinas**.
 
 Decide cuándo:

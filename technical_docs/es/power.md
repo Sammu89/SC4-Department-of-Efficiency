@@ -5,6 +5,8 @@
 <a id="power"></a>
 ## B. Electricidad
 
+Las direcciones del ejecutable relacionadas con este capítulo figuran en la [referencia de direcciones del juego](../en/game_addresses.md) (en inglés).
+
 El Ministerio gestiona automáticamente **cada central eléctrica de forma individual**, ajustando su financiación para ofrecer electricidad suficiente a la ciudad con los costes de funcionamiento más bajos posibles.
 
 Tiene en cuenta:

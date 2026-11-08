@@ -5,6 +5,8 @@
 <a id="power"></a>
 ## B. Power
 
+Reverse-engineered executable addresses related to this chapter are listed in the [game address reference](../en/game_addresses.md).
+
 The Department automatically manages **each power plant individually**, adjusting its funding to provide enough power for the city while keeping operating costs as low as possible.
 
 It considers:
