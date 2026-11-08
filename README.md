@@ -188,11 +188,11 @@ All screenshots show the English version of the game.
 
 ## Requirements and compatibility
 
-- **SimCity 4 Deluxe, Steam edition, game version 1.1.641.0, on Windows.** This is the supported version; the Department stays inactive on other versions.
+- **SimCity 4 Deluxe, Steam edition, game version 1.1.641.0, on Windows.** This is the tested version; the Department is untested on other versions.
 
 - **No other mod, installer or external application is required.**
 
-- **Tested and compatible with these mods** (versions tested):
+- **Tested and compatible with these mods**:
 
   - Network Addon Mod (NAM) — 1.3.1
   - Colossus Addon Mod (CAM) — 3.1.1
