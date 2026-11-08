@@ -220,7 +220,7 @@ All screenshots show the English version of the game.
   - Seasonal Flora Patch — 2.1
   - No Maxis I-D, I-M e I-HT — 2.0
 
-- **Recommended:** add `-CPUCount:1` in **Steam → Library → SimCity 4 Deluxe → Properties → Launch Options**. This helped stability in long sessions on the author's computer.
+- **Recommended:** add `-CPUCount:1` in **Steam → Library → SimCity 4 Deluxe → Properties → Launch Options**. This helped stability in long sessions on my computer.
 
 - **Ten in-game languages:** English, Portuguese, French, German, Spanish, Italian, Dutch, Danish, Swedish and Polish. The Department follows the language of your game automatically.
 
@@ -238,7 +238,7 @@ All screenshots show the English version of the game.
 
 ## Known limitations
 
-- **Compatibility:** only the Windows Steam build of SimCity 4 Deluxe **1.1.641.0** is supported. Other game versions remain inactive.
+- **Compatibility:** I tested the Windows Steam build of SimCity 4 Deluxe **1.1.641.0**. Other game versions have not been tested.
 
 - **Landfill advice:** requires exactly one landfill zone. In cities with multiple landfills, the Department can still repair eligible bugged 'ghost tiles' but does not recommend size changes.
 
@@ -259,13 +259,13 @@ The build downloads [gzcom-dll](https://github.com/nsgomez/gzcom-dll) at a fixed
 
 ## License
 
-- The original code of Department of Efficiency (the files in [`source/`](source/)) was written by **Sammu89** and is released under the **GNU General Public License, version 3 only** (GPL-3.0-only). The full text is in [LICENSE](LICENSE). You may study, modify and redistribute it under the GPLv3: keep the copyright notices and credits, mark your changes, and release your version under the same license. Please do not present modified versions as official versions by the author.
+- The original code of Department of Efficiency (the files in [`source/`](source/)) was written by me, **Sammu89**, and is released under the **GNU General Public License, version 3 only** (GPL-3.0-only). The full text is in [LICENSE](LICENSE). You may study, modify and redistribute it under the GPLv3: keep the copyright notices and credits, mark your changes, and release your version under the same license. Please do not present modified versions as my official versions.
 
 - The documentation (these READMEs and the files in [`technical_docs/`](technical_docs/)) and the texts written for this project (including those in the three INI files and the ones compiled into `DepartmentEfficiency.dat`), together with their original translations, are released under the same license, GPL-3.0-only.
 
 - **gzcom-dll** is not covered by this license: it keeps its own license, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), and is downloaded from its original repository when you build.
 
-- **SimCity 4** and its original resources belong to Electronic Arts / Maxis. **Department of Efficiency** is an unofficial fan-made mod, independent of EA and not endorsed by it. Four of the files in `release/Department of Efficiency/` contain scripts and interface definitions derived from the game's own resources, and the screenshots show the game: these are not the author's property, they are not covered by the GPL, and all rights to them remain with their owners. The same applies to any other third-party material.
+- **SimCity 4** and its original resources belong to Electronic Arts / Maxis. **Department of Efficiency** is an unofficial fan-made mod, independent of EA and not endorsed by it. Four of the files in `release/Department of Efficiency/` contain scripts and interface definitions derived from the game's own resources, and the screenshots show the game: these are not my property, they are not covered by the GPL, and all rights to them remain with their owners. The same applies to any other third-party material.
 
 <a id="credits"></a>
 

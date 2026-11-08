@@ -188,7 +188,7 @@ Wszystkie zrzuty ekranu pokazują angielską wersję gry.
 
 ## Wymagania i zgodność
 
-- **SimCity 4 Deluxe, wersja Steam, wersja gry 1.1.641.0, w systemie Windows.** To obsługiwana wersja; w innych wersjach Ministerstwo pozostaje nieaktywne.
+- **SimCity 4 Deluxe, wersja Steam, wersja gry 1.1.641.0, w systemie Windows.** Przetestowałem Ministerstwo na tej wersji; inne wersje nie zostały przetestowane.
 
 - **Nie jest potrzebny żaden inny mod, instalator ani zewnętrzna aplikacja.**
 
@@ -220,7 +220,7 @@ Wszystkie zrzuty ekranu pokazują angielską wersję gry.
   - Seasonal Flora Patch — 2.1
   - No Maxis I-D, I-M e I-HT — 2.0
 
-- **Zalecane:** dodaj `-CPUCount:1` w **Steam → Biblioteka → SimCity 4 Deluxe → Właściwości → Opcje uruchamiania**. Poprawiło to stabilność podczas długich sesji na komputerze autora.
+- **Zalecane:** dodaj `-CPUCount:1` w **Steam → Biblioteka → SimCity 4 Deluxe → Właściwości → Opcje uruchamiania**. Poprawiło to stabilność podczas długich sesji na moim komputerze.
 
 - **Dziesięć języków w grze:** angielski, portugalski, francuski, niemiecki, hiszpański, włoski, niderlandzki, duński, szwedzki i polski. Ministerstwo automatycznie dopasowuje się do języka Twojej gry.
 
@@ -238,7 +238,7 @@ Wszystkie zrzuty ekranu pokazują angielską wersję gry.
 
 ## Znane ograniczenia
 
-- **Zgodność:** obsługiwana jest tylko wersja **1.1.641.0** SimCity 4 Deluxe dla Windows (Steam). Inne wersje gry pozostają nieaktywne.
+- **Zgodność:** przetestowałem wersję **1.1.641.0** SimCity 4 Deluxe dla Windows (Steam). Inne wersje gry nie zostały przetestowane.
 
 - **Porada o wysypisku:** wymaga dokładnie jednej strefy wysypiska. W miastach z wieloma wysypiskami Ministerstwo nadal może naprawiać kwalifikujące się błędne „pola-widma”, ale nie zaleca zmian rozmiaru.
 
@@ -259,13 +259,13 @@ Podczas budowania pobierana jest biblioteka [gzcom-dll](https://github.com/nsgom
 
 ## Licencja
 
-- Oryginalny kod Department of Efficiency (pliki w [`source/`](source/)) napisał **Sammu89** i jest on udostępniany na licencji **GNU General Public License, wersja 3 wyłącznie** (GPL-3.0-only). Pełny tekst znajduje się w [LICENSE](LICENSE). Możesz go studiować, modyfikować i redystrybuować na warunkach GPLv3: zachowaj informacje o prawach autorskich i podziękowania, oznacz swoje zmiany i udostępnij swoją wersję na tej samej licencji. Nie przedstawiaj zmodyfikowanych wersji jako oficjalnych wersji autora.
+- Oryginalny kod Department of Efficiency (pliki w [`source/`](source/)) napisałem ja, **Sammu89** i jest on udostępniany na licencji **GNU General Public License, wersja 3 wyłącznie** (GPL-3.0-only). Pełny tekst znajduje się w [LICENSE](LICENSE). Możesz go studiować, modyfikować i redystrybuować na warunkach GPLv3: zachowaj informacje o prawach autorskich i podziękowania, oznacz swoje zmiany i udostępnij swoją wersję na tej samej licencji. Nie przedstawiaj zmodyfikowanych wersji jako moich oficjalnych wersji.
 
 - Dokumentacja (te pliki README i pliki w [`technical_docs/`](technical_docs/)) oraz teksty napisane na potrzeby tego projektu (w tym te z trzech plików INI i skompilowane w `DepartmentEfficiency.dat`), wraz z ich oryginalnymi tłumaczeniami, są udostępniane na tej samej licencji, GPL-3.0-only.
 
 - **gzcom-dll** nie jest objęta tą licencją: zachowuje własną licencję, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), i jest pobierana z oryginalnego repozytorium podczas budowania.
 
-- **SimCity 4** i jego oryginalne zasoby należą do Electronic Arts / Maxis. **Department of Efficiency** jest nieoficjalnym modem stworzonym przez fana, niezależnym od EA i niezatwierdzonym przez EA. Cztery pliki w `release/Department of Efficiency/` zawierają skrypty i definicje interfejsu pochodzące z zasobów samej gry, a zrzuty ekranu przedstawiają grę: nie są własnością autora, nie są objęte GPL, a wszelkie prawa do nich pozostają przy ich właścicielach. To samo dotyczy każdego innego materiału stron trzecich.
+- **SimCity 4** i jego oryginalne zasoby należą do Electronic Arts / Maxis. **Department of Efficiency** jest nieoficjalnym modem stworzonym przez fana, niezależnym od EA i niezatwierdzonym przez EA. Cztery pliki w `release/Department of Efficiency/` zawierają skrypty i definicje interfejsu pochodzące z zasobów samej gry, a zrzuty ekranu przedstawiają grę: nie są moją własnością, nie są objęte GPL, a wszelkie prawa do nich pozostają przy ich właścicielach. To samo dotyczy każdego innego materiału stron trzecich.
 
 <a id="credits"></a>
 

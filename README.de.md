@@ -188,7 +188,7 @@ Alle Screenshots zeigen die englische Version des Spiels.
 
 ## Voraussetzungen und Kompatibilität
 
-- **SimCity 4 Deluxe, Steam-Version, Spielversion 1.1.641.0, unter Windows.** Das ist die unterstützte Version; auf anderen Versionen bleibt das Ministerium inaktiv.
+- **SimCity 4 Deluxe, Steam-Version, Spielversion 1.1.641.0, unter Windows.** Ich habe das Ministerium mit dieser Version getestet; andere Versionen wurden nicht getestet.
 
 - **Kein weiterer Mod, Installer oder keine externe Anwendung ist nötig.**
 
@@ -220,7 +220,7 @@ Alle Screenshots zeigen die englische Version des Spiels.
   - Seasonal Flora Patch — 2.1
   - No Maxis I-D, I-M e I-HT — 2.0
 
-- **Empfohlen:** Fügen Sie `-CPUCount:1` unter **Steam → Bibliothek → SimCity 4 Deluxe → Eigenschaften → Startoptionen** hinzu. Das hat auf dem Rechner des Autors die Stabilität in langen Sitzungen verbessert.
+- **Empfohlen:** Fügen Sie `-CPUCount:1` unter **Steam → Bibliothek → SimCity 4 Deluxe → Eigenschaften → Startoptionen** hinzu. Das hat auf meinem Rechner die Stabilität in langen Sitzungen verbessert.
 
 - **Zehn Sprachen im Spiel:** Englisch, Portugiesisch, Französisch, Deutsch, Spanisch, Italienisch, Niederländisch, Dänisch, Schwedisch und Polnisch. Das Ministerium folgt automatisch der Sprache Ihres Spiels.
 
@@ -238,7 +238,7 @@ Alle Screenshots zeigen die englische Version des Spiels.
 
 ## Bekannte Einschränkungen
 
-- **Kompatibilität:** Unterstützt wird nur die Windows-Steam-Version **1.1.641.0** von SimCity 4 Deluxe. Andere Spielversionen bleiben inaktiv.
+- **Kompatibilität:** Ich habe die Windows-Steam-Version **1.1.641.0** von SimCity 4 Deluxe getestet. Andere Spielversionen wurden nicht getestet.
 
 - **Deponiehinweis:** Erfordert genau ein Deponiegebiet. In Städten mit mehreren Deponien kann das Ministerium weiterhin geeignete fehlerhafte „Geisterfelder“ reparieren, empfiehlt aber keine Größenänderungen.
 
@@ -259,13 +259,13 @@ Beim Bauen wird [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in einer feste
 
 ## Lizenz
 
-- Der Originalcode von Department of Efficiency (die Dateien in [`source/`](source/)) stammt von **Sammu89** und wird unter der **GNU General Public License, Version 3 (nur)** (GPL-3.0-only) veröffentlicht. Der vollständige Text steht in [LICENSE](LICENSE). Sie dürfen ihn nach den Bedingungen der GPLv3 studieren, ändern und weitergeben: Urheberrechtsvermerke und Danksagungen bleiben erhalten, Änderungen werden kenntlich gemacht, und Ihre Version wird unter derselben Lizenz veröffentlicht. Bitte geben Sie geänderte Versionen nicht als offizielle Versionen des Autors aus.
+- Der Originalcode von Department of Efficiency (die Dateien in [`source/`](source/)) stammt von mir, **Sammu89** und wird unter der **GNU General Public License, Version 3 (nur)** (GPL-3.0-only) veröffentlicht. Der vollständige Text steht in [LICENSE](LICENSE). Sie dürfen ihn nach den Bedingungen der GPLv3 studieren, ändern und weitergeben: Urheberrechtsvermerke und Danksagungen bleiben erhalten, Änderungen werden kenntlich gemacht, und Ihre Version wird unter derselben Lizenz veröffentlicht. Bitte geben Sie geänderte Versionen nicht als meine offiziellen Versionen aus.
 
 - Die Dokumentation (diese README-Dateien und die Dateien in [`technical_docs/`](technical_docs/)) und die für dieses Projekt geschriebenen Texte (einschließlich der Texte in den drei INI-Dateien und der in `DepartmentEfficiency.dat` kompilierten) werden zusammen mit ihren Originalübersetzungen unter derselben Lizenz veröffentlicht, GPL-3.0-only.
 
 - **gzcom-dll** fällt nicht unter diese Lizenz: Sie behält ihre eigene Lizenz, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), und wird beim Bauen aus ihrem Originalrepository geladen.
 
-- **SimCity 4** und seine Originalressourcen gehören Electronic Arts / Maxis. **Department of Efficiency** ist eine inoffizielle Fan-Mod, unabhängig von EA und nicht von EA unterstützt. Vier der Dateien in `release/Department of Efficiency/` enthalten Skripte und Schnittstellendefinitionen, die aus den Ressourcen des Spiels selbst abgeleitet sind, und die Screenshots zeigen das Spiel: Sie sind nicht Eigentum des Autors, fallen nicht unter die GPL, und alle Rechte daran verbleiben bei den jeweiligen Inhabern. Dasselbe gilt für jedes andere Material Dritter.
+- **SimCity 4** und seine Originalressourcen gehören Electronic Arts / Maxis. **Department of Efficiency** ist eine inoffizielle Fan-Mod, unabhängig von EA und nicht von EA unterstützt. Vier der Dateien in `release/Department of Efficiency/` enthalten Skripte und Schnittstellendefinitionen, die aus den Ressourcen des Spiels selbst abgeleitet sind, und die Screenshots zeigen das Spiel: Sie sind nicht mein Eigentum, fallen nicht unter die GPL, und alle Rechte daran verbleiben bei den jeweiligen Inhabern. Dasselbe gilt für jedes andere Material Dritter.
 
 <a id="credits"></a>
 

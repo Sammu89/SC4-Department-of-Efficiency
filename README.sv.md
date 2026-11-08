@@ -188,7 +188,7 @@ Alla skärmbilder visar den engelska versionen av spelet.
 
 ## Krav och kompatibilitet
 
-- **SimCity 4 Deluxe, Steam-utgåvan, spelversion 1.1.641.0, på Windows.** Det är den version som stöds; Departementet förblir inaktivt på andra versioner.
+- **SimCity 4 Deluxe, Steam-utgåvan, spelversion 1.1.641.0, på Windows.** Jag har testat Departementet på den här versionen; andra versioner har inte testats.
 
 - **Ingen annan mod, installationsprogram eller extern applikation behövs.**
 
@@ -220,7 +220,7 @@ Alla skärmbilder visar den engelska versionen av spelet.
   - Seasonal Flora Patch — 2.1
   - No Maxis I-D, I-M e I-HT — 2.0
 
-- **Rekommenderat:** lägg till `-CPUCount:1` under **Steam → Bibliotek → SimCity 4 Deluxe → Egenskaper → Startalternativ**. Det förbättrade stabiliteten i långa sessioner på skaparens dator.
+- **Rekommenderat:** lägg till `-CPUCount:1` under **Steam → Bibliotek → SimCity 4 Deluxe → Egenskaper → Startalternativ**. Det förbättrade stabiliteten i långa sessioner på min dator.
 
 - **Tio språk i spelet:** engelska, portugisiska, franska, tyska, spanska, italienska, nederländska, danska, svenska och polska. Departementet följer automatiskt spelets språk.
 
@@ -238,7 +238,7 @@ Alla skärmbilder visar den engelska versionen av spelet.
 
 ## Kända begränsningar
 
-- **Kompatibilitet:** endast Windows-Steam-versionen **1.1.641.0** av SimCity 4 Deluxe stöds. Andra spelversioner förblir inaktiva.
+- **Kompatibilitet:** jag har testat Windows-Steam-versionen **1.1.641.0** av SimCity 4 Deluxe. Andra spelversioner har inte testats.
 
 - **Råd om soptippen:** kräver exakt en soptippszon. I städer med flera soptippar kan Departementet fortfarande reparera lämpliga buggade „spökrutor“ men rekommenderar inga storleksändringar.
 
@@ -259,13 +259,13 @@ Vid bygget hämtas [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fast r
 
 ## Licens
 
-- Den ursprungliga koden i Department of Efficiency (filerna i [`source/`](source/)) är skriven av **Sammu89** och ges ut under **GNU General Public License, version 3 endast** (GPL-3.0-only). Hela texten finns i [LICENSE](LICENSE). Du får studera, ändra och vidaredistribuera den enligt GPLv3: behåll upphovsrättsmeddelanden och tack, ange dina ändringar och publicera din version under samma licens. Presentera inte ändrade versioner som officiella versioner från upphovspersonen.
+- Den ursprungliga koden i Department of Efficiency (filerna i [`source/`](source/)) är skriven av mig, **Sammu89** och ges ut under **GNU General Public License, version 3 endast** (GPL-3.0-only). Hela texten finns i [LICENSE](LICENSE). Du får studera, ändra och vidaredistribuera den enligt GPLv3: behåll upphovsrättsmeddelanden och tack, ange dina ändringar och publicera din version under samma licens. Presentera inte ändrade versioner som mina officiella versioner.
 
 - Dokumentationen (dessa README-filer och filerna i [`technical_docs/`](technical_docs/)) och de texter som skrivits för detta projekt (inklusive de i de tre INI-filerna och de som kompilerats i `DepartmentEfficiency.dat`), tillsammans med deras ursprungliga översättningar, ges ut under samma licens, GPL-3.0-only.
 
 - **gzcom-dll** omfattas inte av denna licens: biblioteket behåller sin egen licens, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), och hämtas från sitt ursprungliga arkiv vid bygget.
 
-- **SimCity 4** och dess originalresurser tillhör Electronic Arts / Maxis. **Department of Efficiency** är en inofficiell fanmod, oberoende av EA och inte godkänd av EA. Fyra av filerna i `release/Department of Efficiency/` innehåller skript och gränssnittsdefinitioner som härrör från själva spelets resurser, och skärmbilderna visar spelet: de ägs inte av upphovspersonen, omfattas inte av GPL och alla rättigheter till dem ligger kvar hos deras ägare. Detsamma gäller allt annat material från tredje part.
+- **SimCity 4** och dess originalresurser tillhör Electronic Arts / Maxis. **Department of Efficiency** är en inofficiell fanmod, oberoende av EA och inte godkänd av EA. Fyra av filerna i `release/Department of Efficiency/` innehåller skript och gränssnittsdefinitioner som härrör från själva spelets resurser, och skärmbilderna visar spelet: de ägs inte av mig, omfattas inte av GPL och alla rättigheter till dem ligger kvar hos deras ägare. Detsamma gäller allt annat material från tredje part.
 
 <a id="credits"></a>
 
