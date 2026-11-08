@@ -4,6 +4,22 @@ This reference records research on the **SimCity 4 Deluxe Steam 1.1.641.0 Window
 
 The table describes addresses whose roles have been identified in the research. It distinguishes static analysis from observations in the running game; a runtime test of one use does not validate every possible caller or argument. The list is not exhaustive: values whose roles have not been established are omitted.
 
+
+## Game resource identifiers
+
+A DAT resource is identified by a **type, group and instance** (TGI). The instance IDs below identify Maxis Lua resources in the game's `SimCity_1.dat`; they are **not executable memory addresses**. The distribution includes modified versions at the same TGIs in the named DAT files, so they override the game's resources while installed.
+
+All four resources use type `0xCA63E2A3` and group `0x4A5E8EF6`.
+
+| Instance ID | Original resource | Change in the distribution | Included in |
+|---|---|---|---|
+| `0xFF4CE096` | Health & Education advisor Lua script | Adds conditions to selected education and healthcare advice triggers, including pre-strike and funding warnings. Actual strike notices are left unchanged. | `DepartmentEfficiencyCivicAdvice.dat` |
+| `0xFF713106` | Budget advisor Lua script | Disables selected advice triggers about education and healthcare funding. | `DepartmentEfficiencyCivicAdvice.dat` |
+| `0xFF4D6B4E` | Utilities advisor Lua script for neighbor deals | Suppresses selected deal offers, cancellation suggestions, renewals and default notices. | `DepartmentEfficiencyDealAdvice.dat` |
+| `0xFF1D93C8` | Utilities advisor Lua script containing garbage advice | Adds an uncollected-garbage threshold to selected garbage problem alerts. | `DepartmentEfficiencyGarbageAdvice.dat` |
+
+These overrides are active while their DAT files are installed; switching the corresponding automation off does not restore the original advice. Close the game and remove the corresponding DAT to restore that resource's original behavior.
+
 ## Identified functions and data
 
 | Area | Address | Documented role | Evidence described in notes |
