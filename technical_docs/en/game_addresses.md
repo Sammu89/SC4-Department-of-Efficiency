@@ -18,7 +18,7 @@ All four resources use type `0xCA63E2A3` and group `0x4A5E8EF6`.
 | `0xFF4D6B4E` | Utilities advisor Lua script for neighbor deals | Suppresses selected deal offers, cancellation suggestions, renewals and default notices. | `DepartmentEfficiencyDealAdvice.dat` |
 | `0xFF1D93C8` | Utilities advisor Lua script containing garbage advice | Adds an uncollected-garbage threshold to selected garbage problem alerts. | `DepartmentEfficiencyGarbageAdvice.dat` |
 
-These overrides are active while their DAT files are installed; switching the corresponding automation off does not restore the original advice. Close the game and remove the corresponding DAT to restore that resource's original behavior.
+These overrides are active while their DAT files are installed; for now, switching the corresponding automation off does not restore the original advice (it's a todo for the next fix). Close the game and remove the corresponding DAT to restore that resource's original behavior.
 
 ## Identified functions and data
 
