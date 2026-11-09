@@ -49,7 +49,8 @@ struct AdviceOperational {
     bool garbageDisabled = false;   // the sanitation funding writer was disabled for this city session after a technical failure
     bool civicWritesAllowed = true; // the civic writer is trusted and not hard-stopped (AutoFinance::WritesAllowed)
     bool civicSnapshotUsable = true; // the latest civic facility snapshot is not INVALID (AutoFinance::SnapshotUsable)
-    bool ready[3] = {true, true, true}; // the unified controller's readings of power, water, garbage (and the contracts) are ready; false = it neither writes nor trades for that commodity
+    bool ready[3] = {true, true, true};          // the LOCAL funding of power, water, garbage can be managed now (false = not ready, or nothing local to manage yet: standby)
+    bool contractsReady[3] = {true, true, true}; // the regional CONTRACTS of power, water, garbage can be managed now (for garbage no landfill is needed)
 };
 
 inline AdviceSwitches AdviceSwitchesFor(const AutoFinanceConfig& civic, const UtilityResearchConfig& util, const AdviceOperational& op) {
@@ -58,9 +59,9 @@ inline AdviceSwitches AdviceSwitchesFor(const AutoFinanceConfig& civic, const Ut
     const bool unified = op.unifiedActive && !op.unifiedFailed;
     s.v[0] = civicOn && civic.health;
     s.v[1] = civicOn && civic.education;
-    s.v[2] = unified && op.ready[0] && !op.dealsDisabled && util.tradePowerActive();       // tradeXActive() = AutoTradeX && AutoDeals
-    s.v[3] = unified && op.ready[1] && !op.dealsDisabled && util.tradeWaterActive();
-    s.v[4] = unified && op.ready[2] && !op.dealsDisabled && util.tradeGarbageActive();
+    s.v[2] = unified && op.contractsReady[0] && !op.dealsDisabled && util.tradePowerActive();       // tradeXActive() = AutoTradeX && AutoDeals
+    s.v[3] = unified && op.contractsReady[1] && !op.dealsDisabled && util.tradeWaterActive();
+    s.v[4] = unified && op.contractsReady[2] && !op.dealsDisabled && util.tradeGarbageActive();
     s.v[5] = unified && op.ready[2] && !op.garbageDisabled && util.autoGarbage;
     return s;
 }

@@ -15,7 +15,7 @@ It provides four separate functions:
 
 2. **Regional garbage contracts:** Manages garbage imports and exports when neighbor deal management is enabled. See [Neighbor Deals](deals.md#neighbor-deals).
 
-3. **Landfill size advice (optional):** Recommends expanding or reducing landfill areas when doing so could significantly lower your monthly expenses. **The Department never changes landfill zoning automatically for this purpose.**
+3. **Landfill size advice (optional):** Recommends removing empty landfill squares when doing so could significantly lower your monthly expenses. **The Department never changes landfill zoning automatically for this purpose.**
 
 4. **Ghost landfill square repair:** Automatically corrects a game bug where some former landfill squares continue to be counted and charged as active landfill. This uses the game's own zoning mechanism and does not have a separate option.
 
@@ -203,6 +203,21 @@ It does **not** change:
 
 - The quantity delivered by regional garbage contracts.
 - The amount removed by recycling centers.
+
+**Does a city without garbage facilities need sanitation funding to export its garbage?**
+
+No. This was measured in the real game, in a copy of a city with no landfill, no incinerator, no recycling center and no Waste-to-Energy plant, with real export contracts that were kept unchanged during the comparison. The sanitation funding was held at a fixed value for two full months:
+
+| Funding | Efficiency | Garbage exported per month | Cost of the sanitation department | Cost of the export contracts |
+|---:|---:|---:|---:|---:|
+| 100% | 100% | 81,453 | 407 | 759 |
+| 25% | 12.5% | 80,172 | 100 | 746 |
+| 0% | 0% | 80,658 | 0 | 760 |
+
+- **The exported garbage is the sum of the contract amounts**, whatever the funding (for example 76,329 + 5,124 = 81,453). It did not change when the funding was lowered, and it was identical in the month before and the months after the change to 0% in the same city.
+- **The uncollected garbage behaved the same at every funding level.** It moved up and down by about 15,000 over each month around the same value (about 11.4 million in that city), and the "abducted" garbage stayed at 2,000 a month. Production varies by about 3,000 a month between runs, which is larger than any difference between the three experiments.
+- **The department still charges its funding.** Its ideal monthly cost (about 400 in that city) appeared once the export contracts existed, and the game charges that cost multiplied by the funding percentage even though no local facility can use the funding. Lowering the funding from 100% to 0% saved about 407 a month. The amount actually spent follows the charged cost one month later.
+- **Limits of this measurement.** One city, one region, two months per experiment, and one run per funding level. It does **not** apply to a city that has a landfill, incinerator, recycling center or Waste-to-Energy plant: there the funding changes the treatment capacity (see above) and may matter.
 
 **Does capacity change immediately after funding is adjusted?**
 
@@ -1486,15 +1501,13 @@ Similarly, if garbage starts accumulating on the streets, the Department can rev
 Every evaluation uses the latest available readings and respects the gradual funding adjustments described in [Section 3.7](#garbage-landfills-writing).
 
 <a id="garbage-landfills-advice"></a>
-#### 3.9 Landfill size advice: when expanding or reducing a landfill can save money
+#### 3.9 Landfill size advice: when removing empty landfill squares can save money
 
 Sometimes changing the size of a landfill can reduce your city's sanitation expenses.
 
-This may sound surprising. Adding landfill squares increases maintenance costs, but it can also allow the Department to operate the sanitation system at a lower funding percentage.
+Removing unused squares can reduce maintenance without affecting the city's ability to dispose of garbage.
 
-Conversely, removing unused squares can reduce maintenance without affecting the city's ability to dispose of garbage.
-
-The Department can analyze both possibilities and recommend a change when the expected saving is significant.
+The Department can analyze this and recommend removing squares when the expected saving is significant.
 
 **This feature is disabled by default.**
 
@@ -1502,11 +1515,10 @@ You can enable it using:
 
 **Warn me when checking landfill size can help me save**
 
-The Department then looks for two types of recommendations:
+The Department then looks for one type of recommendation:
 
 | Recommendation | What it means |
 |---|---|
-| **EXPAND** | Adding a specific area to your landfill could reduce the total monthly sanitation bill. |
 | **REDUCE** | Removing a specific unused area could reduce maintenance costs without compromising garbage disposal. |
 
 **The Department never changes landfill zoning automatically for these recommendations.**
@@ -1533,35 +1545,6 @@ It also verifies that every square belongs to the expected zone.
 **If any information is inconsistent, the Department does not make a recommendation.**
 
 This prevents suggestions based on incomplete or incorrect landfill data.
-
-#### How does the Department find safe expansion areas?
-
-For an **EXPAND** recommendation, the Department searches for rectangular areas of unused land next to the existing landfill.
-
-It only considers expansions towards the **right or bottom of the landfill in the game's internal map coordinates**.
-
-This restriction is important because expanding upwards or leftwards can shift the landfill's internal storage cells and disturb their stored garbage.
-
-The proposed area must meet several conditions:
-
-- It must touch the existing landfill along its right or bottom edge.
-- It must start from a corner of the chosen edge.
-- It must be between **2 and 8 squares deep**.
-- It must be at least **2 squares long**, without exceeding the adjoining edge or the game's 48-square limit.
-- It must contain no more than **64 squares**.
-- All squares must be available, inside the map and not already occupied or zoned.
-- It must not merge with another landfill zone.
-- It must not cause stored garbage to be pushed back into the landfill intake valve.
-
-The Department calculates how the new shape would affect the landfill's storage cells and capacity.
-
-It also performs a **dry run using the game's own zoning checks**, to confirm that SimCity 4 would actually accept the proposed area.
-
-If the game would reject the operation or silently omit any square, that candidate is discarded.
-
-**Only expansions verified as safe are considered.**
-
-When several safe placements have the same number of squares, the Department keeps the one providing the greatest resulting storage capacity.
 
 #### How does the Department find safe areas to remove?
 
@@ -1597,11 +1580,6 @@ The Department considers two sources of savings:
 
 ```math
 \begin{aligned}
-\text{EXPAND:}\quad
-\Delta B &= 5n_{\text{added}}-5g_{\text{reconciled}}
-\\
-L' &= L+n
-\\[6pt]
 \text{REDUCE:}\quad
 \Delta B &= -5n
 \\
@@ -1611,16 +1589,13 @@ L' &= L-n
 
 Where:
 
-- **n** is the number of landfill squares added or removed.
-- **gᵣₑcₒₙcᵢₗₑd** is the number of ghost tiles removed during expansion.
+- **n** is the number of landfill squares removed.
 - **ΔB** is the change in monthly landfill maintenance at 100% funding.
 - **L** and **L′** are the landfill square counts before and after the change.
 
 New empty landfill squares cost **§5 each per month** at 100% funding.
 
 Removing an unused square saves that maintenance expense.
-
-An expansion can also remove ghost tiles already costing money, which may partially offset the maintenance of the newly added area.
 
 The Department also recalculates the landfill's storage capacity:
 
@@ -1640,7 +1615,7 @@ I'=I+\Delta B
 
 **The important part is what happens next.**
 
-The Department does not simply multiply the number of added or removed squares by §5.
+The Department does not simply multiply the number of removed squares by §5.
 
 It also recalculates **the cheapest sanitation funding required after the proposed change**, using the same garbage forecast, reserve, contracts and calendar.
 
@@ -1753,8 +1728,6 @@ To avoid slowing down SimCity 4, the Department limits the work performed during
 
 - It evaluates **at most 64 candidates** per analysis.
 - It targets a computation budget of **10 milliseconds**.
-- It initially divides candidate evaluations between EXPAND and REDUCE.
-- If one direction has fewer candidates, the remaining evaluation allowance can be used by the other.
 - If repeated analyses exceed the time budget, the Department progressively reduces how many candidates it checks.
 
 The maximum candidate count can temporarily fall through **48, 32, 16, 8, 4 and 2**, depending on performance.
@@ -1769,7 +1742,6 @@ Among the safe candidates it evaluates, the Department selects:
 
 1. The candidate with the greatest monthly saving.
 2. If savings are equal, the candidate using fewer squares.
-3. If still tied, EXPAND before REDUCE.
 
 The analysis runs as part of a normal sanitation evaluation. It does not require a separate background process.
 
@@ -1777,20 +1749,13 @@ The analysis runs as part of a normal sanitation evaluation. It does not require
 
 The Department sends a message through SimCity 4's **utilities advisor**, categorized as good news.
 
-Two types of notices are possible:
-
-**For expansion:**
-
-> **More Landfill, Less Spending?**
-
-**For reduction:**
+The notice is titled:
 
 > **Our Landfill Is Taking Up Too Much Room!**
 
 The notice explains:
 
-- Whether to expand or reduce the landfill.
-- How many squares should be added or removed.
+- How many squares should be removed.
 - The proposed rectangle's length and depth.
 - The estimated monthly saving in simoleons.
 - The percentage of the sanitation budget that could be saved.
@@ -1962,7 +1927,6 @@ The Department also requires:
 - Exactly one landfill zone.
 - A safe proposed change that preserves stored garbage.
 - No risk of merging zones.
-- An expansion that does not shift the landfill's storage-cell positions.
 - Approval from the game's own zoning or dezoning validation.
 - Savings strictly above the configured threshold.
 
@@ -1987,6 +1951,10 @@ If verification fails, automatic repairs stop for the remainder of the game sess
 
 **The Department always prefers leaving a landfill unchanged over making a modification it cannot verify as safe.**
 
+#### Cities without garbage structures
+
+A city with **no landfill, incinerator, recycling center or waste-to-energy plant** is not an error. Local sanitation waits in **STANDBY**: it shows no notice and starts by itself when a structure appears. In such a city the sanitation funding buys nothing, so the Department lowers it step by step instead of paying for it. **Garbage contracts do not depend on local structures**: a city without a landfill can still export garbage under contract, and local sanitation and contracts are judged separately. A city that has only an incinerator, a recycling center or a waste-to-energy plant is managed normally, and a landfill zoned just now is not cut back until the game reports its capacity, which it does at the next month change.
+
 <a id="garbage-landfills-settings"></a>
 ### 5. Settings
 
@@ -1999,7 +1967,7 @@ Garbage and landfill management can be configured in **Play Options → Departme
 | [Sanitation reserve](options.md#opt-sanitationreserve) | 2% | 2–20% | Adds spare disposal capacity to handle increases in garbage production. |
 | [Manage neighbor deals](options.md#opt-deals) | On | On / Off | Enables automatic management of regional contracts. |
 | [Manage Garbage Deals](options.md#opt-tradegarbage) | On | On / Off | Enables automatic garbage imports and exports when neighbor deal management is active. |
-| [Warn me when checking landfill size can help me save](options.md#opt-landfilladvice) | Off | On / Off | Enables recommendations to expand or reduce landfill areas when significant savings are possible. |
+| [Warn me when checking landfill size can help me save](options.md#opt-landfilladvice) | Off | On / Off | Enables recommendations to remove unused landfill squares when significant savings are possible. |
 | [Landfill savings alert threshold](options.md#opt-landfillthreshold) | 25% | 20–50% | Sets the minimum percentage saving required before the Department recommends changing landfill size. |
 
 #### How do these options work together?
@@ -2026,7 +1994,6 @@ This feature is **off by default**.
 
 When enabled, the Department can recommend:
 
-- **EXPAND:** Add landfill squares if the extra disposal capacity would allow a sufficiently large reduction in sanitation expenses.
 - **REDUCE:** Remove unused landfill squares if that would lower maintenance costs without compromising disposal capacity.
 
 **These recommendations never change landfill zoning automatically.**
@@ -2050,7 +2017,7 @@ These options are also stored in the Department's utility configuration file:
 | `AutoGarbage` | Automatic sanitation funding |
 | `GarbageReservePercent` | Sanitation safety reserve |
 | `AutoTradeGarbage` | Automatic garbage contracts |
-| `WarnLandfillSizeSavings` | Landfill expansion and reduction advice |
+| `WarnLandfillSizeSavings` | Landfill reduction advice |
 | `LandfillSavingsAlertThreshold` | Minimum saving required for advice |
 
 **Automatic ghost-tile repair has no separate setting.** It runs as part of sanitation management, on the supported game version, whenever the required safety checks pass.
@@ -2289,79 +2256,7 @@ The Department was able to repair them again during the new city session.
 
 **The repair works, but the original game can recreate the problem every time the city is loaded.**
 
-#### Example 5: An expansion that saves money, but not enough to recommend
-
-The Department also tested expanding the test city's landfill.
-
-Initially, a street ran along its right-hand edge.
-
-The game's zoning checks rejected every expansion candidate on that side because the proposed land was occupied.
-
-**The Department did not recommend or perform an expansion.**
-
-After the street section was removed, a **2 × 2 expansion** became possible.
-
-This would add four landfill squares.
-
-The zoning operation would also remove the seven existing ghost tiles.
-
-**New landfill structure**
-
-```math
-T'=49+4-7=46
-```
-
-The expanded landfill would have 32 active storage cells.
-
-```math
-C'=\frac{46\times30000}{32}=43125
-```
-
-Total storage capacity:
-
-```math
-32\times43125=1380000
-```
-
-The landfill's capacity would increase from **1,260,000 to 1,380,000 units** without pushing any stored garbage back into the valve.
-
-**What about maintenance?**
-
-The four new empty squares would cost:
-
-```math
-4\times5=20
-```
-
-Removing the seven ghosts would save:
-
-```math
-7\times5=35
-```
-
-Net maintenance change:
-
-```math
-\Delta B=20-35=-15
-```
-
-The landfill's nominal monthly maintenance would fall from **§1,030 to §1,015**, even though the landfill became larger.
-
-The expansion was performed during testing, and the game's observed figures matched the predictions.
-
-**Would the Department recommend it?**
-
-No.
-
-The estimated reduction in the total sanitation bill was only about **4–5%**.
-
-The minimum configurable alert threshold is 20%, and the default is 25%.
-
-**The expansion was safe and could save money, but the saving was too small to justify an advisor notice.**
-
-This illustrates why the Department does not recommend every technically beneficial zoning change.
-
-#### Example 6: Why the Department sometimes refuses to repair ghosts
+#### Example 5: Why the Department sometimes refuses to repair ghosts
 
 A different experiment in the test city showed why ghost-tile repair must be conservative.
 
@@ -2418,7 +2313,7 @@ This is an important safety principle:
 
 Saving a few simoleons is not worth risking a landfill's stored waste.
 
-#### Example 7: When does a landfill savings notice appear?
+#### Example 6: When does a landfill savings notice appear?
 
 Suppose the Department calculates that the cheapest current sanitation budget is:
 
@@ -2484,10 +2379,8 @@ If reliable calibration is unavailable, the Department uses its current-month pr
 
 #### Landfill size advice
 
-- **Only cities with exactly one landfill zone are eligible.** The Department does not provide EXPAND or REDUCE recommendations when several landfill zones exist.
-- **Expansion areas are restricted.** Only safe areas along the right or bottom edges of the landfill's internal map coordinates are considered, with a maximum depth of eight squares and a maximum area of 64 squares.
+- **Only cities with exactly one landfill zone are eligible.** The Department does not provide REDUCE recommendations when several landfill zones exist.
 - **Reductions are restricted to unused outer rows or columns.** Proposed reductions must preserve the remaining landfill's structure and stored garbage.
-- **Savings are estimates.** New landfill squares are initially treated as empty, costing §5 each at 100% funding. Their maintenance may increase later when garbage piles appear.
 - **One-time zoning expenses are not included.** The Department compares recurring monthly sanitation costs, not the initial cost of changing the zone.
 - **Large savings are uncommon in the tested cities.** The observed opportunities generally remained well below the minimum 20% alert threshold, so landfill size advice may appear rarely.
 

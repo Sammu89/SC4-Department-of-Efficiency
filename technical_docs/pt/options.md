@@ -91,7 +91,7 @@ Os dois métodos atualizam a mesma definição, por isso mantêm-se coerentes.
 <a id="options-files"></a>
 ### Onde são guardadas as definições?
 
-O Ministério guarda as suas definições em **três ficheiros de configuração de texto**, situados na pasta `Department of Efficiency` dentro da pasta Plugins do SimCity 4.
+O Ministério guarda as suas definições em **um único ficheiro de configuração de texto**, `DepartmentEfficiency.ini`, colocado diretamente na pasta Plugins do SimCity 4, ao lado de `DepartmentEfficiency.dll` (não existe a subpasta `Department of Efficiency`). Tem três secções independentes.
 
 Pode alterar a maior parte das definições através da janela de opções do Ministério, dentro do jogo, ou editar os ficheiros manualmente.
 
@@ -534,7 +534,7 @@ Quando está desligado:
 - Os avisos sobre o tamanho do aterro ficam indisponíveis.
 - Os contratos de lixo podem continuar a ser geridos de forma independente se Gerir acordos de lixo estiver ligado.
 
-**O Ministério nunca constrói nem zona automaticamente áreas de aterro adicionais.** A ampliação e a redução do aterro são apenas conselhos.
+**O Ministério nunca constrói nem zona automaticamente áreas de aterro adicionais.** A redução do aterro é apenas um conselho.
 
 **Requer:** Ministério ativo.
 
@@ -580,7 +580,6 @@ Ativa recomendações opcionais sobre a alteração do tamanho do aterro.
 
 O Ministério procura situações em que:
 
-- **Ampliar um aterro** proporcionaria capacidade de tratamento adicional suficiente para reduzir o financiamento de saneamento necessário e a despesa mensal total.
 - **Reduzir um aterro** eliminaria quadrados não utilizados e baixaria as despesas de manutenção sem comprometer o tratamento do lixo.
 
 Se uma alteração segura produzir uma poupança acima do limiar que configurou, o Ministério emite um aviso do conselheiro.

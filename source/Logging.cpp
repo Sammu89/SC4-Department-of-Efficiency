@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
 #include "Logging.h"
+#include "LogLocation.h"
 #include "LogTrim.h"
 
 #include <array>
@@ -10,6 +11,8 @@
 #include <mutex>
 #include <sstream>
 #include <string>
+
+#include "KnownFolders.h"
 
 namespace sc4af {
 namespace {
@@ -47,8 +50,18 @@ void TrimIfNeeded() {
     logSize = TrimLogFile(logPath, kLogTrimAtBytes, kLogKeepBytes, note);
     file.open(logPath, std::ios::app);
 }
+
+std::string Utf8(const std::wstring& w) {
+    if (w.empty()) return {};
+    const int n = WideCharToMultiByte(CP_UTF8, 0, w.data(), static_cast<int>(w.size()), nullptr, 0, nullptr, nullptr);
+    std::string s(static_cast<std::size_t>(n > 0 ? n : 0), ' ');
+    if (n > 0) WideCharToMultiByte(CP_UTF8, 0, w.data(), static_cast<int>(w.size()), s.data(), n, nullptr, nullptr);
+    return s;
+}
+
 } // namespace
 
+// The log goes to <SimCity 4 user directory>\Logs\DepartmentEfficiency.log (LogLocation.h); the folder of the DLL (Plugins) is the fallback.
 bool InitLog(HMODULE module) {
     if (!module) return false;
     std::array<wchar_t, 32768> path{};
@@ -59,17 +72,40 @@ bool InitLog(HMODULE module) {
     const auto slash = p.find_last_of(L"\\/");
     if (slash == std::wstring::npos) return false;
     p.resize(slash + 1);
-    p += std::wstring(kDataFolderName, kDataFolderName + std::char_traits<char>::length(kDataFolderName)) + L"\\";
+    LogLocationInputs in;
+    in.commandLine = GetCommandLineW();
+    in.documentsDir = DocumentsKnownFolder();
+    in.legacyDir = std::filesystem::path(p);
+    LogChoice choice = ChooseLogFile(in);
+    if (choice.fallback) OutputDebugStringW((L"[DepartmentEfficiency] log: using the plugin folder: " + choice.note + L"\n").c_str());
     std::error_code ec;
-    std::filesystem::create_directories(std::filesystem::path(p), ec);
-    p += L"DepartmentEfficiency.log";
     std::lock_guard lock(mutex);
-    logPath = std::filesystem::path(p);
+    logPath = choice.path;
     logSize = std::filesystem::file_size(logPath, ec);
     if (ec) logSize = 0;
     TrimIfNeeded();                                                          // a log left large by a previous session is trimmed at once
     if (!file.is_open()) file.open(logPath, std::ios::app);
-    return file.is_open();
+    if (!file.is_open() && !choice.fallback) {                               // the chosen file turned out not to be writable after all: the previous place
+        choice.fallback = true;
+        choice.note = L"the file " + logPath.wstring() + L" could not be opened";
+        OutputDebugStringW((L"[DepartmentEfficiency] log: using the plugin folder: " + choice.note + L"\n").c_str());
+        std::filesystem::create_directories(in.legacyDir, ec);
+        logPath = in.legacyDir / kLogFileName;
+        logSize = std::filesystem::file_size(logPath, ec);
+        if (ec) logSize = 0;
+        file.open(logPath, std::ios::app);
+    }
+    const bool ok = file.is_open();
+    if (ok) {
+        std::string line = Stamp() + (choice.fallback ? "WARN] " : "INFO] ") + "[Log] writing to " + Utf8(logPath.wstring());
+        if (choice.fallback) line += " (the previous place next to the plugin: " + Utf8(choice.note) + ")";
+        line += '\n';
+        file << line;
+        file.flush();
+        logSize += line.size() + 1;
+        OutputDebugStringA(line.c_str());
+    }
+    return ok;
 }
 
 void Log(LogLevel level, std::string_view message) {

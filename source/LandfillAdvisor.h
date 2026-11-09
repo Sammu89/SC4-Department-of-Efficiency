@@ -262,7 +262,7 @@ public:
     // Last run (diagnostics and tests).
     struct Stats {
         bool ran = false; std::string reason; int evaluations = 0; long long micros = 0; int cap = 0; bool pushed = false; bool exceeded = false;
-        long long readMicros = 0, candidateMicros = 0, nativeMicros = 0, economicMicros = 0; int nativeCalls = 0, expandCandidates = 0, reduceCandidates = 0;
+        long long readMicros = 0, candidateMicros = 0, nativeMicros = 0, economicMicros = 0; int nativeCalls = 0, reduceCandidates = 0;
         std::optional<LandfillPlacement> placement;
     };
     const Stats& last() const { return last_; }
@@ -321,15 +321,12 @@ public:
         }
         const LandfillSpatialSnapshot& snap = spatial->Get();
         // 2. candidates (pure, exact model) and 3. the native check of the short list
-        const auto ex = LandfillExpandCandidates(snap, 0);
         const auto rd = LandfillReduceCandidates(snap, 0);
-        last_.expandCandidates = static_cast<int>(ex.size());
         last_.reduceCandidates = static_cast<int>(rd.size());
         const auto t2 = now();
         last_.candidateMicros = us(t1, t2);
         std::vector<std::string> refusals;
         int calls = 0;
-        const auto exList = LandfillCheckedShortList(ex, check, calls, &refusals);
         const auto rdList = LandfillCheckedShortList(rd, check, calls, &refusals);
         last_.nativeCalls = calls;
         const auto t3 = now();
@@ -337,16 +334,15 @@ public:
         for (auto& l : refusals) lines.push_back(std::move(l));
         // 4. the economic search over the existing engine: index i of a list = the i-th placement (sorted by tile count, so "fewer tiles" stays the tie-break)
         const GarbageServiceInput in = base();
-        std::vector<LandfillScenario> scen[2];
-        for (const auto& p : exList) scen[0].push_back(LandfillPlacementScenario(in, c.idealMonthly, snap, p));
-        for (const auto& p : rdList) scen[1].push_back(LandfillPlacementScenario(in, c.idealMonthly, snap, p));
+        std::vector<LandfillScenario> scen;
+        for (const auto& p : rdList) scen.push_back(LandfillPlacementScenario(in, c.idealMonthly, snap, p));
         LandfillSearchOptions opt;
         opt.clock = clock;
         opt.thresholdPercent = c.thresholdPercent;
         opt.ApplyAdaptive(budget);
         const auto plans0 = gGarbagePlanCalls, evals0 = gGarbageEvalCalls;
-        LandfillAdvice adv = AdviseLandfillSize(in, c.funding, c.maxAllowed, c.idealMonthly, static_cast<int>(scen[0].size()), static_cast<int>(scen[1].size()),
-                                                [&](int delta) { return delta > 0 ? scen[0][static_cast<size_t>(delta - 1)] : scen[1][static_cast<size_t>(-delta - 1)]; }, opt);
+        LandfillAdvice adv = AdviseLandfillSize(in, c.funding, c.maxAllowed, c.idealMonthly, static_cast<int>(scen.size()),
+                                                [&](int delta) { return scen[static_cast<size_t>(-delta - 1)]; }, opt);
         gGarbagePlanCalls = plans0;                      // the advisor's hypothetical plans are not the controller's work counters
         gGarbageEvalCalls = evals0;
         const auto t4 = now();
@@ -362,14 +358,12 @@ public:
         std::string result = adv.reason;
         const LandfillPlacement* chosen = nullptr;
         if (adv.hasAdvice) {
-            const bool expand = adv.direction == LandfillDirection::Expand;
-            const auto& list = expand ? exList : rdList;
-            if (adv.tiles >= 1 && adv.tiles <= static_cast<int>(list.size())) chosen = &list[static_cast<size_t>(adv.tiles - 1)];
+            if (adv.tiles >= 1 && adv.tiles <= static_cast<int>(rdList.size())) chosen = &rdList[static_cast<size_t>(adv.tiles - 1)];
         }
         if (chosen) {
             last_.placement = *chosen;
             LandfillNotice n;
-            n.kind = IsExpand(chosen->kind) ? LandfillAdviceKind::Expand : LandfillAdviceKind::Reduce;
+            n.kind = LandfillAdviceKind::Reduce;
             n.tiles = chosen->n; n.percent = adv.savingPercent; n.savings = adv.saving; n.across = chosen->across; n.along = chosen->along;
             n.linkX = LandfillLinkX(chosen->rect); n.linkZ = LandfillLinkZ(chosen->rect);
             result = LandfillPlacementLine(*chosen) + " percent=" + std::to_string(adv.savingPercent) + " savings=" + std::to_string(adv.saving) + " expense " +
@@ -386,21 +380,17 @@ public:
         } else if (adv.hasAdvice) {
             result = "INTERNAL_PLACEMENT_INDEX";
         } else {
-            // the best candidate per direction, for the log (what was weighed and why nothing is advised)
-            for (int d = 0; d < 2; ++d) {
-                const LandfillCandidate* b = nullptr;
-                for (const auto& cd : adv.candidates)
-                    if ((cd.direction == LandfillDirection::Expand ? 0 : 1) == d && cd.eligible && (!b || cd.saving > b->saving)) b = &cd;
-                if (b) {
-                    const auto& list = d == 0 ? exList : rdList;
-                    const auto& pl = list[static_cast<size_t>(b->tiles - 1)];
-                    lines.push_back(std::string("[LandfillAdvisor] best ") + (d == 0 ? "EXPAND " : "REDUCE ") + LandfillPlacementLine(pl) + " saving=" + std::to_string(b->saving) + " (" +
-                                    std::to_string(b->savingPercent) + "% of " + std::to_string(adv.baselineExpense) + ") threshold=" + std::to_string(c.thresholdPercent) + "%");
-                }
+            // the best candidate, for the log (what was weighed and why nothing is advised)
+            const LandfillCandidate* b = nullptr;
+            for (const auto& cd : adv.candidates)
+                if (cd.eligible && (!b || cd.saving > b->saving)) b = &cd;
+            if (b) {
+                const auto& pl = rdList[static_cast<size_t>(b->tiles - 1)];
+                lines.push_back(std::string("[LandfillAdvisor] best REDUCE ") + LandfillPlacementLine(pl) + " saving=" + std::to_string(b->saving) + " (" +
+                                std::to_string(b->savingPercent) + "% of " + std::to_string(adv.baselineExpense) + ") threshold=" + std::to_string(c.thresholdPercent) + "%");
             }
         }
-        lines.push_back("[LandfillAdvisor] result=" + result + " evaluations=" + std::to_string(adv.evaluations) + " candidates expand=" + std::to_string(last_.expandCandidates) + "/" +
-                        std::to_string(exList.size()) + " reduce=" + std::to_string(last_.reduceCandidates) + "/" + std::to_string(rdList.size()) + " nativeChecks=" + std::to_string(calls) +
+        lines.push_back("[LandfillAdvisor] result=" + result + " evaluations=" + std::to_string(adv.evaluations) + " candidates reduce=" + std::to_string(last_.reduceCandidates) + "/" + std::to_string(rdList.size()) + " nativeChecks=" + std::to_string(calls) +
                         " us read=" + std::to_string(snap.readMicros) + " candidates=" + std::to_string(last_.candidateMicros) + " native=" + std::to_string(last_.nativeMicros) +
                         " economic=" + std::to_string(last_.economicMicros) + " total=" + std::to_string(micros) + " cap=" + std::to_string(last_.cap) +
                         (exceeded ? " TIME_BUDGET_EXCEEDED(next cap " + std::to_string(budget.cap) + ")" : std::string()) + (adv.interrupted ? " PARTIAL_SEARCH" : std::string()));

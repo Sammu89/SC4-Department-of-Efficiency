@@ -155,4 +155,40 @@ inline ShortageJudgement JudgeShortage(const FacilityState& f, const PolicyConfi
     return j;
 }
 
+// Early correction of a drift of the game (the Phantom Funding Slider Bug: the game itself moves a slider the Department had set, after an exemplar cost changed in a saved city).
+// The Department does not diagnose that bug. It only recognises, with evidence, a change of funding that it did not make: its own last VERIFIED write of the facility (CivicSession) differs
+// from the funding now, and the change is first seen right after a monthly pass. In four LIVE runs every one of the 30 changes the game made on its own came within one day of the monthly pass
+// (offsets -1, 0, +1 days), none in the middle of a month; a change in the middle of a month is therefore never taken for the simulator's (it may be the player's) and waits for the monthly pass as before.
+// The Watch ticks every second day, so a change one day after the pass can be seen at +1 or +2. At most one early correction per facility and monthly pass: no loop.
+constexpr std::uint32_t kDriftWindowDays = 2;
+
+class DriftGate {
+public:
+    using Key = std::tuple<int, int, int>;
+    void Reset() { rollDay_ = 0; haveRoll_ = false; ++pass_; handled_.clear(); }
+    void NoteMonthlyPass(std::uint32_t day) { rollDay_ = day; haveRoll_ = true; ++pass_; }
+    // `expected`: the last verified write of this facility, if any. `day`: simulated day of the Watch tick.
+    bool Qualifies(const Key& key, std::optional<float> expected, float current, std::uint32_t day) const {
+        if (!haveRoll_ || !expected || NearlyEqual(current, *expected)) return false;
+        if (day <= rollDay_ || day - rollDay_ > kDriftWindowDays) return false;
+        const auto it = handled_.find(key);
+        return it == handled_.end() || it->second != pass_;
+    }
+    void MarkHandled(const Key& key) { handled_[key] = pass_; }
+
+private:
+    std::uint32_t rollDay_ = 0;
+    bool haveRoll_ = false;
+    std::uint32_t pass_ = 0;                          // identifies the current monthly pass
+    std::map<Key, std::uint32_t> handled_;            // the pass in which a facility's drift was already answered
+};
+
+// Outside the monthly pass only RAISES are written (the service first, the economy after). The one exception: the facility whose drift was just confirmed may also be reduced, to the minimum
+// sufficient funding, at once. A calibration probe always waits for the monthly pass.
+inline bool DeferToMonthlyPass(bool monthly, bool confirmedDriftTarget, bool reduction, bool calibration) {
+    if (monthly) return false;
+    if (calibration) return true;
+    return reduction && !confirmedDriftTarget;
+}
+
 }  // namespace sc4af

@@ -29,6 +29,8 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 - [Vereisten en compatibiliteit](#requirements-and-compatibility)
 
+- [Compatibiliteit met de Phantom Funding Slider Bug](#phantom-funding-slider-bug)
+
 - [Bijwerken en verwijderen](#updating-and-uninstalling)
 
 - [Bekende beperkingen](#known-limitations)
@@ -45,27 +47,31 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 ### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
+**Nieuw in 1.0.2:** zie het [wijzigingslogboek](CHANGELOG.md) (in het Engels).
+
 1\. Open de [releasepagina](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) van het project en kies de nieuwste release.
 
 2\. Download onder **Assets** de **distributie-ZIP van Department of Efficiency**.
 
 3\. **Sluit SimCity 4.** Pak de ZIP uit in een tijdelijke map.
 
-4\. Kopieer **`DepartmentEfficiency.dll`** en de hele map **`Department of Efficiency`** naar de hoofdmap van `Documenten\SimCity 4\Plugins`.
+4\. Kopieer de **drie bestanden** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** en **`DepartmentEfficiency.ini`** rechtstreeks naar `Documents\SimCity 4\Plugins`. Maak geen submap aan.
 
 5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
 
-De distributie-ZIP bevat de DLL en een map met één DAT- en één INI-bestand. Na de installatie hebt u:
+De distributie-ZIP bevat precies deze drie bestanden. Na de installatie hebt u:
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiency.ini
+    DepartmentEfficiency.dat
+    DepartmentEfficiency.ini
 ```
 
-De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de DLL **direct in Plugins**, met de bijbehorende map ernaast.
+De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de drie bestanden **rechtstreeks in Plugins**, naast elkaar. De map `Department of Efficiency` bestaat niet meer.
+
+> [!WARNING]
+> **Werkt u bij vanaf een eerdere versie?** Kopieer de nieuwe bestanden niet over de oude heen. Verwijder eerst de oude bestanden van het Ministerie, zoals uitgelegd bij [Bijwerken en verwijderen](#updating-and-uninstalling).
 
 **Instellingen later wijzigen:** open **Spelopties → Ministerie van Efficiëntie**, gebruik de pagina's **Diensten** en **Sloop** en klik op **Accepteren**. Voor de hoofdschakelaar kunt u ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken, zonder maandelijkse kosten. Het Ministerie uitschakelen stopt toekomstige acties; reeds toegepaste financiering, contracten en sloop worden niet ongedaan gemaakt.
 
@@ -83,8 +89,8 @@ De tabel hieronder beschrijft wat het Ministerie doet. Voor formules, voorbeelde
 | [Afvalverwerking](technical_docs/en/garbage.md#garbage-landfills) | Past de financiering van de afvalverwerking aan op basis van afvalproductie, recycling, verwerking, opslag in stortplaatsen en regionale contracten, en beschermt daarbij de eigen verwerkingsbehoefte van de stad. |
 | [Contracten met buursteden](technical_docs/en/deals.md#neighbor-deals) | Kan **elektriciteit en water kopen of verkopen**, **buren betalen om uw afval over te nemen** of **hun afval tegen betaling accepteren**. Het sluit, past aan en zegt geschikte contracten op als het totaalresultaat de stad ten goede komt en de eigen behoeften en reserves beschermd blijven. |
 | [Automatisch slopen](technical_docs/en/demolition.md#demolition) | Kan standaard ruïnes na ongeveer **30 gesimuleerde dagen** opruimen en geschikte gebouwen die **een gesimuleerd jaar** verlaten zijn. U bepaalt welke zones en welke redenen van verlating meetellen, of beschermde ruïnes mogen worden opgeruimd en of u een maandelijkse bestedingslimiet instelt. |
-| [Meldingen van adviseurs](technical_docs/en/safety.md#notices) | Gebruikt de eigen adviseurs van het spel om bewezen, aanhoudende tekorten te melden die financiering of beschikbare contracten niet kunnen verhelpen. Waar nuttig bevatten de berichten links naar de betrokken gebouwen. |
-| [Advies over de omvang van de stortplaats](technical_docs/en/garbage.md#garbage-landfills-advice) | Het optionele advies wijst een concrete uitbreiding of veilige verkleining van de stortplaats aan die de afvalrekening met meer dan uw gekozen besparingsdrempel zou kunnen verlagen. **Het Ministerie adviseert; u beslist of u de zonering wijzigt.** |
+| [Meldingen van adviseurs](technical_docs/en/safety.md#notices) | Gebruikt de eigen adviseurs van het spel om bewezen, aanhoudende tekorten te melden die financiering of beschikbare contracten niet kunnen verhelpen. Waar nuttig bevatten de berichten links naar de betrokken gebouwen. Het voegt ook een nieuwsbericht toe (titel in de lijst, details bij een klik) wanneer een dienst die u hebt ingeschakeld moet stoppen vanwege een technische fout. |
+| [Advies over de omvang van de stortplaats](technical_docs/en/garbage.md#garbage-landfills-advice) | Het optionele advies wijst een concrete, veilige verkleining van de stortplaats aan (lege vakken die weg kunnen) die de afvalrekening met meer dan uw gekozen besparingsdrempel zou kunnen verlagen. **Het Ministerie adviseert; u beslist of u de zonering wijzigt.** |
 | [Herstel van spookvakjes](technical_docs/en/garbage.md#ghost-tiles) | Als het beheer van de afvalverwerking aanstaat, herstelt het veilig geschikte onzichtbare stortplaatsvakjes die het spel nog in het onderhoud meetelt. Onveilige of niet-geverifieerde gevallen blijven met rust; voor dit herstel bestaat geen aparte schakelaar. |
 
 U houdt de controle over bouw, zonering, belastingen, wegen en vervoer, politie, brandweer en elke andere dienst die het Ministerie niet beheert. Schakelt u het beheer van een soort contract met buren in, dan kan het Ministerie ook een contract wijzigen of opzeggen dat u eerder handmatig hebt gesloten. Schakel die contractoptie uit om die contracten zelf te beheren.
@@ -105,7 +111,7 @@ Het Ministerie gebruikt de instellingen die bij de plug-in worden geleverd en **
 
 5\. Open de stad die u wilt spelen. Het Ministerie volgt uw opgeslagen voorkeuren en beheert de stad terwijl de simulatie loopt.
 
-Uw voorkeuren staan in de INI-bestanden van de plug-in en worden hergebruikt als u een andere stad opent. Het Ministerie bouwt **geen** scholen, ziekenhuizen, elektriciteitscentrales of waterwerken voor u. Als financiering en beschikbare contracten een bewezen, aanhoudend tekort niet kunnen oplossen, meldt een adviseur in het spel waar meer capaciteit nodig is.
+Uw voorkeuren staan in `DepartmentEfficiency.ini` en worden hergebruikt als u een andere stad opent. Het Ministerie bouwt **geen** scholen, ziekenhuizen, elektriciteitscentrales of waterwerken voor u. Als financiering en beschikbare contracten een bewezen, aanhoudend tekort niet kunnen oplossen, meldt een adviseur in het spel waar meer capaciteit nodig is.
 
 U kunt het Ministerie ook in- of uitschakelen via de verordeningen van de stad.
 
@@ -218,15 +224,36 @@ Alle schermafbeeldingen tonen de Engelse versie van het spel.
 
 - **Tien talen in het spel:** Engels, Portugees, Frans, Duits, Spaans, Italiaans, Nederlands, Deens, Zweeds en Pools. Het Ministerie volgt automatisch de taal van uw spel.
 
+<a id="phantom-funding-slider-bug"></a>
+
+## Compatibiliteit met de Phantom Funding Slider Bug
+
+Het Ministerie van Efficiëntie is compatibel met steden die door de **Phantom Funding Slider Bug** worden getroffen, een oud SimCity 4-probleem waarbij de financieringsschuifregelaars van al geplaatste gebouwen uit zichzelf blijven bewegen nadat de onderhoudskosten van dat gebouwtype zijn gewijzigd (bijvoorbeeld door een mod).
+
+Het verhelpt de onderliggende SimCity 4-bug **niet**. In plaats daarvan detecteert het verdachte, terugkerende wijzigingen in de financiering en past het de voorzieningen die het beheert automatisch opnieuw aan, zodat de vereiste dienstcapaciteit behouden blijft en onnodige overfinanciering wordt vermeden.
+
+In de geteste scenario's vonden correcties plaats binnen één gesimuleerde dag, in plaats van mogelijk een hele maand te duren.
+
+Deze bescherming geldt voor geschikte voorzieningen (scholen, bibliotheken, musea, klinieken en ziekenhuizen) onder automatisch beheer. Ze herstelt de interne begrotingsgegevens van het spel niet en garandeert geen bescherming in elke situatie. Zie [Phantom Funding Slider Bug](technical_docs/en/phantom_slider.md) voor de werking, de grenzen en de testresultaten (in het Engels).
+
 <a id="updating-and-uninstalling"></a>
 
 ## Bijwerken en verwijderen
 
-**Instellingen worden niet overgenomen.** Sinds versie 1.0.2 zijn de drie INI-bestanden van versie 1.0.0 één bestand, `DepartmentEfficiency.ini`, in de map `Department of Efficiency` (secties `[AutoFinance]`, `[UtilityResearch]` en `[LotDemolition]`). De oude `DepartmentEfficiencyUtility.ini` en `DepartmentEfficiencyDemolition.ini` worden niet meer gelezen.
+**Instellingen worden niet overgenomen.** Sinds versie 1.0.2 heeft het Ministerie één instellingenbestand, `DepartmentEfficiency.ini`, dat de drie INI-bestanden van versie 1.0.0 en de map `Department of Efficiency` van het eerste 1.0.2-pakket vervangt. Instellingen in oudere bestanden worden niet gelezen of overgenomen: stel uw voorkeuren opnieuw in bij **Spelopties → Ministerie van Efficiëntie**.
 
-**Een installatie vervangen (een schone installatie is vereist):** sluit het spel, verwijder de bestaande `DepartmentEfficiency.dll` **en de hele map `Department of Efficiency`** en installeer het nieuwe pakket. Nieuwe bestanden over een oude installatie kopiëren wordt niet ondersteund: de oude resourcebestanden blijven in de map staan en houden de eigen adviezen van het spel stil. Stel uw voorkeuren opnieuw in het spel in (Spelopties → Ministerie van Efficiëntie).
+**Een eerdere installatie bijwerken (een schone installatie is verplicht).** Sluit het spel en verwijder de oude bestanden van het Ministerie **voordat** u de drie nieuwe kopieert. Verwijder alleen deze, in `Documents\SimCity 4\Plugins`:
 
-**Verwijderen:** sluit het spel en verwijder `DepartmentEfficiency.dll` en de map `Department of Efficiency`. Uw opgeslagen steden blijven zonder de mod leesbaar. Financieringsniveaus, bestaande contracten en sloop die al in een stad is opgeslagen, worden niet automatisch teruggedraaid.
+- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` en `DepartmentEfficiency.ini`;
+- de hele map `Department of Efficiency`, als die bestaat;
+- uit versie 1.0.0, als ze er nog staan: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` en `DepartmentEfficiencyDemolition.ini`;
+- `DepartmentEfficiency.told.txt`, een klein geheugenbestand dat de plug-in kan hebben achtergelaten (het wordt zo nodig opnieuw aangemaakt).
+
+Raak de bestanden van andere mods niet aan. De nieuwe bestanden over een oude installatie kopiëren wordt niet ondersteund: de oude resourcebestanden zouden blijven staan en de eigen adviezen van het spel stil kunnen houden. De plug-in leest nooit bestanden uit de oude map; als die map er nog is, schrijft hij alleen een waarschuwing in zijn logboek.
+
+**Verwijderen:** sluit het spel en verwijder dezelfde bestanden. Uw opgeslagen steden blijven zonder de mod leesbaar. Financieringsniveaus, bestaande contracten en al opgeslagen sloopacties in een stad worden niet automatisch teruggedraaid.
+
+**Logbestand:** `DepartmentEfficiency.log` staat in de map `Logs` van uw SimCity 4-gebruikersmap (normaal `Documents\SimCity 4\Logs`, of de map `Logs` van de map die met `-UserDir` is opgegeven). Kan die map niet worden gebruikt, dan wordt het naast de DLL geschreven.
 
 <a id="known-limitations"></a>
 
@@ -259,7 +286,7 @@ Tijdens het bouwen wordt [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in ee
 
 - **gzcom-dll** valt niet onder deze licentie: de bibliotheek behoudt haar eigen licentie, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), en wordt bij het bouwen uit de oorspronkelijke repository gedownload.
 
-- **SimCity 4** en de originele bestanden ervan zijn eigendom van Electronic Arts / Maxis. **Department of Efficiency** is een onofficiële fanmod, onafhankelijk van EA en niet door EA goedgekeurd. Vier van de bestanden in `release/Department of Efficiency/` bevatten scripts en interfacedefinities die zijn afgeleid van de bronnen van het spel zelf, en de screenshots tonen het spel: ze zijn geen mijn eigendom, vallen niet onder de GPL en alle rechten erop blijven bij de rechthebbenden. Hetzelfde geldt voor ander materiaal van derden.
+- **SimCity 4** en de originele bronnen ervan zijn eigendom van Electronic Arts / Maxis. Het **Ministerie van Efficiëntie** is een onofficiële fanmod, onafhankelijk van EA en niet door EA onderschreven. Naast de eigen teksten en scripts van het project bevat `DepartmentEfficiency.dat` twee interfacescripts (de optieknop en het optievenster) die zijn afgeleid van de eigen bronnen van het spel, en de schermafbeeldingen tonen het spel: dat is niet van mij, valt niet onder de GPL en alle rechten blijven bij de rechthebbenden. Hetzelfde geldt voor ander materiaal van derden. Het uitvoerbare bestand van het spel wordt niet verspreid.
 
 <a id="credits"></a>
 
@@ -268,6 +295,12 @@ Tijdens het bouwen wordt [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in ee
 **Auteur**
 
 - Gemaakt door **Sammu89**.
+
+**Speciale dank**
+
+- **Speciale dank aan CorinaMarie** voor haar uitgebreide uitleg over de Phantom Funding Slider Bug, voor het royaal delen van de reproduceerbare teststeden en DAT-bestanden waarmee de gevolgen konden worden onderzocht en verzacht, en voor haar onmisbare technische begeleiding bij het behouden en herstellen van de oorspronkelijke adviseursberichten van Maxis, inclusief de selectieve behandeling van Lua-adviesrecords. Haar hulp maakte het Ministerie robuuster en beter compatibel met het spel en met andere mods.
+
+De code van het Ministerie van Efficiëntie is geschreven door Sammu89. De hier genoemde mensen deelden kennis, hulpmiddelen, testmateriaal en advies; zij zijn geen coauteurs van de code.
 
 **Gebruikte bibliotheek**
 
@@ -278,6 +311,10 @@ Tijdens het bouwen wordt [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in ee
 - Nicholas Hayes (0xC0000054 / Null 45), voor onderzoek, documentatie en open voorbeelden over SimCity 4-DLL's: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Het optievenster, de verordening en het meldingsbestand volgen mechanismen uit zijn projecten sc4-region-census, sc4-humane-society-ordinance en sc4-lua-extension-example (MIT-licentie); de spelcommando's volgen sc4-auto-run-cheats en sc4-game-command-documentation.
 
 - CorinaMarie, voor het documenteren van de Urgent Advice-techniek van SimCity 4 waarop de adviseurmeldingen van de mod zijn gebaseerd.
+
+- memo, voor de begeleiding bij het laden van een eigen Lua-script van de plug-in, met eigen identificaties, na de scripts van het spel en met alleen de nodige adviesrecords gewijzigd, wat de koppeling van het Ministerie met de adviseurs van het spel volgt.
+
+- Kel9509, voor de informatie over hoe de Phantom Funding Slider Bug te reproduceren is.
 
 - De SimCity 4-moddinggemeenschap, voor twee decennia onderzoek, hulpmiddelen en gedeelde kennis, waaronder de documentatie van exemplar-eigenschappen van SC4Devotion.
 

@@ -297,6 +297,15 @@ inline bool GarbageFundingCanBenefit(const GarbageAggregate& a) {
     return !(noStructures || noCapacity);
 }
 
+// A landfill the game has just zoned reports its tiles at once but its CAPACITY only at the next month boundary (measured: 15 tiles read 0 capacity for the first month, then 450000). Until
+// then the capacity 0 says "not initialised yet", not "this landfill can never work": with no other known processing capacity the sanitation funding must not be CUT on that reading (a raise,
+// when the service needs one, is still allowed). Only a KNOWN 0 counts; an unread capacity is handled by the readiness rules, never by this predicate.
+inline bool GarbageLandfillCapacityPending(const GarbageAggregate& a) {
+    const bool landfillWithoutCapacity = a.landfillTiles && *a.landfillTiles > 0 && a.landfillCapacity && *a.landfillCapacity == 0;
+    const bool otherCapacity = (a.incineratorCapacityMonthly && *a.incineratorCapacityMonthly > 0) || (a.w2eCapacityMonthly && *a.w2eCapacityMonthly > 0) || (a.recyclingCount && *a.recyclingCount > 0);
+    return landfillWithoutCapacity && !otherCapacity;
+}
+
 struct GarbageState {
     SnapshotValidity validity = SnapshotValidity::Invalid;
     std::string invalidReason;
@@ -527,6 +536,15 @@ inline SnapshotValidity DeriveValidity(bool simulatorPresent, bool listAvailable
     if (!listAvailable) return SnapshotValidity::Invalid;
     if (criticalMissing) return SnapshotValidity::Partial;
     return itemsSeen == 0 ? SnapshotValidity::ValidEmpty : SnapshotValidity::Valid;
+}
+
+// The garbage snapshot validity. "No garbage structure at all" (ValidEmpty) is only claimed when it is PROVEN: the building list was read and is empty AND the landfill tile
+// count was read and is 0. A landfill developer that could not be read leaves the tile count unknown, and unknown is never zero: the snapshot is then Partial.
+inline SnapshotValidity DeriveGarbageValidity(bool listAvailable, std::size_t buildings, const Opt<std::int32_t>& landfillTiles, bool producedUncollectedMissing, bool epochMatches) {
+    const bool tilesKnown = landfillTiles.has_value();
+    const std::size_t infrastructure = buildings + (tilesKnown && *landfillTiles > 0 ? 1 : 0);
+    const bool landfillUnknownAndNothingElse = !tilesKnown && buildings == 0;
+    return DeriveValidity(true, listAvailable, infrastructure, producedUncollectedMissing || landfillUnknownAndNothingElse, epochMatches);
 }
 
 } // namespace sc4af

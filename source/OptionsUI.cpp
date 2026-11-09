@@ -184,7 +184,7 @@ bool OptionsUI::InjectButton(cIGZWin* panel) {
     cIGZWin* button = CreateFromScript(kOptionsUiButtonScript, kOptionsUiButtonRoot, content, how);
     if (!button) {
         broken_ = true;                                                      // never retried in this session: Play Options stays the game's own
-        Log(LogLevel::Warning, "[OptionsUI] the options button could not be created (" + how + "; is DepartmentEfficiency.dat in the Department of Efficiency folder?): Play Options is left as it is");
+        Log(LogLevel::Warning, "[OptionsUI] the options button could not be created (" + how + "; is DepartmentEfficiency.dat in Plugins next to the DLL?): Play Options is left as it is");
         return false;
     }
     // room for one more button: the panel grows, the game's Accept / Cancel bar moves down, nothing of the game is replaced
@@ -305,7 +305,7 @@ bool OptionsUI::OpenWindow() {
     std::string how;
     cIGZWin* win = CreateFromScript(kOptionsUiWindowScript, kOptionsUiWindowRoot, parent, how);
     if (!win) {
-        Log(LogLevel::Warning, "[OptionsUI] the options window could not be created (" + how + "; is DepartmentEfficiency.dat in the Department of Efficiency folder?)");
+        Log(LogLevel::Warning, "[OptionsUI] the options window could not be created (" + how + "; is DepartmentEfficiency.dat in Plugins next to the DLL?)");
         return false;
     }
     if (!parent->ChildExists(win)) parent->ChildAdd(win);

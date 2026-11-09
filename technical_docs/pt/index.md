@@ -16,7 +16,7 @@ Este guia explica como funciona o SimCity 4 nos bastidores e como o Ministério 
 | Eletricidade | Reserva de eletricidade | 20% | Mantém capacidade de produção de reserva para acomodar o crescimento da cidade e reduzir o risco de apagões. As linhas elétricas também ficam protegidas contra a deterioração. | [Eletricidade](power.md#power) |
 | Água | Reserva de água | 10% | Mantém capacidade de produção de água de reserva, com a proteção das canalizações ativada por predefinição. | [Água](water.md#water) |
 | Saneamento | Reserva de lixo | 2% | Garante capacidade suficiente de tratamento e eliminação de resíduos, com o objetivo de limpar o lixo acumulado até ao fim do mês simulado. | [Lixo e aterros](garbage.md#garbage-landfills) |
-| Aviso do aterro | Limiar de poupança dos avisos | Aviso desligado; limiar de 25% | Recomenda ampliações ou reduções do aterro quando estas podem baixar de forma significativa os custos do saneamento. | [Aviso sobre o tamanho do aterro](garbage.md#garbage-landfills-advice) |
+| Aviso do aterro | Limiar de poupança dos avisos | Aviso desligado; limiar de 25% | Recomenda retirar quadrados vazios do aterro quando estas podem baixar de forma significativa os custos do saneamento. | [Aviso sobre o tamanho do aterro](garbage.md#garbage-landfills-advice) |
 | Acordos com os vizinhos | Gestão por recurso | Ligada; intermediação entre vizinhos desligada | Gere os contratos de eletricidade, água e lixo, dando prioridade às necessidades da própria cidade e às reservas de segurança. | [Acordos com os vizinhos](deals.md#neighbor-deals) |
 | Demolição | Tempos de espera | Ruínas: 1 mês; edifícios abandonados: 12 meses | Protege por predefinição os edifícios municipais e históricos, com um limite mensal opcional para a despesa em demolições. | [Demolição automática](demolition.md#demolition) |
 
@@ -37,5 +37,6 @@ Este guia explica como funciona o SimCity 4 nos bastidores e como o Ministério 
 * [H. Referência das opções](options.md#options)
 
 * [I. Referência dos endereços do executável](../en/game_addresses.md) (em inglês)
+* [J. Phantom Funding Slider Bug](phantom_slider.md) (deriva «fantasma» dos sliders)
 
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

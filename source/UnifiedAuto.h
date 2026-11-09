@@ -44,6 +44,10 @@
 #include <set>
 #include <map>
 #include <string>
+#ifdef SC4AF_TEST_FAULTS
+#include <cstdlib>
+#include <fstream>
+#endif
 #include <vector>
 
 namespace sc4af {
@@ -126,6 +130,9 @@ public:
         powerEvaluated_ = waterEvaluated_ = false;               // nothing of the previous city says this one was already evaluated
         lastWaterDay_ = 0;
         for (auto& r : ready_) r = ReadinessState{};
+        garbageInputs_.clear();
+        budgetReady_ = ReadinessState{};
+        for (auto& r : contractsReady_) r = ReadinessState{};
         landfill_.Reset();                                   // the geometry is calibrated per city lifecycle and never carried over
         tracker_.OnReset();
     }
@@ -152,6 +159,9 @@ public:
     void OnDay(const UtilityResearchConfig& cfg, IUnifiedActuator& act) {
         lines_.clear();
         ++days_;
+#ifdef SC4AF_TEST_FAULTS
+        TestFaultFile();                                              // TEST BUILD ONLY (never compiled into a release): see below
+#endif
         if (!Gate(cfg)) return;
         tracker_.OnDay();
         const bool powerDay = cfg.powerCadenceDays > 0 && days_ % static_cast<std::uint32_t>(cfg.powerCadenceDays) == 0;      // the full review of the electricity, every PowerCadenceDays days
@@ -178,7 +188,7 @@ public:
                     const auto v = monitor_.ObservePower(sc);
                     urgentPower = v.trigger;
                     powerFresh = v.cause != ServiceCause::Stale;
-                    NoteServiceSample(0, v, sc.pDemand, sc.pConsumption);
+                    NoteServiceSample(0, v, sc.pDemand, ServiceMonitor::ServedOf(sc, true));      // the city's own consumption: the counter includes the exports
                 }
                 if (wantWater) {
                     const auto v = monitor_.ObserveWater(sc);
@@ -257,12 +267,17 @@ public:
     bool sessionFailed() const { return tracker_.sessionFailed(); }
     // The service-insufficiency episode of commodity `i` (0 power, 1 water, 2 garbage) has been proven and not yet closed by a proven recovery (the player notice is deferred on it).
     // The readings of commodity i (0 power, 1 water, 2 garbage) and of the contracts are present and consistent in the latest snapshot: otherwise the controller neither writes nor trades for it.
-    bool commodityReady(int i) const { return ready_[i].ok; }
+    bool commodityReady(int i) const { return ready_[i].ok; }                     // the LOCAL funding of commodity i can be managed now
+    bool commodityContractsReady(int i) const { return contractsReady_[i].ok; }   // its regional contracts can be managed now (for garbage: no landfill needed)
+    bool commodityStandby(int i) const { return ready_[i].standby; }              // nothing local to manage yet (not an error)
     bool serviceEpisodeActive(int i) const { return episodes_.active(i); }
     bool powerDisabled() const { return legacy_.powerDisabled(); }
     bool waterDisabled() const { return legacy_.waterDisabled(); }
     bool garbageDisabled() const { return garbageOff_.disabled; }
     bool dealsDisabled() const { return deals_off_.disabled; }
+    const std::string& powerReason() const { return legacy_.powerReason(); }
+    const std::string& waterReason() const { return legacy_.waterReason(); }
+
     const std::string& garbageReason() const { return garbageOff_.reason; }
     const std::string& dealsReason() const { return deals_off_.reason; }
     bool dealPending() const { return AnyDealPending(); }
@@ -502,7 +517,9 @@ private:
             if (c == Commodity::Power && !allow.power) continue;
             if (c == Commodity::Water && !allow.water) continue;
             if (c == Commodity::Garbage && !allow.garbage) continue;
-            if (!ready_[ci].ok) continue;                 // the readings of THIS commodity are not ready: no write, no deal; the others carry on
+            if (!ready_[ci].ok && !contractsReady_[ci].ok) continue;     // nothing of THIS commodity is ready (neither its local funding nor its contracts): no write, no deal; the others carry on
+            if (fundingPhase && !ready_[ci].ok && !(ci == 2 && budgetReady_.ok)) continue;   // the LOCAL readings are not ready: no funding write. The one exception is the sanitation BUDGET of a city with no structure (standby): its department figures are read, so a cost paid for nothing may be cut (budgetReady_)
+            if (!fundingPhase && !contractsReady_[ci].ok) continue;      // the CONTRACT readings are not ready: no deal (a local funding step does not depend on them for garbage)
             if (fundingPhase && FundingDisabled(c)) continue;      // a failed funding write stops this commodity's FUNDING for the session; its contracts are a separate permission and carry on
             if (fundingPhase) {
                 if (allow.manage[ci]) ExecuteFundingPhase(c, phase, liveId, livePlan, liveSnap, cfg, act);   // the funding writes belong to the funding manager only (a frozen plan has none for an unmanaged commodity)
@@ -557,12 +574,39 @@ private:
         const Readiness v[3] = {PowerReadiness(snap), WaterReadiness(snap), GarbageReadiness(snap)};
         const Readiness d = DealsReadiness(snap);
         for (int i = 0; i < 3; ++i) {
-            // the deals of a commodity need the contracts read as well
-            const bool ok = v[i].ready && d.ready;
+            // Power and water: their local funding AND their deals need the readings and the contract book. GARBAGE is split: the local sanitation needs its own structures and readings; the contracts
+            // need the garbage load and the contract book, never a landfill, and neither one waits for the other.
+            const bool garbage = i == 2;
+            const bool ok = garbage ? v[i].ready : (v[i].ready && d.ready);
             const std::string why = !v[i].ready ? v[i].reason : d.reason;
-            if (!ready_[i].known || ready_[i].ok != ok || ready_[i].reason != why)
-                Info(std::string("[Readiness] ") + names[i] + (ok ? " READY: the readings needed for a safe decision are present, current and consistent" : " NOT_READY (no write for it yet): " + why));
-            ready_[i] = {ok, true, why};
+            const bool standby = !ok && v[i].standby;
+            if (!ready_[i].known || ready_[i].ok != ok || ready_[i].standby != standby || ready_[i].reason != why)
+                Info(std::string("[Readiness] ") + names[i] + (ok ? " READY: the readings needed for a safe decision are present, current and consistent"
+                                                               : standby ? " STANDBY (no local operation, not an error): " + why : " NOT_READY (no write for it yet): " + why));
+            ready_[i] = {ok, true, why, standby};
+            if (garbage) {
+                // the structures the verdict rests on, logged when they change (a diagnostic, never read by a decision)
+                const auto& ga = snap.garbage.aggregate;
+                const auto num = [](const auto& o) { return o ? std::to_string(static_cast<long long>(*o)) : std::string("unread"); };
+                const std::string inputs = "landfillTiles=" + num(ga.landfillTiles) + " landfillCapacity=" + num(ga.landfillCapacity) + " incinerators=" + num(ga.incineratorCount) + " incineratorCapacity=" +
+                                           num(ga.incineratorCapacityMonthly) + " w2eBuildings=" + num(ga.w2eCount) + " w2eCapacity=" + num(ga.w2eCapacityMonthly) + " recyclingCenters=" + num(ga.recyclingCount) +
+                                           " buildings=" + std::to_string(snap.garbage.buildings.size());
+                if (inputs != garbageInputs_) { Info("[Readiness] GARBAGE inputs: " + inputs); garbageInputs_ = inputs; }
+                const Readiness b = GarbageBudgetReadiness(snap);
+                if (!budgetReady_.known || budgetReady_.ok != b.ready) {
+                    if (b.ready) Info("[Readiness] GARBAGE BUDGET READY: no garbage structure (proven) and the sanitation department figures are read; the funding cost may be cut (the local sanitation stays on STANDBY)");
+                    else if (standby) Info("[Readiness] GARBAGE BUDGET NOT_READY (the funding is left alone): " + b.reason);
+                }
+                budgetReady_ = {b.ready, true, b.reason, false};
+                const Readiness c = GarbageContractsReadiness(snap);
+                const bool cok = c.ready && d.ready;
+                const std::string cwhy = !c.ready ? c.reason : d.reason;
+                if (!contractsReady_[i].known || contractsReady_[i].ok != cok || contractsReady_[i].reason != cwhy)
+                    Info(std::string("[Readiness] GARBAGE CONTRACTS ") + (cok ? "READY: the garbage load and the contract book are read (no landfill is needed)" : "NOT_READY (no deal for it yet): " + cwhy));
+                contractsReady_[i] = {cok, true, cwhy, false};
+            } else {
+                contractsReady_[i] = ready_[i];
+            }
         }
     }
 
@@ -730,6 +774,23 @@ private:
         else if (internal && !internalLogged_[i]) Info(std::string("[ServiceCheck] ") + ServiceCauseName(v.cause) + ": " + v.text);
         internalLogged_[i] = internal;
     }
+
+#ifdef SC4AF_TEST_FAULTS
+    // TEST BUILD ONLY (-DSC4AF_TEST_FAULTS, a separate build directory; the release never contains this): a file written by the test harness at %LOCALAPPDATA%\SC4AFTests\sc4af_fault.txt puts a
+    // manager in the state it reaches after a real technical failure (fail-closed), so the failure notices can be observed in the real game without waiting for the game to misbehave.
+    // Words: sanitation, deals (force that manager off), clear (undo both).
+    void TestFaultFile() {
+        const char* base = std::getenv("LOCALAPPDATA");
+        if (!base) return;
+        std::ifstream f(std::string(base) + "/SC4AFTests/sc4af_fault.txt");
+        std::string w;
+        while (f >> w) {
+            if (w == "sanitation" && !garbageOff_.disabled) { garbageOff_.disabled = true; garbageOff_.reason = "TEST FAULT: sanitation forced into the fail-closed state"; Err("[UnifiedAuto][Sanitation] FAIL CLOSED (technical): " + garbageOff_.reason); }
+            else if (w == "deals" && !deals_off_.disabled) { deals_off_.disabled = true; deals_off_.reason = "TEST FAULT: deals forced into the fail-closed state"; Err("[UnifiedAuto][Deal] FAIL CLOSED (technical): " + deals_off_.reason); }
+            else if (w == "clear" && (garbageOff_.disabled || deals_off_.disabled)) { garbageOff_ = Off{}; deals_off_ = Off{}; Info("[UnifiedAuto] TEST FAULT cleared"); }
+        }
+    }
+#endif
 
     void NoteDisabledTransitions() {
         if (legacy_.powerDisabled() && !lastPowerOff_) { tracker_.OnFailedWrite("power fail-closed"); lastPowerOff_ = true; }
@@ -1147,8 +1208,11 @@ private:
     bool buyAllowed_[3] = {true, true, true};                 // the Department manages the regional contracts of each commodity (power, water, garbage): only for the wording of a shortage notice
     bool powerEvaluated_ = false, waterEvaluated_ = false;   // a full evaluation of this commodity with READY readings has happened in this city
     std::uint32_t lastWaterDay_ = 0;                          // the day (of this city session) of the last full evaluation of the water
-    struct ReadinessState { bool ok = false; bool known = false; std::string reason; };
-    ReadinessState ready_[3];                                 // the verdict of the latest full snapshot per commodity (power, water, garbage)
+    struct ReadinessState { bool ok = false; bool known = false; std::string reason; bool standby = false; };
+    ReadinessState ready_[3];
+    std::string garbageInputs_;                       // the last logged garbage structure inputs (diagnostic)                                 // the verdict of the latest full snapshot per commodity (power, water, garbage): the LOCAL funding
+    ReadinessState budgetReady_;                              // garbage only: the department figures of a city with no structure are read (the funding cost may be cut); never makes the local sanitation "ready"
+    ReadinessState contractsReady_[3];                        // the same for the regional CONTRACTS (equal to ready_ for power and water; independent for garbage)
     bool validation_ = false, verbose_ = false;
     ServiceMonitor monitor_;
     NoticeEpisodes episodes_;

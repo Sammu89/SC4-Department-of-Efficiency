@@ -142,8 +142,37 @@ inline UnifiedPlan BuildUnifiedPlanOnce(const UtilitySnapshot& s, const Optimize
         u.actions.push_back(std::move(x));
     }
     if (!GarbageFundingCanBenefit(s.garbage.aggregate)) {
-        u.notes.push_back("SANITATION_FUNDING_LEFT_ALONE: the city has no garbage processing structure (no landfill, incinerator, waste-to-energy plant or recycling center); funding cannot help, the garbage can only be exported");
-    } else if ((u.garbage.status == GarbagePlanStatus::Optimal || u.garbage.status == GarbagePlanStatus::InsufficientCapacity) && u.garbage.targetPercent != u.garbage.currentPercent) {
+        // PROVEN absence of every garbage structure (ValidEmpty, every count read and 0): the funding buys nothing (measured on the real engine: the exports, the uncollected stock and the abducted figure
+        // are the same at 0%, 25% and 100%), so a funding that still costs money is a pure waste and the cheapest funding gives exactly the same service. Nothing changes when the cost is already 0,
+        // when the department figures are unread or when the absence is not the proven one (a building was listed): then the funding is left alone, as before.
+        const auto& d = s.garbage.department;
+        const int current = d.funding ? UtilityPercentRound(*d.funding) : 0;
+        if (s.garbage.validity == SnapshotValidity::ValidEmpty && d.present && d.funding && d.idealMonthly && s.garbage.aggregate.fundingEfficiency && current > 0 &&
+            ChargedExpense(*d.idealMonthly, current) > ChargedExpense(*d.idealMonthly, 0)) {
+            u.garbage = GarbageFundingPlan{};
+            u.garbage.status = GarbagePlanStatus::Optimal;
+            u.garbage.currentPercent = current;
+            u.garbage.targetPercent = 0;
+            u.garbage.currentExpense = ChargedExpense(*d.idealMonthly, current);
+            u.garbage.targetExpense = ChargedExpense(*d.idealMonthly, 0);
+            u.garbage.steadyStatePercent = 0;
+            u.garbage.steadyStateExpense = u.garbage.targetExpense;
+            u.garbage.note = "no garbage structure: the funding buys nothing, the cheapest funding gives the same service";
+            UnifiedAction x;
+            x.kind = UnifiedActionKind::SanitationFunding;
+            x.commodity = Commodity::Garbage;
+            x.phase = kPhaseCapacityCut;
+            x.sanitation.expectedPercent = current;
+            x.sanitation.targetPercent = 0;
+            x.sanitation.expectedMonthlyDelta = u.garbage.targetExpense - u.garbage.currentExpense;
+            x.sanitation.reason = "Sanitation NO_STRUCTURE " + std::to_string(current) + "% -> 0%";
+            u.actions.push_back(std::move(x));
+            u.notes.push_back("SANITATION_FUNDING_CUT_NO_STRUCTURE: the city has no garbage processing structure (proven); the funding cannot help, so it is lowered to the cheapest (paced, verified)");
+        } else {
+            u.notes.push_back("SANITATION_FUNDING_LEFT_ALONE: the city has no garbage processing structure (no landfill, incinerator, waste-to-energy plant or recycling center); funding cannot help, the garbage can only be exported");
+        }
+    } else if ((u.garbage.status == GarbagePlanStatus::Optimal || u.garbage.status == GarbagePlanStatus::InsufficientCapacity) && u.garbage.targetPercent != u.garbage.currentPercent &&
+               !(u.garbage.targetPercent < u.garbage.currentPercent && GarbageLandfillCapacityPending(s.garbage.aggregate))) {
         UnifiedAction x;
         x.kind = UnifiedActionKind::SanitationFunding;
         x.commodity = Commodity::Garbage;

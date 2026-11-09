@@ -1512,7 +1512,9 @@ inline PortfolioCommodity BuildGarbageCommodity(const UtilitySnapshot& s, const 
     PortfolioCommodity pc;
     pc.commodity = Commodity::Garbage;
     const auto& g = s.garbage;
-    if ((g.validity != SnapshotValidity::Valid && g.validity != SnapshotValidity::Partial) || !g.department.present || !g.department.funding ||
+    // ValidEmpty (a PROVEN absence of every garbage structure: no landfill, incinerator, recycling or waste-to-energy plant) is a legitimate state for the CONTRACTS: such a city can still export
+    // (the model reads the zero landfill / building capacities as what they are, so it never plans an import it cannot host).
+    if ((g.validity != SnapshotValidity::Valid && g.validity != SnapshotValidity::Partial && g.validity != SnapshotValidity::ValidEmpty) || !g.department.present || !g.department.funding ||
         !g.department.maxAllowed || !g.department.idealMonthly || !g.aggregate.produced || !g.aggregate.imported || !g.aggregate.recycled) {
         pc.unavailableReason = "garbage control, expense or flow counters unavailable";
         return pc;

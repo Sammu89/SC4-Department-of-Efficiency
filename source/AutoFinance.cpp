@@ -12,6 +12,7 @@
 #include "cISC4City.h"
 
 #include <windows.h>
+#include <algorithm>
 #include <fstream>
 #include <cmath>
 #include <iomanip>
@@ -164,6 +165,7 @@ void AutoFinance::WatchTick(cISC4City* city, std::uint32_t month, bool strikeNow
     if (enumeration.validity == SnapshotValidity::Invalid || enumeration.validity == SnapshotValidity::ValidEmpty) return;
     bool trigger = false;
     std::string first;
+    std::vector<std::tuple<int, int, int>> driftTargets;
     for (auto& f : enumeration.facilities) {
         if (!FamilyEnabled(config_, f.state.family)) continue;
         const auto id = IdOf(f);
@@ -174,6 +176,14 @@ void AutoFinance::WatchTick(cISC4City* city, std::uint32_t month, bool strikeNow
         f.state.onStrike = strike.strikeSince && *strike.strikeSince != 0;
         if (f.state.usage) f.state.usageVolatility = CivicSession::WithIntakeAssumption(f.state.subtype, session_.UsageSamples(id), session_.UpwardVolatility(id));
         f.state.capacityPrior = session_.CapacityPriorFor(id, identity);
+        // A change of funding that the Department did not make, right after the monthly pass: answer it at this tick (raise or reduce to the minimum sufficient) instead of waiting for the next monthly pass.
+        if (guard_.WritesAllowed() && driftGate_.Qualifies(id, session_.ExpectedFunding(id), f.state.buildingFunding, dayInCity_)) {
+            driftGate_.MarkHandled(id);
+            driftTargets.push_back(id);
+            trigger = true;
+            if (first.empty()) first = std::string(f.state.family == FundingFamily::School ? "School/" : "Health/") + f.state.subtype + " cell=" + std::to_string(f.state.cellX) + ',' + std::to_string(f.state.cellZ) +
+                ": funding " + Fmt(f.state.buildingFunding) + " is not the last verified write " + Fmt(*session_.ExpectedFunding(id)) + ", seen " + std::to_string(dayInCity_) + " days into the city right after the monthly pass";
+        }
         const Attention a = NeedsAttention(f.state, policy);
         if (!a.needed) { latch_.Clear(id); continue; }
         const std::string signature = a.why + '|' + (f.state.usage ? std::to_string(*f.state.usage) : std::string("?")) + '|' + std::to_string(f.state.capacity) + '|' + std::to_string(PercentForFraction(f.state.buildingFunding));
@@ -184,16 +194,17 @@ void AutoFinance::WatchTick(cISC4City* city, std::uint32_t month, bool strikeNow
     }
     if (!trigger) return;
     Log(LogLevel::Info, std::string("[AutoFinance][Watch] day=") + std::to_string(dayInCity_) + " gameStrikeFlag=" + (strikeNow ? "1" : "0") + " first: " + first + "; evaluating now instead of waiting for the monthly pass");
-    Evaluate(city, month, EvalTrigger::Watch);
+    Evaluate(city, month, EvalTrigger::Watch, driftTargets.empty() ? nullptr : &driftTargets);
 }
 
 void AutoFinance::OnMonth(cISC4City* city, std::uint32_t month) {
     LoadConfigIfChanged();
+    driftGate_.NoteMonthlyPass(dayInCity_);   // the day counter of the Watch: a drift of the game is looked for in the two days that follow
     evidence_ = CivicMonthEvidence{};
     Evaluate(city, month, EvalTrigger::Month);
 }
 
-void AutoFinance::Evaluate(cISC4City* city, std::uint32_t month, EvalTrigger trigger) {
+void AutoFinance::Evaluate(cISC4City* city, std::uint32_t month, EvalTrigger trigger, const std::vector<std::tuple<int, int, int>>* driftTargets) {
     const bool monthly = trigger == EvalTrigger::Month;
     CivicMonthEvidence scratch;                                  // Open / Watch evaluations never touch the monthly evidence
     CivicMonthEvidence& E = monthly ? evidence_ : scratch;
@@ -270,7 +281,8 @@ void AutoFinance::Evaluate(cISC4City* city, std::uint32_t month, EvalTrigger tri
         f.state.capacityPrior = session_.CapacityPriorFor(facilityId, identity);       // what this city has taught about THIS facility's real capacity curve
         Decision d = DecideFunding(f.state, policy);
         // Open / Watch evaluations only RAISE: a reduction (a saving) and a calibration probe wait for the monthly pass. The service first, the economy after.
-        if (!monthly && ((d.write && d.targetFraction < f.state.buildingFunding - 0.005f) || d.calibration)) {
+        const bool confirmedDrift = driftTargets && std::find(driftTargets->begin(), driftTargets->end(), facilityId) != driftTargets->end();
+        if (DeferToMonthlyPass(monthly, confirmedDrift, d.write && d.targetFraction < f.state.buildingFunding - 0.005f, d.calibration)) {
             d.write = false;
             d.calibration = false;
             d.action = Action::NoChange;

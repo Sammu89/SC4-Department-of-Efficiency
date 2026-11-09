@@ -15,7 +15,7 @@ Oferece quatro funções distintas:
 
 2. **Contratos regionais de lixo:** gere as importações e exportações de lixo quando a gestão dos acordos com os vizinhos está ativada. Ver [Acordos com os vizinhos](deals.md#neighbor-deals).
 
-3. **Aviso sobre o tamanho do aterro (opcional):** recomenda ampliar ou reduzir as zonas de aterro quando isso puder baixar de forma significativa as despesas mensais. **O Ministério nunca altera automaticamente a zona do aterro com este fim.**
+3. **Aviso sobre o tamanho do aterro (opcional):** recomenda retirar quadrados vazios das zonas de aterro quando isso puder baixar de forma significativa as despesas mensais. **O Ministério nunca altera automaticamente a zona do aterro com este fim.**
 
 4. **Reparação dos quadrados fantasma do aterro:** corrige automaticamente um erro do jogo em que alguns antigos quadrados de aterro continuam a ser contados e cobrados como aterro ativo. Usa o mecanismo de zonamento do próprio jogo e não tem uma opção separada.
 
@@ -203,6 +203,21 @@ A eficiência do saneamento altera:
 
 - A quantidade entregue pelos contratos regionais de lixo.
 - A quantidade retirada pelos centros de reciclagem.
+
+**Uma cidade sem instalações de lixo precisa de financiamento do saneamento para exportar o seu lixo?**
+
+Não. Foi medido no jogo real, numa cópia de uma cidade sem aterro, sem incineradora, sem centro de reciclagem e sem central de conversão de resíduos em energia, com contratos de exportação reais que se mantiveram inalterados durante a comparação. O financiamento do saneamento foi mantido num valor fixo durante dois meses completos:
+
+| Financiamento | Eficiência | Lixo exportado por mês | Custo do departamento de saneamento | Custo dos contratos de exportação |
+|---:|---:|---:|---:|---:|
+| 100% | 100% | 81 453 | 407 | 759 |
+| 25% | 12,5% | 80 172 | 100 | 746 |
+| 0% | 0% | 80 658 | 0 | 760 |
+
+- **O lixo exportado é a soma das quantidades dos contratos**, seja qual for o financiamento (por exemplo 76 329 + 5 124 = 81 453). Não mudou quando o financiamento baixou, e foi idêntico no mês anterior e nos meses seguintes à passagem a 0% na mesma cidade.
+- **O lixo por recolher comportou-se da mesma forma em todos os níveis de financiamento.** Subiu e desceu cerca de 15 000 ao longo de cada mês, em torno do mesmo valor (cerca de 11,4 milhões nessa cidade), e o lixo «abducted» ficou em 2 000 por mês. A produção varia cerca de 3 000 por mês entre execuções, mais do que qualquer diferença entre as três experiências.
+- **O departamento continua a cobrar o seu financiamento.** O seu custo ideal mensal (cerca de 400 nessa cidade) apareceu quando os contratos de exportação passaram a existir, e o jogo cobra esse custo multiplicado pela percentagem de financiamento, mesmo que nenhuma instalação local o possa usar. Baixar o financiamento de 100% para 0% poupou cerca de 407 por mês. O valor efetivamente gasto acompanha o custo cobrado um mês depois.
+- **Limites desta medição.** Uma cidade, uma região, dois meses por experiência e uma execução por nível de financiamento. **Não** se aplica a uma cidade com aterro, incineradora, centro de reciclagem ou central de conversão de resíduos em energia: aí o financiamento altera a capacidade de tratamento (ver acima) e pode ter importância.
 
 **A capacidade muda imediatamente depois de o financiamento ser ajustado?**
 
@@ -1486,15 +1501,13 @@ Do mesmo modo, se o lixo começar a acumular-se nas ruas, o Ministério pode ver
 Cada avaliação usa as leituras mais recentes disponíveis e respeita os ajustes graduais de financiamento descritos na [secção 3.7](#garbage-landfills-writing).
 
 <a id="garbage-landfills-advice"></a>
-#### 3.9 Aviso sobre o tamanho do aterro: quando ampliar ou reduzir um aterro pode poupar dinheiro
+#### 3.9 Aviso sobre o tamanho do aterro: quando retirar quadrados vazios de um aterro pode poupar dinheiro
 
 Por vezes, alterar o tamanho de um aterro pode reduzir as despesas de saneamento da cidade.
 
-Pode parecer surpreendente. Acrescentar quadrados de aterro aumenta os custos de manutenção, mas também pode permitir ao Ministério fazer funcionar o sistema de saneamento com uma percentagem de financiamento mais baixa.
+Retirar quadrados sem uso pode reduzir a manutenção sem afetar a capacidade da cidade para eliminar o lixo.
 
-Inversamente, retirar quadrados sem uso pode reduzir a manutenção sem afetar a capacidade da cidade para eliminar o lixo.
-
-O Ministério pode analisar as duas possibilidades e recomendar uma alteração quando a poupança esperada for significativa.
+O Ministério pode analisar esta possibilidade e recomendar a remoção de quadrados quando a poupança esperada for significativa.
 
 **Esta funcionalidade vem desativada por predefinição.**
 
@@ -1502,11 +1515,10 @@ Pode ativá-la com:
 
 **Avisar-me quando rever o tamanho do aterro compensar**
 
-O Ministério procura então dois tipos de recomendações:
+O Ministério procura então um tipo de recomendação:
 
 | Recomendação | O que significa |
 |---|---|
-| **AMPLIAR** | Acrescentar uma área concreta ao aterro poderia reduzir a fatura mensal total de saneamento. |
 | **REDUZIR** | Retirar uma área concreta sem uso poderia reduzir os custos de manutenção sem comprometer a eliminação do lixo. |
 
 **O Ministério nunca altera automaticamente o zonamento do aterro por causa destas recomendações.**
@@ -1533,35 +1545,6 @@ Verifica também que todos os quadrados pertencem à zona esperada.
 **Se alguma informação for incoerente, o Ministério não faz nenhuma recomendação.**
 
 Isto evita sugestões baseadas em dados do aterro incompletos ou incorretos.
-
-#### Como encontra o Ministério áreas de ampliação seguras?
-
-Para uma recomendação de **AMPLIAR**, o Ministério procura áreas retangulares de terreno livre junto ao aterro existente.
-
-Só considera ampliações para a **direita ou para baixo do aterro, nas coordenadas internas do mapa do jogo**.
-
-Esta restrição é importante porque ampliar para cima ou para a esquerda pode deslocar as células de armazenamento internas do aterro e perturbar o lixo que nelas está armazenado.
-
-A área proposta tem de cumprir várias condições:
-
-- Tem de tocar no aterro existente ao longo do seu lado direito ou inferior.
-- Tem de começar num canto do lado escolhido.
-- Tem de ter entre **2 e 8 quadrados de profundidade**.
-- Tem de ter pelo menos **2 quadrados de comprimento**, sem exceder o lado adjacente nem o limite de 48 quadrados do jogo.
-- Não pode conter mais de **64 quadrados**.
-- Todos os quadrados têm de estar disponíveis, dentro do mapa e ainda sem ocupação nem zonamento.
-- Não pode juntar-se a outra zona de aterro.
-- Não pode fazer com que o lixo armazenado seja empurrado de volta para a válvula de admissão do aterro.
-
-O Ministério calcula como a nova forma afetaria as células de armazenamento e a capacidade do aterro.
-
-Faz também uma **simulação com as próprias verificações de zonamento do jogo**, para confirmar que o SimCity 4 aceitaria de facto a área proposta.
-
-Se o jogo rejeitasse a operação ou omitisse silenciosamente algum quadrado, esse candidato é descartado.
-
-**Só são consideradas as ampliações verificadas como seguras.**
-
-Quando várias localizações seguras têm o mesmo número de quadrados, o Ministério fica com a que oferece maior capacidade de armazenamento resultante.
 
 #### Como encontra o Ministério áreas seguras para retirar?
 
@@ -1597,11 +1580,6 @@ O Ministério considera duas fontes de poupança:
 
 ```math
 \begin{aligned}
-\text{AMPLIAR:}\quad
-\Delta B &= 5n_{\text{acrescentados}}-5g_{\text{reconciliados}}
-\\
-L' &= L+n
-\\[6pt]
 \text{REDUZIR:}\quad
 \Delta B &= -5n
 \\
@@ -1611,16 +1589,13 @@ L' &= L-n
 
 Em que:
 
-- **n** é o número de quadrados de aterro acrescentados ou retirados.
-- **gᵣₑcₒₙcᵢₗₑd** é o número de quadrados fantasma eliminados durante a ampliação.
+- **n** é o número de quadrados de aterro retirados.
 - **ΔB** é a variação da manutenção mensal do aterro com 100% de financiamento.
 - **L** e **L′** são as contagens de quadrados do aterro antes e depois da alteração.
 
 Os novos quadrados de aterro vazios custam **§5 cada por mês** com 100% de financiamento.
 
 Retirar um quadrado sem uso poupa essa despesa de manutenção.
-
-Uma ampliação pode também eliminar quadrados fantasma que já custam dinheiro, o que pode compensar parcialmente a manutenção da área recém-acrescentada.
 
 O Ministério recalcula também a capacidade de armazenamento do aterro:
 
@@ -1640,7 +1615,7 @@ I'=I+\Delta B
 
 **O mais importante é o que acontece a seguir.**
 
-O Ministério não se limita a multiplicar por §5 o número de quadrados acrescentados ou retirados.
+O Ministério não se limita a multiplicar por §5 o número de quadrados retirados.
 
 Recalcula também **o financiamento de saneamento mais barato necessário depois da alteração proposta**, usando a mesma previsão de lixo, a mesma reserva, os mesmos contratos e o mesmo calendário.
 
@@ -1753,8 +1728,6 @@ Para não tornar o SimCity 4 mais lento, o Ministério limita o trabalho feito e
 
 - Avalia **no máximo 64 candidatos** por análise.
 - Tem como objetivo um orçamento de cálculo de **10 milissegundos**.
-- Divide inicialmente as avaliações de candidatos entre AMPLIAR e REDUZIR.
-- Se uma direção tiver menos candidatos, a margem de avaliação que sobra pode ser usada pela outra.
 - Se análises repetidas excederem o orçamento de tempo, o Ministério reduz progressivamente o número de candidatos que verifica.
 
 O número máximo de candidatos pode descer temporariamente por **48, 32, 16, 8, 4 e 2**, consoante o desempenho.
@@ -1769,7 +1742,6 @@ Entre os candidatos seguros que avalia, o Ministério seleciona:
 
 1. O candidato com a maior poupança mensal.
 2. Se as poupanças forem iguais, o candidato que usa menos quadrados.
-3. Se ainda houver empate, AMPLIAR antes de REDUZIR.
 
 A análise é feita como parte de uma avaliação normal do saneamento. Não exige nenhum processo separado em segundo plano.
 
@@ -1777,20 +1749,13 @@ A análise é feita como parte de uma avaliação normal do saneamento. Não exi
 
 O Ministério envia uma mensagem através do **conselheiro de serviços públicos** do SimCity 4, classificada como boa notícia.
 
-São possíveis dois tipos de avisos:
-
-**Para a ampliação:**
-
-> **Mais aterro, menos despesa?**
-
-**Para a redução:**
+O aviso tem o título:
 
 > **O aterro ocupa espaço a mais!**
 
 O aviso explica:
 
-- Se deve ampliar ou reduzir o aterro.
-- Quantos quadrados devem ser acrescentados ou retirados.
+- Quantos quadrados devem ser retirados.
 - O comprimento e a profundidade do retângulo proposto.
 - A poupança mensal estimada em simoleões.
 - A percentagem do orçamento de saneamento que poderia ser poupada.
@@ -1962,7 +1927,6 @@ O Ministério exige também:
 - Exatamente uma zona de aterro.
 - Uma alteração proposta segura que preserve o lixo armazenado.
 - Nenhum risco de juntar zonas.
-- Uma ampliação que não desloque as posições das células de armazenamento do aterro.
 - A aprovação da própria validação de zonamento ou de remoção de zonamento do jogo.
 - Poupança estritamente acima do limiar configurado.
 
@@ -1987,6 +1951,10 @@ Se a verificação falhar, as reparações automáticas param durante o resto da
 
 **O Ministério prefere sempre deixar um aterro como está a fazer uma modificação que não consiga verificar como segura.**
 
+#### Cidades sem estruturas de lixo
+
+Uma cidade **sem aterro, incineradora, centro de reciclagem nem central de resíduos para energia** não é um erro. O saneamento local fica em **STANDBY**: não mostra nenhum aviso e começa sozinho quando aparece uma estrutura. Numa cidade assim o financiamento do saneamento não compra nada, pelo que o Ministério o baixa por etapas em vez de o pagar. **Os contratos de lixo não dependem das estruturas locais**: uma cidade sem aterro pode, mesmo assim, exportar lixo por contrato, e o saneamento local e os contratos são avaliados em separado. Uma cidade que tenha apenas uma incineradora, um centro de reciclagem ou uma central de resíduos para energia é gerida normalmente, e um aterro zonado agora não é reduzido enquanto o jogo não comunicar a sua capacidade, o que faz na mudança de mês seguinte.
+
 <a id="garbage-landfills-settings"></a>
 ### 5. Definições
 
@@ -1999,7 +1967,7 @@ A gestão do lixo e dos aterros pode ser configurada em **Opções de Jogo → M
 | [Reserva de saneamento](options.md#opt-sanitationreserve) | 2% | 2–20% | Acrescenta capacidade de eliminação de reserva para acomodar aumentos da produção de lixo. |
 | [Gerir os acordos com os vizinhos](options.md#opt-deals) | Ligado | Ligado / Desligado | Ativa a gestão automática dos contratos regionais. |
 | [Gerir acordos de lixo](options.md#opt-tradegarbage) | Ligado | Ligado / Desligado | Ativa as importações e exportações automáticas de lixo quando a gestão dos acordos com os vizinhos está ativa. |
-| [Avisar-me quando rever o tamanho do aterro compensar](options.md#opt-landfilladvice) | Desligado | Ligado / Desligado | Ativa as recomendações de ampliar ou reduzir áreas do aterro quando são possíveis poupanças significativas. |
+| [Avisar-me quando rever o tamanho do aterro compensar](options.md#opt-landfilladvice) | Desligado | Ligado / Desligado | Ativa as recomendações de retirar quadrados sem uso do aterro quando são possíveis poupanças significativas. |
 | [Limiar de poupança dos avisos do aterro](options.md#opt-landfillthreshold) | 25% | 20–50% | Define a poupança percentual mínima exigida antes de o Ministério recomendar uma alteração do tamanho do aterro. |
 
 #### Como funcionam estas opções em conjunto?
@@ -2026,7 +1994,6 @@ Esta funcionalidade está **desligada por predefinição**.
 
 Quando está ativada, o Ministério pode recomendar:
 
-- **AMPLIAR:** acrescentar quadrados de aterro se a capacidade de eliminação adicional permitir uma redução suficientemente grande das despesas de saneamento.
 - **REDUZIR:** retirar quadrados de aterro sem uso se isso baixar os custos de manutenção sem comprometer a capacidade de eliminação.
 
 **Estas recomendações nunca alteram automaticamente o zonamento do aterro.**
@@ -2050,7 +2017,7 @@ Estas opções ficam também guardadas no ficheiro de configuração de infraest
 | `AutoGarbage` | Financiamento automático do saneamento |
 | `GarbageReservePercent` | Reserva de segurança do saneamento |
 | `AutoTradeGarbage` | Contratos automáticos de lixo |
-| `WarnLandfillSizeSavings` | Aviso de ampliação e redução do aterro |
+| `WarnLandfillSizeSavings` | Aviso de redução do aterro |
 | `LandfillSavingsAlertThreshold` | Poupança mínima exigida para o aviso |
 
 **A reparação automática de quadrados fantasma não tem uma definição própria.** Funciona como parte da gestão do saneamento, na versão do jogo suportada, sempre que as verificações de segurança necessárias passam.
@@ -2289,79 +2256,7 @@ O Ministério conseguiu repará-los outra vez durante a nova sessão da cidade.
 
 **A reparação funciona, mas o jogo original pode recriar o problema sempre que a cidade é carregada.**
 
-#### Exemplo 5: Uma ampliação que poupa dinheiro, mas não o suficiente para ser recomendada
-
-O Ministério testou também a ampliação do aterro da cidade de teste.
-
-Inicialmente, passava uma rua ao longo do seu limite direito.
-
-As verificações de zonamento do jogo rejeitaram todos os candidatos de ampliação nesse lado, porque o terreno proposto estava ocupado.
-
-**O Ministério não recomendou nem executou nenhuma ampliação.**
-
-Depois de o troço de rua ser removido, passou a ser possível uma **ampliação de 2 × 2**.
-
-Isto acrescentaria quatro quadrados de aterro.
-
-A operação de zonamento removeria também os sete quadrados fantasma existentes.
-
-**Nova estrutura do aterro**
-
-```math
-T'=49+4-7=46
-```
-
-O aterro ampliado teria 32 células de armazenamento ativas.
-
-```math
-C'=\frac{46\times30000}{32}=43125
-```
-
-Capacidade total de armazenamento:
-
-```math
-32\times43125=1380000
-```
-
-A capacidade do aterro aumentaria de **1.260.000 para 1.380.000 unidades**, sem empurrar de volta para a válvula qualquer lixo armazenado.
-
-**E a manutenção?**
-
-Os quatro novos quadrados vazios custariam:
-
-```math
-4\times5=20
-```
-
-Remover os sete fantasmas pouparia:
-
-```math
-7\times5=35
-```
-
-Variação líquida da manutenção:
-
-```math
-\Delta B=20-35=-15
-```
-
-A manutenção mensal nominal do aterro desceria de **§1.030 para §1.015**, apesar de o aterro ter ficado maior.
-
-A ampliação foi realizada durante os testes e os valores observados no jogo coincidiram com as previsões.
-
-**O Ministério recomendá-la-ia?**
-
-Não.
-
-A redução estimada da fatura total do saneamento era de apenas cerca de **4–5%**.
-
-O limiar de aviso mínimo configurável é 20% e o predefinido é 25%.
-
-**A ampliação era segura e poderia poupar dinheiro, mas a poupança era demasiado pequena para justificar um aviso do conselheiro.**
-
-Isto ilustra por que razão o Ministério não recomenda todas as alterações de zonamento tecnicamente vantajosas.
-
-#### Exemplo 6: Por que razão o Ministério recusa por vezes reparar fantasmas
+#### Exemplo 5: Por que razão o Ministério recusa por vezes reparar fantasmas
 
 Uma experiência diferente na cidade de teste mostrou por que motivo a reparação de quadrados fantasma tem de ser conservadora.
 
@@ -2418,7 +2313,7 @@ Este é um importante princípio de segurança:
 
 Poupar alguns simoleões não compensa o risco de comprometer os resíduos armazenados num aterro.
 
-#### Exemplo 7: Quando aparece um aviso de poupança no aterro?
+#### Exemplo 6: Quando aparece um aviso de poupança no aterro?
 
 Suponha-se que o Ministério calcula que o orçamento de saneamento atual mais barato é de:
 
@@ -2484,10 +2379,8 @@ Se não estiver disponível uma calibração fiável, o Ministério usa apenas a
 
 #### Aviso sobre o tamanho do aterro
 
-- **Só as cidades com exatamente uma zona de aterro são elegíveis.** O Ministério não dá recomendações de AMPLIAR ou REDUZIR quando existem várias zonas de aterro.
-- **As áreas de ampliação são restritas.** Só são consideradas áreas seguras ao longo dos limites direito ou inferior das coordenadas internas do mapa do aterro, com uma profundidade máxima de oito quadrados e uma área máxima de 64 quadrados.
+- **Só as cidades com exatamente uma zona de aterro são elegíveis.** O Ministério não dá recomendações de REDUZIR quando existem várias zonas de aterro.
 - **As reduções limitam-se a linhas ou colunas exteriores não utilizadas.** As reduções propostas têm de preservar a estrutura do aterro restante e o lixo armazenado.
-- **As poupanças são estimativas.** Os novos quadrados de aterro são tratados inicialmente como vazios, custando §5 cada um com 100% de financiamento. A sua manutenção pode aumentar mais tarde, quando surgirem montes de lixo.
 - **Os custos pontuais de zonamento não estão incluídos.** O Ministério compara os custos mensais recorrentes do saneamento, não o custo inicial de alterar a zona.
 - **Nas cidades testadas, as grandes poupanças são raras.** As oportunidades observadas ficaram, em geral, bastante abaixo do limiar mínimo de aviso de 20%, pelo que o aviso sobre o tamanho do aterro pode aparecer raramente.
 

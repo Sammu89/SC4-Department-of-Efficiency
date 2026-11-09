@@ -946,7 +946,7 @@ El Ministerio solo toma decisiones de financiación cuando la información del j
 - La demanda de electricidad y las demás lecturas necesarias deben estar disponibles y ser coherentes.
 - Una lectura de demanda igual a cero se trata como posiblemente sin inicializar, no automáticamente como prueba de que la ciudad no necesita electricidad.
 - Al menos una central eléctrica debe tener información legible de financiación y producción antes de que se pueda gestionar la financiación de las centrales.
-- Las lecturas contradictorias, como un consumo de electricidad notificado que supera la demanda en más de un 1% más una unidad, impiden los cambios automáticos de financiación.
+- Las lecturas contradictorias, como un consumo de electricidad notificado que supera la demanda en más de un 1% más una unidad, impiden los cambios automáticos de financiación. El contador mensual de consumo del juego **incluye la electricidad que la ciudad exporta**, por lo que el Ministerio resta la exportación antes de compararlo con la demanda propia de la ciudad (una ciudad que exporta electricidad no queda bloqueada). Si la exportación no puede leerse, nunca se supone cero y la lectura se rechaza.
 
 Una ciudad **sin centrales eléctricas** puede seguir evaluándose para comprar electricidad a las ciudades vecinas, si la gestión de contratos regionales está activada.
 

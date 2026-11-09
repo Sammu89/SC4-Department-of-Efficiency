@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
 #pragma once
-// Spatial landfill analysis: the concrete EXPAND / REDUCE placements and the ghost-tile repair. Pure, header-only, no game types, no I/O.
+// Spatial landfill analysis: the concrete REDUCE placements and the ghost-tile repair. Pure, header-only, no game types, no I/O.
 //
 // The plugin fills a LandfillSpatialSnapshot once per relevant evaluation (LandfillZoneReader.cpp): the zone type of every map cell and the pile of the landfill tiles (public API),
 // and, for each landfill zone, its box, bitmap and cell records (a guarded read-only view, SimCity 4 1.1.641.0 only). ValidateLandfillSpatial cross-checks that view against the game's
 // own totals (capacity, usage, maintenance, tile count): one difference and nothing spatial is used (fail closed).
 //
 // Everything a placement does to the zone is computed by LandfillZoneModel (exact, validated in game). A placement is offered only when:
-//   EXPAND  a rectangle of at least 2 x 2 tiles (the game's minimum zone size) touching the RIGHT or BOTTOM side of the zone box and inside its span (growing up or left would move every
-//           cell away from its piles: never offered), anchored at a corner of that side so the player can find it; every tile unzoned (zone type 0); nothing sent to the valve, under
-//           both possible roundings; the native dry run (PlaceZone, place = false) accepts it (the caller checks that for the short list).
 //   REDUCE  the k outermost full rows / columns of the zone's landfill tiles on one side, forming a clean rectangle of landfill tiles of this zone; no pile on any of them; every
 //           cell whose window holds one of them EMPTY; nothing sent to the valve; the remaining tiles one piece holding a 2 x 2 block; the native dezone dry run accepts it.
 //   REPAIR  (ghost tiles) re-zoning as landfill the pile-free landfill tiles of the zone (no new tile): the game's add path reconciles the bitmap (0x6BCD70). Automatic only when the
 //           capacity does not fall, nothing goes to the valve, no other zone is within one tile of the region (the add would merge it), and the native dry run accepts the region.
-// Only zones read and validated are used; a city with more than one landfill zone gets no EXPAND / REDUCE advice (the notice cannot say which landfill), the repair works per zone.
+// Only zones read and validated are used; a city with more than one landfill zone gets no REDUCE advice (the notice cannot say which landfill), the repair works per zone.
 
 #include "GarbageControl.h"
 #include "LandfillScenario.h"
@@ -34,9 +31,8 @@ namespace sc4af {
 constexpr int kLandfillZoneTypeLandfill = 14;           // cISC4ZoneManager::ZoneType::Landfill
 constexpr int kLandfillMinZoneSize = 2;                 // GetMinZoneSize(Landfill) (PlaceZone error 3 below)
 constexpr int kLandfillMaxZoneSize = 48;                // GetMaxZoneSize(Landfill) (PlaceZone error 4 above)
-constexpr int kLandfillExpandMaxDepth = 8;              // largest depth of an expansion strip that is offered
 constexpr int kLandfillReduceMaxRows = 8;               // largest number of edge rows / columns offered for removal
-constexpr int kLandfillPlacementMaxTiles = 64;          // as the advisor's domain (kLandfillMaxTilesPerDirection)
+constexpr int kLandfillPlacementMaxTiles = 64;          // as the advisor's domain (kLandfillMaxTiles)
 
 struct LandfillPileInfo {
     bool pile = false;
@@ -110,13 +106,9 @@ inline std::string ValidateLandfillSpatial(const LandfillSpatialSnapshot& s) {
     return {};
 }
 
-enum class LandfillPlacementKind { ExpandRightTop, ExpandRightBottom, ExpandDownLeft, ExpandDownRight, ReduceTop, ReduceBottom, ReduceLeft, ReduceRight, Repair };
+enum class LandfillPlacementKind { ReduceTop, ReduceBottom, ReduceLeft, ReduceRight, Repair };
 inline const char* LandfillPlacementKindName(LandfillPlacementKind k) {
     switch (k) {
-    case LandfillPlacementKind::ExpandRightTop: return "EXPAND_RIGHT_FROM_TOP";
-    case LandfillPlacementKind::ExpandRightBottom: return "EXPAND_RIGHT_FROM_BOTTOM";
-    case LandfillPlacementKind::ExpandDownLeft: return "EXPAND_BOTTOM_FROM_LEFT";
-    case LandfillPlacementKind::ExpandDownRight: return "EXPAND_BOTTOM_FROM_RIGHT";
     case LandfillPlacementKind::ReduceTop: return "REDUCE_TOP_ROWS";
     case LandfillPlacementKind::ReduceBottom: return "REDUCE_BOTTOM_ROWS";
     case LandfillPlacementKind::ReduceLeft: return "REDUCE_LEFT_COLUMNS";
@@ -125,7 +117,6 @@ inline const char* LandfillPlacementKindName(LandfillPlacementKind k) {
     }
     return "?";
 }
-inline bool IsExpand(LandfillPlacementKind k) { return k == LandfillPlacementKind::ExpandRightTop || k == LandfillPlacementKind::ExpandRightBottom || k == LandfillPlacementKind::ExpandDownLeft || k == LandfillPlacementKind::ExpandDownRight; }
 inline bool IsReduce(LandfillPlacementKind k) { return k == LandfillPlacementKind::ReduceTop || k == LandfillPlacementKind::ReduceBottom || k == LandfillPlacementKind::ReduceLeft || k == LandfillPlacementKind::ReduceRight; }
 
 struct LandfillRect { int x1 = 0, z1 = 0, x2 = -1, z2 = -1; int W() const { return x2 - x1 + 1; } int H() const { return z2 - z1 + 1; } };
@@ -199,50 +190,6 @@ inline void Fill(LandfillPlacement& p, const LandfillZoneView& z, const Landfill
 }
 
 }  // namespace landfill_spatial_detail
-
-// EXPAND candidates of one zone (deterministic order: side right then bottom, anchor first corner then second, depth, length). Physically safe ones only (refusal empty) unless
-// `withRefused` (diagnostics).
-inline std::vector<LandfillPlacement> LandfillExpandCandidates(const LandfillSpatialSnapshot& s, int zone, bool withRefused = false) {
-    using namespace landfill_spatial_detail;
-    std::vector<LandfillPlacement> out;
-    const auto& z = s.zones[static_cast<size_t>(zone)];
-    const auto& m = z.model;
-    if (z.landfillTiles.empty()) return out;
-    // anchored on the landfill the player SEES (its landfill tiles), never on ghost rows of the box; the box may only grow right / down
-    int tx1 = z.landfillTiles.front().first, tx2 = tx1, tz1 = z.landfillTiles.front().second, tz2 = tz1;
-    for (const auto& [x, zz] : z.landfillTiles) { tx1 = std::min(tx1, x); tx2 = std::max(tx2, x); tz1 = std::min(tz1, zz); tz2 = std::max(tz2, zz); }
-    struct Side { LandfillPlacementKind kind; bool right; bool fromStart; };
-    const Side sides[] = {{LandfillPlacementKind::ExpandRightTop, true, true}, {LandfillPlacementKind::ExpandRightBottom, true, false},
-                          {LandfillPlacementKind::ExpandDownLeft, false, true}, {LandfillPlacementKind::ExpandDownRight, false, false}};
-    std::set<std::tuple<int, int, int, int>> done;      // a full-length strip is the same rectangle from both corners
-    for (const auto& sd : sides) {
-        const int span = sd.right ? tz2 - tz1 + 1 : tx2 - tx1 + 1;
-        for (int depth = kLandfillMinZoneSize; depth <= kLandfillExpandMaxDepth; ++depth)
-            for (int len = kLandfillMinZoneSize; len <= std::min(span, kLandfillMaxZoneSize); ++len) {
-                if (depth * len > kLandfillPlacementMaxTiles) break;
-                LandfillRect r;
-                if (sd.right) { r.x1 = tx2 + 1; r.x2 = tx2 + depth; r.z1 = sd.fromStart ? tz1 : tz2 - len + 1; r.z2 = r.z1 + len - 1; }
-                else { r.z1 = tz2 + 1; r.z2 = tz2 + depth; r.x1 = sd.fromStart ? tx1 : tx2 - len + 1; r.x2 = r.x1 + len - 1; }
-                if (!done.insert({r.x1, r.z1, r.x2, r.z2}).second) continue;
-                LandfillPlacement p;
-                p.kind = sd.kind; p.zone = zone; p.rect = r; p.across = depth; p.along = len;
-                for (int zz = r.z1; zz <= r.z2; ++zz) for (int x = r.x1; x <= r.x2; ++x) p.tiles.emplace_back(x, zz);
-                p.n = static_cast<int>(p.tiles.size());
-                for (const auto& [x, zz] : p.tiles) if (s.ZoneTypeAt(x, zz) != 0) { p.refusal = s.ZoneTypeAt(x, zz) < 0 ? "OUTSIDE_MAP" : "LAND_ZONED_OR_USED"; break; }
-                if (p.refusal.empty() && (r.x1 < m.x1 || r.z1 < m.y1)) p.refusal = "BOX_WOULD_GROW_UP_OR_LEFT";
-                if (p.refusal.empty() && TouchesOtherZone(s, zone, r)) p.refusal = "TOUCHES_ANOTHER_ZONE";
-                if (p.refusal.empty()) {
-                    LandfillZoneModel after = m;
-                    const auto res = after.Add(p.tiles, z.ghosts);
-                    Fill(p, z, after, res);
-                    p.maintenanceDelta = kLandfillEmptyTileCost * res.tilesAdded - kLandfillEmptyTileCost * res.ghostsReconciled;
-                    if (p.pushed > 0) p.refusal = "SENDS_GARBAGE_TO_THE_VALVE";
-                }
-                if (p.refusal.empty() || withRefused) out.push_back(std::move(p));
-            }
-    }
-    return out;
-}
 
 // REDUCE candidates of one zone: k outermost rows / columns of its landfill tiles.
 inline std::vector<LandfillPlacement> LandfillReduceCandidates(const LandfillSpatialSnapshot& s, int zone, bool withRefused = false) {
@@ -349,7 +296,7 @@ inline std::vector<LandfillPlacement> LandfillShortList(std::vector<LandfillPlac
 // department ideal move by exactly what the model says; the calibrated geometry follows when it was calibrated AND agrees with the zone read; everything else is copied.
 inline LandfillScenario LandfillPlacementScenario(const GarbageServiceInput& base, Opt<std::int64_t> idealMonthly, const LandfillSpatialSnapshot& s, const LandfillPlacement& p) {
     LandfillScenario sc;
-    sc.delta = IsReduce(p.kind) ? -p.n : p.n;
+    sc.delta = -p.n;
     sc.input = base;
     const std::string problem = landfill_scenario_detail::BaseProblem(base, idealMonthly);
     if (!problem.empty()) { sc.reason = problem; return sc; }

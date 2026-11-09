@@ -946,7 +946,7 @@ The Department only makes funding decisions when the game's information is relia
 - Power demand and the other required readings must be available and consistent.
 - A demand reading of zero is treated as potentially uninitialized, not automatically as proof that the city needs no power.
 - At least one power plant must have readable funding and production information before plant funding can be managed.
-- Contradictory readings, such as reported power consumption exceeding demand by more than 1% plus one unit, prevent automatic funding changes.
+- Contradictory readings, such as reported power consumption exceeding demand by more than 1% plus one unit, prevent automatic funding changes. The game's monthly consumption counter **includes the electricity the city exports**, so the Department takes the export off before comparing it with the city's own demand (a city that exports power is not blocked). If the export cannot be read, it is never assumed to be zero, and the reading is refused.
 
 A city with **no power plants** can still be evaluated for power purchases from neighboring cities, if regional contract management is enabled.
 

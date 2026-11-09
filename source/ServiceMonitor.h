@@ -30,7 +30,7 @@ namespace sc4af {
 
 struct ServiceCounters {
     bool power = false, water = false;                       // which halves were read
-    Opt<std::int64_t> pDemand, pRequirement, pConsumption, pProduction, pImport, pCapacity;
+    Opt<std::int64_t> pDemand, pRequirement, pConsumption, pProduction, pImport, pExport, pCapacity;
     Opt<std::int64_t> pGameImported, pGameExported;          // RegionalCity flows (immediate): the contracts as the game accounts them
     Opt<std::int64_t> wDemand, wConsumed, wCapacity, wImport, wExport;
     Opt<std::int64_t> wWatered, wUnwatered;                   // both read 0 until the simulation has run: not a real reading (UtilityModel.h ServiceCountsReady)
@@ -74,6 +74,15 @@ struct ServiceProof {
 class ServiceMonitor {
 public:
     void Reset() { *this = ServiceMonitor{}; }
+
+    // The service the city really received, comparable with ITS OWN demand. Power: the game's monthly consumption counter INCLUDES the exports (consumption = demand + export when the city is served), so
+    // it is only the city's own consumption once the export is taken off (same simulator, same monthly counters). Without the export reading nothing is claimed (nullopt: the callers treat the sample as
+    // unreadable): a sale could otherwise make a short city look served. Water: the consumed counter already excludes the exports.
+    static Opt<std::int64_t> ServedOf(const ServiceCounters& c, bool power) {
+        if (!power) return c.wConsumed;
+        if (!c.pConsumption || !c.pExport) return std::nullopt;
+        return *c.pConsumption - std::max<std::int64_t>(0, *c.pExport);
+    }
 
     // Pure: the service state of a sample.
     // `exports`: what the city has sold. A sale eats the supply the city needs for itself, so it is subtracted from what the supply can cover.
@@ -153,7 +162,7 @@ public:
         if (sig == p.sigAtWrite) return false;                                    // the game has not updated the counters since the write: nothing to conclude
         p.active = false;
         const auto demand = power ? c.pDemand : c.wDemand;
-        const auto served = power ? c.pConsumption : c.wConsumed;
+        const auto served = ServedOf(c, power);
         const auto capacity = power ? c.pCapacity : c.wCapacity;
         const auto imported = power ? c.pImport : c.wImport;
         out = ServiceProof{};
@@ -180,7 +189,7 @@ private:
 
     static std::string Signature(const ServiceCounters& c, bool power) {
         const auto n = [](const Opt<std::int64_t>& o) { return o ? std::to_string(*o) : std::string("?"); };
-        if (power) return n(c.pDemand) + '|' + n(c.pRequirement) + '|' + n(c.pConsumption) + '|' + n(c.pProduction) + '|' + n(c.pImport) + '|' + n(c.pCapacity) + '|' + n(c.pGameImported) + '|' + n(c.pGameExported);
+        if (power) return n(c.pDemand) + '|' + n(c.pRequirement) + '|' + n(c.pConsumption) + '|' + n(c.pExport) + '|' + n(c.pProduction) + '|' + n(c.pImport) + '|' + n(c.pCapacity) + '|' + n(c.pGameImported) + '|' + n(c.pGameExported);
         return n(c.wDemand) + '|' + n(c.wConsumed) + '|' + n(c.wCapacity) + '|' + n(c.wImport) + '|' + n(c.wExport) + '|' + n(c.wGameImported) + '|' + n(c.wGameExported);
     }
 
@@ -190,7 +199,7 @@ private:
         if (sig == lastSig) { v.cause = ServiceCause::Stale; return v; }          // not a new observation: never repeat a decision on an old counter
         lastSig = sig;
         const auto demand = power ? c.pDemand : c.wDemand;
-        const auto served = power ? c.pConsumption : c.wConsumed;
+        const auto served = ServedOf(c, power);
         const auto capacity = power ? c.pCapacity : c.wCapacity;
         const auto imported = power ? c.pGameImported : c.wGameImported;           // the contracts as the game accounts them right now
         const auto usable = power ? c.pImport : c.wImport;

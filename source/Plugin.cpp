@@ -13,6 +13,7 @@
 #include "ServiceNotices.h"
 #include "NoticeMemory.h"
 #include "CivicBuildingNotices.h"
+#include "FailureNotice.h"
 #include <fstream>
 #include <sstream>
 #include "CivicFundingWriter.h"
@@ -123,7 +124,8 @@ public:
         return cRZCOMDllDirector::QueryInterface(iid, result);
     }
 
-    // <dir of DepartmentEfficiency.dll>\Department of Efficiency\ (trailing backslash), from the real module path; empty if the path is unknown.
+    // <dir of DepartmentEfficiency.dll>\ (trailing backslash), from the real module path; empty if the path is unknown. The DLL, the DAT and the INI are installed side by side, directly in Plugins:
+    // there is NO subfolder and nothing is looked up in a former location (no fallback to the folders of earlier versions).
     static std::string DataDirectory() {
         wchar_t wide[MAX_PATH] = {};
         const DWORD n = GetModuleFileNameW(gModule, wide, MAX_PATH);
@@ -132,7 +134,6 @@ public:
         const auto slash = dir.find_last_of(L"\\/");
         if (slash == std::wstring::npos) return {};
         dir.resize(slash + 1);
-        dir += std::wstring(sc4af::kDataFolderName, sc4af::kDataFolderName + std::char_traits<char>::length(sc4af::kDataFolderName)) + L"\\";
         // the rest of the plugin opens files through the ANSI API: a path the ANSI code page cannot hold goes through its 8.3 form
         BOOL lossy = FALSE;
         auto narrow = [&](const std::wstring& w) {
@@ -158,10 +159,8 @@ public:
 
     bool OnStart(cIGZCOM* com) override {
         dataDir_ = DataDirectory();
-        const DWORD folderAttr = dataDir_.empty() ? INVALID_FILE_ATTRIBUTES : GetFileAttributesA(dataDir_.c_str());
-        const bool folderPresent = folderAttr != INVALID_FILE_ATTRIBUTES && (folderAttr & FILE_ATTRIBUTE_DIRECTORY);
-        sc4af::InitLog(gModule);       // creates the folder if it is missing: the log is the one write that needs it
-        sc4af::Log(sc4af::LogLevel::Info, "Plugin loaded: version " SC4AF_VERSION " commit=" SC4AF_GIT_SHA_STR ";  AutoFinance is OFF unless DepartmentEfficiency.ini enables it; writer test harness disarmed unless an armed config exists; probe=read-only; utilities=Off unless DepartmentEfficiency.ini [UtilityResearch] says Shadow or Auto (Auto writes only power plant and water department funding, per-subsystem opt-in)");
+        sc4af::InitLog(gModule);
+        sc4af::Log(sc4af::LogLevel::Info, "Plugin loaded: version " SC4AF_VERSION " commit=" SC4AF_GIT_SHA_STR "; what the Department manages (education and health funding, power, water and sanitation funding, regional contracts, lot demolition) is set by DepartmentEfficiency.ini and logged below once the configuration is read; the observation probes only read");
 #ifdef SC4AF_ENABLE_FINAL_AUTO_VALIDATION
         sc4af::Log(sc4af::LogLevel::Warning, "[FinalValidation] BUILD=FINAL_VALIDATION (unified Power/Water/Sanitation/Deals Auto is compiled in; NOT a release binary)");
 #endif
@@ -182,12 +181,17 @@ public:
                    "GameVersion=" + sc4af::FormatGameVersion(*version) +
                    (sc4af::IsSupportedGameVersion(*version) ? " Supported=YES" : " Supported=NO"));
         if (!sc4af::IsSupportedGameVersion(*version)) return true;
-        // Fail-safe: without its folder and the main resource file the plugin stays inert (nothing subscribed, no timer, no write), rather than run partially.
-        if (!folderPresent || !FileExists(dataDir_ + "DepartmentEfficiency.dat")) {
+        // A folder of an earlier version is never read: say so once, so that a copy laid over an old installation is not mistaken for a working one.
+        if (!dataDir_.empty()) {
+            const DWORD legacyAttr = GetFileAttributesA((dataDir_ + "Department of Efficiency").c_str());
+            if (legacyAttr != INVALID_FILE_ATTRIBUTES && (legacyAttr & FILE_ATTRIBUTE_DIRECTORY))
+                sc4af::Log(sc4af::LogLevel::Warning, "the folder \"" + dataDir_ + "Department of Efficiency\" of an earlier version is present: nothing in it is read any more (the INI and the DAT are DepartmentEfficiency.ini and DepartmentEfficiency.dat next to the DLL). Delete the old files of the Department and install the three files again.");
+        }
+        // Fail-safe: without the main resource file next to the DLL the plugin stays inert (nothing subscribed, no timer, no write), rather than run partially.
+        if (dataDir_.empty() || !FileExists(dataDir_ + "DepartmentEfficiency.dat")) {
             sc4af::Log(sc4af::LogLevel::Error,
                        dataDir_.empty() ? std::string("the plugin folder could not be determined; the plugin stays inert (read-only, nothing is managed)")
-                       : !folderPresent ? "the folder \"" + dataDir_ + "\" was not found next to DepartmentEfficiency.dll; the plugin stays inert (read-only, nothing is managed). Reinstall the complete package."
-                                        : "\"" + dataDir_ + "DepartmentEfficiency.dat\" is missing; the plugin stays inert (read-only, nothing is managed). Reinstall the complete package.");
+                                        : "\"" + dataDir_ + "DepartmentEfficiency.dat\" is missing; the plugin stays inert (read-only, nothing is managed). Install the three files (DepartmentEfficiency.dll, .dat and .ini) together in Plugins.");
             return true;
         }
         supported_ = true;
@@ -312,7 +316,7 @@ public:
             op.unifiedFailed = unifiedAuto_->sessionFailed();
             op.dealsDisabled = unifiedAuto_->dealsDisabled();
             op.garbageDisabled = unifiedAuto_->garbageDisabled();
-            for (int i = 0; i < 3; ++i) op.ready[i] = unifiedAuto_->commodityReady(i);
+            for (int i = 0; i < 3; ++i) { op.ready[i] = unifiedAuto_->commodityReady(i); op.contractsReady[i] = unifiedAuto_->commodityContractsReady(i); }
         }
 #endif
         return op;
@@ -418,6 +422,7 @@ public:
                 for (auto& c : civicCount_) c = 0;
                 simDays_ = 0;
                 cityKey_.clear();
+                failureKey_.clear();                              // the failure notices link to the city again on its first simulated day
 #endif
                 LogFinalReadiness();
                 ordinance_.AddToCity(city, optionsUi_.MasterIsOn(), "PostCityInit");
@@ -447,6 +452,7 @@ public:
             deferred_.Reset();
             simDays_ = 0;
             cityKey_.clear();
+            failureKey_.clear();                              // the failure notices link to the city again on its first simulated day
             if (cityActive_) sc4af::Log(sc4af::LogLevel::Info, "[Contracts] SHUTDOWN city=" + std::to_string(citySerial_) + " " + unifiedAuto_->contractTable());
 #endif
             cityActive_ = false;
@@ -664,8 +670,7 @@ private:
     // proof that the notice was displayed. The caller decides whether the option is on and the cadence; this function only delivers.
     bool PushLandfillAdvice(const sc4af::LandfillNotice& n) {
         const std::int32_t event = sc4af::LandfillAdviceEvent(n.kind);
-        const bool expand = n.kind == sc4af::LandfillAdviceKind::Expand;
-        const std::string what = std::string("[Notice] landfill advice ") + (expand ? "EXPAND" : "REDUCE") + " event 0x" + sc4af::HexId(event) + " (tiles=" + std::to_string(n.tiles) + " area=" +
+        const std::string what = std::string("[Notice] landfill advice REDUCE") + " event 0x" + sc4af::HexId(event) + " (tiles=" + std::to_string(n.tiles) + " area=" +
                                  std::to_string(n.across) + "x" + std::to_string(n.along) + " percent=" + std::to_string(n.percent) + " savings=" + std::to_string(n.savings) + " link=" +
                                  std::to_string(n.linkX) + "," + std::to_string(n.linkZ) + ")";
         if (!sc4af::LandfillNoticeValid(n)) { sc4af::Log(sc4af::LogLevel::Warning, what + " NOT pushed: the numbers are not valid"); return false; }
@@ -795,6 +800,109 @@ private:
         sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] retire of advice 0x") + sc4af::HexId(guid) + ": RetireAdvice returned " + (ok ? "true" : "false") + ", the advisor " +
                    (after == sc4af::Listing::NotListed ? "no longer shows it (confirmed)" : after == sc4af::Listing::Listed ? "STILL shows it (NOT confirmed)" : "could not be asked afterwards (NOT confirmed)"));
         return after == sc4af::Listing::NotListed;
+    }
+
+    // ---- the failure notices (FailureNotice.h): ONE news item per service the Department can no longer manage technically in this session ----------------------------------------------------------------------
+    // The record is BAD_JOB, MEDIUM (below the pop-up priority of every skill level): a plain entry of the news, never a pop-up. All the technical detail goes to the log only.
+    sc4af::Listing FailureShown(int service) {
+        auto* advisor = AdvisorSystemNow();
+        auto* adv = advisor ? advisor->GetAdvisor(sc4af::FailureAdvisorType(service)) : nullptr;
+        if (!adv || advisorApiBroken_) return sc4af::Listing::Unknown;
+        bool raised = false;
+        cISC4Advice* advice = GuardedAdviceByGuid(adv, sc4af::FailureAdviceGuid(service), raised);
+        const bool shown = advice && !raised && GuardedShown(advice, raised);
+        if (raised) { advisorApiBroken_ = true; sc4af::Log(sc4af::LogLevel::Warning, "[Notice] a native advisor call raised an exception: the notices are not checked or retired again in this session"); return sc4af::Listing::Unknown; }
+        if (!advice) return sc4af::Listing::Unknown;
+        return shown ? sc4af::Listing::Listed : sc4af::Listing::NotListed;
+    }
+
+    // true = the advisor accepted the event (NOT proof that the player saw it: the log also says whether the advisor lists it afterwards).
+    bool PushFailureNotice(int service) {
+        auto* advisor = AdvisorSystemNow();
+        const std::int32_t event = sc4af::FailureAdviceEvent(service);
+        if (!advisor) { sc4af::Log(sc4af::LogLevel::Info, std::string("[FailureNotice] ") + sc4af::FailureServiceName(service) + ": event 0x" + sc4af::HexId(event) + " NOT pushed: no advisor system (tried again later)"); return false; }
+        bool raised = false;
+        const bool accepted = GuardedPushEvent(advisor, event, raised);
+        const auto shown = accepted ? FailureShown(service) : sc4af::Listing::Unknown;
+        sc4af::Log(sc4af::LogLevel::Info, std::string("[FailureNotice] ") + sc4af::FailureServiceName(service) + ": news item event 0x" + sc4af::HexId(event) + " " +
+                   (accepted ? std::string("handed to the advisor (PushEvent returned true; this is NOT proof that it was displayed); the advisor ") +
+                               (shown == sc4af::Listing::Listed ? "lists it" : shown == sc4af::Listing::NotListed ? "does not list it yet (measured: it is listed a moment later, on the next advisor evaluation)" : "could not be asked")
+                             : raised ? std::string("NOT accepted (the call raised an exception)") : std::string("NOT accepted by the advisor (tried again later)")));
+        return accepted;
+    }
+
+    // true = the advisor no longer lists it afterwards (also when it was not listed: dismissed by the player or timed out).
+    bool RetireFailureNotice(int service) {
+        const std::string name = std::string("[FailureNotice] ") + sc4af::FailureServiceName(service);
+        const auto before = FailureShown(service);
+        if (before == sc4af::Listing::NotListed) { sc4af::Log(sc4af::LogLevel::Info, name + ": withdrawal: it is not listed any more (dismissed by the player, timed out or already withdrawn)"); return true; }
+        if (before == sc4af::Listing::Unknown) { sc4af::Log(sc4af::LogLevel::Info, name + ": withdrawal: the advisor cannot be asked (NOT confirmed, tried again later)"); return false; }
+        auto* advisor = AdvisorSystemNow();
+        auto* adv = advisor ? advisor->GetAdvisor(sc4af::FailureAdvisorType(service)) : nullptr;
+        bool raised = false;
+        cISC4Advice* advice = adv ? GuardedAdviceByGuid(adv, sc4af::FailureAdviceGuid(service), raised) : nullptr;
+        bool ok = false;
+        if (advice && !raised) ok = GuardedRetire(adv, advice, raised);
+        if (raised) { advisorApiBroken_ = true; sc4af::Log(sc4af::LogLevel::Warning, "[Notice] a native advisor call raised an exception: the notices are not checked or retired again in this session"); return false; }
+        const auto after = FailureShown(service);
+        sc4af::Log(sc4af::LogLevel::Info, name + ": withdrawal: RetireAdvice returned " + (ok ? "true" : "false") + ", the advisor " +
+                   (after == sc4af::Listing::NotListed ? "no longer lists it (confirmed)" : after == sc4af::Listing::Listed ? "STILL lists it (NOT confirmed, tried again later)" : "could not be asked afterwards (NOT confirmed)"));
+        return after == sc4af::Listing::NotListed;
+    }
+
+    // What the controllers already know about each service, as plain booleans (nothing is read from the game here, nothing is evaluated: the cost is a few comparisons per simulated day).
+    void FillFailureInputs(std::array<sc4af::FailureInput, sc4af::kFailureServices>& in) {
+        using sc4af::FailureService;
+        const auto at = [&](FailureService s) -> sc4af::FailureInput& { return in[static_cast<std::size_t>(s)]; };
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+        if (UnifiedActive() && unifiedAuto_) {
+            const auto& u = utility_.config();
+            const auto& ua = *unifiedAuto_;
+            // only DEFINITIVE failures (fail-closed): a writer that failed its verification stays shut down until the city is loaded again. NOT_READY readings, STANDBY and the like are recoverable: never reported.
+            at(FailureService::Power) = {u.autoPower, ua.powerDisabled(), ua.powerDisabled() ? "the power funding writer failed its verification and was shut down: " + ua.powerReason() : std::string()};
+            at(FailureService::Water) = {u.autoWater, ua.waterDisabled(), ua.waterDisabled() ? "the water funding writer failed its verification and was shut down: " + ua.waterReason() : std::string()};
+            at(FailureService::Sanitation) = {u.autoGarbage, ua.garbageDisabled(), ua.garbageDisabled() ? "the sanitation funding writer failed its verification and was shut down: " + ua.garbageReason() : std::string()};
+            // the contracts: a failed deal manager is global (it covers power, water and garbage together), so one message is true
+            at(FailureService::Deals) = {u.autoDeals && (u.tradePower || u.tradeWater || u.tradeGarbage), ua.dealsDisabled(), ua.dealsDisabled() ? "the neighbor-deal manager failed and was shut down: " + ua.dealsReason() : std::string()};
+        }
+#endif
+        const auto& civic = autoFinance_.config();
+        const bool civicAuto = civic.mode == sc4af::AutoMode::Auto;
+        const bool tripped = autoFinance_.WriterTripped();      // one writer serves both: each is reported only when the player enabled it
+        const std::string civicCause = tripped ? "the civic writer distrusted itself (3 different facilities could not be verified)" : std::string();
+        at(FailureService::Health) = {civicAuto && civic.health, tripped, civicCause};
+        at(FailureService::Education) = {civicAuto && civic.education, tripped, civicCause};
+        const std::string stop = sc4af::LotDemolitionStopReason();
+        at(FailureService::Demolition) = {sc4af::LotDemolitionAutoOn(), !stop.empty(), stop};
+    }
+
+    // Once per simulated day. The first call of a city session starts a NEW memory (one notice per service and city session; nothing is kept from an earlier session, not even of the same city) and
+    // withdraws any notice of an older session that the advisor still lists.
+    void ObserveFailures() {
+        if (!cityActive_) return;
+        if (failureKey_.empty()) {
+            const std::string& key = CityKeyNow();
+            failureKey_ = key.empty() ? "serial:" + std::to_string(citySerial_) : key;               // for the log only
+            failures_.StartSession();
+            int stray = 0;
+            for (int s = 0; s < sc4af::kFailureServices; ++s)
+                if (FailureShown(s) == sc4af::Listing::Listed && RetireFailureNotice(s)) ++stray;
+            if (stray) sc4af::Log(sc4af::LogLevel::Info, "[FailureNotice] city session started: " + std::to_string(stray) + " failure notice(s) of an older session withdrawn");
+        }
+        std::array<sc4af::FailureInput, sc4af::kFailureServices> in;
+        FillFailureInputs(in);
+        std::vector<std::string> transitions;
+        const auto steps = failures_.Update(simDays_, in, &transitions);
+        for (const auto& t : transitions) sc4af::Log(sc4af::LogLevel::Info, "[FailureNotice] city=" + failureKey_ + " " + t);
+        for (const auto& step : steps) {
+            if (step.what == sc4af::FailureDo::Announce) {
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[FailureNotice] ") + sc4af::FailureServiceName(step.service) + ": failure confirmed on simulated day " + std::to_string(simDays_) + " (" + step.cause + "): the player is told once");
+                failures_.ConfirmAnnounce(step.service, PushFailureNotice(step.service), simDays_);
+            } else if (step.what == sc4af::FailureDo::Retire) {
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[FailureNotice] ") + sc4af::FailureServiceName(step.service) + (step.recovered ? ": the management is available again: the notice is withdrawn" : ": the player switched the service off: the notice is withdrawn"));
+                failures_.ConfirmRetire(step.service, RetireFailureNotice(step.service), simDays_);
+            }
+        }
     }
 
     // Once per city: every notice of the plugin that the advisor shows but the board does not own (an older session, a crash between a retire and a push) is retired,
@@ -1094,6 +1202,7 @@ private:
 
     void OnNewDay() {
         ++simDays_;
+        if (cityActive_) ObserveFailures();                                                           // the failure notices: a few booleans per day, never touches a controller
         if (cityActive_) RefreshAdviceSwitches(false, "SimNewDay");                                   // a controller that failed, an earlier publish that failed: the switches follow within a day (a hand-edited INI is read monthly; the options window and the ordinance apply at once)
         { PerfScope p(perfCivicDayMs_); CivicDailyWatch(); }
         if (cityActive_ && simDays_ % 10 == 0) { PerfScope p(perfLotDayMs_); LotWatchTick(); }      // logs only the lots that appeared or changed state / reason (the monthly pass lists them all)
@@ -1340,6 +1449,8 @@ private:
     sc4af::MinistryOrdinance ordinance_;           // the Department in the game's Ordinances window: the same global switch (MinistryOrdinance.h)
     std::uint64_t dirtySinceMs_ = 0;
     std::uint64_t cityInitMs_ = 0;
+    sc4af::FailureNoticeBoard failures_;          // the failure notices: one per service and city for the whole game session (FailureNotice.h)
+    std::string failureKey_;                      // the city key the board is linked to (empty until the first day of a city session)
     sc4af::CivicNoticeBoard civicBoard_;          // the one notice per facility type: selection, replacement, cooldown, retirement (CivicBuildingNotices.h)
     bool civicRestored_ = false;                  // the memory of an earlier session was loaded into civicBoard_ for this city
     int civicCount_[sc4af::kCivicKinds] = {};     // affected buildings per type at the last evaluation (log on change only)

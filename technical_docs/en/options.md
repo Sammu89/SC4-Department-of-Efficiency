@@ -91,7 +91,7 @@ Both methods update the same setting, so they remain consistent.
 <a id="options-files"></a>
 ### Where are the settings stored?
 
-The Department stores its settings in **three text configuration files**, located inside the `Department of Efficiency` folder in your SimCity 4 Plugins directory.
+The Department stores its settings in **one text configuration file**, `DepartmentEfficiency.ini`, placed directly in your SimCity 4 Plugins folder, next to `DepartmentEfficiency.dll` (there is no `Department of Efficiency` subfolder). It has three independent sections.
 
 You can change most settings through the Department's in-game options window, or edit the files manually.
 
@@ -534,7 +534,7 @@ When disabled:
 - Landfill size advice is unavailable.
 - Garbage contracts can still be managed independently if Manage Garbage Deals is enabled.
 
-**The Department never automatically constructs or zones additional landfill areas.** Landfill expansion and reduction are advice only.
+**The Department never automatically constructs or zones additional landfill areas.** Landfill reduction is advice only.
 
 **Requires:** Department active.
 
@@ -578,9 +578,8 @@ See [Garbage & Landfills](garbage.md#garbage-landfills-need).
 
 Enables optional recommendations about changing the size of your landfill.
 
-The Department looks for situations where either:
+The Department looks for situations where:
 
-- **Expanding a landfill** would provide enough additional disposal capacity to reduce the required sanitation funding and total monthly expense.
 - **Reducing a landfill** would remove unused squares and lower maintenance expenses without compromising garbage disposal.
 
 If a safe change produces savings above your configured threshold, the Department issues an advisor notice.

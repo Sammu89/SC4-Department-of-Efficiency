@@ -29,6 +29,8 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 - [Krav och kompatibilitet](#requirements-and-compatibility)
 
+- [Kompatibilitet med Phantom Funding Slider Bug](#phantom-funding-slider-bug)
+
 - [Uppdatera och avinstallera](#updating-and-uninstalling)
 
 - [Kända begränsningar](#known-limitations)
@@ -45,27 +47,31 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 ### [⬇ Ladda ner Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
+**Nytt i 1.0.2:** se [ändringsloggen](CHANGELOG.md) (på engelska).
+
 1\. Öppna projektets [releasesida](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) och välj den senaste utgåvan.
 
 2\. Under **Assets** hämtar du **distributions-ZIP:en för Department of Efficiency**.
 
 3\. **Stäng SimCity 4.** Packa upp ZIP-filen i en tillfällig mapp.
 
-4\. Kopiera **`DepartmentEfficiency.dll`** och hela mappen **`Department of Efficiency`** till roten av `Dokument\SimCity 4\Plugins`.
+4\. Kopiera de **tre filerna** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** och **`DepartmentEfficiency.ini`** direkt till `Documents\SimCity 4\Plugins`. Skapa ingen undermapp.
 
 5\. Starta spelet och följ anvisningarna under [första inställningen](#first-time-setup) innan du spelar en sparad stad.
 
-Distributions-ZIP:en innehåller DLL-filen och en mapp med en DAT- och en INI-fil. Efter installationen ska du ha:
+Distributions-ZIP:en innehåller exakt dessa tre filer. Efter installationen ska du ha:
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiency.ini
+    DepartmentEfficiency.dat
+    DepartmentEfficiency.ini
 ```
 
-Det offentliga arkivets Markdown-filer och skärmbilder behövs **inte** av spelet. Låt DLL-filen ligga **direkt i Plugins**, med den tillhörande mappen bredvid.
+Det publika förvarets Markdown-filer och skärmbilder behövs **inte** för spelet. Behåll de tre filerna **direkt i Plugins**, sida vid sida. Mappen `Department of Efficiency` finns inte längre.
+
+> [!WARNING]
+> **Uppdaterar du från en tidigare version?** Kopiera inte de nya filerna över de gamla. Ta först bort Departementets gamla filer, som beskrivs under [Uppdatering och avinstallation](#updating-and-uninstalling).
 
 **Ändra inställningar senare:** öppna **Spelalternativ → Effektivitetsdepartementet**, använd sidorna **Samhällsservice** och **Rivning** och klicka på **Godkänn**. För huvudströmbrytaren kan du också använda förordningen **Inrätta ett effektivitetsdepartement**, utan månadskostnad. Att stänga av Departementet stoppar framtida åtgärder; det ångrar inte finansiering, avtal eller rivningar som redan genomförts.
 
@@ -83,8 +89,8 @@ Tabellen nedan beskriver vad Departementet gör. För formler, exempel, skyddså
 | [Sophantering](technical_docs/en/garbage.md#garbage-landfills) | Justerar finansieringen av sophanteringen utifrån sopproduktion, återvinning, behandling, soptippens lagringsutrymme och regionala avtal, samtidigt som stadens eget behov av bortskaffning skyddas. |
 | [Grannavtal](technical_docs/en/deals.md#neighbor-deals) | Kan **köpa eller sälja el och vatten**, **betala grannar för att ta emot ditt avfall** eller **ta emot deras mot betalning**. Det skapar, justerar och säger upp lämpliga avtal när det samlade resultatet gynnar staden och dess egna behov och reserver förblir skyddade. |
 | [Automatisk rivning](technical_docs/en/demolition.md#demolition) | Kan som standard röja ruiner efter ungefär **30 simulerade dagar** och lämpliga byggnader som varit övergivna i **ett simulerat år**. Du bestämmer vilka zoner och vilka orsaker till övergivenhet som räknas, om skyddade ruiner får röjas och om en månatlig utgiftsgräns ska gälla. |
-| [Rådgivarnas meddelanden](technical_docs/en/safety.md#notices) | Använder spelets egna rådgivare för att flagga styrkta, ihållande brister som varken finansiering eller tillgängliga avtal kan åtgärda. Där det passar innehåller meddelandena länkar som tar dig till de berörda byggnaderna. |
-| [Råd om soptippens storlek](technical_docs/en/garbage.md#garbage-landfills-advice) | Det valfria rådet pekar ut en bestämd utvidgning av soptippen, eller en säker minskning, som kan sänka sophanteringsräkningen med mer än din valda spargräns. **Departementet ger råd; du avgör om zonindelningen ska ändras.** |
+| [Rådgivarnas meddelanden](technical_docs/en/safety.md#notices) | Använder spelets egna rådgivare för att flagga styrkta, ihållande brister som varken finansiering eller tillgängliga avtal kan åtgärda. Där det passar innehåller meddelandena länkar som tar dig till de berörda byggnaderna. Det lägger också till en nyhet (rubrik i listan, detaljer vid klick) när en tjänst du har aktiverat måste stoppas på grund av ett tekniskt fel. |
+| [Råd om soptippens storlek](technical_docs/en/garbage.md#garbage-landfills-advice) | Det valfria rådet pekar ut en bestämd, säker minskning av soptippen (tomma rutor som kan tas bort), som kan sänka sophanteringsräkningen med mer än din valda spargräns. **Departementet ger råd; du avgör om zonindelningen ska ändras.** |
 | [Reparation av spökrutor](technical_docs/en/garbage.md#ghost-tiles) | När skötseln av sophanteringen är påslagen repareras lämpliga osynliga soptippsrutor som spelet fortfarande räknar med i underhållet, på ett säkert sätt. Osäkra eller overifierade fall lämnas ifred; det finns ingen separat strömbrytare för den här reparationen. |
 
 Du styr fortfarande över byggande, zonindelning, skatter, vägar och transporter, polis, brandkår och alla andra tjänster som Departementet inte sköter. Om du slår på skötseln av en typ av grannavtal kan Departementet också ändra eller säga upp ett avtal som du tidigare gjort för hand. Stäng av det avtalsalternativet om du vill sköta de avtalen själv.
@@ -105,7 +111,7 @@ Departementet använder de inställningar som följer med tillägget och **börj
 
 5\. Öppna den stad du vill spela. Departementet följer dina sparade inställningar och sköter staden medan simuleringen pågår.
 
-Dina inställningar lagras i tilläggets INI-filer och återanvänds när du öppnar en annan stad. Departementet bygger **inte** skolor, sjukhus, kraftverk eller vattenanläggningar åt dig. När finansiering och tillgängliga avtal inte kan lösa en styrkt, ihållande brist talar en rådgivare i spelet om var mer kapacitet behövs.
+Dina inställningar lagras i `DepartmentEfficiency.ini` och återanvänds när du öppnar en annan stad. Departementet bygger **inte** skolor, sjukhus, kraftverk eller vattenanläggningar åt dig. När finansiering och tillgängliga avtal inte kan lösa en styrkt, ihållande brist talar en rådgivare i spelet om var mer kapacitet behövs.
 
 Du kan också slå på eller stänga av Departementet via stadens förordningar.
 
@@ -218,15 +224,36 @@ Alla skärmbilder visar den engelska versionen av spelet.
 
 - **Tio språk i spelet:** engelska, portugisiska, franska, tyska, spanska, italienska, nederländska, danska, svenska och polska. Departementet följer automatiskt spelets språk.
 
+<a id="phantom-funding-slider-bug"></a>
+
+## Kompatibilitet med Phantom Funding Slider Bug
+
+Effektivitetsdepartementet är kompatibelt med städer som drabbats av **Phantom Funding Slider Bug**, ett gammalt SimCity 4-problem där finansieringsreglagen för redan placerade byggnader fortsätter att röra sig av sig själva efter att underhållskostnaden för den byggnadstypen har ändrats (till exempel av en mod).
+
+Det åtgärdar **inte** själva SimCity 4-felet. I stället upptäcker det misstänkta, återkommande förändringar i finansieringen och justerar automatiskt de anläggningar det hanterar, vilket hjälper till att behålla den nödvändiga servicekapaciteten och undvika onödig överfinansiering.
+
+I de testade scenarierna skedde rättelserna inom en simulerad dag i stället för att potentiellt ta en hel månad.
+
+Skyddet gäller lämpliga anläggningar (skolor, bibliotek, museer, kliniker och sjukhus) under automatisk hantering. Det reparerar inte spelets interna budgetdata och garanterar inte skydd i alla situationer. Se [Phantom Funding Slider Bug](technical_docs/en/phantom_slider.md) för hur det fungerar, dess gränser och testresultaten (på engelska).
+
 <a id="updating-and-uninstalling"></a>
 
 ## Uppdatera och avinstallera
 
-**Inställningarna förs inte över.** Sedan version 1.0.2 är de tre INI-filerna från version 1.0.0 en enda fil, `DepartmentEfficiency.ini`, i mappen `Department of Efficiency` (avsnitten `[AutoFinance]`, `[UtilityResearch]` och `[LotDemolition]`). De gamla `DepartmentEfficiencyUtility.ini` och `DepartmentEfficiencyDemolition.ini` läses inte längre.
+**Inställningarna förs inte över.** Sedan version 1.0.2 har Departementet en enda inställningsfil, `DepartmentEfficiency.ini`, som ersätter de tre INI-filerna från version 1.0.0 och mappen `Department of Efficiency` från det första 1.0.2-paketet. Inställningar i äldre filer läses eller migreras inte: ställ in dina inställningar på nytt under **Spelalternativ → Effektivitetsdepartementet**.
 
-**Så byter du ut en installation (en ren installation krävs):** stäng spelet, ta bort den befintliga `DepartmentEfficiency.dll` **och hela mappen `Department of Efficiency`**, och installera det nya paketet. Att kopiera de nya filerna över en gammal installation stöds inte: de gamla resursfilerna skulle ligga kvar i mappen och hålla spelets egna råd tysta. Ställ in dina inställningar på nytt i spelet (Spelalternativ → Effektivitetsdepartementet).
+**Så uppdaterar du en tidigare installation (en ren installation krävs).** Stäng spelet och ta bort Departementets gamla filer **innan** du kopierar de tre nya. Ta bara bort dessa, i `Documents\SimCity 4\Plugins`:
 
-**Så avinstallerar du:** stäng spelet och radera `DepartmentEfficiency.dll` och mappen `Department of Efficiency`. Dina sparade städer går fortfarande att läsa utan modden. Finansieringsnivåer, befintliga avtal och rivningar som redan sparats i en stad ångras inte automatiskt.
+- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` och `DepartmentEfficiency.ini`;
+- hela mappen `Department of Efficiency`, om den finns;
+- från version 1.0.0, om de fortfarande ligger kvar: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` och `DepartmentEfficiencyDemolition.ini`;
+- `DepartmentEfficiency.told.txt`, en liten minnesfil som tillägget kan ha lämnat kvar (den skapas på nytt vid behov).
+
+Rör inte andra moddars filer. Att kopiera de nya filerna över en gammal installation stöds inte: de gamla resursfilerna skulle ligga kvar och kunna hålla spelets egna råd tysta. Tillägget läser aldrig filer från den gamla mappen; om mappen fortfarande finns skriver det bara en varning i sin logg.
+
+**Avinstallation:** stäng spelet och ta bort samma filer. Dina sparade städer kan fortfarande läsas utan modden. Finansieringsnivåer, befintliga avtal och rivningar som redan sparats i en stad ångras inte automatiskt.
+
+**Loggfil:** `DepartmentEfficiency.log` finns i mappen `Logs` i din SimCity 4-användarmapp (normalt `Documents\SimCity 4\Logs`, eller mappen `Logs` i den mapp som anges med `-UserDir`). Kan den mappen inte användas skrivs den bredvid DLL-filen.
 
 <a id="known-limitations"></a>
 
@@ -259,7 +286,7 @@ Vid bygget hämtas [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fast r
 
 - **gzcom-dll** omfattas inte av denna licens: biblioteket behåller sin egen licens, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), och hämtas från sitt ursprungliga arkiv vid bygget.
 
-- **SimCity 4** och dess originalresurser tillhör Electronic Arts / Maxis. **Department of Efficiency** är en inofficiell fanmod, oberoende av EA och inte godkänd av EA. Fyra av filerna i `release/Department of Efficiency/` innehåller skript och gränssnittsdefinitioner som härrör från själva spelets resurser, och skärmbilderna visar spelet: de ägs inte av mig, omfattas inte av GPL och alla rättigheter till dem ligger kvar hos deras ägare. Detsamma gäller allt annat material från tredje part.
+- **SimCity 4** och dess ursprungliga resurser tillhör Electronic Arts / Maxis. **Effektivitetsdepartementet** är en inofficiell fanmod, oberoende av EA och inte godkänd av EA. Förutom projektets egna texter och skript innehåller `DepartmentEfficiency.dat` två gränssnittsskript (alternativknappen och alternativfönstret) som härleds från spelets egna resurser, och skärmbilderna visar spelet: detta är inte min egendom, omfattas inte av GPL och alla rättigheter ligger kvar hos sina ägare. Detsamma gäller allt annat material från tredje part. Spelets körbara fil distribueras inte.
 
 <a id="credits"></a>
 
@@ -268,6 +295,12 @@ Vid bygget hämtas [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fast r
 **Upphovsperson**
 
 - Skapad av **Sammu89**.
+
+**Särskilt tack**
+
+- **Särskilt tack till CorinaMarie** för hennes utförliga förklaringar av Phantom Funding Slider Bug, för att hon generöst delat de reproducerbara teststäderna och DAT-filerna som gjorde det möjligt att undersöka och mildra dess effekter, och för hennes ovärderliga tekniska vägledning om att bevara och återställa Maxis ursprungliga rådgivarmeddelanden, inklusive den selektiva hanteringen av Lua-rådposter. Hennes hjälp gjorde Departementet mer robust och mer kompatibelt med spelet och med andra moddar.
+
+Koden till Effektivitetsdepartementet är skriven av Sammu89. De personer som nämns här delade kunskap, verktyg, testmaterial och råd; de är inte medförfattare till koden.
 
 **Använt bibliotek**
 
@@ -278,6 +311,10 @@ Vid bygget hämtas [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fast r
 - Nicholas Hayes (0xC0000054 / Null 45), för forskning, dokumentation och öppna exempel om SimCity 4-DLL:er: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. Inställningsfönstret, förordningen och meddelandefilen följer mekanismer publicerade i hans projekt sc4-region-census, sc4-humane-society-ordinance och sc4-lua-extension-example (MIT-licens); spelkommandona följer sc4-auto-run-cheats och sc4-game-command-documentation.
 
 - CorinaMarie, för att ha dokumenterat SimCity 4:s Urgent Advice-teknik som moddens rådgivarmeddelanden följer.
+
+- memo, för vägledningen om att läsa in ett eget Lua-skript i tillägget, med egna identifierare, efter spelets skript och ändra endast de rådposter som behövs, vilket Departementets integration med spelets rådgivare följer.
+
+- Kel9509, för informationen om hur man återskapar Phantom Funding Slider Bug.
 
 - SimCity 4-modding-gemenskapen, för två decennier av forskning, verktyg och delad kunskap, inklusive SC4Devotions dokumentation av exemplar-egenskaper.
 

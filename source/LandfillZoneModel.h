@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Sammu89
 #pragma once
 // Exact model of ONE landfill zone of SimCity 4 1.1.641.0. Pure, header-only, no game types, no I/O.
-// It reproduces the game's own arithmetic and predicted every validated in-game operation (expand, reduce, ghost repair) to the unit.
+// It reproduces the game's own arithmetic and predicted every validated in-game operation (zoning, dezoning, ghost repair) to the unit.
 //
 // State: the zone box (x1, y1, x2, y2), the bitmap of its tiles (bit set = the tile belongs to the zone; it can hold GHOSTS: tiles whose zone type is no longer landfill), and the
 // cell records: a (w-1) x (h-1) grid of 2x2 windows, each {active, capacity, stock}, addressed by coordinates RELATIVE to the box.

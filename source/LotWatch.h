@@ -409,6 +409,10 @@ namespace sc4af {
 // READ ONLY. `full`: also list the relevant lots one by one (the oldest first, at most 60); otherwise only the lots that appeared or changed state / reason since the last call.
 void RunLotWatch(cISC4City* city, const char* reason, bool full);
 void LotWatchReset();
+// The failure notices (FailureNotice.h): true when [LotDemolition] Mode=Auto (the player asked for automatic demolitions); the stop reason is a short technical cause when the demolitions were
+// stopped for this city session by a technical block (the game did not carry out the confirmed orders, a demolition cleared a zone, the cost preview changed a lot), and empty otherwise.
+bool LotDemolitionAutoOn();
+std::string LotDemolitionStopReason();
 void LotWatchSetConfigDirectory(const std::string& directory);
 void LotWatchReloadConfig();                                           // re-reads the ini after the options window wrote it; DepartmentEfficiency.ini [LotDemolition] lives next to the DLL (missing file = Off)
 } // namespace sc4af

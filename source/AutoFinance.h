@@ -71,6 +71,7 @@ public:
         guard_.ResetCity();  // clears the Civic trust failure of the previous city; the external hard stop (blocked) stays
         eligibilitySeen_.clear();
         latch_.Reset();
+        driftGate_.Reset();
         strikeStart_.clear();
         dayInCity_ = 0;
         open_.Reset();
@@ -86,6 +87,8 @@ public:
     bool WritesAllowed() const { return guard_.WritesAllowed(); }
     // false while the latest facility snapshot is INVALID (nothing readable, so nothing is written): the Department does not control the budgets then either.
     bool SnapshotUsable() const { return !session_.LastSnapshotInvalid(); }
+    // The failure notices (FailureNotice.h): the civic writer distrusted itself in this city (3 different facilities could not be verified): a definitive failure until the city is loaded again.
+    bool WriterTripped() const { return guard_.tripped; }
 
     // What the last OnMonth observed and verified (evidence only; never used for decisions).
     const CivicMonthEvidence& evidence() const { return evidence_; }
@@ -99,6 +102,7 @@ private:
     CivicMonthEvidence evidence_;
     CivicShortage shortage_;
     AttentionLatch latch_;                                              // evaluation per change of risk (Watch)
+    DriftGate driftGate_;                                               // early correction of a drift of the game, once per facility and monthly pass (CivicWatch.h)
     std::map<std::tuple<int, int, int>, std::uint32_t> strikeStart_;    // simulated day (since the city opened) a strike was first seen in a facility
     std::uint32_t dayInCity_ = 0;
     OpenSchedule open_;                                                 // the Open evaluation of this city lifecycle
@@ -109,7 +113,8 @@ private:
     CivicWriterGuard guard_;
 
     void TripOnUnverifiedWrite(CivicWriteOutcome outcome, const std::string& reason, const FacilityKey& facility, const CivicSession::FacilityIdentity& identity);
-    void Evaluate(cISC4City* city, std::uint32_t month, EvalTrigger trigger);
+    // `driftTargets`: facilities whose funding the game moved on its own right after the monthly pass (DriftGate); only they may also be reduced outside the monthly pass.
+    void Evaluate(cISC4City* city, std::uint32_t month, EvalTrigger trigger, const std::vector<std::tuple<int, int, int>>* driftTargets = nullptr);
     void WatchTick(cISC4City* city, std::uint32_t month, bool strikeNow);
 };
 

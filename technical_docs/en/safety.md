@@ -541,6 +541,8 @@ For example, if you increase water funding to 100% but leave **Manage water** en
 
 **To keep a specific funding value under your control, disable that service's manager.**
 
+**If the game itself moves a slider.** SimCity 4 can move the sliders of already-placed buildings on its own after a building's maintenance cost has been changed (the Phantom Funding Slider Bug). If the change appears right after a monthly recalculation, in a building whose funding the Department had set, the Department re-evaluates that building at its next watch and puts its funding back to the minimum that gives the required capacity, instead of waiting for the monthly review. A change you make by hand in the middle of the month is not treated this way. See [Phantom Funding Slider Bug](phantom_slider.md).
+
 #### Are there any effects that cannot be switched off individually?
 
 Yes.
@@ -571,11 +573,11 @@ Others only display information so that you can decide what to do.
 | **Neighbor contracts** | Creates, changes and cancels contracts | No separate routine contract notice |
 | **Automatic demolition** | Removes eligible ruins and abandoned buildings | No notice |
 | **Ghost landfill squares** | Repairs eligible ghost tiles automatically | No notice |
-| **Landfill size advice** | **Never changes landfill size** | Optionally recommends a specific expansion or reduction |
+| **Landfill size advice** | **Never changes landfill size** | Optionally recommends a specific reduction |
 
 **Landfill size advice is the main feature that recommends a change without carrying it out.**
 
-It may tell you that expanding or reducing a landfill could save money, but the zoning decision remains yours.
+It may tell you that reducing a landfill could save money, but the zoning decision remains yours.
 
 <a id="safety-performance"></a>
 #### How does the Department avoid slowing down the game?
@@ -824,13 +826,12 @@ A capacity notice can remain in the news list for up to **720 simulated days** w
 <a id="safety-notices-landfill"></a>
 #### Landfill size recommendations
 
-The Department can issue two optional notices when changing landfill size would significantly reduce sanitation expenses.
+The Department can issue an optional notice when changing landfill size would significantly reduce sanitation expenses.
 
-Both come from the **Utilities advisor**, with a good-news mood and urgent priority.
+It comes from the **Utilities advisor**, with a good-news mood and urgent priority.
 
 | Recommendation | Notice title |
 |---|---|
-| **EXPAND** | **More Landfill, Less Spending?** |
 | **REDUCE** | **Our Landfill Is Taking Up Too Much Room!** |
 
 Each notice describes:
@@ -938,6 +939,20 @@ When a safety check fails, the affected component stops making changes rather th
 | **The Play Options window has an unexpected layout** | Leaves the original window unchanged and does not add the Department button during that session. |
 | **A configuration file is invalid** | Disables the affected management component rather than using unreliable settings. |
 
+#### How are technical failures announced?
+
+If a service you enabled has to stop for the rest of the city session because of a technical failure, the Department adds **one native news item** to the news list at the bottom of the game. The title appears in the list and the detail when you click it. There is no pop-up and no advisor window.
+
+- There are seven kinds: electricity, water, sanitation, healthcare, education, regional neighbor contracts and automatic demolition.
+- There is **one item per service and per city session**. Healthcare and education are separate items, and only appear if you enabled them.
+- It is never shown for something that recovers by itself, for a service in **STANDBY**, for a reading that was refused, for a service you switched off, or in **Off** and **Shadow** modes. There are no recovery messages.
+- The item is removed when the service is switched off or its management is restarted. The technical cause is written only to the log, in `[FailureNotice]` lines.
+- The texts exist in the ten languages of the plugin.
+
+**STANDBY** means that the service has nothing to manage in the city yet (for example local sanitation in a city with no landfill, incinerator, recycling center or waste-to-energy plant). It is not an error, produces no notice, and starts by itself when something to manage appears.
+
+**Where is the log?** `DepartmentEfficiency.log` is written to the `Logs` folder of the SimCity 4 user folder, normally `Documents\SimCity 4\Logs\DepartmentEfficiency.log`; if you start the game with `-UserDir`, it is the `Logs` folder of that folder. If that folder cannot be used, the log is written next to the DLL, in `Plugins`, and its first line says why. An existing log is appended to and never moved.
+
 #### What does a session safety stop mean?
 
 A safety stop lasts for the current city session.
@@ -975,7 +990,7 @@ That means:
 - No funding, contract or demolition operations.
 - No agricultural water-icon modification.
 
-The same complete inactivity applies when the required **Department of Efficiency** folder or main resource file is missing beside the DLL.
+The same complete inactivity applies when the main resource file, `DepartmentEfficiency.dat`, is missing beside the DLL. The DLL, the DAT and the INI are installed together, directly in the Plugins folder; the plugin never looks for them anywhere else.
 
 **The Department does not attempt to operate on an unsupported or incomplete installation.**
 

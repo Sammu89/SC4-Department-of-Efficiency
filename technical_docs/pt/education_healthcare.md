@@ -600,6 +600,10 @@ Isto segue o estado do Ministério em cada cidade, sem reiniciar o jogo. Se desa
 
 Consulte a [Segurança geral](safety.md#safety) para mais informação.
 
+#### Se o jogo mover um slider por conta própria
+
+Quando o jogo altera o financiamento de uma escola ou de um hospital que o Ministério tinha definido, logo a seguir a um recálculo mensal, o Ministério reavalia esse edifício na vigilância seguinte, nos dois sentidos, e aplica o financiamento mínimo que ainda dá a capacidade exigida. Ver [Phantom Funding Slider Bug](phantom_slider.md).
+
 <a id="education-healthcare-settings"></a>
 ### 5. Definições
 

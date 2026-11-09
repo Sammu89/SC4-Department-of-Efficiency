@@ -106,7 +106,8 @@ struct SanitationObservation {
 inline SanitationObservation ObserveSanitation(const UtilitySnapshot& s) {
     SanitationObservation o;
     const auto& g = s.garbage;
-    o.valid = g.validity == SnapshotValidity::Valid || g.validity == SnapshotValidity::Partial;
+    // ValidEmpty (a city with no garbage structure, the absence PROVEN) is a valid read of the department too: the budget of such a city may be cut. Invalid is still refused.
+    o.valid = g.validity == SnapshotValidity::Valid || g.validity == SnapshotValidity::Partial || g.validity == SnapshotValidity::ValidEmpty;
     o.lifecycleEpoch = s.lifecycleEpoch;
     o.simDay = static_cast<std::int64_t>(s.simYear) * 365 + s.simDayOfYear;
     o.departmentPresent = g.department.present;

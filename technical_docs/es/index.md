@@ -16,7 +16,7 @@ Esta guía explica cómo funciona SimCity 4 entre bambalinas y cómo toma el Min
 | Electricidad | Reserva de electricidad | 20% | Mantiene capacidad de generación libre para absorber el crecimiento de la ciudad y reducir el riesgo de apagones. Las líneas eléctricas también están protegidas contra el deterioro. | [Electricidad](power.md#power) |
 | Agua | Reserva de agua | 10% | Mantiene capacidad libre de producción de agua, con la protección de las tuberías activada por defecto. | [Agua](water.md#water) |
 | Limpieza | Reserva de basura | 2% | Garantiza capacidad suficiente de tratamiento y eliminación de residuos, con el objetivo de despejar la basura acumulada antes de que acabe el mes simulado. | [Basura y vertederos](garbage.md#garbage-landfills) |
-| Consejo sobre el vertedero | Umbral de aviso de ahorro | Consejo desactivado; umbral del 25% | Recomienda ampliaciones o reducciones del vertedero cuando podrían rebajar de forma notable los costes de limpieza. | [Consejo sobre el tamaño del vertedero](garbage.md#garbage-landfills-advice) |
+| Consejo sobre el vertedero | Umbral de aviso de ahorro | Consejo desactivado; umbral del 25% | Recomienda quitar casillas vacías del vertedero cuando podrían rebajar de forma notable los costes de limpieza. | [Consejo sobre el tamaño del vertedero](garbage.md#garbage-landfills-advice) |
 | Acuerdos con vecinos | Gestión por recurso | Activada; comprar a una ciudad para vender a otra desactivado | Gestiona los contratos de electricidad, agua y basura dando prioridad a las necesidades propias de la ciudad y a sus reservas de seguridad. | [Acuerdos con vecinos](deals.md#neighbor-deals) |
 | Demolición | Tiempos de espera | Ruinas: 1 mes; edificios abandonados: 12 meses | Protege por defecto los edificios municipales e históricos, con un límite opcional de gasto mensual en demolición. | [Demolición automática](demolition.md#demolition) |
 
@@ -37,5 +37,6 @@ Esta guía explica cómo funciona SimCity 4 entre bambalinas y cómo toma el Min
 * [H. Referencia de opciones](options.md#options)
 
 * [I. Referencia de direcciones del ejecutable](../en/game_addresses.md) (en inglés)
+* [J. Phantom Funding Slider Bug](phantom_slider.md) (deriva «fantasma» de los controles)
 
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

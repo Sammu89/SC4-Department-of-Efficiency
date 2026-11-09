@@ -4,21 +4,12 @@
 
 // Landfill size counterfactuals. Pure, header-only, no game types.
 //
-// This file builds the COUNTERFACTUAL INPUT of "what if the landfill had delta more / fewer tiles". It contains no simulator: the funding search and the service
-// verdict stay in PlanGarbageFunding / EvaluateGarbageServiceAt, which the caller runs on `LandfillScenario::input`. Only quantities the game's own fields prove are
-// changed; everything else (reserve, contracts, accumulated garbage, W2E / incinerators, backlog, calendar, curves) is copied untouched.
+// This file builds the COUNTERFACTUAL INPUT of "what if the landfill had n fewer (empty) tiles". It contains no simulator: the funding search and the service verdict stay in
+// PlanGarbageFunding / EvaluateGarbageServiceAt, which the caller runs on `LandfillScenario::input`. Only quantities the game's own fields prove are changed; everything else (reserve,
+// contracts, accumulated garbage, W2E / incinerators, backlog, calendar, curves) is copied untouched. The Department only ever advises REDUCING the landfill: enlarging it is not advised.
 //
-// What changes with n added tiles (EXPAND):
-//   * landfillTiles += n              -> the valve allowance round(curve(tiles) x eff) - supply moves exactly (5000 per tile at the installed curve): PROVEN, it is the
-//                                        same function ComputeLandfillValve / LandfillHeadroomAt evaluate, and the per-zone intake cap tiles x 5000 of the month boundary.
-//   * landfillMaintenance += ceil(maint x n / tiles) (the landfill maintenance B). The Department ideal INCLUDES B at 100% funding (ideal == B in a city with no other line)
-//                                        and the charge is ideal x percent, so idealMonthly' = idealMonthly + the same delta, ONCE.
-//   * landfillCapacity, landfillUsage, geometry (activeCells, cellCapacity): UNCHANGED. A zone tile is not an active storage cell (240 tiles / 182 active cells), so the
-//                                        storage a new tile brings is NOT provable: the scenario is credited ZERO new storage (conservative: it can only make the service
-//                                        verdict harder to pass). The snapshot stays self-consistent (capacity == activeCells x cellCapacity), so a CALIBRATED geometry keeps
-//                                        the dual horizon exactly as the model runs it; an unknown / ambiguous one keeps the continuity lock.
 // What changes with n removed EMPTY tiles (REDUCE): nothing the aggregate data can prove (see LandfillRemovableEvidence). Without a validated reader of the removable
-// tiles the direction is disabled: maxReduce = 0 and BuildLandfillScenario(delta < 0) is not demonstrable.
+// tiles the direction is disabled: maxReduce = 0 and BuildLandfillScenario is not demonstrable.
 
 #include "GarbageControl.h"
 
@@ -30,11 +21,6 @@ namespace sc4af {
 
 // Largest zone tile count the installed transport curve describes (x of its last point). Beyond it the allowance would be extrapolated: not provable.
 constexpr std::int64_t kLandfillCurveMaxTiles = 65536;
-// Largest expansion recommended relative to the current size: the average maintenance per tile (below) is only an observation of the CURRENT mix of tiles, so it is not
-// extrapolated beyond doubling the landfill.
-constexpr int kLandfillExpandMaxFactor = 1;      // maxExpand <= tiles x factor
-// UNVERIFIED community figure (50 per tile). Informational one-off cost only, never part of a monthly saving.
-constexpr std::int64_t kLandfillTileBuildCostCommunity = 50;
 
 // Extension point for REDUCE. A future VALIDATED reader (per-tile occupancy of the landfill zone) fills this; nothing in the product fills it today.
 // `validated` must be true only when the reader proves that `removableTiles` tiles hold no garbage and can be removed by the player. The quantities below must come
@@ -50,7 +36,7 @@ struct LandfillRemovableEvidence {
 };
 
 struct LandfillScenario {
-    int delta = 0;                         // +n expand, -n reduce (tiles)
+    int delta = 0;                         // -n (tiles removed)
     bool demonstrable = false;             // geometry/physics (and for REDUCE removability) PROVEN, else excluded from advice
     std::string reason;                    // stable code when not demonstrable
     GarbageServiceInput input;             // the counterfactual input
@@ -59,14 +45,13 @@ struct LandfillScenario {
 };
 
 struct LandfillLimits {
-    int maxExpand = 0;                     // largest n whose EXPAND scenario can be proven; 0 = direction disabled
-    int maxReduce = 0;                     // largest n whose REDUCE scenario can be proven; 0 = direction disabled
-    std::string expandNote, reduceNote;    // stable code (or the bound that applies) per direction
+    int maxReduce = 0;                     // largest n whose REDUCE scenario can be proven; 0 = disabled
+    std::string reduceNote;                // stable code (or the bound that applies)
 };
 
 namespace landfill_scenario_detail {
 
-// Everything the EXPAND / REDUCE scenarios need from the base. Returns "" when all is readable.
+// Everything the REDUCE scenarios need from the base. Returns "" when all is readable.
 inline std::string BaseProblem(const GarbageServiceInput& base, Opt<std::int64_t> ideal) {
     const auto& a = base.aggregate;
     if (!a.landfillTiles) return "TILES_UNKNOWN";
@@ -78,18 +63,6 @@ inline std::string BaseProblem(const GarbageServiceInput& base, Opt<std::int64_t
     if (!a.garbageSupply || !a.landfillUsage || !a.landfillCapacity || *a.landfillCapacity < *a.landfillUsage || !a.fundingEfficiency) return "VALVE_INPUTS_UNKNOWN";
     if (!a.produced || !a.recycled || !a.imported || !a.incineratorCapacityMonthly || !a.w2eCapacityMonthly) return "SERVICE_INPUTS_UNKNOWN";
     return {};
-}
-
-// ceil(maint x n / tiles): the average maintenance per tile of the CURRENT landfill, rounded up. A new tile is empty, and the observed maintenance rises with the
-// occupancy at constant tiles (66 tiles: 1290 -> 1385 while usage grew), so an empty tile costs no more than the average: the cost of an expansion is never under-stated.
-inline std::int64_t ExpandMaintenanceDelta(std::int64_t maintenance, std::int64_t tiles, int n) {
-    return (maintenance * n + tiles - 1) / tiles;
-}
-
-inline int ExpandBound(std::int64_t tiles) {
-    const std::int64_t byCurve = kLandfillCurveMaxTiles - tiles;
-    const std::int64_t byProportion = tiles * kLandfillExpandMaxFactor;
-    return static_cast<int>(std::max<std::int64_t>(0, std::min(byCurve, byProportion)));
 }
 
 // Largest n the evidence proves removable without breaking the storage (the capacity left must hold the usage) and keeping at least one tile.
@@ -109,12 +82,9 @@ inline LandfillLimits LandfillScenarioLimits(const GarbageServiceInput& base, Op
     LandfillLimits lim;
     const std::string problem = landfill_scenario_detail::BaseProblem(base, idealMonthly);
     if (!problem.empty()) {
-        lim.expandNote = problem;
         lim.reduceNote = problem;
         return lim;
     }
-    lim.maxExpand = landfill_scenario_detail::ExpandBound(*base.aggregate.landfillTiles);
-    lim.expandNote = lim.maxExpand > 0 ? "VALVE_EXACT_STORAGE_NOT_CREDITED" : "TILES_BEYOND_CURVE";
     if (!removable || !removable->validated) {
         lim.reduceNote = "REDUCE_REMOVABLE_TILES_NOT_READABLE";
     } else {
@@ -135,16 +105,7 @@ inline LandfillScenario BuildLandfillScenario(const GarbageServiceInput& base, O
     const std::int64_t tiles = *base.aggregate.landfillTiles;
     const std::int64_t maint = *base.aggregate.landfillMaintenance;
 
-    if (delta > 0) {
-        if (delta > landfill_scenario_detail::ExpandBound(tiles)) { s.reason = tiles + delta > kLandfillCurveMaxTiles ? "TILES_BEYOND_CURVE" : "EXPAND_EXCEEDS_PROVEN_LIMIT"; return s; }
-        const std::int64_t dm = landfill_scenario_detail::ExpandMaintenanceDelta(maint, tiles, delta);
-        a.landfillTiles = static_cast<std::int32_t>(tiles + delta);
-        a.landfillMaintenance = maint + dm;
-        s.idealMonthly = *idealMonthly + dm;                       // the ONLY place the maintenance delta enters the ideal
-        s.initialCost = static_cast<std::int64_t>(delta) * kLandfillTileBuildCostCommunity;
-        s.demonstrable = true;
-        return s;
-    }
+    if (delta > 0) { s.reason = "NOT_A_REDUCTION"; return s; }          // the Department never evaluates enlarging the landfill
 
     const int n = -delta;
     if (!removable || !removable->validated) { s.reason = "REDUCE_REMOVABLE_TILES_NOT_READABLE"; return s; }

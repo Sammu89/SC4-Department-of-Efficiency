@@ -541,6 +541,8 @@ Por exemplo, se aumentar o financiamento da água para 100% mas deixar **Gerir a
 
 **Para manter um valor de financiamento específico sob o seu controlo, desative o gestor desse serviço.**
 
+**Se o próprio jogo mover um slider.** O SimCity 4 pode mover por conta própria os sliders de edifícios já colocados depois de o custo de manutenção de um edifício ter sido alterado (o Phantom Funding Slider Bug). Se a alteração aparecer logo a seguir a um recálculo mensal, num edifício cujo financiamento o Ministério tinha definido, o Ministério reavalia esse edifício na vigilância seguinte e repõe o financiamento no mínimo que dá a capacidade exigida, em vez de esperar pela revisão mensal. Uma alteração que faça à mão a meio do mês não é tratada assim. Ver [Phantom Funding Slider Bug](phantom_slider.md).
+
 #### Há efeitos que não podem ser desligados individualmente?
 
 Sim.
@@ -571,11 +573,11 @@ Outras limitam-se a mostrar informação para que o jogador decida o que fazer.
 | **Contratos com os vizinhos** | Cria, altera e cancela contratos | Sem aviso de rotina específico para contratos |
 | **Demolição automática** | Remove ruínas e edifícios abandonados elegíveis | Sem aviso |
 | **Quadrados fantasma do aterro** | Repara automaticamente os quadrados fantasma elegíveis | Sem aviso |
-| **Aviso sobre o tamanho do aterro** | **Nunca altera o tamanho do aterro** | Recomenda, opcionalmente, uma ampliação ou uma redução concreta |
+| **Aviso sobre o tamanho do aterro** | **Nunca altera o tamanho do aterro** | Recomenda, opcionalmente, uma redução concreta |
 
 **O aviso sobre o tamanho do aterro é a principal funcionalidade que recomenda uma alteração sem a executar.**
 
-Pode dizer-lhe que ampliar ou reduzir um aterro poderia poupar dinheiro, mas a decisão de zonamento continua a ser sua.
+Pode dizer-lhe que reduzir um aterro poderia poupar dinheiro, mas a decisão de zonamento continua a ser sua.
 
 <a id="safety-performance"></a>
 #### Como evita o Ministério abrandar o jogo?
@@ -824,13 +826,12 @@ Um aviso de capacidade pode permanecer na lista de notícias até **720 dias sim
 <a id="safety-notices-landfill"></a>
 #### Recomendações sobre o tamanho do aterro
 
-O Ministério pode emitir dois avisos opcionais quando alterar o tamanho do aterro reduziria de forma significativa as despesas de saneamento.
+O Ministério pode emitir um aviso opcional quando alterar o tamanho do aterro reduziria de forma significativa as despesas de saneamento.
 
-Ambos vêm do **conselheiro de serviços públicos**, com tom de boa notícia e prioridade urgente.
+Vem do **conselheiro de serviços públicos**, com tom de boa notícia e prioridade urgente.
 
 | Recomendação | Título do aviso |
 |---|---|
-| **AMPLIAR** | **Mais aterro, menos despesa?** |
 | **REDUZIR** | **O aterro ocupa espaço a mais!** |
 
 Cada aviso descreve:
@@ -938,6 +939,20 @@ Quando uma verificação de segurança falha, o componente afetado deixa de faze
 | **A janela Opções de Jogo tem uma disposição inesperada** | Deixa a janela original inalterada e não acrescenta o botão do Ministério durante essa sessão. |
 | **Um ficheiro de configuração é inválido** | Desativa o componente de gestão afetado em vez de usar definições pouco fiáveis. |
 
+#### Como são anunciadas as falhas técnicas?
+
+Se um serviço que ativou tiver de parar até ao fim da sessão da cidade por causa de uma falha técnica, o Ministério acrescenta **uma notícia nativa** à lista de notícias na barra inferior do jogo. O título aparece na lista e o detalhe ao clicar. Não há pop-up nem janela de conselheiro.
+
+- Há sete tipos: eletricidade, água, saneamento, saúde, educação, contratos regionais com cidades vizinhas e demolição automática.
+- Há **uma notícia por serviço e por sessão da cidade**. Saúde e educação são notícias separadas e só aparecem se as ativou.
+- Nunca é mostrada para algo que recupera sozinho, para um serviço em **STANDBY**, para uma leitura recusada, para um serviço que desligou, nem nos modos **Off** e **Shadow**. Não há mensagens de recuperação.
+- A notícia é retirada quando o serviço é desligado ou a sua gestão é reiniciada. A causa técnica fica apenas no registo, em linhas `[FailureNotice]`.
+- Os textos existem nos dez idiomas do plugin.
+
+**STANDBY** significa que o serviço ainda não tem nada para gerir na cidade (por exemplo o saneamento local numa cidade sem aterro, incineradora, centro de reciclagem nem central de resíduos para energia). Não é um erro, não gera aviso e começa sozinho quando aparece algo para gerir.
+
+**Onde está o registo?** O `DepartmentEfficiency.log` é escrito na pasta `Logs` da pasta de utilizador do SimCity 4, normalmente `Documents\SimCity 4\Logs\DepartmentEfficiency.log`; se iniciar o jogo com `-UserDir`, é a pasta `Logs` dessa pasta. Se essa pasta não puder ser usada, o registo é escrito ao lado da DLL, em `Plugins`, e a primeira linha diz porquê. Um registo existente continua a ser acrescentado e nunca é movido.
+
 #### O que significa uma paragem de segurança da sessão?
 
 Uma paragem de segurança dura até ao fim da sessão da cidade em curso.
@@ -975,7 +990,7 @@ Isto significa que não há:
 - Operações de financiamento, de contratos ou de demolição.
 - Modificação do ícone de água das quintas.
 
-A mesma inatividade total aplica-se quando a pasta **Department of Efficiency** necessária, ou o ficheiro de recursos principal, não se encontra ao lado da DLL.
+A mesma inatividade total aplica-se quando o ficheiro de recursos principal, `DepartmentEfficiency.dat`, não se encontra ao lado da DLL. A DLL, o DAT e o INI são instalados juntos, diretamente na pasta Plugins; o plugin nunca os procura noutro lugar.
 
 **O Ministério não tenta funcionar numa instalação não suportada ou incompleta.**
 

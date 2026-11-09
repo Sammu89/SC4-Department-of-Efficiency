@@ -47,22 +47,22 @@ constexpr std::uint32_t kAdviceSubjectClsid = 0x6A26D049u;
 constexpr std::uint32_t kAdviceSubjectIid = 0x6A26D050u;
 
 // Landfill notices of the Utilities advisor.
-//   EXPAND / REDUCE (option "Warn me when checking landfill size can help me save", INI WarnLandfillSizeSavings, threshold LandfillSavingsAlertThreshold): GREAT_JOB mood, priority URGENT (100):
-//     good news, green in the news list, shown in the game's own pop-up when the player's settings allow urgent advice. They name a CONCRETE area: {ACROSS} x {ALONG} squares
+//   REDUCE (option "Warn me when checking landfill size can help me save", INI WarnLandfillSizeSavings, threshold LandfillSavingsAlertThreshold): GREAT_JOB mood, priority URGENT (100):
+//     good news, green in the news list, shown in the game's own pop-up when the player's settings allow urgent advice. It names a CONCRETE area: {ACROSS} x {ALONG} squares
 //     and a link that moves the camera to its centre (the view can be rotated, so the text never says "right" or "bottom").
 //   Ghost squares are repaired silently (log only): no notice.
 // The numbers are numeric advisor GLOBAL values the plugin writes right before the event is pushed (cISC4AdvisorSystem::SetGlobalValue(name, double)); the link reads the advice local value
 // kLandfillLinkVariable (an advice subject placed on CELL coordinates, as the civic notices do). The records read them with #game.<name># tokens.
-enum class LandfillAdviceKind { Expand = 0, Reduce = 1 };
-constexpr int kLandfillAdviceKinds = 2;
-constexpr std::int32_t kAdviceLandfillBase = 0x5C4AF070;        // events: + LandfillAdviceKind (0x5C4AF070 expand, 0x5C4AF071 reduce); advice records 0x5C4AD070 + kind, texts 0x5C4AE070 / 0x5C4AE170 + kind
+enum class LandfillAdviceKind { Reduce = 0 };                 // enlarging the landfill is never advised
+constexpr int kLandfillAdviceKinds = 1;
+constexpr std::int32_t kAdviceLandfillBase = 0x5C4AF070;        // event 0x5C4AF070 (reduce); advice record 0x5C4AD070, texts 0x5C4AE070 / 0x5C4AE170
 constexpr std::int32_t kAdviceLandfillGuidBase = 0x5C4AD070;
 constexpr std::int32_t LandfillAdviceEvent(LandfillAdviceKind k) { return kAdviceLandfillBase + static_cast<std::int32_t>(k); }
 constexpr std::int32_t LandfillAdviceGuid(LandfillAdviceKind k) { return kAdviceLandfillGuidBase + static_cast<std::int32_t>(k); }
-constexpr const char* kLandfillTilesGlobal = "g_sc4af_lf_tiles";        // {TILES}: whole squares to add / remove
+constexpr const char* kLandfillTilesGlobal = "g_sc4af_lf_tiles";        // {TILES}: whole squares to remove
 constexpr const char* kLandfillPercentGlobal = "g_sc4af_lf_percent";    // {PERCENT}: whole percent of the monthly sanitation bill
 constexpr const char* kLandfillSavingsGlobal = "g_sc4af_lf_savings";    // {SAVINGS}: whole simoleons per month (the text puts the section sign before it)
-constexpr const char* kLandfillAcrossGlobal = "g_sc4af_lf_across";      // {ACROSS}: squares away from the landfill edge (depth of the area, or rows / columns removed)
+constexpr const char* kLandfillAcrossGlobal = "g_sc4af_lf_across";      // {ACROSS}: squares away from the landfill edge (depth of the area: rows / columns removed)
 constexpr const char* kLandfillAlongGlobal = "g_sc4af_lf_along";        // {ALONG}: squares along the landfill edge
 constexpr const char* kLandfillLinkVariable = "l_sc4af_lf_h";           // the link: game.l_sc4af_lf_h_subject
 
@@ -75,16 +75,16 @@ constexpr bool LandfillAdviceValuesValid(std::int64_t tiles, int percent, std::i
 
 // Everything one landfill notice carries.
 struct LandfillNotice {
-    LandfillAdviceKind kind = LandfillAdviceKind::Expand;
-    std::int64_t tiles = 0;          // squares to add / remove
+    LandfillAdviceKind kind = LandfillAdviceKind::Reduce;
+    std::int64_t tiles = 0;          // squares to remove
     int percent = 0;                 // of the monthly sanitation expense
     std::int64_t savings = 0;        // monthly
-    int across = 0, along = 0;       // EXPAND / REDUCE area
+    int across = 0, along = 0;       // the REDUCE area
     float linkX = 0, linkZ = 0;      // cell coordinates of the link (centre of the area / of the landfill)
 };
 inline bool LandfillNoticeValid(const LandfillNotice& n) {
     const bool link = n.linkX >= 0 && n.linkZ >= 0 && n.linkX < 4096 && n.linkZ < 4096;
-    return link && (n.kind == LandfillAdviceKind::Expand || n.kind == LandfillAdviceKind::Reduce) && LandfillAdviceValuesValid(n.tiles, n.percent, n.savings) && n.across >= 1 && n.along >= 1 &&
+    return link && n.kind == LandfillAdviceKind::Reduce && LandfillAdviceValuesValid(n.tiles, n.percent, n.savings) && n.across >= 1 && n.along >= 1 &&
            static_cast<std::int64_t>(n.across) * n.along == n.tiles;
 }
 
@@ -110,6 +110,15 @@ inline std::string FillLandfillAdviceText(std::string pattern, const LandfillNot
     put("{ALONG}", std::to_string(n.along));
     return pattern;
 }
+
+// Failure notices (FailureNotice.h): one news item per service the Department manages (power, water, sanitation, health, education, neighbor deals, automatic demolition), shown when that management
+// is technically unavailable in this session. BAD_JOB, MEDIUM (45): the bottom news bar, no pop-up. Event 0x5C4AF080 + service, advice record 0x5C4AD080 + service, texts 0x5C4AE080 / 0x5C4AE180 + service.
+constexpr std::int32_t kAdviceFailureBase = 0x5C4AF080;
+constexpr std::int32_t kAdviceFailureGuidBase = 0x5C4AD080;
+constexpr std::int32_t FailureAdviceEvent(int service) { return kAdviceFailureBase + service; }
+constexpr std::int32_t FailureAdviceGuid(int service) { return kAdviceFailureGuidBase + service; }
+// The advisor each notice belongs to (advice_types of the vanilla adv_const.lua: UTILITIES 21, HEALTH_EDUCATION 22, CITY_PLANNING 23): power, water, sanitation, health, education, deals, demolition.
+constexpr int FailureAdvisorType(int service) { return service == 3 || service == 4 ? 22 : service == 6 ? 23 : 21; }
 
 // Id of the activation greeting of the Department (City Planning advisor). Unused: no record ships for it.
 constexpr std::int32_t kAdviceGreeting = 0x5C4AF040;

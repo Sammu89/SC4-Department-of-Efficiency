@@ -15,7 +15,7 @@ Ofrece cuatro funciones independientes:
 
 2. **Contratos regionales de basura:** gestiona las importaciones y exportaciones de basura cuando la gestión de acuerdos con vecinos está activada. Consulta [Acuerdos con vecinos](deals.md#neighbor-deals).
 
-3. **Consejo sobre el tamaño del vertedero (opcional):** recomienda ampliar o reducir las zonas de vertedero cuando hacerlo podría reducir de forma notable tus gastos mensuales. **El Ministerio nunca cambia por sí mismo la zonificación del vertedero con este fin.**
+3. **Consejo sobre el tamaño del vertedero (opcional):** recomienda quitar casillas vacías de las zonas de vertedero cuando hacerlo podría reducir de forma notable tus gastos mensuales. **El Ministerio nunca cambia por sí mismo la zonificación del vertedero con este fin.**
 
 4. **Reparación de casillas fantasma de vertedero:** corrige automáticamente un error del juego por el que algunas casillas que antes eran de vertedero se siguen contando y cobrando como vertedero activo. Usa el propio mecanismo de zonificación del juego y no tiene una opción independiente.
 
@@ -203,6 +203,21 @@ El rendimiento de la limpieza cambia:
 
 - La cantidad entregada por los contratos regionales de basura.
 - La cantidad eliminada por los centros de reciclaje.
+
+**¿Necesita una ciudad sin instalaciones de basura financiación de la limpieza para exportar su basura?**
+
+No. Se midió en el juego real, en una copia de una ciudad sin vertedero, sin incineradora, sin centro de reciclaje y sin planta de conversión de residuos en energía, con contratos de exportación reales que se mantuvieron sin cambios durante la comparación. La financiación de la limpieza se mantuvo en un valor fijo durante dos meses completos:
+
+| Financiación | Rendimiento | Basura exportada al mes | Coste del departamento | Coste de los contratos de exportación |
+|---:|---:|---:|---:|---:|
+| 100% | 100% | 81.453 | 407 | 759 |
+| 25% | 12,5% | 80.172 | 100 | 746 |
+| 0% | 0% | 80.658 | 0 | 760 |
+
+- **La basura exportada es la suma de las cantidades de los contratos**, sea cual sea la financiación (por ejemplo 76.329 + 5.124 = 81.453). No cambió al bajar la financiación, y fue idéntica en el mes anterior y en los meses posteriores al paso al 0% en la misma ciudad.
+- **La basura sin recoger se comportó igual en todos los niveles de financiación.** Subió y bajó unos 15.000 a lo largo de cada mes alrededor del mismo valor (unos 11,4 millones en esa ciudad), y la basura «abducted» se mantuvo en 2.000 al mes. La producción varía unos 3.000 al mes entre ejecuciones, más que cualquier diferencia entre los tres experimentos.
+- **El departamento sigue cobrando su financiación.** Su coste ideal mensual (unos 400 en esa ciudad) apareció cuando existieron los contratos de exportación, y el juego cobra ese coste multiplicado por el porcentaje de financiación aunque ninguna instalación local pueda aprovecharlo. Bajar la financiación del 100% al 0% ahorró unos 407 al mes. El gasto efectivo sigue al coste cobrado un mes después.
+- **Límites de esta medición.** Una ciudad, una región, dos meses por experimento y una ejecución por nivel de financiación. **No** se aplica a una ciudad con vertedero, incineradora, centro de reciclaje o planta de conversión de residuos en energía: allí la financiación cambia la capacidad de tratamiento (véase arriba) y puede importar.
 
 **¿Cambia la capacidad inmediatamente después de ajustar la financiación?**
 
@@ -1486,15 +1501,13 @@ Del mismo modo, si la basura empieza a acumularse en las calles, el Ministerio p
 Cada evaluación usa las últimas lecturas disponibles y respeta los ajustes graduales de financiación descritos en la [Sección 3.7](#garbage-landfills-writing).
 
 <a id="garbage-landfills-advice"></a>
-#### 3.9 Consejo sobre el tamaño del vertedero: cuándo ampliar o reducir un vertedero puede ahorrar dinero
+#### 3.9 Consejo sobre el tamaño del vertedero: cuándo quitar casillas vacías de un vertedero puede ahorrar dinero
 
 A veces, cambiar el tamaño de un vertedero puede reducir los gastos de limpieza de tu ciudad.
 
-Puede parecer sorprendente. Añadir casillas de vertedero aumenta los costes de mantenimiento, pero también puede permitir que el Ministerio haga funcionar el sistema de limpieza con un porcentaje de financiación más bajo.
+Quitar casillas sin usar puede reducir el mantenimiento sin afectar a la capacidad de la ciudad para eliminar basura.
 
-A la inversa, quitar casillas sin usar puede reducir el mantenimiento sin afectar a la capacidad de la ciudad para eliminar basura.
-
-El Ministerio puede analizar ambas posibilidades y recomendar un cambio cuando el ahorro esperado es significativo.
+El Ministerio puede analizar esta posibilidad y recomendar quitar casillas cuando el ahorro esperado es significativo.
 
 **Esta función está desactivada por defecto.**
 
@@ -1502,11 +1515,10 @@ Puedes activarla con:
 
 **Avisar si revisar el vertedero puede ahorrarme dinero**
 
-A continuación, el Ministerio busca dos tipos de recomendaciones:
+A continuación, el Ministerio busca un tipo de recomendación:
 
 | Recomendación | Qué significa |
 |---|---|
-| **AMPLIAR** | Añadir una zona concreta a tu vertedero podría reducir la factura mensual total de la limpieza. |
 | **REDUCIR** | Quitar una zona concreta sin usar podría reducir los costes de mantenimiento sin comprometer la eliminación de la basura. |
 
 **El Ministerio nunca cambia automáticamente la zonificación del vertedero por estas recomendaciones.**
@@ -1533,35 +1545,6 @@ También verifica que cada casilla pertenece a la zona esperada.
 **Si alguna información es incoherente, el Ministerio no hace ninguna recomendación.**
 
 Así se evitan sugerencias basadas en datos del vertedero incompletos o incorrectos.
-
-#### ¿Cómo encuentra el Ministerio zonas de ampliación seguras?
-
-Para una recomendación de **AMPLIAR**, el Ministerio busca áreas rectangulares de terreno sin usar junto al vertedero existente.
-
-Solo considera ampliaciones hacia la **derecha o la parte inferior del vertedero en las coordenadas internas del mapa del juego**.
-
-Esta restricción es importante porque ampliar hacia arriba o hacia la izquierda puede desplazar las celdas de almacenamiento internas del vertedero y alterar la basura almacenada en ellas.
-
-El área propuesta debe cumplir varias condiciones:
-
-- Debe tocar el vertedero existente a lo largo de su borde derecho o inferior.
-- Debe empezar en una esquina del borde elegido.
-- Debe tener entre **2 y 8 casillas de fondo**.
-- Debe tener al menos **2 casillas de largo**, sin sobrepasar el borde contiguo ni el límite de 48 casillas del juego.
-- No debe contener más de **64 casillas**.
-- Todas las casillas deben estar disponibles, dentro del mapa y sin edificar ni zonificar.
-- No debe fusionarse con otra zona de vertedero.
-- No debe provocar que la basura almacenada se empuje de vuelta a la válvula de admisión del vertedero.
-
-El Ministerio calcula cómo afectaría la nueva forma a las celdas de almacenamiento y a la capacidad del vertedero.
-
-También realiza una **simulación previa con las propias comprobaciones de zonificación del juego**, para confirmar que SimCity 4 aceptaría de verdad el área propuesta.
-
-Si el juego rechazara la operación u omitiera en silencio alguna casilla, ese candidato se descarta.
-
-**Solo se tienen en cuenta las ampliaciones verificadas como seguras.**
-
-Cuando varias ubicaciones seguras tienen el mismo número de casillas, el Ministerio se queda con la que ofrece la mayor capacidad de almacenamiento resultante.
 
 #### ¿Cómo encuentra el Ministerio zonas seguras que quitar?
 
@@ -1597,11 +1580,6 @@ El Ministerio considera dos fuentes de ahorro:
 
 ```math
 \begin{aligned}
-\text{AMPLIAR:}\quad
-\Delta B &= 5n_{\text{añadidas}}-5g_{\text{reconciled}}
-\\
-L' &= L+n
-\\[6pt]
 \text{REDUCIR:}\quad
 \Delta B &= -5n
 \\
@@ -1611,16 +1589,13 @@ L' &= L-n
 
 Donde:
 
-- **n** es el número de casillas de vertedero añadidas o quitadas.
-- **gᵣₑcₒₙcᵢₗₑd** es el número de casillas fantasma eliminadas durante la ampliación.
+- **n** es el número de casillas de vertedero quitadas.
 - **ΔB** es el cambio en el mantenimiento mensual del vertedero con el 100% de financiación.
 - **L** y **L′** son los números de casillas del vertedero antes y después del cambio.
 
 Las casillas de vertedero vacías nuevas cuestan **§5 cada una al mes** con el 100% de financiación.
 
 Quitar una casilla sin usar ahorra ese gasto de mantenimiento.
-
-Una ampliación también puede eliminar casillas fantasma que ya cuestan dinero, lo que puede compensar en parte el mantenimiento de la nueva área añadida.
 
 El Ministerio también recalcula la capacidad de almacenamiento del vertedero:
 
@@ -1640,7 +1615,7 @@ I'=I+\Delta B
 
 **Lo importante es lo que ocurre a continuación.**
 
-El Ministerio no se limita a multiplicar por §5 el número de casillas añadidas o quitadas.
+El Ministerio no se limita a multiplicar por §5 el número de casillas quitadas.
 
 También recalcula **la financiación de limpieza más barata necesaria tras el cambio propuesto**, con la misma previsión de basura, la misma reserva, los mismos contratos y el mismo calendario.
 
@@ -1753,8 +1728,6 @@ Para no ralentizar SimCity 4, el Ministerio limita el trabajo que realiza en cad
 
 - Evalúa **como máximo 64 candidatos** por análisis.
 - Se fija un presupuesto de cálculo de **10 milisegundos**.
-- Al principio reparte las evaluaciones de candidatos entre AMPLIAR y REDUCIR.
-- Si una dirección tiene menos candidatos, la otra puede usar el margen de evaluación sobrante.
 - Si varios análisis seguidos superan el presupuesto de tiempo, el Ministerio reduce progresivamente cuántos candidatos comprueba.
 
 El número máximo de candidatos puede bajar temporalmente a **48, 32, 16, 8, 4 y 2**, según el rendimiento.
@@ -1769,7 +1742,6 @@ Entre los candidatos seguros que evalúa, el Ministerio selecciona:
 
 1. El candidato con mayor ahorro mensual.
 2. Si los ahorros son iguales, el candidato que usa menos casillas.
-3. Si sigue habiendo empate, AMPLIAR antes que REDUCIR.
 
 El análisis se ejecuta como parte de una evaluación normal de la limpieza. No requiere un proceso aparte en segundo plano.
 
@@ -1777,20 +1749,13 @@ El análisis se ejecuta como parte de una evaluación normal de la limpieza. No 
 
 El Ministerio envía un mensaje a través del **asesor de servicios públicos** de SimCity 4, clasificado como buena noticia.
 
-Son posibles dos tipos de aviso:
-
-**Para una ampliación:**
-
-> **¿Más vertedero, menos gasto?**
-
-**Para una reducción:**
+El aviso tiene el título:
 
 > **¡El vertedero ocupa demasiado sitio!**
 
 El aviso explica:
 
-- Si hay que ampliar o reducir el vertedero.
-- Cuántas casillas hay que añadir o quitar.
+- Cuántas casillas hay que quitar.
 - El largo y el fondo del rectángulo propuesto.
 - El ahorro mensual estimado en simoleones.
 - El porcentaje del presupuesto de limpieza que se podría ahorrar.
@@ -1962,7 +1927,6 @@ El Ministerio también exige:
 - Exactamente una zona de vertedero.
 - Un cambio propuesto seguro que conserve la basura almacenada.
 - Ningún riesgo de fusionar zonas.
-- Una ampliación que no desplace las posiciones de las celdas de almacenamiento del vertedero.
 - La aprobación de la propia validación de zonificación o deszonificación del juego.
 - Un ahorro estrictamente superior al umbral configurado.
 
@@ -1987,6 +1951,10 @@ Si la verificación falla, las reparaciones automáticas se detienen durante el 
 
 **El Ministerio siempre prefiere dejar un vertedero sin cambios antes que hacer una modificación que no puede verificar como segura.**
 
+#### Ciudades sin estructuras de basura
+
+Una ciudad **sin vertedero, incineradora, centro de reciclaje ni planta de residuos a energía** no es un error. El saneamiento local queda en **STANDBY**: no muestra ningún aviso y arranca solo cuando aparece una estructura. En una ciudad así la financiación del saneamiento no compra nada, por lo que el Ministerio la baja por etapas en lugar de pagarla. **Los contratos de basura no dependen de las estructuras locales**: una ciudad sin vertedero puede seguir exportando basura por contrato, y el saneamiento local y los contratos se juzgan por separado. Una ciudad que solo tiene una incineradora, un centro de reciclaje o una planta de residuos a energía se gestiona con normalidad, y un vertedero zonificado ahora no se recorta hasta que el juego comunica su capacidad, lo que hace en el siguiente cambio de mes.
+
 <a id="garbage-landfills-settings"></a>
 ### 5. Ajustes
 
@@ -1999,7 +1967,7 @@ La gestión de la basura y de los vertederos se puede configurar en **Opciones d
 | [Reserva para tratar basura](options.md#opt-sanitationreserve) | 2% | 2–20% | Añade capacidad de eliminación de reserva para absorber aumentos en la producción de basura. |
 | [Gestionar acuerdos con vecinos](options.md#opt-deals) | Activado | Activado / Desactivado | Activa la gestión automática de los contratos regionales. |
 | [Gestionar acuerdos de basura](options.md#opt-tradegarbage) | Activado | Activado / Desactivado | Activa las importaciones y exportaciones automáticas de basura cuando la gestión de acuerdos con vecinos está activa. |
-| [Avisar si revisar el vertedero puede ahorrarme dinero](options.md#opt-landfilladvice) | Desactivado | Activado / Desactivado | Activa las recomendaciones de ampliar o reducir áreas de vertedero cuando es posible un ahorro significativo. |
+| [Avisar si revisar el vertedero puede ahorrarme dinero](options.md#opt-landfilladvice) | Desactivado | Activado / Desactivado | Activa las recomendaciones de quitar casillas sin usar del vertedero cuando es posible un ahorro significativo. |
 | [Ahorro mínimo para avisos del vertedero](options.md#opt-landfillthreshold) | 25% | 20–50% | Fija el porcentaje mínimo de ahorro que se exige antes de que el Ministerio recomiende cambiar el tamaño del vertedero. |
 
 #### ¿Cómo funcionan juntas estas opciones?
@@ -2026,7 +1994,6 @@ Esta función está **desactivada por defecto**.
 
 Cuando se activa, el Ministerio puede recomendar:
 
-- **AMPLIAR:** añadir casillas de vertedero si la capacidad de eliminación adicional permitiera una reducción suficientemente grande de los gastos de limpieza.
 - **REDUCIR:** quitar casillas de vertedero sin usar si eso rebajara los costes de mantenimiento sin comprometer la capacidad de eliminación.
 
 **Estas recomendaciones nunca cambian automáticamente la zonificación del vertedero.**
@@ -2050,7 +2017,7 @@ Estas opciones también se guardan en el archivo de configuración de servicios 
 | `AutoGarbage` | Financiación automática de la limpieza |
 | `GarbageReservePercent` | Reserva de seguridad de la limpieza |
 | `AutoTradeGarbage` | Contratos automáticos de basura |
-| `WarnLandfillSizeSavings` | Consejo para ampliar y reducir el vertedero |
+| `WarnLandfillSizeSavings` | Consejo para reducir el vertedero |
 | `LandfillSavingsAlertThreshold` | Ahorro mínimo exigido para el consejo |
 
 **La reparación automática de casillas fantasma no tiene un ajuste aparte.** Se ejecuta como parte de la gestión de la limpieza, en la versión compatible del juego, siempre que se superen las comprobaciones de seguridad necesarias.
@@ -2289,79 +2256,7 @@ El Ministerio pudo repararlas otra vez durante la nueva sesión de la ciudad.
 
 **La reparación funciona, pero el juego original puede recrear el problema cada vez que se carga la ciudad.**
 
-#### Ejemplo 5: una ampliación que ahorra dinero, pero no lo bastante para recomendarla
-
-El Ministerio también probó a ampliar el vertedero de la ciudad de prueba.
-
-Al principio, una calle recorría su borde derecho.
-
-Las comprobaciones de zonificación del juego rechazaron todos los candidatos de ampliación de ese lado porque el terreno propuesto estaba ocupado.
-
-**El Ministerio no recomendó ni realizó ninguna ampliación.**
-
-Después de quitar el tramo de calle, pasó a ser posible una **ampliación de 2 × 2**.
-
-Esto añadiría cuatro casillas de vertedero.
-
-La operación de zonificación también eliminaría las siete casillas fantasma existentes.
-
-**Nueva estructura del vertedero**
-
-```math
-T'=49+4-7=46
-```
-
-El vertedero ampliado tendría 32 celdas de almacenamiento activas.
-
-```math
-C'=\frac{46\times30000}{32}=43125
-```
-
-Capacidad de almacenamiento total:
-
-```math
-32\times43125=1380000
-```
-
-La capacidad del vertedero aumentaría de **1.260.000 a 1.380.000 unidades** sin devolver nada de la basura almacenada a la válvula.
-
-**¿Y el mantenimiento?**
-
-Las cuatro casillas vacías nuevas costarían:
-
-```math
-4\times5=20
-```
-
-Eliminar las siete casillas fantasma ahorraría:
-
-```math
-7\times5=35
-```
-
-Variación neta del mantenimiento:
-
-```math
-\Delta B=20-35=-15
-```
-
-El mantenimiento mensual nominal del vertedero bajaría de **§1.030 a §1.015**, a pesar de que el vertedero se hizo más grande.
-
-La ampliación se realizó durante las pruebas, y las cifras observadas en el juego coincidieron con las predicciones.
-
-**¿La recomendaría el Ministerio?**
-
-No.
-
-La reducción estimada de la factura total de limpieza era de solo un **4–5%**.
-
-El umbral de aviso mínimo configurable es del 20%, y el predeterminado es del 25%.
-
-**La ampliación era segura y podía ahorrar dinero, pero el ahorro era demasiado pequeño para justificar un aviso del asesor.**
-
-Esto ilustra por qué el Ministerio no recomienda todos los cambios de zonificación que sean técnicamente beneficiosos.
-
-#### Ejemplo 6: por qué el Ministerio a veces se niega a reparar casillas fantasma
+#### Ejemplo 5: por qué el Ministerio a veces se niega a reparar casillas fantasma
 
 Otro experimento en la ciudad de prueba mostró por qué la reparación de casillas fantasma tiene que ser conservadora.
 
@@ -2418,7 +2313,7 @@ Este es un principio de seguridad importante:
 
 Ahorrar unos pocos simoleones no compensa arriesgar los residuos almacenados en un vertedero.
 
-#### Ejemplo 7: ¿cuándo aparece un aviso de ahorro del vertedero?
+#### Ejemplo 6: ¿cuándo aparece un aviso de ahorro del vertedero?
 
 Supongamos que el Ministerio calcula que el presupuesto de limpieza actual más barato es de:
 
@@ -2484,10 +2379,8 @@ Si no hay una calibración fiable, el Ministerio usa solo su proyección del mes
 
 #### Consejo sobre el tamaño del vertedero
 
-- **Solo son elegibles las ciudades con exactamente una zona de vertedero.** El Ministerio no ofrece recomendaciones de AMPLIAR ni REDUCIR cuando existen varias zonas de vertedero.
-- **Las áreas de ampliación están restringidas.** Solo se consideran áreas seguras a lo largo de los bordes derecho o inferior de las coordenadas internas del mapa del vertedero, con una profundidad máxima de ocho casillas y una superficie máxima de 64 casillas.
+- **Solo son elegibles las ciudades con exactamente una zona de vertedero.** El Ministerio no ofrece recomendaciones de REDUCIR cuando existen varias zonas de vertedero.
 - **Las reducciones se limitan a filas o columnas exteriores sin usar.** Las reducciones propuestas deben conservar la estructura del vertedero restante y la basura almacenada.
-- **Los ahorros son estimaciones.** Las casillas de vertedero nuevas se tratan al principio como vacías, con un coste de §5 cada una con la financiación al 100%. Su mantenimiento puede aumentar más adelante cuando aparezcan montones de basura.
 - **No se incluyen los gastos únicos de zonificación.** El Ministerio compara los costes mensuales recurrentes de la limpieza, no el coste inicial de cambiar la zona.
 - **En las ciudades de prueba, los ahorros grandes son poco frecuentes.** Las oportunidades observadas se mantuvieron por lo general muy por debajo del umbral de aviso mínimo del 20%, así que el consejo sobre el tamaño del vertedero puede aparecer rara vez.
 

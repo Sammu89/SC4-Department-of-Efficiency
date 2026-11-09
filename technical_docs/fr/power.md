@@ -946,7 +946,7 @@ Le Ministère ne prend de décisions de financement que lorsque les informations
 - La demande d’électricité et les autres lectures nécessaires doivent être disponibles et cohérentes.
 - Une demande lue à zéro est traitée comme potentiellement non initialisée, et non automatiquement comme la preuve que la ville n’a pas besoin d’électricité.
 - Au moins une centrale doit avoir des informations de financement et de production lisibles avant que le financement des centrales puisse être géré.
-- Des lectures contradictoires, par exemple une consommation d’électricité déclarée supérieure à la demande de plus de 1 % plus une unité, empêchent les changements de financement automatiques.
+- Des lectures contradictoires, par exemple une consommation d’électricité déclarée supérieure à la demande de plus de 1 % plus une unité, empêchent les changements de financement automatiques. Le compteur mensuel de consommation du jeu **inclut l’électricité que la ville exporte** : le Ministère retire donc l’exportation avant de le comparer à la demande propre de la ville (une ville qui exporte de l’électricité n’est pas bloquée). Si l’exportation ne peut pas être lue, elle n’est jamais supposée nulle et la lecture est refusée.
 
 Une ville **sans centrale** peut quand même être évaluée pour des achats d’électricité auprès des villes voisines, si la gestion des contrats régionaux est activée.
 

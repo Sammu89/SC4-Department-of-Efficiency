@@ -15,7 +15,7 @@ Il assure quatre fonctions distinctes :
 
 2. **Accords régionaux sur les déchets :** gère les importations et exportations de déchets lorsque la gestion des accords avec les voisins est activée. Voir [Accords avec les voisins](deals.md#neighbor-deals).
 
-3. **Conseil sur la taille de la décharge (facultatif) :** recommande d’agrandir ou de réduire les zones de décharge lorsque cela pourrait réduire sensiblement vos dépenses mensuelles. **Le Ministère ne modifie jamais automatiquement le zonage des décharges à cette fin.**
+3. **Conseil sur la taille de la décharge (facultatif) :** recommande de retirer des cases vides des zones de décharge lorsque cela pourrait réduire sensiblement vos dépenses mensuelles. **Le Ministère ne modifie jamais automatiquement le zonage des décharges à cette fin.**
 
 4. **Réparation des cases fantômes de décharge :** corrige automatiquement un bogue du jeu où d’anciennes cases de décharge continuent d’être comptées et facturées comme des décharges actives. Cela passe par le mécanisme de zonage du jeu lui-même et n’a pas d’option distincte.
 
@@ -203,6 +203,21 @@ Elle ne modifie **pas** :
 
 - La quantité livrée par les accords régionaux sur les déchets.
 - La quantité retirée par les centres de recyclage.
+
+**Une ville sans installation de traitement des déchets a-t-elle besoin du financement de la gestion des déchets pour exporter ses déchets ?**
+
+Non. Cela a été mesuré dans le jeu réel, sur une copie d’une ville sans décharge, sans incinérateur, sans centre de recyclage et sans centrale de valorisation énergétique des déchets, avec de vrais accords d’exportation maintenus inchangés pendant la comparaison. Le financement de la gestion des déchets a été maintenu à une valeur fixe pendant deux mois complets :
+
+| Financement | Efficacité | Déchets exportés par mois | Coût du département | Coût des accords d’exportation |
+|---:|---:|---:|---:|---:|
+| 100 % | 100 % | 81 453 | 407 | 759 |
+| 25 % | 12,5 % | 80 172 | 100 | 746 |
+| 0 % | 0 % | 80 658 | 0 | 760 |
+
+- **Les déchets exportés correspondent à la somme des quantités des accords**, quel que soit le financement (par exemple 76 329 + 5 124 = 81 453). Elles n’ont pas changé quand le financement a baissé, et elles étaient identiques le mois précédant le passage à 0 % et les mois suivants, dans la même ville.
+- **Les déchets non collectés se sont comportés de la même façon à tous les niveaux de financement.** Ils ont monté et baissé d’environ 15 000 au cours de chaque mois autour de la même valeur (environ 11,4 millions dans cette ville), et les déchets « abducted » sont restés à 2 000 par mois. La production varie d’environ 3 000 par mois d’une exécution à l’autre, soit plus que n’importe quelle différence entre les trois expériences.
+- **Le département continue de facturer son financement.** Son coût idéal mensuel (environ 400 dans cette ville) est apparu dès que les accords d’exportation ont existé, et le jeu facture ce coût multiplié par le pourcentage de financement, même si aucune installation locale ne peut l’utiliser. Passer le financement de 100 % à 0 % a économisé environ 407 par mois. La somme réellement dépensée suit le coût facturé avec un mois de retard.
+- **Limites de cette mesure.** Une ville, une région, deux mois par expérience et une exécution par niveau de financement. Elle ne s’applique **pas** à une ville qui possède une décharge, un incinérateur, un centre de recyclage ou une centrale de valorisation énergétique des déchets : là, le financement modifie la capacité de traitement (voir ci-dessus) et peut compter.
 
 **La capacité change-t-elle immédiatement après un ajustement du financement ?**
 
@@ -1486,15 +1501,13 @@ De même, si des déchets commencent à s’accumuler dans les rues, le Ministè
 Chaque évaluation utilise les dernières mesures disponibles et respecte les ajustements progressifs du financement décrits à la [section 3.7](#garbage-landfills-writing).
 
 <a id="garbage-landfills-advice"></a>
-#### 3.9 Conseil sur la taille de la décharge : quand agrandir ou réduire une décharge peut faire économiser de l’argent
+#### 3.9 Conseil sur la taille de la décharge : quand retirer des cases vides d’une décharge peut faire économiser de l’argent
 
 Il arrive que modifier la taille d’une décharge réduise les dépenses de gestion des déchets de votre ville.
 
-Cela peut sembler surprenant. Ajouter des cases de décharge augmente les coûts d’entretien, mais peut aussi permettre au Ministère de faire fonctionner le système de gestion des déchets à un pourcentage de financement plus bas.
+Retirer des cases inutilisées peut réduire l’entretien sans affecter la capacité de la ville à éliminer ses déchets.
 
-À l’inverse, retirer des cases inutilisées peut réduire l’entretien sans affecter la capacité de la ville à éliminer ses déchets.
-
-Le Ministère peut analyser ces deux possibilités et recommander un changement lorsque l’économie attendue est significative.
+Le Ministère peut analyser cette possibilité et recommander de retirer des cases lorsque l’économie attendue est significative.
 
 **Cette fonction est désactivée par défaut.**
 
@@ -1502,11 +1515,10 @@ Vous pouvez l’activer avec l’option :
 
 **M’avertir si revoir la décharge permet d’économiser**
 
-Le Ministère recherche alors deux types de recommandations :
+Le Ministère recherche alors un type de recommandation :
 
 | Recommandation | Ce que cela signifie |
 |---|---|
-| **AGRANDIR** | Ajouter une zone précise à votre décharge pourrait réduire la facture mensuelle totale de gestion des déchets. |
 | **RÉDUIRE** | Retirer une zone inutilisée précise pourrait réduire les coûts d’entretien sans compromettre l’élimination des déchets. |
 
 **Le Ministère ne modifie jamais automatiquement le zonage de la décharge pour ces recommandations.**
@@ -1533,35 +1545,6 @@ Il vérifie aussi que chaque case appartient bien à la zone attendue.
 **Si une information est incohérente, le Ministère ne fait aucune recommandation.**
 
 Cela évite des suggestions fondées sur des données de décharge incomplètes ou erronées.
-
-#### Comment le Ministère trouve-t-il des zones d’agrandissement sûres ?
-
-Pour une recommandation **AGRANDIR**, le Ministère cherche des zones rectangulaires de terrain inutilisé à côté de la décharge existante.
-
-Il n’envisage que des agrandissements vers la **droite ou le bas de la décharge, dans les coordonnées internes de la carte du jeu**.
-
-Cette restriction est importante, car agrandir vers le haut ou vers la gauche peut décaler les cellules de stockage internes de la décharge et perturber les déchets qui y sont stockés.
-
-La zone proposée doit remplir plusieurs conditions :
-
-- Elle doit toucher la décharge existante le long de son bord droit ou bas.
-- Elle doit partir d’un coin du bord choisi.
-- Elle doit faire **entre 2 et 8 cases de profondeur**.
-- Elle doit faire **au moins 2 cases de long**, sans dépasser le bord adjacent ni la limite de 48 cases du jeu.
-- Elle ne doit pas contenir plus de **64 cases**.
-- Toutes les cases doivent être disponibles, dans la carte, et ne pas être déjà occupées ni zonées.
-- Elle ne doit pas fusionner avec une autre zone de décharge.
-- Elle ne doit pas provoquer le refoulement de déchets stockés vers la vanne d’admission de la décharge.
-
-Le Ministère calcule comment la nouvelle forme affecterait les cellules de stockage et la capacité de la décharge.
-
-Il effectue aussi un **essai à blanc avec les propres vérifications de zonage du jeu**, pour confirmer que SimCity 4 accepterait réellement la zone proposée.
-
-Si le jeu rejetait l’opération ou omettait silencieusement une case, ce candidat est écarté.
-
-**Seuls les agrandissements vérifiés comme sûrs sont retenus.**
-
-Lorsque plusieurs emplacements sûrs ont le même nombre de cases, le Ministère garde celui qui donne la plus grande capacité de stockage résultante.
 
 #### Comment le Ministère trouve-t-il des zones à retirer sans risque ?
 
@@ -1597,11 +1580,6 @@ Le Ministère prend en compte deux sources d’économies :
 
 ```math
 \begin{aligned}
-\text{AGRANDIR :}\quad
-\Delta B &= 5n_{\text{ajoutées}}-5g_{\text{corrigées}}
-\\
-L' &= L+n
-\\[6pt]
 \text{RÉDUIRE :}\quad
 \Delta B &= -5n
 \\
@@ -1611,16 +1589,13 @@ L' &= L-n
 
 Où :
 
-- **n** est le nombre de cases de décharge ajoutées ou retirées.
-- **g<sub>corrigées</sub>** est le nombre de cases fantômes supprimées lors de l’agrandissement.
+- **n** est le nombre de cases de décharge retirées.
 - **ΔB** est la variation de l’entretien mensuel de la décharge à 100 % de financement.
 - **L** et **L′** sont le nombre de cases de la décharge avant et après la modification.
 
 Les nouvelles cases de décharge vides coûtent **5 § chacune par mois** à 100 % de financement.
 
 Retirer une case inutilisée économise cette dépense d’entretien.
-
-Un agrandissement peut aussi supprimer des cases fantômes qui coûtent déjà de l’argent, ce qui peut compenser en partie l’entretien de la zone nouvellement ajoutée.
 
 Le Ministère recalcule aussi la capacité de stockage de la décharge :
 
@@ -1640,7 +1615,7 @@ I'=I+\Delta B
 
 **Ce qui compte, c’est ce qui se passe ensuite.**
 
-Le Ministère ne se contente pas de multiplier par 5 § le nombre de cases ajoutées ou retirées.
+Le Ministère ne se contente pas de multiplier par 5 § le nombre de cases retirées.
 
 Il recalcule aussi **le financement des déchets le moins cher requis après la modification proposée**, avec les mêmes prévisions de déchets, la même réserve, les mêmes contrats et le même calendrier.
 
@@ -1753,8 +1728,6 @@ Pour éviter de ralentir SimCity 4, le Ministère limite le travail effectué à
 
 - Il évalue **au plus 64 candidats** par analyse.
 - Il vise un budget de calcul de **10 millisecondes**.
-- Il répartit d’abord les évaluations de candidats entre AGRANDIR et RÉDUIRE.
-- Si une direction compte moins de candidats, l’allocation d’évaluation restante peut être utilisée par l’autre.
 - Si des analyses répétées dépassent le budget de temps, le Ministère réduit progressivement le nombre de candidats examinés.
 
 Le nombre maximal de candidats peut descendre temporairement par paliers : **48, 32, 16, 8, 4 puis 2**, selon les performances.
@@ -1769,7 +1742,6 @@ Parmi les candidats sûrs qu’il évalue, le Ministère sélectionne :
 
 1. Le candidat qui offre la plus grande économie mensuelle.
 2. À économie égale, le candidat qui utilise le moins de cases.
-3. En cas de nouvelle égalité, AGRANDIR avant RÉDUIRE.
 
 L’analyse s’exécute dans le cadre d’une évaluation normale de la gestion des déchets. Elle ne nécessite aucun processus d’arrière-plan distinct.
 
@@ -1777,20 +1749,13 @@ L’analyse s’exécute dans le cadre d’une évaluation normale de la gestion
 
 Le Ministère envoie un message par le **conseiller des services publics** de SimCity 4, classé comme bonne nouvelle.
 
-Deux types d’avis sont possibles :
-
-**Pour un agrandissement :**
-
-> **Plus de décharge, moins de dépenses ?**
-
-**Pour une réduction :**
+L’avis a pour titre :
 
 > **Notre décharge prend trop de place !**
 
 L’avis explique :
 
-- S’il faut agrandir ou réduire la décharge.
-- Combien de cases doivent être ajoutées ou retirées.
+- Combien de cases doivent être retirées.
 - La longueur et la profondeur du rectangle proposé.
 - L’économie mensuelle estimée en simoléons.
 - Le pourcentage du budget de gestion des déchets qui pourrait être économisé.
@@ -1962,7 +1927,6 @@ Le Ministère exige aussi :
 - Exactement une zone de décharge.
 - Une modification proposée sûre, qui préserve les déchets stockés.
 - Aucun risque de fusion de zones.
-- Un agrandissement qui ne décale pas la position des cellules de stockage de la décharge.
 - L’approbation de la validation de zonage ou de dézonage propre au jeu.
 - Une économie strictement supérieure au seuil configuré.
 
@@ -1987,6 +1951,10 @@ Si la vérification échoue, les réparations automatiques s’arrêtent pour le
 
 **Le Ministère préfère toujours laisser une décharge inchangée plutôt que d’effectuer une modification qu’il ne peut pas vérifier comme sûre.**
 
+#### Villes sans structure de traitement des déchets
+
+Une ville **sans décharge, incinérateur, centre de recyclage ni centrale de valorisation énergétique des déchets** n’est pas une erreur. L’assainissement local reste en **STANDBY** : il n’affiche aucun avis et démarre tout seul quand une structure apparaît. Dans une telle ville, le financement de l’assainissement n’achète rien : le Ministère l’abaisse donc par paliers au lieu de le payer. **Les contrats de déchets ne dépendent pas des structures locales** : une ville sans décharge peut quand même exporter des déchets par contrat, et l’assainissement local et les contrats sont jugés séparément. Une ville qui n’a qu’un incinérateur, un centre de recyclage ou une centrale de valorisation énergétique est gérée normalement, et une décharge zonée à l’instant n’est pas réduite tant que le jeu n’a pas indiqué sa capacité, ce qu’il fait au changement de mois suivant.
+
 <a id="garbage-landfills-settings"></a>
 ### 5. Réglages
 
@@ -1999,7 +1967,7 @@ La gestion des déchets et des décharges se configure dans **Options de jeu →
 | [Réserve de traitement des déchets](options.md#opt-sanitationreserve) | 2 % | 2–20 % | Ajoute de la capacité d’élimination de réserve pour absorber les hausses de production de déchets. |
 | [Gérer les accords avec les voisins](options.md#opt-deals) | Activé | Activé / Désactivé | Active la gestion automatique des contrats régionaux. |
 | [Gérer les accords de déchets](options.md#opt-tradegarbage) | Activé | Activé / Désactivé | Active les importations et exportations automatiques de déchets lorsque la gestion des accords avec les voisins est active. |
-| [M’avertir si revoir la décharge permet d’économiser](options.md#opt-landfilladvice) | Désactivé | Activé / Désactivé | Active les recommandations d’agrandir ou de réduire les zones de décharge lorsque des économies importantes sont possibles. |
+| [M’avertir si revoir la décharge permet d’économiser](options.md#opt-landfilladvice) | Désactivé | Activé / Désactivé | Active les recommandations de retirer des cases inutilisées de la décharge lorsque des économies importantes sont possibles. |
 | [Seuil d’économie des alertes de décharge](options.md#opt-landfillthreshold) | 25 % | 20–50 % | Définit l’économie minimale, en pourcentage, requise avant que le Ministère recommande de modifier la taille de la décharge. |
 
 #### Comment ces options fonctionnent-elles ensemble ?
@@ -2026,7 +1994,6 @@ Cette fonction est **désactivée par défaut**.
 
 Lorsqu’elle est activée, le Ministère peut recommander :
 
-- **AGRANDIR :** ajouter des cases de décharge si la capacité d’élimination supplémentaire permettait une réduction suffisamment importante des dépenses de gestion des déchets.
 - **RÉDUIRE :** retirer des cases de décharge inutilisées si cela réduisait les coûts d’entretien sans compromettre la capacité d’élimination.
 
 **Ces recommandations ne modifient jamais automatiquement le zonage de la décharge.**
@@ -2050,7 +2017,7 @@ Ces options sont aussi enregistrées dans le fichier de configuration des servic
 | `AutoGarbage` | Financement automatique des déchets |
 | `GarbageReservePercent` | Réserve de sécurité des déchets |
 | `AutoTradeGarbage` | Contrats de déchets automatiques |
-| `WarnLandfillSizeSavings` | Conseil d’agrandissement et de réduction de la décharge |
+| `WarnLandfillSizeSavings` | Conseil de réduction de la décharge |
 | `LandfillSavingsAlertThreshold` | Économie minimale requise pour un conseil |
 
 **La réparation automatique des cases fantômes n’a pas de réglage distinct.** Elle fait partie de la gestion des déchets, sur la version du jeu prise en charge, chaque fois que les vérifications de sécurité requises réussissent.
@@ -2289,79 +2256,7 @@ Le Ministère a pu les réparer à nouveau pendant la nouvelle session de la vil
 
 **La réparation fonctionne, mais le jeu original peut recréer le problème à chaque chargement de la ville.**
 
-#### Exemple 5 : Un agrandissement qui fait économiser de l’argent, mais pas assez pour être recommandé
-
-Le Ministère a aussi testé l’agrandissement de la décharge de la ville de test.
-
-Au départ, une rue longeait son bord droit.
-
-Les vérifications de zonage du jeu ont rejeté tous les candidats à l’agrandissement de ce côté, parce que le terrain proposé était occupé.
-
-**Le Ministère n’a ni recommandé ni effectué d’agrandissement.**
-
-Une fois le tronçon de rue supprimé, un **agrandissement de 2 × 2** est devenu possible.
-
-Cela ajouterait quatre cases de décharge.
-
-L’opération de zonage supprimerait aussi les sept cases fantômes existantes.
-
-**Nouvelle structure de la décharge**
-
-```math
-T'=49+4-7=46
-```
-
-La décharge agrandie aurait 32 cellules de stockage actives.
-
-```math
-C'=\frac{46\times30000}{32}=43125
-```
-
-Capacité de stockage totale :
-
-```math
-32\times43125=1380000
-```
-
-La capacité de la décharge passerait de **1 260 000 à 1 380 000 unités** sans refouler de déchets stockés dans la vanne.
-
-**Et l’entretien ?**
-
-Les quatre nouvelles cases vides coûteraient :
-
-```math
-4\times5=20
-```
-
-La suppression des sept fantômes ferait économiser :
-
-```math
-7\times5=35
-```
-
-Variation nette de l’entretien :
-
-```math
-\Delta B=20-35=-15
-```
-
-L’entretien mensuel nominal de la décharge passerait de **1 030 § à 1 015 §**, alors même que la décharge est devenue plus grande.
-
-L’agrandissement a été réalisé pendant les tests, et les chiffres observés dans le jeu correspondaient aux prédictions.
-
-**Le Ministère le recommanderait-il ?**
-
-Non.
-
-La réduction estimée de la facture totale de gestion des déchets n’était que d’environ **4 à 5 %**.
-
-Le seuil d’alerte minimal configurable est de 20 %, et la valeur par défaut est de 25 %.
-
-**L’agrandissement était sans risque et pouvait faire économiser de l’argent, mais l’économie était trop faible pour justifier un avis du conseiller.**
-
-Cela illustre pourquoi le Ministère ne recommande pas tous les changements de zonage techniquement avantageux.
-
-#### Exemple 6 : Pourquoi le Ministère refuse parfois de réparer les fantômes
+#### Exemple 5 : Pourquoi le Ministère refuse parfois de réparer les fantômes
 
 Une autre expérience dans la ville de test a montré pourquoi la réparation des cases fantômes doit rester prudente.
 
@@ -2418,7 +2313,7 @@ C’est un principe de sécurité important :
 
 Économiser quelques simoleons ne vaut pas le risque de mettre en danger les déchets stockés d’une décharge.
 
-#### Exemple 7 : Quand un avis d’économie sur la décharge apparaît-il ?
+#### Exemple 6 : Quand un avis d’économie sur la décharge apparaît-il ?
 
 Supposons que le Ministère calcule que le budget de gestion des déchets actuel le moins cher est de :
 
@@ -2484,10 +2379,8 @@ Si aucune calibration fiable n’est disponible, le Ministère utilise uniquemen
 
 #### Conseil sur la taille de la décharge
 
-- **Seules les villes qui ont exactement une zone de décharge sont éligibles.** Le Ministère ne fournit pas de recommandations AGRANDIR ou RÉDUIRE lorsqu’il existe plusieurs zones de décharge.
-- **Les zones d’agrandissement sont restreintes.** Seules des zones sûres le long des bords droit ou inférieur des coordonnées internes de la décharge sont envisagées, avec une profondeur maximale de huit cases et une surface maximale de 64 cases.
+- **Seules les villes qui ont exactement une zone de décharge sont éligibles.** Le Ministère ne fournit pas de recommandations RÉDUIRE lorsqu’il existe plusieurs zones de décharge.
 - **Les réductions sont limitées aux rangées ou colonnes extérieures inutilisées.** Les réductions proposées doivent préserver la structure de la décharge restante et les déchets stockés.
-- **Les économies sont des estimations.** Les nouvelles cases de décharge sont d’abord considérées comme vides et coûtent 5 § chacune à 100 % de financement. Leur entretien peut augmenter par la suite lorsque des tas de déchets apparaissent.
 - **Les frais de zonage ponctuels ne sont pas inclus.** Le Ministère compare les coûts mensuels récurrents de gestion des déchets, pas le coût initial du changement de zone.
 - **Les grosses économies sont rares dans les villes testées.** Les opportunités observées sont généralement restées bien en dessous du seuil d’alerte minimal de 20 %, si bien que le conseil sur la taille de la décharge peut apparaître rarement.
 

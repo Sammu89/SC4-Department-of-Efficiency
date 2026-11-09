@@ -91,7 +91,7 @@ Les deux méthodes modifient le même réglage ; elles restent donc cohérentes.
 <a id="options-files"></a>
 ### Où sont enregistrés les réglages ?
 
-Le Ministère enregistre ses réglages dans **trois fichiers de configuration texte**, situés dans le dossier `Department of Efficiency` du répertoire Plugins de SimCity 4.
+Le Ministère enregistre ses réglages dans **un seul fichier de configuration texte**, `DepartmentEfficiency.ini`, placé directement dans le dossier Plugins de SimCity 4, à côté de `DepartmentEfficiency.dll` (il n’y a pas de sous-dossier `Department of Efficiency`). Il comporte trois sections indépendantes.
 
 Vous pouvez modifier la plupart des réglages depuis la fenêtre d’options du Ministère dans le jeu, ou éditer les fichiers à la main.
 
@@ -534,7 +534,7 @@ Lorsqu’elle est désactivée :
 - Le conseil sur la taille de la décharge n’est plus disponible.
 - Les contrats de déchets peuvent toujours être gérés indépendamment si Gérer les accords de déchets est activé.
 
-**Le Ministère ne construit ni ne zone jamais automatiquement de zones de décharge supplémentaires.** L’agrandissement et la réduction de la décharge relèvent uniquement du conseil.
+**Le Ministère ne construit ni ne zone jamais automatiquement de zones de décharge supplémentaires.** La réduction de la décharge relève uniquement du conseil.
 
 **Nécessite :** Ministère actif.
 
@@ -580,7 +580,6 @@ Active des recommandations facultatives sur la modification de la taille de votr
 
 Le Ministère recherche les situations où :
 
-- **Agrandir une décharge** apporterait assez de capacité d’élimination supplémentaire pour réduire le financement de gestion des déchets nécessaire et la dépense mensuelle totale.
 - **Réduire une décharge** supprimerait des cases inutilisées et abaisserait les frais d’entretien sans compromettre l’élimination des déchets.
 
 Si un changement sûr produit des économies supérieures à votre seuil configuré, le Ministère publie un avis de conseiller.

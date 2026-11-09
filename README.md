@@ -29,6 +29,8 @@ Everything is controlled from within the game at **Play Options → Department o
 
 - [Requirements and compatibility](#requirements-and-compatibility)
 
+- [Phantom Funding Slider Bug compatibility](#phantom-funding-slider-bug)
+
 - [Updating and uninstalling](#updating-and-uninstalling)
 
 - [Known limitations](#known-limitations)
@@ -45,27 +47,31 @@ Everything is controlled from within the game at **Play Options → Department o
 
 ### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
+**What's new in 1.0.2:** see the [changelog](CHANGELOG.md).
+
 1\. Open the project’s [Releases page](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) and choose the latest release.
 
 2\. Under **Assets**, download the **Department of Efficiency distribution ZIP**.
 
 3\. **Close SimCity 4.** Extract the ZIP to a temporary folder.
 
-4\. Copy **`DepartmentEfficiency.dll`** and the entire **`Department of Efficiency`** folder into the root of the `Documents\SimCity 4\Plugins`.
+4\. Copy the **three files** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** and **`DepartmentEfficiency.ini`** directly into `Documents\SimCity 4\Plugins`. Do not create a subfolder.
 
 5\. Start the game and follow the [first-time setup](#first-time-setup) instructions before playing a saved city.
 
-The distribution ZIP contains the DLL and a folder with one DAT and one INI file. After installation, you should have:
+The distribution ZIP contains exactly these three files. After installation, you should have:
 
 ```text
 Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiency.ini
+    DepartmentEfficiency.dll
+    DepartmentEfficiency.dat
+    DepartmentEfficiency.ini
 ```
 
-The public repository's Markdown files and screenshots are **not** required by the game. Keep the DLL **directly in Plugins**, with its accompanying folder alongside it.
+The public repository's Markdown files and screenshots are **not** required by the game. Keep the three files **directly in Plugins**, side by side. There is no `Department of Efficiency` folder any more.
+
+> [!WARNING]
+> **Updating from an earlier version?** Do not copy the new files over the old ones. First delete the old Department files, as explained in [Updating and uninstalling](#updating-and-uninstalling).
 
 **Changing settings later:** open **Play Options → Department of Efficiency**, use the **Services** and **Demolition** pages, and click **Accept**. For the master switch you can also use the **Establish a Department of Efficiency** ordinance at no monthly cost. Switching the Department off stops future actions; it does not undo funding, contracts or demolition already applied.
 
@@ -83,8 +89,8 @@ The table below describes what the Department does. For formulas, examples, safe
 | [Sanitation and garbage](technical_docs/en/garbage.md#garbage-landfills) | Adjusts sanitation funding using garbage production, recycling, treatment, landfill storage and regional contracts, while protecting the city's own disposal needs. |
 | [Neighbor deals](technical_docs/en/deals.md#neighbor-deals) | Can **buy or sell electricity and water**, **pay neighbors to take your garbage**, or **accept theirs for payment**. It creates, adjusts and cancels eligible contracts when the overall result benefits the city and its own needs and reserves remain protected. |
 | [Automatic demolition](technical_docs/en/demolition.md#demolition) | Can clear ruins after roughly **30 simulated days** and eligible buildings abandoned for **one simulated year**, by default. You decide which zones and abandonment reasons count, whether protected ruins may be cleared, and whether to set a monthly spending limit. |
-| [Advisor notices](technical_docs/en/safety.md#notices) | Uses the game's own advisors to flag proven, persistent shortages that funding or available deals cannot fix. Where appropriate, messages include links that take you to the affected buildings. |
-| [Landfill size advice](technical_docs/en/garbage.md#garbage-landfills-advice) | Optional advice identifies a specific landfill expansion or safe reduction that could cut the sanitation bill by more than your chosen savings threshold. **The Department advises; you decide whether to change the zoning.** |
+| [Advisor notices](technical_docs/en/safety.md#notices) | Uses the game's own advisors to flag proven, persistent shortages that funding or available deals cannot fix. Where appropriate, messages include links that take you to the affected buildings. It also adds one news item (title in the list, detail on click) when a service you enabled has to stop because of a technical failure. |
+| [Landfill size advice](technical_docs/en/garbage.md#garbage-landfills-advice) | Optional advice identifies a specific safe landfill reduction (empty squares to remove) that could cut the sanitation bill by more than your chosen savings threshold. **The Department advises; you decide whether to change the zoning.** |
 | [Ghost-tile repair](technical_docs/en/garbage.md#ghost-tiles) | When sanitation management is enabled, safely repairs eligible invisible landfill squares that the game still counts toward maintenance. Unsafe or unverified cases are left alone; there is no separate switch for this repair. |
 
 You remain in control of construction, zoning, taxes, roads and transport, police, fire services and any other service the Department does not manage. If you enable the management of a type of neighbor deal, the Department may also change or cancel a contract you previously made manually. Turn that deal option off to manage those contracts yourself.
@@ -105,7 +111,7 @@ The Department uses the settings supplied with the plugin and **starts working a
 
 5\. Open the city you want to play. The Department follows your saved preferences and manages the city as the simulation runs.
 
-Your preferences are stored in the plugin's INI files and are reused when you open another city. The Department does **not** build schools, hospitals, power plants or water facilities for you. When funding and available deals cannot solve a proven, persistent shortage, an in-game advisor tells you where more capacity is needed.
+Your preferences are stored in `DepartmentEfficiency.ini` and are reused when you open another city. The Department does **not** build schools, hospitals, power plants or water facilities for you. When funding and available deals cannot solve a proven, persistent shortage, an in-game advisor tells you where more capacity is needed.
 
 You can also activate or deactivate the Department through the city ordinances.
 
@@ -218,15 +224,36 @@ All screenshots show the English version of the game.
 
 - **Ten in-game languages:** English, Portuguese, French, German, Spanish, Italian, Dutch, Danish, Swedish and Polish. The Department follows the language of your game automatically.
 
+<a id="phantom-funding-slider-bug"></a>
+
+## Phantom Funding Slider Bug compatibility
+
+The Department of Efficiency is compatible with cities affected by the **Phantom Funding Slider Bug**, a long-standing SimCity 4 problem in which the funding sliders of already-placed buildings keep moving on their own after the maintenance cost of that building type has been changed (for example by a mod).
+
+It does **not** fix the underlying SimCity 4 bug. Instead, it detects suspicious recurring funding changes and automatically readjusts the facilities it manages, helping maintain the required service capacity while avoiding unnecessary overfunding.
+
+In the tested scenarios, corrections occurred within one simulated day instead of potentially taking an entire month.
+
+This protection applies to eligible facilities (schools, libraries, museums, clinics and hospitals) under automatic management. It does not repair the game's internal budget data and does not guarantee protection in every situation. See [Phantom Funding Slider Bug](technical_docs/en/phantom_slider.md) for how it works, its limits and the test results.
+
 <a id="updating-and-uninstalling"></a>
 
 ## Updating and uninstalling
 
-**Settings are not carried over.** Since version 1.0.2 the three INI files of version 1.0.0 are one file, `DepartmentEfficiency.ini`, in the `Department of Efficiency` folder (sections `[AutoFinance]`, `[UtilityResearch]` and `[LotDemolition]`). The old `DepartmentEfficiencyUtility.ini` and `DepartmentEfficiencyDemolition.ini` are no longer read.
+**Settings are not carried over.** Since version 1.0.2 the Department has a single settings file, `DepartmentEfficiency.ini`, which replaces the three INI files of version 1.0.0 and the `Department of Efficiency` folder of the first 1.0.2 package. Settings in older files are neither read nor migrated: set your preferences again in **Play Options → Department of Efficiency**.
 
-**To replace an installation (a clean install is required):** close the game, delete the existing `DepartmentEfficiency.dll` **and the whole `Department of Efficiency` folder**, then install the new package. Copying the new files over an old installation is not supported: the old resource files would stay in the folder and keep the game's own advice silenced. Set your preferences again in the game (Play Options → Department of Efficiency).
+**To update an earlier installation (a clean install is required).** Close the game and delete the Department's old files **before** copying the three new ones. Delete only these, in `Documents\SimCity 4\Plugins`:
 
-**To uninstall:** close the game, delete `DepartmentEfficiency.dll` and the `Department of Efficiency` folder. Your saved cities remain readable without the mod. Funding levels, existing contracts and any demolitions already saved in a city are not automatically reversed.
+- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini`;
+- the whole `Department of Efficiency` folder, if it exists;
+- from version 1.0.0, if they are still there: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` and `DepartmentEfficiencyDemolition.ini`;
+- `DepartmentEfficiency.told.txt`, a small memory file the plugin may have left (it is created again when needed).
+
+Do not touch the files of other mods. Copying the new files over an old installation is not supported: the old resource files would stay and could keep the game's own advice silenced. The plugin never reads files from the old folder; if the folder is still there, it only writes a warning to its log.
+
+**To uninstall:** close the game and delete the same files. Your saved cities remain readable without the mod. Funding levels, existing contracts and any demolitions already saved in a city are not automatically reversed.
+
+**Log file:** `DepartmentEfficiency.log` is in the `Logs` folder of your SimCity 4 user folder (normally `Documents\SimCity 4\Logs`, or the `Logs` folder of the folder given with `-UserDir`). If that folder cannot be used, it is written next to the DLL.
 
 <a id="known-limitations"></a>
 
@@ -259,7 +286,7 @@ The build downloads [gzcom-dll](https://github.com/nsgomez/gzcom-dll) at a fixed
 
 - **gzcom-dll** is not covered by this license: it keeps its own license, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), and is downloaded from its original repository when you build.
 
-- **SimCity 4** and its original resources belong to Electronic Arts / Maxis. **Department of Efficiency** is an unofficial fan-made mod, independent of EA and not endorsed by it. Four of the files in `release/Department of Efficiency/` contain scripts and interface definitions derived from the game's own resources, and the screenshots show the game: these are not my property, they are not covered by the GPL, and all rights to them remain with their owners. The same applies to any other third-party material.
+- **SimCity 4** and its original resources belong to Electronic Arts / Maxis. **Department of Efficiency** is an unofficial fan-made mod, independent of EA and not endorsed by it. Besides the project's own texts and scripts, `DepartmentEfficiency.dat` contains two interface scripts (the options button and window) derived from the game's own resources, and the screenshots show the game: these are not my property, they are not covered by the GPL, and all rights to them remain with their owners. The same applies to any other third-party material. The game's executable is not distributed.
 
 <a id="credits"></a>
 
@@ -268,6 +295,12 @@ The build downloads [gzcom-dll](https://github.com/nsgomez/gzcom-dll) at a fixed
 **Author**
 
 - Created by **Sammu89**.
+
+**Special thanks**
+
+- **Special thanks to CorinaMarie** for her detailed explanations of the Phantom Funding Slider Bug, for generously sharing the reproducible test cities and DAT files that made it possible to investigate and mitigate its effects, and for her invaluable technical guidance on preserving and restoring the original Maxis advisor messages, including the selective handling of Lua advice records. Her help made the Department more robust and more compatible with the game and with other mods.
+
+The code of Department of Efficiency was written by Sammu89. The people credited here shared knowledge, tools, test material and advice; they are not co-authors of the code.
 
 **Library used**
 
@@ -278,6 +311,10 @@ The build downloads [gzcom-dll](https://github.com/nsgomez/gzcom-dll) at a fixed
 - Nicholas Hayes (0xC0000054 / Null 45), for SimCity 4 DLL research, documentation and open examples: sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. The options window, the ordinance and the notice file follow mechanisms published in his projects sc4-region-census, sc4-humane-society-ordinance and sc4-lua-extension-example (MIT license); game commands follow sc4-auto-run-cheats and sc4-game-command-documentation.
 
 - CorinaMarie, for documenting the SimCity 4 Urgent Advice technique that the mod's advisor notices follow.
+
+- memo, for the guidance on loading the plugin's own Lua script, with its own identifiers, after the game's scripts and changing only the advice records that are needed, which the Department's integration with the game's advisors follows.
+
+- Kel9509, for the information on how to reproduce the Phantom Funding Slider Bug.
 
 - The SimCity 4 modding community, for two decades of research, tools and shared knowledge, including the exemplar property documentation of SC4Devotion.
 

@@ -91,6 +91,11 @@ public:
     std::size_t expectationCount() const { return lastWritten_.size(); }
 
     void RecordWrite(const FacilityKey& key, float value) { lastWritten_[key] = value; }
+    // The Department's last verified write of this facility, read without consuming it (the Watch's early check of a drift of the game).
+    std::optional<float> ExpectedFunding(const FacilityKey& key) const {
+        const auto it = lastWritten_.find(key);
+        return it == lastWritten_.end() ? std::nullopt : std::optional<float>(it->second);
+    }
 
     // Facilities whose funding looked adjustable but ignored the setter (see SetterHadNoEffect).
     // Tracked individually per city lifecycle, never for a whole family. The identity is the cell

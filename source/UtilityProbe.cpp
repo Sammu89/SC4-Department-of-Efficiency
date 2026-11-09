@@ -418,8 +418,13 @@ GarbageState ReadGarbage(cISC4City* city, cISC4BudgetSimulator* budget, cISC4Reg
         std::sort(state.buildings.begin(), state.buildings.end(), [](const auto& x, const auto& y) { return x.ref < y.ref; });
     }
     // Landfill tiles count as "garbage infrastructure" even without garbage buildings.
-    const std::size_t infrastructure = state.buildings.size() + (a.landfillTiles && *a.landfillTiles > 0 ? 1 : 0);
-    state.validity = DeriveValidity(true, listOk, infrastructure, !a.produced || !a.uncollected, epochMatches);
+    state.validity = DeriveGarbageValidity(listOk, state.buildings.size(), a.landfillTiles, !a.produced || !a.uncollected, epochMatches);
+    if (state.validity != SnapshotValidity::Valid && state.invalidReason.empty()) {      // say WHY the snapshot is not Valid (an empty reason hides the cause)
+        state.invalidReason = std::string("validity=") + (state.validity == SnapshotValidity::ValidEmpty ? "ValidEmpty" : state.validity == SnapshotValidity::Partial ? "Partial" : "Invalid") +
+                              " epochMatches=" + (epochMatches ? "1" : "0") + " garbageBuildingList=" + (listOk ? "ok" : "REFUSED") + " garbageBuildings=" + std::to_string(state.buildings.size()) +
+                              " landfillTiles=" + (a.landfillTiles ? std::to_string(*a.landfillTiles) : std::string("unread")) + " produced=" + (a.produced ? "read" : "MISSING") +
+                              " uncollected=" + (a.uncollected ? "read" : "MISSING");
+    }
     return state;
 }
 
@@ -697,6 +702,7 @@ bool ReadServiceCountersFromCity(cISC4City* city, cISC4RegionalCity* regional, s
         out.pImport = sim->GetMonthlyImport();
         out.pDemand = sim->GetMonthlyDemand();
         out.pConsumption = sim->GetMonthlyConsumption();
+        out.pExport = sim->GetMonthlyExport();
         // effective local capacity: what each plant can deliver at its present funding (maximum output x efficiency), summed
         ilist<cISC4Occupant*> plants;
         sim->GetPowerPlants(plants);
@@ -803,11 +809,12 @@ void UtilityProbe::LoadConfigIfChanged() {
 }
 
 std::string UtilityProbe::Banner() const {
+    // What the Department is actually set to manage (read from the configuration, never a fixed statement): each manager is On only when the master switch is Auto AND its own key is true.
     const bool autoOn = config_.enabled && config_.mode == UtilityMode::Auto;
+    const auto on = [&](bool key) { return autoOn && key ? "On" : "Off"; };
     return std::string("UtilityResearch=") + (config_.enabled ? "Enabled" : "Disabled") + " UtilityOptimizer=" + UtilityModeName(config_.mode) +
-           " PowerAuto=" + (autoOn && config_.autoPower ? "On" : "Off") + " WaterAuto=" + (autoOn && config_.autoWater ? "On" : "Off") +
-           " PowerReserve=20% WaterReserve=10% GarbageReserve=2%(read-only) Sanitation/Deals=ReadOnly(unless final-validation gate) Phase8Runtime=" +
-           (config_.phase8Runtime ? "Passive" : "Off") + " UtilityWriters(test harness)=Disarmed-unless-armed-test-config";
+           " PowerAuto=" + on(config_.autoPower) + " WaterAuto=" + on(config_.autoWater) + " GarbageAuto=" + on(config_.autoGarbage) + " DealsAuto=" + on(config_.autoDeals) +
+           " " + PolicyText(config_) + " Phase8Runtime=" + (config_.phase8Runtime ? "Passive" : "Off");
 }
 
 // ---- logging ------------------------------------------------------------------------------------------------

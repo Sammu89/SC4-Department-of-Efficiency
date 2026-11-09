@@ -600,6 +600,10 @@ Cela suit l’état du Ministère dans chaque ville, sans redémarrer le jeu. Si
 
 Consultez la [Sécurité générale](safety.md#safety) pour en savoir plus.
 
+#### Si le jeu déplace un curseur de lui-même
+
+Quand le jeu modifie le financement d’une école ou d’un hôpital que le Ministère avait réglé, juste après un recalcul mensuel, le Ministère réévalue ce bâtiment à sa prochaine surveillance, dans les deux sens, et applique le financement le plus bas qui donne encore la capacité exigée. Voir [Phantom Funding Slider Bug](phantom_slider.md).
+
 <a id="education-healthcare-settings"></a>
 ### 5. Réglages
 

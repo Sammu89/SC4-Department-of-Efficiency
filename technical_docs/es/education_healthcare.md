@@ -600,6 +600,10 @@ Esto sigue el estado del Ministerio en cada ciudad, sin reiniciar el juego. Si d
 
 Consulta la [seguridad general](safety.md#safety) para más información.
 
+#### Si el juego mueve un control por sí solo
+
+Cuando el juego cambia la financiación de una escuela o de un hospital que el Ministerio había fijado, justo después de un recálculo mensual, el Ministerio reevalúa ese edificio en su siguiente vigilancia, en ambos sentidos, y aplica la financiación más baja que aún da la capacidad exigida. Véase [Phantom Funding Slider Bug](phantom_slider.md).
+
 <a id="education-healthcare-settings"></a>
 ### 5. Ajustes
 

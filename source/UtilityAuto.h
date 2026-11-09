@@ -157,6 +157,8 @@ public:
     const std::vector<AutoLine>& lines() const { return lines_; }
     bool powerDisabled() const { return power_.disabled; }
     bool waterDisabled() const { return water_.disabled; }
+    const std::string& powerReason() const { return power_.reason; }
+    const std::string& waterReason() const { return water_.reason; }
     const SavingsLedger& ledger() const { return ledger_; }
     std::uint32_t monthsInCity() const { return monthsInCity_; }
 
@@ -207,7 +209,7 @@ private:
     static std::string ConfigText(const UtilityResearchConfig& c) {
         std::ostringstream o;
         o << "config Mode=" << UtilityModeName(c.mode) << " PowerAuto=" << (c.autoPower ? "On" : "Off") << " WaterAuto=" << (c.autoWater ? "On" : "Off")
-          << " Sanitation/Deals=ReadOnly(normal build) " << PolicyText(c)
+          << " (sanitation funding and the regional contracts belong to the unified controller: GarbageAuto=" << (c.autoGarbage ? "On" : "Off") << " DealsAuto=" << (c.autoDeals ? "On" : "Off") << ") " << PolicyText(c)
           << " PowerCadenceDays=" << c.powerCadenceDays << " (reserves are floors; direct funding, no step limit, no rollback watch)";
         return o.str();
     }

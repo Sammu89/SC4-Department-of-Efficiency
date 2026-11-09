@@ -541,6 +541,8 @@ Por ejemplo, si subes la financiación del agua al 100% pero dejas activada la o
 
 **Para mantener bajo tu control un valor de financiación concreto, desactiva el gestor de ese servicio.**
 
+**Si el propio juego mueve un control.** SimCity 4 puede mover por su cuenta los controles de edificios ya colocados después de que se haya cambiado el coste de mantenimiento de un edificio (el Phantom Funding Slider Bug). Si el cambio aparece justo después de un recálculo mensual, en un edificio cuya financiación había fijado el Ministerio, el Ministerio reevalúa ese edificio en su siguiente vigilancia y devuelve su financiación al mínimo que da la capacidad exigida, en lugar de esperar a la revisión mensual. Un cambio que hagas a mano a mitad de mes no se trata así. Véase [Phantom Funding Slider Bug](phantom_slider.md).
+
 #### ¿Hay efectos que no se pueden desactivar individualmente?
 
 Sí.
@@ -571,11 +573,11 @@ Otras solo muestran información para que tú decidas qué hacer.
 | **Contratos con vecinos** | Crea, cambia y cancela contratos | Sin aviso rutinario de contratos aparte |
 | **Demolición automática** | Retira ruinas y edificios abandonados elegibles | Sin aviso |
 | **Casillas fantasma de vertedero** | Repara automáticamente las casillas fantasma elegibles | Sin aviso |
-| **Consejo sobre el tamaño del vertedero** | **Nunca cambia el tamaño del vertedero** | Recomienda opcionalmente una ampliación o una reducción concretas |
+| **Consejo sobre el tamaño del vertedero** | **Nunca cambia el tamaño del vertedero** | Recomienda opcionalmente una reducción concreta |
 
 **El consejo sobre el tamaño del vertedero es la principal función que recomienda un cambio sin llevarlo a cabo.**
 
-Puede decirte que ampliar o reducir un vertedero podría ahorrar dinero, pero la decisión de zonificación sigue siendo tuya.
+Puede decirte que reducir un vertedero podría ahorrar dinero, pero la decisión de zonificación sigue siendo tuya.
 
 <a id="safety-performance"></a>
 #### ¿Cómo evita el Ministerio ralentizar el juego?
@@ -824,13 +826,12 @@ Un aviso de capacidad puede permanecer en la lista de noticias hasta **720 días
 <a id="safety-notices-landfill"></a>
 #### Recomendaciones sobre el tamaño del vertedero
 
-El Ministerio puede emitir dos avisos opcionales cuando cambiar el tamaño del vertedero reduciría significativamente los gastos de limpieza.
+El Ministerio puede emitir un aviso opcional cuando cambiar el tamaño del vertedero reduciría significativamente los gastos de limpieza.
 
-Ambos proceden del **asesor de Servicios públicos**, con un estado de ánimo de buenas noticias y prioridad urgente.
+Procede del **asesor de Servicios públicos**, con un estado de ánimo de buenas noticias y prioridad urgente.
 
 | Recomendación | Título del aviso |
 |---|---|
-| **AMPLIAR** | **¿Más vertedero, menos gasto?** |
 | **REDUCIR** | **¡El vertedero ocupa demasiado sitio!** |
 
 Cada aviso describe:
@@ -938,6 +939,20 @@ Cuando falla una comprobación de seguridad, el componente afectado deja de hace
 | **La ventana de Opciones de juego tiene un diseño inesperado** | Deja la ventana original sin cambios y no añade el botón del Ministerio durante esa sesión. |
 | **Un archivo de configuración no es válido** | Desactiva el componente de gestión afectado en lugar de usar ajustes poco fiables. |
 
+#### ¿Cómo se anuncian los fallos técnicos?
+
+Si un servicio que has activado tiene que detenerse hasta el final de la sesión de la ciudad por un fallo técnico, el Ministerio añade **una noticia nativa** a la lista de noticias de la parte inferior del juego. El título aparece en la lista y el detalle al hacer clic. No hay ventana emergente ni ventana de asesor.
+
+- Hay siete tipos: electricidad, agua, saneamiento, sanidad, educación, contratos regionales con ciudades vecinas y demolición automática.
+- Hay **una noticia por servicio y por sesión de ciudad**. Sanidad y educación son noticias distintas y solo aparecen si las has activado.
+- Nunca se muestra por algo que se recupera solo, por un servicio en **STANDBY**, por una lectura rechazada, por un servicio que has desactivado, ni en los modos **Off** y **Shadow**. No hay mensajes de recuperación.
+- La noticia se retira cuando el servicio se desactiva o su gestión se reinicia. La causa técnica se escribe solo en el registro, en líneas `[FailureNotice]`.
+- Los textos existen en los diez idiomas del plugin.
+
+**STANDBY** significa que el servicio aún no tiene nada que gestionar en la ciudad (por ejemplo el saneamiento local en una ciudad sin vertedero, incineradora, centro de reciclaje ni planta de residuos a energía). No es un error, no genera aviso y arranca solo cuando aparece algo que gestionar.
+
+**¿Dónde está el registro?** `DepartmentEfficiency.log` se escribe en la carpeta `Logs` de la carpeta de usuario de SimCity 4, normalmente `Documents\SimCity 4\Logs\DepartmentEfficiency.log`; si inicias el juego con `-UserDir`, es la carpeta `Logs` de esa carpeta. Si esa carpeta no se puede usar, el registro se escribe junto a la DLL, en `Plugins`, y su primera línea indica el motivo. A un registro existente se le añade texto y nunca se mueve.
+
 #### ¿Qué significa una parada de seguridad de sesión?
 
 Una parada de seguridad dura lo que dura la sesión de ciudad en curso.
@@ -975,7 +990,7 @@ Esto significa:
 - Ninguna operación de financiación, de contratos ni de demolición.
 - Ninguna modificación del icono de agua de las parcelas agrícolas.
 
-La misma inactividad total se aplica cuando falta, junto a la DLL, la carpeta **Department of Efficiency** necesaria o el archivo de recursos principal.
+La misma inactividad total se aplica cuando falta, junto a la DLL, el archivo de recursos principal, `DepartmentEfficiency.dat`. La DLL, el DAT y el INI se instalan juntos, directamente en la carpeta Plugins; el plugin nunca los busca en otro sitio.
 
 **El Ministerio no intenta funcionar en una instalación no compatible o incompleta.**
 

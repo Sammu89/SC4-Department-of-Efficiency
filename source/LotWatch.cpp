@@ -139,6 +139,20 @@ void ResetSession() {
     g_costQueryBroken = false;
 }
 
+} // namespace
+
+bool LotDemolitionAutoOn() { return g_config.mode == DemolitionMode::Auto; }
+
+std::string LotDemolitionStopReason() {
+    if (g_config.mode != DemolitionMode::Auto) return std::string();
+    if (g_zoneCleared > 0) return "a demolition cleared the zone of a lot (" + std::to_string(g_zoneCleared) + ")";
+    if (g_guard.tripped()) return "the game did not carry out " + std::to_string(FailureGuard::kMaxConsecutive) + " confirmed demolition orders in a row";
+    if (g_costQueryBroken) return "the cost preview of a lot changed the lot";
+    return std::string();
+}
+
+namespace {
+
 void LoadConfigIfChanged() {
     if (g_configPath.empty()) return;
     const auto stamp = FileWriteTime(g_configPath);

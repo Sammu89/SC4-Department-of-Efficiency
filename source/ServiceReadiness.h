@@ -21,6 +21,7 @@
 #include "ServiceMonitor.h"
 #include "UtilityModel.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <string>
 
@@ -28,17 +29,27 @@ namespace sc4af {
 
 struct Readiness {
     bool ready = false;
-    std::string reason;          // why it is not ready (empty when ready)
+    bool standby = false;        // NOT an error: there is nothing to manage in this city (yet); the Department waits and re-evaluates every cycle
+    std::string reason;          // why it is not ready (empty when ready), or what the standby is waiting for
     explicit operator bool() const { return ready; }
 };
 
 inline Readiness ReadyNow() { Readiness r; r.ready = true; return r; }
 inline Readiness NotReady(std::string why) { Readiness r; r.reason = std::move(why); return r; }
+inline Readiness Standby(std::string why) { Readiness r; r.standby = true; r.reason = std::move(why); return r; }
 
 // The game's monthly counters carry rounding: a service delivered a few units above the demand is not a contradiction, a service delivered well above it is.
 constexpr double kConsistencyTolerance = 0.01;
 inline bool ConsumptionContradictsDemand(std::int64_t demand, std::int64_t consumed) {
     return static_cast<double>(consumed) > static_cast<double>(demand) * (1.0 + kConsistencyTolerance) + 1.0;
+}
+
+// Power: the game's monthly consumption counter INCLUDES what the city exports (measured: consumption 15 303 = demand 9 559 + export 5 744, and 26 659 = 15 394 + 11 265), so it is only comparable with the
+// city's own demand once the export is taken off: net consumption = consumption - export (same simulator, same monthly accounting period, read together). An export that was not read is never taken as 0:
+// the unexplained excess then stays a contradiction (fail closed). The 1% tolerance is the same. Water has no such rule: its consumed counter already excludes the exports.
+inline bool PowerConsumptionContradictsDemand(std::int64_t demand, std::int64_t consumption, bool exportKnown, std::int64_t exported) {
+    const std::int64_t net = exportKnown ? consumption - std::max<std::int64_t>(0, exported) : consumption;
+    return ConsumptionContradictsDemand(demand, net);
 }
 
 inline Readiness PowerReadiness(const UtilitySnapshot& s) {
@@ -51,7 +62,7 @@ inline Readiness PowerReadiness(const UtilitySnapshot& s) {
     bool plantRead = noPlants;
     for (const auto& plant : p.plants) plantRead = plantRead || (plant.funding && plant.maxProduced);
     if (!plantRead) return NotReady("no power plant with a readable funding and output");
-    if (p.aggregate.consumption && ConsumptionContradictsDemand(*p.aggregate.demand, *p.aggregate.consumption))
+    if (p.aggregate.consumption && PowerConsumptionContradictsDemand(*p.aggregate.demand, *p.aggregate.consumption, p.aggregate.export_.has_value(), p.aggregate.export_.value_or(0)))
         return NotReady("contradictory power readings: the service delivered (" + std::to_string(*p.aggregate.consumption) + ") exceeds the demand (" + std::to_string(*p.aggregate.demand) + ")");
     return ReadyNow();
 }
@@ -69,12 +80,37 @@ inline Readiness WaterReadiness(const UtilitySnapshot& s) {
     return ReadyNow();
 }
 
+// The LOCAL sanitation (the funding of the city's own garbage structures). A city WITHOUT any of them (no landfill, incinerator, recycling center or waste-to-energy plant: a PROVEN absence, the
+// building list was read and is empty, ValidEmpty) has nothing to fund: STANDBY, not an error; the structures that appear later are picked up by the next snapshot. Only a reading that is
+// missing, inconsistent or refused (Partial / Invalid) stops the local sanitation.
 inline Readiness GarbageReadiness(const UtilitySnapshot& s) {
     const auto& g = s.garbage;
+    if (g.validity == SnapshotValidity::ValidEmpty) return Standby("no garbage structure to manage (no landfill, incinerator, recycling center or waste-to-energy plant); waiting for one");
     if (g.validity != SnapshotValidity::Valid) return NotReady("garbage snapshot not valid (" + g.invalidReason + ")");
     if (!g.department.present) return NotReady("sanitation department not read");
     if (!g.aggregate.produced) return NotReady("garbage produced last month not read");
     if (!g.aggregate.fundingEfficiency) return NotReady("sanitation funding efficiency not read");
+    return ReadyNow();
+}
+
+// The sanitation BUDGET of a city with no garbage structure (STANDBY). It is NOT the local readiness (nothing is managed, no structure becomes "ready"): it only says that the department figures a
+// funding cut rests on are read, so that a cost the city pays for nothing can be removed. The absence is the proven one (ValidEmpty); the funding, its ideal cost and the funding efficiency must be read.
+inline Readiness GarbageBudgetReadiness(const UtilitySnapshot& s) {
+    const auto& g = s.garbage;
+    if (g.validity != SnapshotValidity::ValidEmpty) return NotReady("the absence of garbage structures is not proven");
+    if (!g.department.present || !g.department.funding) return NotReady("sanitation department or its funding not read");
+    if (!g.department.idealMonthly) return NotReady("sanitation ideal monthly cost not read");
+    if (!g.aggregate.fundingEfficiency) return NotReady("sanitation funding efficiency not read");
+    return ReadyNow();
+}
+
+// The garbage CONTRACTS (regional export / import). They need the city's garbage load (produced, uncollected) read from a snapshot that is not refused, and the contract book (DealsReadiness);
+// they do NOT need a landfill, a local structure or the local funding readings: a city with no garbage structure at all can still export, and a missing local funding reading does not stop
+// them (the portfolio planner prices what it can read and plans nothing it cannot).
+inline Readiness GarbageContractsReadiness(const UtilitySnapshot& s) {
+    const auto& g = s.garbage;
+    if (g.validity != SnapshotValidity::Valid && g.validity != SnapshotValidity::ValidEmpty) return NotReady("garbage snapshot not valid (" + g.invalidReason + ")");
+    if (!g.aggregate.produced || !g.aggregate.uncollected) return NotReady("garbage produced / uncollected not read");
     return ReadyNow();
 }
 
@@ -91,7 +127,7 @@ inline Readiness DealsReadiness(const UtilitySnapshot& s) {
 inline bool PowerCountersShowNotReady(const ServiceCounters& c) {
     if (!c.power) return false;
     if (c.pDemand && *c.pDemand <= 0) return true;
-    if (c.pDemand && c.pConsumption && ConsumptionContradictsDemand(*c.pDemand, *c.pConsumption)) return true;
+    if (c.pDemand && c.pConsumption && PowerConsumptionContradictsDemand(*c.pDemand, *c.pConsumption, c.pExport.has_value(), c.pExport.value_or(0))) return true;
     return false;
 }
 inline bool WaterCountersShowNotReady(const ServiceCounters& c) {

@@ -3,27 +3,23 @@
 #pragma once
 // Landfill Size Savings Advisor: the pure counterfactual search (no game types, no I/O, no mutated globals, no second simulator).
 //
-// It answers one question: would changing the landfill size (EXPAND = add tiles, REDUCE = remove empty tiles) save strictly more than the player's
-// threshold (default 25%, 20..50) of the monthly sanitation expense? The Department never builds or removes anything; this only produces advice.
+// It answers one question: would REDUCING the landfill (removing empty tiles) save strictly more than the player's threshold (default 25%, 20..50) of the monthly sanitation expense?
+// The Department never builds or removes anything; this only produces advice. Enlarging the landfill is not advised.
 //
 // Baseline E0   = ChargedExpense(idealMonthly, chosen funding of PlanGarbageFunding(base, ...)). This is the plan's own optimum, never the raw current
 //                 funding (an unfinished reduction must not fake a saving). Not computable / not feasible / E0 <= 0 -> no advice.
-// Candidate d   = scenario provided by the caller (LandfillScenario): its counterfactual input and its idealMonthly (the maintenance delta is applied
-//                 once, there). E(d) = ChargedExpense(scenario.idealMonthly, chosen funding of PlanGarbageFunding(scenario.input, ...)), same funding /
+// Candidate n   = scenario provided by the caller (LandfillScenario): its counterfactual input and its idealMonthly (the maintenance delta is applied
+//                 once, there). E(n) = ChargedExpense(scenario.idealMonthly, chosen funding of PlanGarbageFunding(scenario.input, ...)), same funding /
 //                 maxAllowed / frozen rules. Infeasible with the reserve (InsufficientCapacity / NotAvailable) -> not eligible. Contracts are inside the inputs
-//                 and stay constant: no hypothetical contracts or revenue. Saving(d) = E0 - E(d); percent = floor(100 * saving / E0).
-// Selection     : maximise Saving in simoleons; tie -> smaller |delta|; tie -> lower initialCost when both known; tie -> EXPAND before REDUCE.
+//                 and stay constant: no hypothetical contracts or revenue. Saving(n) = E0 - E(n); percent = floor(100 * saving / E0).
+// Selection     : maximise Saving in simoleons; tie -> fewer tiles; tie -> lower initialCost when both known.
 //                 Threshold: saving * 100 > T * E0 (strict, integers; T = the player's LandfillSavingsAlertThreshold, 20..50, default 25). One single
 //                 recommendation. Savings per tile are not monotone: the whole domain is scanned, the search never stops at the first candidate over the
 //                 threshold. initialCost is reported apart, never in the saving.
-// Domain/budget : at most 64 tiles per direction, 64 counterfactual evaluations per run (candidates; the baseline plan is not counted), target <= 10 ms.
-//                 Per-direction domain N = min(limit, 64) (limit 0 = direction never evaluated). Budget split: 32/32 by default; a direction that needs
-//                 less than its share (N < share) frees the difference for the other one (EXPAND first, then REDUCE, never beyond its own N). With a single
-//                 direction it gets the whole budget.
-//                 N <= share: every n in 1..N. N > share: a deterministic schedule: a coarse grid of share/4 points ceil(i*N/c) (i=1..c, ends at N), then the
-//                 contiguous prefix 1,2,3,... (skipping already evaluated points) until the share is used. The two directions are interleaved
-//                 (E, R, E, R, ...) in that schedule so that a time cut starves neither.
-//                 Optimality: a direction reports K = the largest k such that every n in 1..k was evaluated and demonstrable (validated). Only candidates
+// Domain/budget : at most 64 tiles, 64 counterfactual evaluations per run (candidates; the baseline plan is not counted), target <= 10 ms. The whole budget belongs to REDUCE.
+//                 N = min(limit, 64). N <= budget: every n in 1..N. N > budget: a deterministic schedule: a coarse grid of budget/4 points ceil(i*N/c) (i=1..c, ends at N), then the
+//                 contiguous prefix 1,2,3,... (skipping already evaluated points) until the budget is used.
+//                 Optimality: the report gives K = the largest k such that every n in 1..k was evaluated and demonstrable (validated). Only candidates
 //                 n <= K may be recommended; `complete` = (K == N). A coarse point beyond K is exploratory only (reported in the candidates list, never advised).
 // Interruption  : cooperative, before starting each candidate: (1) work cap (evaluation count), (2) the injectable monotonic clock: stop if elapsed >= budget,
 //                 or if elapsed + mean cost of the candidates done so far would exceed it. Nothing is ever interrupted in the middle of a candidate.
@@ -44,18 +40,12 @@
 
 namespace sc4af {
 
-constexpr int kLandfillMaxTilesPerDirection = 64;
+constexpr int kLandfillMaxTiles = 64;
 constexpr int kLandfillMaxEvaluations = 64;
 constexpr int kLandfillSavingThresholdPercent = 25;   // the DEFAULT threshold: advice only when saving% is STRICTLY above it (the player chooses 20..50, LandfillSearchOptions::thresholdPercent)
 
-enum class LandfillDirection { None, Expand, Reduce };
-inline const char* LandfillDirectionName(LandfillDirection d) {
-    switch (d) {
-    case LandfillDirection::Expand: return "EXPAND";
-    case LandfillDirection::Reduce: return "REDUCE";
-    default: return "NONE";
-    }
-}
+enum class LandfillDirection { None, Reduce };
+inline const char* LandfillDirectionName(LandfillDirection d) { return d == LandfillDirection::Reduce ? "REDUCE" : "NONE"; }
 
 // Shrinks the per-run budget for future runs after a run that exceeded the time budget. Steps: 64 -> 48 -> 32 -> 16 -> 8 -> 4 -> 2 (floor 2). Once per
 // exceeded run, one step; a run inside the budget keeps the current cap (no automatic growth: Reset() is the caller's decision).
@@ -95,7 +85,7 @@ struct AdaptiveBudget {
 };
 
 struct LandfillSearchOptions {
-    int maxTilesPerDirection = kLandfillMaxTilesPerDirection;   // clamped to [0, 64]
+    int maxTiles = kLandfillMaxTiles;                           // clamped to [0, 64]
     int totalBudget = kLandfillMaxEvaluations;                  // counterfactual evaluations per run, clamped to [0, 64]
     std::chrono::microseconds timeBudget{10000};                // CPU/time target of one run
     std::function<std::chrono::steady_clock::time_point()> clock;   // injectable monotonic clock; empty = std::chrono::steady_clock::now
@@ -103,7 +93,7 @@ struct LandfillSearchOptions {
     // The caller may lower both limits for this run from an AdaptiveBudget.
     void ApplyAdaptive(const AdaptiveBudget& a) {
         totalBudget = std::min(totalBudget, a.cap);
-        maxTilesPerDirection = std::min(maxTilesPerDirection, a.cap);
+        maxTiles = std::min(maxTiles, a.cap);
     }
 };
 
@@ -122,8 +112,8 @@ struct LandfillCandidate {
 
 struct LandfillDirectionReport {
     int limit = 0;                       // LandfillScenarioLimits maximum (0 = disabled)
-    int domain = 0;                      // N = min(limit, maxTilesPerDirection)
-    int share = 0;                       // evaluations allotted to this direction
+    int domain = 0;                      // N = min(limit, maxTiles)
+    int share = 0;                       // evaluations allotted (the whole budget, up to N)
     int evaluated = 0;                   // candidates actually evaluated
     int eligible = 0;                    // feasible and demonstrable among them
     int fullyEvaluatedTo = 0;            // K: every n in 1..K evaluated and demonstrable
@@ -143,7 +133,7 @@ struct LandfillAdvice {
     Opt<std::int64_t> initialCost;       // one-off, separate from the saving
     Opt<std::int64_t> paybackMonths;     // ceil(initialCost / saving), informational; only when initialCost known and saving > 0
     std::string reason;                  // stable code when !hasAdvice, "ADVICE" otherwise
-    std::array<LandfillDirectionReport, 2> report;   // [0] = EXPAND, [1] = REDUCE
+    LandfillDirectionReport report;      // the REDUCE search
     int evaluations = 0;                 // counterfactual candidates evaluated (<= 64)
     bool timeBudgetExceeded = false;     // interrupted by, or finished over, the time budget: feed AdaptiveBudget::Record
     bool interrupted = false;            // the schedule was cut short (time or work cap)
@@ -152,20 +142,7 @@ struct LandfillAdvice {
 
 namespace landfill_detail {
 
-inline int ShareOf(int budget, int nExpand, int nReduce, int dir) {
-    if (nExpand > 0 && nReduce > 0) {
-        int sE = std::min(nExpand, budget / 2), sR = std::min(nReduce, budget - budget / 2);
-        int left = budget - sE - sR;
-        const int giveE = std::min(left, nExpand - sE); sE += giveE; left -= giveE;
-        const int giveR = std::min(left, nReduce - sR); sR += giveR;
-        return dir == 0 ? sE : sR;
-    }
-    const int n = nExpand > 0 ? nExpand : nReduce;
-    const bool mine = dir == 0 ? nExpand > 0 : nReduce > 0;
-    return mine ? std::min(n, budget) : 0;
-}
-
-// The deterministic per-direction schedule of tile counts (see the file header).
+// The deterministic schedule of tile counts (see the file header).
 inline std::vector<int> Schedule(int domain, int share) {
     std::vector<int> out;
     if (domain <= 0 || share <= 0) return out;
@@ -180,10 +157,10 @@ inline std::vector<int> Schedule(int domain, int share) {
 
 }  // namespace landfill_detail
 
-// `provider(int delta)` returns the scenario for delta (+n expand, -n reduce): any type with the fields of sc4af::LandfillScenario (demonstrable, reason,
-// input, idealMonthly, initialCost). `maxExpand` / `maxReduce` are LandfillScenarioLimits (0 = direction disabled).
+// `provider(int delta)` returns the scenario for delta = -n (n tiles removed): any type with the fields of sc4af::LandfillScenario (demonstrable, reason,
+// input, idealMonthly, initialCost). `maxReduce` is LandfillScenarioLimits::maxReduce (0 = disabled).
 template <class Provider>
-LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> funding, Opt<float> maxAllowed, Opt<std::int64_t> idealMonthly, int maxExpand, int maxReduce,
+LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> funding, Opt<float> maxAllowed, Opt<std::int64_t> idealMonthly, int maxReduce,
                                   Provider&& provider, const LandfillSearchOptions& options = LandfillSearchOptions{}) {
     LandfillAdvice adv;
     adv.reason = "NO_BASELINE";
@@ -200,25 +177,18 @@ LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> fu
     if (adv.baselineExpense <= 0) { adv.reason = "BASELINE_NOT_POSITIVE"; return adv; }
     const std::int64_t e0 = adv.baselineExpense;
 
-    const int cap = std::clamp(options.maxTilesPerDirection, 0, kLandfillMaxTilesPerDirection);
+    const int cap = std::clamp(options.maxTiles, 0, kLandfillMaxTiles);
     const int budget = std::clamp(options.totalBudget, 0, kLandfillMaxEvaluations);
-    const int limits[2] = {maxExpand, maxReduce};
-    int domain[2];
-    for (int d = 0; d < 2; ++d) { domain[d] = std::clamp(limits[d], 0, cap); adv.report[d].limit = std::max(0, limits[d]); adv.report[d].domain = domain[d]; }
-    if (domain[0] == 0 && domain[1] == 0) { adv.reason = "NO_DIRECTION"; return adv; }
-    std::vector<int> sched[2];
-    for (int d = 0; d < 2; ++d) {
-        adv.report[d].share = landfill_detail::ShareOf(budget, domain[0], domain[1], d);
-        sched[d] = landfill_detail::Schedule(domain[d], adv.report[d].share);
-    }
-    // interleave E, R, E, R ...
-    std::vector<std::pair<int, int>> order;   // (direction index, tiles)
-    for (size_t i = 0; i < std::max(sched[0].size(), sched[1].size()); ++i)
-        for (int d = 0; d < 2; ++d) if (i < sched[d].size()) order.emplace_back(d, sched[d][i]);
+    const int domain = std::clamp(maxReduce, 0, cap);
+    adv.report.limit = std::max(0, maxReduce);
+    adv.report.domain = domain;
+    if (domain == 0) { adv.reason = "NO_DIRECTION"; return adv; }
+    adv.report.share = std::min(domain, budget);
+    const std::vector<int> sched = landfill_detail::Schedule(domain, adv.report.share);
 
-    std::map<int, LandfillCandidate> byTiles[2];
+    std::map<int, LandfillCandidate> byTiles;
     const auto candStart = now();
-    for (const auto& item : order) {
+    for (const int n : sched) {
         if (adv.evaluations >= kLandfillMaxEvaluations || adv.evaluations >= budget) { adv.interrupted = true; break; }
         const auto t = now();
         const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(t - start);
@@ -228,13 +198,11 @@ LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> fu
             const auto mean = spent / adv.evaluations;
             if (elapsed + mean > options.timeBudget) { adv.interrupted = true; adv.timeBudgetExceeded = true; break; }
         }
-        const int d = item.first, n = item.second;
-        const int delta = d == 0 ? n : -n;
-        const auto sc = provider(delta);
+        const auto sc = provider(-n);
         ++adv.evaluations;
-        ++adv.report[d].evaluated;
+        ++adv.report.evaluated;
         LandfillCandidate c;
-        c.direction = d == 0 ? LandfillDirection::Expand : LandfillDirection::Reduce;
+        c.direction = LandfillDirection::Reduce;
         c.tiles = n;
         c.demonstrable = sc.demonstrable;
         c.initialCost = sc.initialCost;
@@ -252,45 +220,39 @@ LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> fu
                 c.expense = ChargedExpense(*sc.idealMonthly, plan.targetPercent);
                 c.saving = e0 - c.expense;
                 if (c.saving > 0) c.savingPercent = static_cast<int>((c.saving * 100) / e0);
-                ++adv.report[d].eligible;
+                ++adv.report.eligible;
             }
         }
         adv.candidates.push_back(c);
-        byTiles[d][n] = c;
+        byTiles[n] = c;
     }
     {
         const auto end = now();
         if (std::chrono::duration_cast<std::chrono::microseconds>(end - start) > options.timeBudget) adv.timeBudgetExceeded = true;
     }
 
-    int validPrefix[2] = {0, 0};
-    for (int d = 0; d < 2; ++d) {
-        int k = 0;
-        while (k < domain[d]) {
-            const auto it = byTiles[d].find(k + 1);
-            if (it == byTiles[d].end() || !it->second.demonstrable) break;
-            ++k;
-        }
-        validPrefix[d] = k;
-        adv.report[d].fullyEvaluatedTo = k;
-        adv.report[d].complete = domain[d] > 0 && k == domain[d];
+    int validPrefix = 0;
+    while (validPrefix < domain) {
+        const auto it = byTiles.find(validPrefix + 1);
+        if (it == byTiles.end() || !it->second.demonstrable) break;
+        ++validPrefix;
     }
-    if (validPrefix[0] == 0 && validPrefix[1] == 0) { adv.reason = "NO_VALIDATED_DOMAIN"; return adv; }
+    adv.report.fullyEvaluatedTo = validPrefix;
+    adv.report.complete = domain > 0 && validPrefix == domain;
+    if (validPrefix == 0) { adv.reason = "NO_VALIDATED_DOMAIN"; return adv; }
 
-    // Best candidate inside the fully evaluated and validated intervals.
+    // Best candidate inside the fully evaluated and validated interval.
     const LandfillCandidate* best = nullptr;
     const auto better = [](const LandfillCandidate& a, const LandfillCandidate& b) {   // is a better than b
         if (a.saving != b.saving) return a.saving > b.saving;
         if (a.tiles != b.tiles) return a.tiles < b.tiles;
-        if (a.initialCost && b.initialCost && *a.initialCost != *b.initialCost) return *a.initialCost < *b.initialCost;
-        return a.direction == LandfillDirection::Expand && b.direction == LandfillDirection::Reduce;
+        return a.initialCost && b.initialCost && *a.initialCost < *b.initialCost;
     };
-    for (int d = 0; d < 2; ++d)
-        for (int n = 1; n <= validPrefix[d]; ++n) {
-            const auto& c = byTiles[d][n];
-            if (!c.eligible || c.saving <= 0) continue;
-            if (!best || better(c, *best)) best = &c;
-        }
+    for (int n = 1; n <= validPrefix; ++n) {
+        const auto& c = byTiles[n];
+        if (!c.eligible || c.saving <= 0) continue;
+        if (!best || better(c, *best)) best = &c;
+    }
     if (!best) { adv.reason = "NO_SAVING"; return adv; }
     const int threshold = std::clamp(options.thresholdPercent, kLandfillAlertThresholdMin, kLandfillAlertThresholdMax);
     if (!(best->saving * 100 > static_cast<std::int64_t>(threshold) * e0)) { adv.reason = "BELOW_THRESHOLD"; return adv; }
@@ -315,7 +277,7 @@ namespace sc4af {
 inline LandfillAdvice AdviseLandfillSize(const GarbageServiceInput& base, Opt<float> funding, Opt<float> maxAllowed, Opt<std::int64_t> idealMonthly,
                                          const LandfillSearchOptions& options = LandfillSearchOptions{}) {
     const auto lim = LandfillScenarioLimits(base, idealMonthly);
-    return AdviseLandfillSize(base, funding, maxAllowed, idealMonthly, lim.maxExpand, lim.maxReduce,
+    return AdviseLandfillSize(base, funding, maxAllowed, idealMonthly, lim.maxReduce,
                               [&](int delta) { return BuildLandfillScenario(base, idealMonthly, delta); }, options);
 }
 }  // namespace sc4af

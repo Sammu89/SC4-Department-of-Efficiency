@@ -541,6 +541,8 @@ Par exemple, si vous augmentez le financement de l’eau à 100 % mais laissez *
 
 **Pour garder la maîtrise d’une valeur de financement précise, désactivez le gestionnaire de ce service.**
 
+**Si le jeu déplace lui-même un curseur.** SimCity 4 peut déplacer de lui-même les curseurs de bâtiments déjà placés après la modification du coût d’entretien d’un bâtiment (le Phantom Funding Slider Bug). Si le changement apparaît juste après un recalcul mensuel, dans un bâtiment dont le Ministère avait réglé le financement, le Ministère réévalue ce bâtiment à sa prochaine surveillance et remet son financement au minimum qui donne la capacité exigée, au lieu d’attendre la revue mensuelle. Un changement fait à la main en milieu de mois n’est pas traité ainsi. Voir [Phantom Funding Slider Bug](phantom_slider.md).
+
 #### Y a-t-il des effets qui ne peuvent pas être désactivés individuellement ?
 
 Oui.
@@ -571,11 +573,11 @@ D’autres se contentent d’afficher des informations pour que vous décidiez q
 | **Contrats avec les voisins** | Crée, modifie et annule des contrats | Aucun avis de contrat de routine distinct |
 | **Démolition automatique** | Supprime les ruines et les bâtiments abandonnés éligibles | Aucun avis |
 | **Cases fantômes de décharge** | Répare automatiquement les cases fantômes éligibles | Aucun avis |
-| **Conseil sur la taille de la décharge** | **Ne modifie jamais la taille de la décharge** | Recommande en option un agrandissement ou une réduction précis |
+| **Conseil sur la taille de la décharge** | **Ne modifie jamais la taille de la décharge** | Recommande en option une réduction précise |
 
 **Le conseil sur la taille de la décharge est la principale fonction qui recommande un changement sans l’effectuer.**
 
-Il peut vous indiquer qu’agrandir ou réduire une décharge pourrait faire économiser de l’argent, mais la décision de zonage reste la vôtre.
+Il peut vous indiquer que réduire une décharge pourrait faire économiser de l’argent, mais la décision de zonage reste la vôtre.
 
 <a id="safety-performance"></a>
 #### Comment le Ministère évite-t-il de ralentir le jeu ?
@@ -824,13 +826,12 @@ Un avis de capacité peut rester dans la liste des nouvelles jusqu’à **720 jo
 <a id="safety-notices-landfill"></a>
 #### Recommandations sur la taille de la décharge
 
-Le Ministère peut émettre deux avis facultatifs quand modifier la taille de la décharge réduirait nettement les dépenses de traitement des déchets.
+Le Ministère peut émettre un avis facultatif quand modifier la taille de la décharge réduirait nettement les dépenses de traitement des déchets.
 
-Tous deux proviennent du **conseiller des services publics**, avec une humeur de bonne nouvelle et une priorité urgente.
+Il provient du **conseiller des services publics**, avec une humeur de bonne nouvelle et une priorité urgente.
 
 | Recommandation | Titre de l’avis |
 |---|---|
-| **AGRANDIR** | **Plus de décharge, moins de dépenses ?** |
 | **RÉDUIRE** | **Notre décharge prend trop de place !** |
 
 Chaque avis décrit :
@@ -938,6 +939,20 @@ Quand un contrôle de sécurité échoue, le composant concerné cesse de faire 
 | **La fenêtre Options de jeu a une disposition inattendue** | Laisse la fenêtre d’origine inchangée et n’ajoute pas le bouton du Ministère pendant cette session. |
 | **Un fichier de configuration est invalide** | Désactive le composant de gestion concerné au lieu d’utiliser des réglages peu fiables. |
 
+#### Comment les défaillances techniques sont-elles annoncées ?
+
+Si un service que vous avez activé doit s’arrêter jusqu’à la fin de la session de la ville à cause d’une défaillance technique, le Ministère ajoute **une actualité native** à la liste des actualités en bas du jeu. Le titre apparaît dans la liste et le détail au clic. Il n’y a ni fenêtre contextuelle ni fenêtre de conseiller.
+
+- Il y a sept types : électricité, eau, assainissement, santé, éducation, contrats régionaux avec les villes voisines et démolition automatique.
+- Il y a **une actualité par service et par session de ville**. Santé et éducation sont deux actualités distinctes et n’apparaissent que si vous les avez activées.
+- Elle n’est jamais affichée pour ce qui se rétablit tout seul, pour un service en **STANDBY**, pour une lecture refusée, pour un service que vous avez désactivé, ni dans les modes **Off** et **Shadow**. Il n’y a pas de message de rétablissement.
+- L’actualité est retirée quand le service est désactivé ou que sa gestion est relancée. La cause technique n’est écrite que dans le journal, dans des lignes `[FailureNotice]`.
+- Les textes existent dans les dix langues du plugin.
+
+**STANDBY** signifie que le service n’a encore rien à gérer dans la ville (par exemple l’assainissement local dans une ville sans décharge, incinérateur, centre de recyclage ni centrale de valorisation énergétique des déchets). Ce n’est pas une erreur, cela ne produit aucun avis et démarre tout seul dès qu’il y a quelque chose à gérer.
+
+**Où est le journal ?** `DepartmentEfficiency.log` est écrit dans le dossier `Logs` du dossier utilisateur de SimCity 4, normalement `Documents\SimCity 4\Logs\DepartmentEfficiency.log` ; si vous lancez le jeu avec `-UserDir`, c’est le dossier `Logs` de ce dossier. Si ce dossier est inutilisable, le journal est écrit à côté de la DLL, dans `Plugins`, et sa première ligne en donne la raison. Un journal existant est complété, jamais déplacé.
+
 #### Que signifie un arrêt de sécurité de session ?
 
 Un arrêt de sécurité dure pour la session de ville en cours.
@@ -975,7 +990,7 @@ Cela signifie :
 - Aucune opération de financement, de contrat ou de démolition.
 - Aucune modification de l’icône d’eau agricole.
 
-La même inactivité complète s’applique lorsque le dossier **Department of Efficiency** requis ou le fichier de ressources principal est absent à côté de la DLL.
+La même inactivité complète s’applique lorsque le fichier de ressources principal, `DepartmentEfficiency.dat`, est absent à côté de la DLL. La DLL, le DAT et l’INI s’installent ensemble, directement dans le dossier Plugins ; le plugin ne les cherche jamais ailleurs.
 
 **Le Ministère ne tente pas de fonctionner sur une installation non prise en charge ou incomplète.**
 

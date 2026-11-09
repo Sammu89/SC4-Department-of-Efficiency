@@ -600,6 +600,10 @@ This follows the Department's state in every city, without restarting the game. 
 
 See [General Safety](safety.md#safety) for more information.
 
+#### If the game moves a slider by itself
+
+When the game changes the funding of a school or hospital that the Department had set, right after a monthly recalculation, the Department re-evaluates that building at its next watch, in both directions, and applies the lowest funding that still gives the required capacity. See [Phantom Funding Slider Bug](phantom_slider.md).
+
 <a id="education-healthcare-settings"></a>
 ### 5. Settings
 

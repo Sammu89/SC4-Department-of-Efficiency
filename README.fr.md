@@ -29,6 +29,8 @@ Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisa
 
 - [Prérequis et compatibilité](#requirements-and-compatibility)
 
+- [Compatibilité avec le Phantom Funding Slider Bug](#phantom-funding-slider-bug)
+
 - [Mise à jour et désinstallation](#updating-and-uninstalling)
 
 - [Limites connues](#known-limitations)
@@ -45,27 +47,31 @@ Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisa
 
 ### [⬇ Télécharger le Département de l’efficacité 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
+**Nouveautés de la 1.0.2 :** voir le [journal des modifications](CHANGELOG.md) (en anglais).
+
 1\. Ouvrez la [page des releases](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) du projet et choisissez la dernière version.
 
 2\. Sous **Assets**, téléchargez le **ZIP de distribution de Department of Efficiency**.
 
 3\. **Fermez SimCity 4.** Extrayez le ZIP dans un dossier temporaire.
 
-4\. Copiez **`DepartmentEfficiency.dll`** et tout le dossier **`Department of Efficiency`** à la racine de `Documents\SimCity 4\Plugins`.
+4\. Copiez les **trois fichiers** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** et **`DepartmentEfficiency.ini`** directement dans `Documents\SimCity 4\Plugins`. Ne créez aucun sous-dossier.
 
 5\. Lancez le jeu et suivez les instructions des [premiers réglages](#first-time-setup) avant de jouer une ville sauvegardée.
 
-Le ZIP de distribution contient la DLL et un dossier avec un fichier DAT et un fichier INI. Après l’installation, vous devriez avoir :
+Le ZIP de distribution contient exactement ces trois fichiers. Après l’installation, vous devriez avoir :
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
-    Department of Efficiency\
-        DepartmentEfficiency.dat
-        DepartmentEfficiency.ini
+    DepartmentEfficiency.dat
+    DepartmentEfficiency.ini
 ```
 
-Les fichiers Markdown et les captures d’écran du dépôt public ne sont **pas** nécessaires au jeu. Gardez la DLL **directement dans Plugins**, avec le dossier qui l’accompagne à côté.
+Les fichiers Markdown et les captures d’écran du dépôt public ne sont **pas** nécessaires au jeu. Gardez les trois fichiers **directement dans Plugins**, côte à côte. Le dossier `Department of Efficiency` n’existe plus.
+
+> [!WARNING]
+> **Vous mettez à jour une version antérieure ?** Ne copiez pas les nouveaux fichiers par-dessus les anciens. Supprimez d’abord les anciens fichiers du Ministère, comme expliqué dans [Mise à jour et désinstallation](#updating-and-uninstalling).
 
 **Modifier les réglages plus tard :** ouvrez **Options de jeu → Ministère de l’Optimisation**, utilisez les pages **Services** et **Démolition**, puis cliquez sur **Accepter**. Pour l’interrupteur général, vous pouvez aussi utiliser l’ordonnance **Instituer un Ministère de l’Optimisation**, sans coût mensuel. Désactiver le Ministère arrête ses actions futures ; cela n’annule ni les financements, ni les accords, ni les démolitions déjà appliqués.
 
@@ -83,8 +89,8 @@ Le tableau ci-dessous décrit ce que fait le Ministère. Pour les formules, les 
 | [Déchets](technical_docs/fr/garbage.md#garbage-landfills) | Ajuste le financement de la gestion des déchets d’après la production d’ordures, le recyclage, le traitement, le stockage des décharges et les accords régionaux, tout en protégeant les besoins propres de la ville. |
 | [Accords avec les voisins](technical_docs/fr/deals.md#neighbor-deals) | Peut **acheter ou vendre de l’électricité et de l’eau**, **payer les voisins pour qu’ils prennent vos déchets** ou **accepter les leurs contre paiement**. Il crée, ajuste et annule les accords éligibles lorsque le résultat global profite à la ville et que ses propres besoins et réserves restent protégés. |
 | [Démolition automatique](technical_docs/fr/demolition.md#demolition) | Peut déblayer les ruines après environ **30 jours simulés** et les bâtiments éligibles abandonnés depuis **une année simulée**, par défaut. Vous décidez quelles zones et quels motifs d’abandon comptent, si les ruines protégées peuvent être déblayées et si vous fixez un plafond de dépenses mensuel. |
-| [Avis des conseillers](technical_docs/fr/safety.md#notices) | Utilise les conseillers du jeu pour signaler les pénuries avérées et persistantes que ni le financement ni les accords disponibles ne peuvent résoudre. Quand c’est utile, les messages contiennent des liens qui mènent aux bâtiments concernés. |
-| [Conseil sur la taille de la décharge](technical_docs/fr/garbage.md#garbage-landfills-advice) | Un conseil optionnel indique un agrandissement précis de la décharge, ou une réduction sans risque, qui pourrait réduire la facture des déchets de plus que le seuil d’économie choisi. **Le Ministère conseille ; c’est à vous de décider de modifier ou non le zonage.** |
+| [Avis des conseillers](technical_docs/fr/safety.md#notices) | Utilise les conseillers du jeu pour signaler les pénuries avérées et persistantes que ni le financement ni les accords disponibles ne peuvent résoudre. Quand c’est utile, les messages contiennent des liens qui mènent aux bâtiments concernés. Il ajoute aussi une actualité (titre dans la liste, détail au clic) quand un service que vous avez activé doit s’arrêter à cause d’une défaillance technique. |
+| [Conseil sur la taille de la décharge](technical_docs/fr/garbage.md#garbage-landfills-advice) | Un conseil optionnel indique une réduction précise et sans risque de la décharge (cases vides à retirer), qui pourrait réduire la facture des déchets de plus que le seuil d’économie choisi. **Le Ministère conseille ; c’est à vous de décider de modifier ou non le zonage.** |
 | [Réparation des cases fantômes](technical_docs/fr/garbage.md#ghost-tiles) | Quand la gestion des déchets est activée, répare sans risque les cases de décharge invisibles éligibles que le jeu compte encore dans l’entretien. Les cas risqués ou non vérifiés sont laissés tels quels ; cette réparation n’a pas d’interrupteur distinct. |
 
 Vous gardez la main sur la construction, le zonage, les impôts, les routes et les transports, la police, les pompiers et tout autre service que le Ministère ne gère pas. Si vous activez la gestion d’un type d’accord avec les voisins, le Ministère peut aussi modifier ou annuler un accord que vous aviez conclu à la main. Désactivez cette option d’accords pour les gérer vous-même.
@@ -105,7 +111,7 @@ Le Ministère utilise les réglages fournis avec le plugin et **se met au travai
 
 5\. Ouvrez la ville que vous voulez jouer. Le Ministère suit vos préférences enregistrées et gère la ville pendant que la simulation avance.
 
-Vos préférences sont stockées dans les fichiers INI du plugin et réutilisées quand vous ouvrez une autre ville. Le Ministère ne construit **pas** d’écoles, d’hôpitaux, de centrales électriques ni d’installations d’eau à votre place. Quand le financement et les accords disponibles ne suffisent pas à résoudre une pénurie avérée et persistante, un conseiller du jeu vous dit où il faut plus de capacité.
+Vos préférences sont stockées dans `DepartmentEfficiency.ini` et réutilisées quand vous ouvrez une autre ville. Le Ministère ne construit **pas** d’écoles, d’hôpitaux, de centrales électriques ni d’installations d’eau à votre place. Quand le financement et les accords disponibles ne suffisent pas à résoudre une pénurie avérée et persistante, un conseiller du jeu vous dit où il faut plus de capacité.
 
 Vous pouvez aussi activer ou désactiver le Ministère par les ordonnances de la ville.
 
@@ -218,15 +224,36 @@ Toutes les captures d’écran montrent la version anglaise du jeu.
 
 - **Dix langues dans le jeu :** anglais, portugais, français, allemand, espagnol, italien, néerlandais, danois, suédois et polonais. Le Ministère suit automatiquement la langue de votre jeu.
 
+<a id="phantom-funding-slider-bug"></a>
+
+## Compatibilité avec le Phantom Funding Slider Bug
+
+Le Ministère de l’Optimisation est compatible avec les villes touchées par le **Phantom Funding Slider Bug**, un ancien problème de SimCity 4 où les curseurs de financement de bâtiments déjà placés continuent de bouger tout seuls après que le coût d’entretien de ce type de bâtiment a été modifié (par exemple par un mod).
+
+Il ne corrige **pas** le bug de SimCity 4 lui-même. Il détecte en revanche les changements de financement suspects et récurrents et réajuste automatiquement les installations qu’il gère, ce qui aide à maintenir la capacité de service exigée tout en évitant un surfinancement inutile.
+
+Dans les scénarios testés, les corrections sont intervenues en moins d’un jour simulé, au lieu de pouvoir prendre un mois entier.
+
+Cette protection s’applique aux installations éligibles (écoles, bibliothèques, musées, cliniques et hôpitaux) sous gestion automatique. Elle ne répare pas les données budgétaires internes du jeu et ne garantit pas la protection dans toutes les situations. Voir [Phantom Funding Slider Bug](technical_docs/fr/phantom_slider.md) pour son fonctionnement, ses limites et les résultats des tests.
+
 <a id="updating-and-uninstalling"></a>
 
 ## Mise à jour et désinstallation
 
-**Les réglages ne sont pas repris.** Depuis la version 1.0.2, les trois fichiers INI de la version 1.0.0 n’en forment plus qu’un, `DepartmentEfficiency.ini`, dans le dossier `Department of Efficiency` (sections `[AutoFinance]`, `[UtilityResearch]` et `[LotDemolition]`). Les anciens `DepartmentEfficiencyUtility.ini` et `DepartmentEfficiencyDemolition.ini` ne sont plus lus.
+**Les réglages ne sont pas repris.** Depuis la version 1.0.2, le Ministère a un seul fichier de réglages, `DepartmentEfficiency.ini`, qui remplace les trois fichiers INI de la version 1.0.0 et le dossier `Department of Efficiency` du premier paquet 1.0.2. Les réglages des anciens fichiers ne sont ni lus ni migrés : réglez de nouveau vos préférences dans **Options de jeu → Ministère de l’Optimisation**.
 
-**Pour remplacer une installation (une installation propre est obligatoire) :** fermez le jeu, supprimez la `DepartmentEfficiency.dll` existante **et tout le dossier `Department of Efficiency`**, puis installez le nouveau paquet. Copier les nouveaux fichiers par-dessus une ancienne installation n’est pas pris en charge : les anciens fichiers de ressources resteraient dans le dossier et garderaient silencieux les conseils du jeu. Réglez de nouveau vos préférences dans le jeu (Options de jeu → Ministère de l’Optimisation).
+**Pour mettre à jour une installation antérieure (une installation propre est obligatoire).** Fermez le jeu et supprimez les anciens fichiers du Ministère **avant** de copier les trois nouveaux. Supprimez uniquement ceux-ci, dans `Documents\SimCity 4\Plugins` :
 
-**Pour désinstaller :** fermez le jeu, supprimez `DepartmentEfficiency.dll` et le dossier `Department of Efficiency`. Vos villes sauvegardées restent lisibles sans le mod. Les niveaux de financement, les accords en cours et les démolitions déjà enregistrées dans une ville ne sont pas annulés automatiquement.
+- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` et `DepartmentEfficiency.ini` ;
+- le dossier `Department of Efficiency` en entier, s’il existe ;
+- de la version 1.0.0, s’ils sont encore là : `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` et `DepartmentEfficiencyDemolition.ini` ;
+- `DepartmentEfficiency.told.txt`, un petit fichier de mémoire que le plugin a pu laisser (il est recréé au besoin).
+
+Ne touchez pas aux fichiers des autres mods. Copier les nouveaux fichiers par-dessus une ancienne installation n’est pas pris en charge : les anciens fichiers de ressources resteraient et pourraient garder silencieux les conseils du jeu. Le plugin ne lit jamais les fichiers de l’ancien dossier ; si ce dossier est encore là, il se contente d’écrire un avertissement dans son journal.
+
+**Pour désinstaller :** fermez le jeu et supprimez les mêmes fichiers. Vos villes sauvegardées restent lisibles sans le mod. Les niveaux de financement, les contrats existants et les démolitions déjà enregistrés dans une ville ne sont pas annulés automatiquement.
+
+**Fichier journal :** `DepartmentEfficiency.log` se trouve dans le dossier `Logs` de votre dossier utilisateur de SimCity 4 (normalement `Documents\SimCity 4\Logs`, ou le dossier `Logs` du dossier indiqué par `-UserDir`). Si ce dossier est inutilisable, il est écrit à côté de la DLL.
 
 <a id="known-limitations"></a>
 
@@ -259,7 +286,7 @@ La compilation télécharge [gzcom-dll](https://github.com/nsgomez/gzcom-dll) à
 
 - **gzcom-dll** n'est pas couverte par cette licence : elle garde sa propre licence, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), et est téléchargée depuis son dépôt d'origine lors de la compilation.
 
-- **SimCity 4** et ses ressources d'origine appartiennent à Electronic Arts / Maxis. **Department of Efficiency** est un mod non officiel créé par un fan, indépendant d'EA et non approuvé par elle. Quatre des fichiers de `release/Department of Efficiency/` contiennent des scripts et des définitions d'interface dérivés des ressources du jeu lui-même, et les captures d'écran montrent le jeu : ils ne sont pas ma propriété, ne sont pas couverts par la GPL et tous les droits sur ceux-ci restent à leurs propriétaires. Il en va de même pour tout autre matériel de tiers.
+- **SimCity 4** et ses ressources d’origine appartiennent à Electronic Arts / Maxis. Le **Ministère de l’Optimisation** est un mod de fan non officiel, indépendant d’EA et non approuvé par elle. Outre les textes et scripts propres au projet, `DepartmentEfficiency.dat` contient deux scripts d’interface (le bouton et la fenêtre d’options) dérivés des ressources du jeu lui-même, et les captures d’écran montrent le jeu : cela ne m’appartient pas, n’est pas couvert par la GPL et tous les droits restent à leurs détenteurs. Il en va de même pour tout autre matériel tiers. L’exécutable du jeu n’est pas distribué.
 
 <a id="credits"></a>
 
@@ -268,6 +295,12 @@ La compilation télécharge [gzcom-dll](https://github.com/nsgomez/gzcom-dll) à
 **Auteur**
 
 - Créé par **Sammu89**.
+
+**Remerciements particuliers**
+
+- **Un grand merci à CorinaMarie** pour ses explications détaillées du Phantom Funding Slider Bug, pour avoir généreusement partagé les villes de test et les fichiers DAT reproductibles qui ont permis d’en étudier et d’en atténuer les effets, et pour ses précieux conseils techniques sur la préservation et la restauration des messages d’origine des conseillers de Maxis, y compris le traitement sélectif des enregistrements d’avis en Lua. Son aide a rendu le Ministère plus robuste et plus compatible avec le jeu et avec d’autres mods.
+
+Le code du Ministère de l’Optimisation a été écrit par Sammu89. Les personnes citées ici ont partagé des connaissances, des outils, du matériel de test et des conseils ; elles ne sont pas coauteures du code.
 
 **Bibliothèque utilisée**
 
@@ -278,6 +311,10 @@ La compilation télécharge [gzcom-dll](https://github.com/nsgomez/gzcom-dll) à
 - Nicholas Hayes (0xC0000054 / Null 45), pour ses recherches, sa documentation et ses exemples ouverts sur les DLL de SimCity 4 : sc4-dll-utilities, sc4-custom-budget-departments, sc4-query-ui-hooks, sc4-lua-extensions, sc4-lua-extension-example. La fenêtre d'options, l'ordonnance et le fichier d'avis suivent des mécanismes publiés dans ses projets sc4-region-census, sc4-humane-society-ordinance et sc4-lua-extension-example (licence MIT) ; les commandes du jeu suivent sc4-auto-run-cheats et sc4-game-command-documentation.
 
 - CorinaMarie, pour avoir documenté la technique des Urgent Advice de SimCity 4 que suivent les avis de conseiller du mod.
+
+- memo, pour ses conseils sur le chargement d’un script Lua propre au plugin, avec ses propres identifiants, après les scripts du jeu et en ne modifiant que les enregistrements d’avis nécessaires, que suit l’intégration du Ministère avec les conseillers du jeu.
+
+- Kel9509, pour les informations sur la façon de reproduire le Phantom Funding Slider Bug.
 
 - La communauté de modding de SimCity 4, pour vingt ans de recherches, d'outils et de connaissances partagées, dont la documentation des propriétés d'exemplaires de SC4Devotion.
 

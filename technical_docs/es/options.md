@@ -91,7 +91,7 @@ Ambos métodos actualizan el mismo ajuste, por lo que siempre son coherentes ent
 <a id="options-files"></a>
 ### ¿Dónde se guardan los ajustes?
 
-El Ministerio guarda sus ajustes en **tres archivos de configuración de texto**, situados dentro de la carpeta `Department of Efficiency` de tu directorio Plugins de SimCity 4.
+El Ministerio guarda sus ajustes en **un único archivo de configuración de texto**, `DepartmentEfficiency.ini`, colocado directamente en la carpeta Plugins de SimCity 4, junto a `DepartmentEfficiency.dll` (no existe la subcarpeta `Department of Efficiency`). Tiene tres secciones independientes.
 
 Puedes cambiar la mayoría de los ajustes desde la ventana de opciones del Ministerio en el juego, o editar los archivos a mano.
 
@@ -534,7 +534,7 @@ Cuando está desactivado:
 - El consejo sobre el tamaño del vertedero no está disponible.
 - Los contratos de basura se pueden seguir gestionando de forma independiente si Gestionar acuerdos de basura está activado.
 
-**El Ministerio nunca construye ni zonifica automáticamente áreas de vertedero adicionales.** La ampliación y la reducción del vertedero son solo un consejo.
+**El Ministerio nunca construye ni zonifica automáticamente áreas de vertedero adicionales.** La reducción del vertedero es solo un consejo.
 
 **Requiere:** Ministerio activo.
 
@@ -580,7 +580,6 @@ Activa recomendaciones opcionales sobre cómo cambiar el tamaño de tu vertedero
 
 El Ministerio busca situaciones en las que:
 
-- **Ampliar un vertedero** daría capacidad de eliminación adicional suficiente para reducir la financiación de limpieza necesaria y el gasto mensual total.
 - **Reducir un vertedero** eliminaría casillas sin usar y bajaría los gastos de mantenimiento sin comprometer la eliminación de la basura.
 
 Si un cambio seguro produce un ahorro superior al umbral que hayas configurado, el Ministerio emite un aviso de un asesor.

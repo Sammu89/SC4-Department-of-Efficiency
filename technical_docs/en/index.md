@@ -16,7 +16,7 @@ This guide explains how SimCity 4 works behind the scenes and how the Department
 | Power | Power reserve | 20% | Maintains spare generating capacity to accommodate city growth and reduce the risk of blackouts. Power lines are also protected against deterioration. | [Power](power.md#power) |
 | Water | Water reserve | 10% | Maintains spare water production capacity, with pipe protection enabled by default. | [Water](water.md#water) |
 | Sanitation | Garbage reserve | 2% | Ensures sufficient waste treatment and disposal capacity, aiming to clear any accumulated garbage by the end of the simulated month. | [Garbage & Landfills](garbage.md#garbage-landfills) |
-| Landfill advice | Savings alert threshold | Advice off; threshold 25% | Recommends landfill expansions or reductions when they could significantly lower sanitation costs. | [Landfill Size Advice](garbage.md#garbage-landfills-advice) |
+| Landfill advice | Savings alert threshold | Advice off; threshold 25% | Recommends removing empty landfill squares when they could significantly lower sanitation costs. | [Landfill Size Advice](garbage.md#garbage-landfills-advice) |
 | Neighbor deals | Management by resource | On; dealing between neighbors  off | Manages power, water and garbage contracts while prioritizing the city's own needs and safety reserves. | [Neighbor Deals](deals.md#neighbor-deals) |
 | Demolition | Waiting periods | Ruins: 1 month; abandoned buildings: 12 months | Protects municipal and historic buildings by default, with an optional monthly demolition spending limit. | [Automatic Demolition](demolition.md#demolition) |
 
@@ -37,5 +37,6 @@ This guide explains how SimCity 4 works behind the scenes and how the Department
 * [H. Option reference](options.md#options)
 
 * [I. Game executable address reference](../en/game_addresses.md)
+* [J. Phantom Funding Slider Bug](phantom_slider.md)
 
 <!-- SPDX-License-Identifier: GPL-3.0-only · Copyright (c) 2026 Sammu89 -->

@@ -946,7 +946,7 @@ O Ministério só toma decisões de financiamento quando as informações do jog
 - A procura de eletricidade e as outras leituras necessárias têm de estar disponíveis e ser coerentes.
 - Uma leitura de procura igual a zero é tratada como possivelmente não inicializada, e não automaticamente como prova de que a cidade não precisa de eletricidade.
 - Pelo menos uma central tem de ter informações legíveis de financiamento e de produção antes de o financiamento das centrais poder ser gerido.
-- Leituras contraditórias, como um consumo de eletricidade comunicado que excede a procura em mais de 1% mais uma unidade, impedem alterações automáticas de financiamento.
+- Leituras contraditórias, como um consumo de eletricidade comunicado que excede a procura em mais de 1% mais uma unidade, impedem alterações automáticas de financiamento. O contador mensal de consumo do jogo **inclui a eletricidade que a cidade exporta**, pelo que o Ministério retira a exportação antes de o comparar com a procura da própria cidade (uma cidade que exporta eletricidade não fica bloqueada). Se a exportação não puder ser lida, nunca se assume que é zero e a leitura é recusada.
 
 Uma cidade **sem centrais** pode, ainda assim, ser avaliada quanto a compras de eletricidade às cidades vizinhas, se a gestão de contratos regionais estiver ligada.
 

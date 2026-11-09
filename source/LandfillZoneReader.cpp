@@ -141,10 +141,9 @@ SC4CellRegion<int32_t> RegionOf(const LandfillPlacement& p) {
     return region;
 }
 
-// The zoning parameters of a placement: EXPAND faces the player's checks (slope, lots); REDUCE is a dezone; REPAIR uses exactly the arguments validated in game.
+// The zoning parameters of a placement: REDUCE is a dezone; REPAIR uses exactly the arguments validated in game.
 void ParamsOf(const LandfillPlacement& p, int& type, bool& slope, bool& lot) {
     if (IsReduce(p.kind)) { type = 0; slope = false; lot = false; }
-    else if (IsExpand(p.kind)) { type = kLandfillZoneTypeLandfill; slope = true; lot = true; }
     else { type = kLandfillZoneTypeLandfill; slope = false; lot = false; }
 }
 
