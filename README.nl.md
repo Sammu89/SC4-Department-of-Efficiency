@@ -43,7 +43,7 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 ## Downloaden en installeren
 
-### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 1\. Open de [releasepagina](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) van het project en kies de nieuwste release.
 
@@ -55,20 +55,14 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
 
-De distributie-ZIP bevat de DLL en een map met vijf DAT- en drie INI-bestanden. Na de installatie hebt u:
+De distributie-ZIP bevat de DLL en een map met één DAT- en één INI-bestand. Na de installatie hebt u:
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
     Department of Efficiency\
         DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
         DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
 ```
 
 De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de DLL **direct in Plugins**, met de bijbehorende map ernaast.
@@ -228,9 +222,9 @@ Alle schermafbeeldingen tonen de Engelse versie van het spel.
 
 ## Bijwerken en verwijderen
 
-**Bewaar uw voorkeuren.** De drie INI-bestanden in de map `Department of Efficiency` bevatten uw instellingen. Maak vóór het vervangen van de mod een back-up van `DepartmentEfficiency.ini`, `DepartmentEfficiencyUtility.ini` en `DepartmentEfficiencyDemolition.ini` buiten uw Plugins-map.
+**Instellingen worden niet overgenomen.** Sinds versie 1.0.2 zijn de drie INI-bestanden van versie 1.0.0 één bestand, `DepartmentEfficiency.ini`, in de map `Department of Efficiency` (secties `[AutoFinance]`, `[UtilityResearch]` en `[LotDemolition]`). De oude `DepartmentEfficiencyUtility.ini` en `DepartmentEfficiencyDemolition.ini` worden niet meer gelezen.
 
-**Een installatie vervangen:** sluit het spel, verwijder de bestaande `DepartmentEfficiency.dll` en de map `Department of Efficiency`, installeer het nieuwe pakket en zet uw back-up van de INI-bestanden **alleen terug als het formaat compatibel is** met de nieuwe release. Stel anders uw voorkeuren opnieuw in het spel in.
+**Een installatie vervangen (een schone installatie is vereist):** sluit het spel, verwijder de bestaande `DepartmentEfficiency.dll` **en de hele map `Department of Efficiency`** en installeer het nieuwe pakket. Nieuwe bestanden over een oude installatie kopiëren wordt niet ondersteund: de oude resourcebestanden blijven in de map staan en houden de eigen adviezen van het spel stil. Stel uw voorkeuren opnieuw in het spel in (Spelopties → Ministerie van Efficiëntie).
 
 **Verwijderen:** sluit het spel en verwijder `DepartmentEfficiency.dll` en de map `Department of Efficiency`. Uw opgeslagen steden blijven zonder de mod leesbaar. Financieringsniveaus, bestaande contracten en sloop die al in een stad is opgeslagen, worden niet automatisch teruggedraaid.
 
@@ -261,7 +255,7 @@ Tijdens het bouwen wordt [gzcom-dll](https://github.com/nsgomez/gzcom-dll) in ee
 
 - De originele code van Department of Efficiency (de bestanden in [`source/`](source/)) is geschreven door mij, **Sammu89** en wordt uitgebracht onder de **GNU General Public License, versie 3 uitsluitend** (GPL-3.0-only). De volledige tekst staat in [LICENSE](LICENSE). Je mag de code bestuderen, aanpassen en herdistribueren onder de voorwaarden van de GPLv3: behoud de copyrightvermeldingen en dankbetuigingen, geef je wijzigingen aan en publiceer je versie onder dezelfde licentie. Presenteer aangepaste versies alsjeblieft niet als mijn officiële versies.
 
-- De documentatie (deze README's en de bestanden in [`technical_docs/`](technical_docs/)) en de voor dit project geschreven teksten (inclusief die in de drie INI-bestanden en die welke in `DepartmentEfficiency.dat` zijn gecompileerd), samen met hun oorspronkelijke vertalingen, worden onder dezelfde licentie uitgebracht, GPL-3.0-only.
+- De documentatie (deze README's en de bestanden in [`technical_docs/`](technical_docs/)) en de voor dit project geschreven teksten (inclusief die in het INI-bestand en die welke in `DepartmentEfficiency.dat` zijn gecompileerd), samen met hun oorspronkelijke vertalingen, worden onder dezelfde licentie uitgebracht, GPL-3.0-only.
 
 - **gzcom-dll** valt niet onder deze licentie: de bibliotheek behoudt haar eigen licentie, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), en wordt bij het bouwen uit de oorspronkelijke repository gedownload.
 

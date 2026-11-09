@@ -97,17 +97,17 @@ Puedes cambiar la mayoría de los ajustes desde la ventana de opciones del Minis
 
 | Archivo de configuración | Qué controla |
 |---|---|
-| `DepartmentEfficiency.ini` | La financiación de educación y sanidad, los márgenes de seguridad y el interruptor principal del Ministerio. |
-| `DepartmentEfficiencyUtility.ini` | Electricidad, agua, limpieza, consejos sobre el vertedero, contratos regionales y sus opciones relacionadas. |
-| `DepartmentEfficiencyDemolition.ini` | Demolición automática, periodos de espera, zonas elegibles, motivos de abandono y gasto en demoliciones. |
+| `DepartmentEfficiency.ini`, sección `[AutoFinance]` | La financiación de educación y sanidad, los márgenes de seguridad y el interruptor principal del Ministerio. |
+| `DepartmentEfficiency.ini`, sección `[UtilityResearch]` | Electricidad, agua, limpieza, consejos sobre el vertedero, contratos regionales y sus opciones relacionadas. |
+| `DepartmentEfficiency.ini`, sección `[LotDemolition]` | Demolición automática, periodos de espera, zonas elegibles, motivos de abandono y gasto en demoliciones. |
 
-Cada archivo tiene su propia sección de configuración.
+Desde la versión 1.0.2 hay un único archivo con tres secciones independientes. Una sección ausente o no válida solo afecta a su propio módulo; los otros dos siguen funcionando.
 
 #### Educación y sanidad
 
 Archivo: `DepartmentEfficiency.ini`
 
-Sección: `[DepartmentEfficiency]`
+Sección: `[AutoFinance]`
 
 | Ajuste | Clave INI |
 |---|---|
@@ -121,9 +121,9 @@ La configuración suministrada usa `ReservePercent=5` tanto para el margen de se
 
 #### Suministros y contratos regionales
 
-Archivo: `DepartmentEfficiencyUtility.ini`
+Archivo: `DepartmentEfficiency.ini`
 
-Sección: `[DepartmentEfficiencyUtility]`
+Sección: `[UtilityResearch]`
 
 | Ajuste | Clave INI |
 |---|---|
@@ -146,7 +146,7 @@ Sección: `[DepartmentEfficiencyUtility]`
 
 #### Demolición automática
 
-Archivo: `DepartmentEfficiencyDemolition.ini`
+Archivo: `DepartmentEfficiency.ini`
 
 Sección: `[LotDemolition]`
 
@@ -215,7 +215,7 @@ Tus preferencias individuales también se conservan, de modo que vuelven a estar
 
 Todos los demás ajustes de las páginas Servicios y Demolición dejan de estar disponibles mientras el interruptor principal esté desactivado.
 
-**Importante:** Los archivos de recursos de asesores incluidos y la modificación que oculta los iconos de *sin agua* de las granjas siguen en vigor mientras estén instalados, incluso con el Ministerio desactivado.
+**Importante:** La modificación que oculta los iconos de *sin agua* agrícolas sigue activa mientras esté instalada, incluso con el Ministerio desactivado. Los mensajes de los asesores del propio juego dejan de silenciarse cuando el Ministerio está desactivado.
 
 También puedes controlar este mismo interruptor con **Crear un Ministerio de Optimización** en la ventana de Ordenanzas de SimCity 4.
 
@@ -243,7 +243,7 @@ Cuando está activado:
 
 Cuando está desactivado, la financiación de la educación se queda en los valores que hayas fijado a mano y los avisos de capacidad de educación se desactivan.
 
-**Importante:** Los edificios que no admiten el mecanismo de financiación estándar del juego no se modifican. Los consejos de financiación de educación del juego original siguen suprimidos mientras el archivo de recursos de consejos cívicos esté instalado, aunque la gestión automática de la educación esté desactivada.
+**Importante:** Los edificios que no admiten el mecanismo de financiación estándar del juego no se modifican. Los consejos originales del juego sobre la financiación de la educación solo se silencian mientras el Ministerio gestiona la educación.
 
 **Requiere:** Ministerio activo.
 
@@ -299,7 +299,7 @@ Cuando está desactivado, la financiación de la sanidad sigue bajo tu control m
 
 Se excluyen los edificios que no admiten el mecanismo de financiación estándar.
 
-Los consejos habituales de financiación sanitaria del juego original siguen suprimidos mientras el archivo de recursos de consejos cívicos esté instalado, sea cual sea este ajuste.
+Los consejos originales del juego sobre la financiación sanitaria habitual solo se silencian mientras el Ministerio gestiona la sanidad.
 
 **Requiere:** Ministerio activo.
 
@@ -677,9 +677,9 @@ Cuando está desactivado:
 - No se reserva capacidad local para hipotéticas ventas futuras.
 - Los avisos de carencia de suministros no se pueden demostrar del todo, porque no se examinan las ofertas regionales.
 
-**Importante:** Los mensajes originales de los asesores de SimCity 4 sobre acuerdos con vecinos siguen suprimidos mientras el archivo de recursos de consejos sobre acuerdos del Ministerio esté instalado.
+**Importante:** Los mensajes originales de los asesores de SimCity 4 sobre acuerdos con vecinos solo se silencian mientras el Ministerio gestiona los contratos de ese recurso.
 
-Para restaurar esos mensajes originales tras desactivar la gestión automática de contratos, quita el archivo de recursos correspondiente con el juego cerrado.
+Si desactivas la gestión (o todo el Ministerio), los mensajes originales vuelven al instante, sin reiniciar el juego.
 
 **Requiere:** Ministerio activo.
 

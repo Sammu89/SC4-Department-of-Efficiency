@@ -184,7 +184,7 @@ bool OptionsUI::InjectButton(cIGZWin* panel) {
     cIGZWin* button = CreateFromScript(kOptionsUiButtonScript, kOptionsUiButtonRoot, content, how);
     if (!button) {
         broken_ = true;                                                      // never retried in this session: Play Options stays the game's own
-        Log(LogLevel::Warning, "[OptionsUI] the options button could not be created (" + how + "; is DepartmentEfficiencyUI.dat in the Department of Efficiency folder?): Play Options is left as it is");
+        Log(LogLevel::Warning, "[OptionsUI] the options button could not be created (" + how + "; is DepartmentEfficiency.dat in the Department of Efficiency folder?): Play Options is left as it is");
         return false;
     }
     // room for one more button: the panel grows, the game's Accept / Cancel bar moves down, nothing of the game is replaced
@@ -291,7 +291,7 @@ std::string OptionsUI::ClosePlayOptions() {
 }
 
 OptionsIniTexts OptionsUI::ReadFiles() const {
-    return {ReadFile(configDir_ + "DepartmentEfficiency.ini"), ReadFile(configDir_ + "DepartmentEfficiencyUtility.ini"), ReadFile(configDir_ + "DepartmentEfficiencyDemolition.ini")};
+    return OptionsIniTexts::FromFile(ReadFile(configDir_ + kIniFileName));      // ONE file, three sections
 }
 
 bool OptionsUI::OpenWindow() {
@@ -305,7 +305,7 @@ bool OptionsUI::OpenWindow() {
     std::string how;
     cIGZWin* win = CreateFromScript(kOptionsUiWindowScript, kOptionsUiWindowRoot, parent, how);
     if (!win) {
-        Log(LogLevel::Warning, "[OptionsUI] the options window could not be created (" + how + "; is DepartmentEfficiencyUI.dat in the Department of Efficiency folder?)");
+        Log(LogLevel::Warning, "[OptionsUI] the options window could not be created (" + how + "; is DepartmentEfficiency.dat in the Department of Efficiency folder?)");
         return false;
     }
     if (!parent->ChildExists(win)) parent->ChildAdd(win);
@@ -386,14 +386,13 @@ int OptionsUI::ShowDraft() {
     return written;
 }
 
-// Writes the files of an accepted result (each one whole or not at all) and makes the plugin read them; `keys` = what was written. False = nothing more is written.
+// Writes the file of an accepted result (whole or not at all) and makes the plugin read it; `keys` = what was written. False = nothing more is written.
 bool OptionsUI::WriteResult(const OptionsApplyResult& r, std::string& keys, std::string& error) {
-    if (r.civicChanged && !WriteFileAtomic(configDir_ + "DepartmentEfficiency.ini", r.texts.civic, error)) return false;
-    if (r.utilityChanged && !WriteFileAtomic(configDir_ + "DepartmentEfficiencyUtility.ini", r.texts.utility, error)) return false;
-    if (r.demolitionChanged && !WriteFileAtomic(configDir_ + "DepartmentEfficiencyDemolition.ini", r.texts.demolition, error)) return false;
+    const bool any = r.civicChanged || r.utilityChanged || r.demolitionChanged;
+    if (any && !WriteFileAtomic(configDir_ + kIniFileName, r.texts.file, error)) return false;       // the whole file, once, whole or not at all
     keys.clear();
     for (const auto& k : r.keys) keys += (keys.empty() ? "" : ", ") + k;
-    if ((r.civicChanged || r.utilityChanged || r.demolitionChanged) && onApplied_) onApplied_();   // the plugin reads the files at once (no wait for the next month)
+    if (any && onApplied_) onApplied_();   // the plugin reads the file at once (no wait for the next month)
     return true;
 }
 

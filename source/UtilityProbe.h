@@ -31,7 +31,7 @@ Opt<bool> ReadNeighborDealsUiDisabled(cISC4City* city);
 // their first mention.
 class UtilityProbe {
 public:
-    void SetConfigDirectory(const std::string& directory) { configPath_ = directory + "DepartmentEfficiencyUtility.ini"; }
+    void SetConfigDirectory(const std::string& directory) { configPath_ = directory + "DepartmentEfficiency.ini"; }      // the one file; this module reads its [UtilityResearch] section
     void LoadConfigIfChanged();
     const UtilityResearchConfig& config() const { return config_; }
     std::string Banner() const;

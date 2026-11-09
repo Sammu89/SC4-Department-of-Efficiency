@@ -33,10 +33,10 @@ inline const char* TriggerName(EvalTrigger t) { return t == EvalTrigger::Month ?
 class AutoFinance {
 public:
     void SetConfigDirectory(const std::string& directory) {
-        configPath_ = directory + "DepartmentEfficiency.ini";
+        configPath_ = directory + "DepartmentEfficiency.ini";      // the one file; this module reads its [AutoFinance] section
     }
 
-    // (Re)loads DepartmentEfficiency.ini when it changed. Missing file => Mode=Off.
+    // (Re)loads the [AutoFinance] section of DepartmentEfficiency.ini when the file changed. Missing file or section => Mode=Off.
     void LoadConfigIfChanged();
 
     // One line describing mode, reserve and the classes/shapes that may be written.
@@ -82,6 +82,10 @@ public:
 
     // Hard stop: the controller keeps reading and logging but never writes again.
     void SetWritesBlocked(bool blocked) { guard_.blocked = blocked; }
+    // false after a hard stop (failed unified session) or after the writer distrusted itself in this city: the Department then does NOT control the budgets and the game's own advice must come back
+    bool WritesAllowed() const { return guard_.WritesAllowed(); }
+    // false while the latest facility snapshot is INVALID (nothing readable, so nothing is written): the Department does not control the budgets then either.
+    bool SnapshotUsable() const { return !session_.LastSnapshotInvalid(); }
 
     // What the last OnMonth observed and verified (evidence only; never used for decisions).
     const CivicMonthEvidence& evidence() const { return evidence_; }

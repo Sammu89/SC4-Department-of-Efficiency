@@ -43,7 +43,7 @@ Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet
 
 ## Download og installation
 
-### [⬇ Download Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 1\. Åbn projektets [release-side](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases), og vælg den seneste udgave.
 
@@ -55,20 +55,14 @@ Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet
 
 5\. Start spillet, og følg vejledningen i [første opsætning](#first-time-setup), før du spiller en gemt by.
 
-Distributions-ZIP'en indeholder DLL'en og en mappe med fem DAT- og tre INI-filer. Efter installationen skal du have:
+Distributions-ZIP'en indeholder DLL'en og en mappe med én DAT- og én INI-fil. Efter installationen skal du have:
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
     Department of Efficiency\
         DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
         DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
 ```
 
 Det offentlige repositorys Markdown-filer og skærmbilleder er **ikke** nødvendige for spillet. Behold DLL'en **direkte i Plugins** med den tilhørende mappe ved siden af.
@@ -228,9 +222,9 @@ Alle skærmbilleder viser den engelske version af spillet.
 
 ## Opdatering og afinstallation
 
-**Bevar dine præferencer.** De tre INI-filer i mappen `Department of Efficiency` gemmer dine indstillinger. Tag, før du udskifter modden, en sikkerhedskopi af `DepartmentEfficiency.ini`, `DepartmentEfficiencyUtility.ini` og `DepartmentEfficiencyDemolition.ini` uden for din Plugins-mappe.
+**Indstillinger overføres ikke.** Siden version 1.0.2 er de tre INI-filer fra version 1.0.0 samlet i én fil, `DepartmentEfficiency.ini`, i mappen `Department of Efficiency` (sektionerne `[AutoFinance]`, `[UtilityResearch]` og `[LotDemolition]`). De gamle `DepartmentEfficiencyUtility.ini` og `DepartmentEfficiencyDemolition.ini` læses ikke længere.
 
-**Sådan udskifter du en installation:** luk spillet, fjern den eksisterende `DepartmentEfficiency.dll` og mappen `Department of Efficiency`, installér den nye pakke, og gendan dine sikkerhedskopierede INI-filer **kun hvis deres format er kompatibelt** med den nye udgave. Ellers indstiller du dine præferencer igen i spillet.
+**Sådan udskifter du en installation (en ren installation er påkrævet):** luk spillet, slet den eksisterende `DepartmentEfficiency.dll` **og hele mappen `Department of Efficiency`**, og installér den nye pakke. Det understøttes ikke at kopiere de nye filer oven på en gammel installation: de gamle ressourcefiler ville blive i mappen og holde spillets egne råd tavse. Indstil dine præferencer igen i spillet (Spilindstillinger → Effektivitetsministeriet).
 
 **Sådan afinstallerer du:** luk spillet, og slet `DepartmentEfficiency.dll` og mappen `Department of Efficiency`. Dine gemte byer kan stadig læses uden modden. Finansieringsniveauer, eksisterende aftaler og nedrivninger, der allerede er gemt i en by, fortrydes ikke automatisk.
 
@@ -261,7 +255,7 @@ Under bygningen hentes [gzcom-dll](https://github.com/nsgomez/gzcom-dll) i en fa
 
 - Den originale kode i Department of Efficiency (filerne i [`source/`](source/)) er skrevet af mig, **Sammu89** og udgives under **GNU General Public License, version 3 alene** (GPL-3.0-only). Den fulde tekst findes i [LICENSE](LICENSE). Du må studere, ændre og videredistribuere den efter GPLv3: bevar ophavsretsmeddelelser og tak-til-omtaler, angiv dine ændringer, og udgiv din version under samme licens. Præsentér venligst ikke ændrede versioner som mine officielle versioner.
 
-- Dokumentationen (disse README-filer og filerne i [`technical_docs/`](technical_docs/)) og de tekster, der er skrevet til dette projekt (herunder dem i de tre INI-filer og dem, der er kompileret i `DepartmentEfficiency.dat`), sammen med deres originale oversættelser, udgives under samme licens, GPL-3.0-only.
+- Dokumentationen (disse README-filer og filerne i [`technical_docs/`](technical_docs/)) og de tekster, der er skrevet til dette projekt (herunder dem i INI-filen og dem, der er kompileret i `DepartmentEfficiency.dat`), sammen med deres originale oversættelser, udgives under samme licens, GPL-3.0-only.
 
 - **gzcom-dll** er ikke omfattet af denne licens: biblioteket beholder sin egen licens, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), og hentes fra sit oprindelige repository under bygningen.
 

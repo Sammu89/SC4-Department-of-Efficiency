@@ -73,6 +73,9 @@ class CivicSession {
 public:
     static constexpr int kInvalidRepeatEvery = 12;  // rate limit for repeated INVALID diagnostics
 
+    // The latest snapshot of this city could not be read at all (INVALID): the writer does nothing, so the Department does not manage the budgets this month.
+    bool LastSnapshotInvalid() const { return haveLast_ && last_ == SnapshotValidity::Invalid; }
+
     void ResetCity() {
         ++epoch_;
         lastWritten_.clear();

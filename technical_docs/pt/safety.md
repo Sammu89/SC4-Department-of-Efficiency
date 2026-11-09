@@ -551,9 +551,9 @@ Isto não altera o serviço de água em si.
 
 Consulte [Água](water.md#water-farm-icon).
 
-O Ministério inclui também três ficheiros de recursos que modificam algumas das mensagens originais dos conselheiros do SimCity 4.
+O Ministério também silencia algumas das mensagens originais dos conselheiros do SimCity 4, mas apenas enquanto gere mesmo o serviço correspondente.
 
-Esses ficheiros funcionam sempre que estão instalados, independentemente das opções de gestão correspondentes. O seu comportamento é explicado em [Avisos dos conselheiros](#safety-notices-game).
+Quando não gere (ou não consegue gerir) o serviço, as mensagens originais são exatamente as que o jogo traz. Consulte os [Avisos dos conselheiros](#safety-notices-game).
 
 <a id="safety-automation"></a>
 #### Que funcionalidades atuam automaticamente e quais só dão conselhos?
@@ -864,23 +864,17 @@ Consulte [Lixo e aterros](garbage.md#garbage-landfills-advice).
 <a id="safety-notices-game"></a>
 #### Mensagens originais do SimCity 4 modificadas pelo Ministério
 
-O Ministério inclui **três ficheiros de recursos** que alteram algumas das mensagens originais dos conselheiros do jogo.
+O Ministério silencia algumas das mensagens originais dos conselheiros do jogo que seriam enganadoras ou redundantes enquanto a gestão automática está ativa, **mas apenas enquanto consegue mesmo gerir o serviço em causa**. Em todos os outros casos as mensagens originais são exatamente as que o jogo traz.
 
-O seu objetivo é evitar avisos enganadores ou redundantes enquanto a gestão automática está ativa.
+Isto é feito por dois pequenos scripts do próprio Ministério dentro de `DepartmentEfficiency.dat`. Seguem seis interruptores que o Ministério publica em cada cidade e atualiza sem reiniciar o jogo: quando desliga um serviço, desliga todo o Ministério, ou quando o Ministério não consegue atuar sobre um serviço (por exemplo, por faltarem leituras ou porque um dos controladores parou por segurança), as mensagens originais desse serviço voltam de imediato. Os serviços são independentes entre si.
 
-**Estes ficheiros são carregados quando o SimCity 4 arranca.**
+| Mensagens originais do jogo | Silenciadas enquanto o Ministério gere |
+|---|---|
+| Ofertas de contratos, sugestões de cancelamento, renovações e avisos de incumprimento com os vizinhos | os contratos desse recurso (eletricidade, água ou lixo, separadamente) |
+| Conselhos normais de financiamento da educação e da saúde; os rumores de pré-greve limitam-se aos períodos em que há mesmo uma greve | a educação, ou a saúde, respetivamente |
+| Os avisos de problemas de lixo limitam-se a situações com uma quantidade significativa de lixo por recolher | o saneamento local |
 
-Enquanto continuarem instalados, as suas alterações continuam a aplicar-se mesmo que desative durante o jogo as opções do Ministério correspondentes.
-
-| Ficheiro de recursos | Mensagens originais do jogo afetadas | Utilização prevista |
-|---|---|---|
-| **Ficheiro de conselhos dos acordos com os vizinhos** | Suprime as ofertas de contrato originais, as sugestões de cancelamento, as mensagens de renovação e os avisos predefinidos. | Quando a gestão automática dos acordos com os vizinhos está ativa para pelo menos um recurso. |
-| **Ficheiro de conselhos de educação e saúde** | Suprime os conselhos normais de financiamento e limita os rumores de pré-greve aos períodos em que há mesmo uma greve em curso. | Quando a gestão da educação ou da saúde está ativa. |
-| **Ficheiro de conselhos do lixo** | Restringe os avisos de problemas de lixo às situações com uma quantidade significativa de lixo por recolher. | Sempre. |
-
-O ficheiro de educação e saúde **não** suprime os alertas genuínos de greve nem as mensagens positivas dos conselheiros.
-
-O ficheiro do lixo deixa as mensagens de boas notícias inalteradas.
+Os alertas de greve verdadeiros e as mensagens positivas dos conselheiros nunca são alterados. Uma mensagem cujo evento ocorra enquanto está silenciada não é mostrada depois.
 
 #### Por que são suprimidos alguns avisos originais sobre o lixo?
 
@@ -917,19 +911,9 @@ Isto evita alertas desnecessários quando a eliminação do lixo funciona normal
 
 #### Como posso repor as mensagens originais dos conselheiros do jogo?
 
-Como o SimCity 4 carrega estes ficheiros de recursos no arranque, alterar as opções do Ministério não repõe de imediato as mensagens originais.
+Não há nada a remover. O Ministério publica o seu estado em cada cidade: desligue o serviço correspondente na janela de opções (ou revogue a ordenança, ou defina `Mode=Off`) e as mensagens originais voltam de imediato, sem reiniciar o jogo. Voltam também quando o Ministério não consegue atuar sobre um serviço. Uma mensagem que já estava escondida volta sujeita à frequência de apresentação do próprio jogo, o que pode demorar algum tempo.
 
-Se desativar uma funcionalidade mas deixar instalado o respetivo ficheiro de conselhos, o Ministério regista um aviso no seu registo.
-
-O aviso identifica o ficheiro que deve ser removido.
-
-Para repor as mensagens originais correspondentes:
-
-1. Feche o SimCity 4.
-2. Remova da pasta Plugins o ficheiro de conselhos indicado.
-3. Reinicie o jogo.
-
-**Os ficheiros de recursos dos conselheiros afetam as mensagens do jogo independentemente de o Ministério estar, nesse momento, a fazer alterações de gestão automática.**
+**Um evento que ocorra enquanto a sua mensagem está silenciada não é mostrado depois.**
 
 <a id="safety-isolation"></a>
 ### 4. Condições de segurança
@@ -1218,8 +1202,8 @@ O Ministério foi concebido para funcionar de forma conservadora, mas não conse
 
 #### Mensagens originais dos conselheiros do jogo
 
-- **Os três ficheiros de recursos de conselhos atuam sempre que estão instalados.** Desligar as opções correspondentes do Ministério não anula de imediato os seus efeitos.
-- **Para restaurar as mensagens originais pode ser preciso remover o ficheiro de recursos em causa e reiniciar o SimCity 4.** O Ministério regista no registo (log) as divergências de configuração.
+- **O Ministério só silencia as mensagens do jogo enquanto gere mesmo o serviço.** Desligar um serviço, ou um serviço sobre o qual o Ministério não consegue atuar, faz voltar de imediato as mensagens originais.
+- **Um evento que ocorra enquanto a sua mensagem está silenciada não é mostrado depois.** Uma mensagem que volta fica sujeita à frequência de apresentação do próprio jogo.
 
 #### Segurança técnica
 

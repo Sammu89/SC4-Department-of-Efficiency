@@ -97,17 +97,17 @@ Pode alterar a maior parte das definições através da janela de opções do Mi
 
 | Ficheiro de configuração | O que controla |
 |---|---|
-| `DepartmentEfficiency.ini` | Financiamento da educação e da saúde, margens de segurança e o interruptor principal do Ministério. |
-| `DepartmentEfficiencyUtility.ini` | Eletricidade, água, saneamento, avisos sobre o aterro, contratos regionais e respetivas opções. |
-| `DepartmentEfficiencyDemolition.ini` | Demolição automática, tempos de espera, zonas elegíveis, motivos de abandono e despesa com demolições. |
+| `DepartmentEfficiency.ini`, secção `[AutoFinance]` | Financiamento da educação e da saúde, margens de segurança e o interruptor principal do Ministério. |
+| `DepartmentEfficiency.ini`, secção `[UtilityResearch]` | Eletricidade, água, saneamento, avisos sobre o aterro, contratos regionais e respetivas opções. |
+| `DepartmentEfficiency.ini`, secção `[LotDemolition]` | Demolição automática, tempos de espera, zonas elegíveis, motivos de abandono e despesa com demolições. |
 
-Cada ficheiro tem a sua própria secção de configuração.
+Desde a versão 1.0.2 há um único ficheiro com três secções independentes. Uma secção em falta ou inválida afeta apenas o seu módulo; os outros dois continuam a funcionar.
 
 #### Educação e saúde
 
 Ficheiro: `DepartmentEfficiency.ini`
 
-Secção: `[DepartmentEfficiency]`
+Secção: `[AutoFinance]`
 
 | Definição | Chave INI |
 |---|---|
@@ -121,9 +121,9 @@ A configuração fornecida usa `ReservePercent=5` para as margens de segurança 
 
 #### Serviços públicos e contratos regionais
 
-Ficheiro: `DepartmentEfficiencyUtility.ini`
+Ficheiro: `DepartmentEfficiency.ini`
 
-Secção: `[DepartmentEfficiencyUtility]`
+Secção: `[UtilityResearch]`
 
 | Definição | Chave INI |
 |---|---|
@@ -146,7 +146,7 @@ Secção: `[DepartmentEfficiencyUtility]`
 
 #### Demolição automática
 
-Ficheiro: `DepartmentEfficiencyDemolition.ini`
+Ficheiro: `DepartmentEfficiency.ini`
 
 Secção: `[LotDemolition]`
 
@@ -215,7 +215,7 @@ As suas preferências individuais também são preservadas, por isso voltam a fi
 
 Todas as outras definições das páginas Serviços e Demolição ficam indisponíveis enquanto o interruptor principal estiver desligado.
 
-**Importante:** Os ficheiros de recursos de conselhos incluídos e a modificação que esconde os ícones de *sem água* agrícolas continuam a fazer efeito enquanto estiverem instalados, mesmo com o Ministério desligado.
+**Importante:** A modificação que esconde os ícones de *sem água* agrícolas mantém-se enquanto estiver instalada, mesmo com o Ministério desativado. As mensagens dos conselheiros do próprio jogo deixam de ser silenciadas quando o Ministério está desativado.
 
 Pode também controlar o mesmo interruptor através de **Instituir o Ministério da Optimização**, na janela de leis municipais do SimCity 4.
 
@@ -243,7 +243,7 @@ Quando está ligado:
 
 Quando está desligado, o financiamento da educação mantém os valores que definiu manualmente e os avisos de capacidade da educação ficam desativados.
 
-**Importante:** Os edifícios que não suportam o mecanismo de financiamento normal do jogo não são modificados. Os conselhos originais do jogo sobre o financiamento da educação continuam suprimidos enquanto o ficheiro de recursos de conselhos cívicos estiver instalado, mesmo que a gestão automática da educação esteja desligada.
+**Importante:** Os edifícios que não suportam o mecanismo de financiamento padrão do jogo não são modificados. Os conselhos originais do jogo sobre o financiamento da educação só são silenciados enquanto o Ministério gere a educação.
 
 **Requer:** Ministério ativo.
 
@@ -299,7 +299,7 @@ Quando está desligado, o financiamento da saúde fica sob o seu controlo manual
 
 Os edifícios que não suportam o mecanismo de financiamento normal ficam excluídos.
 
-Os conselhos originais do jogo sobre o financiamento normal da saúde continuam suprimidos enquanto o ficheiro de recursos de conselhos cívicos estiver instalado, independentemente desta definição.
+Os conselhos originais do jogo sobre o financiamento normal da saúde só são silenciados enquanto o Ministério gere a saúde.
 
 **Requer:** Ministério ativo.
 
@@ -677,9 +677,9 @@ Quando está desligado:
 - Não é reservada capacidade local para vendas futuras hipotéticas.
 - Os avisos de falta de serviços públicos não podem ser totalmente comprovados, porque as ofertas regionais não são examinadas.
 
-**Importante:** As mensagens originais dos conselheiros do SimCity 4 sobre acordos com os vizinhos continuam suprimidas enquanto o ficheiro de recursos de conselhos sobre acordos do Ministério estiver instalado.
+**Importante:** As mensagens originais dos conselheiros do SimCity 4 sobre acordos com os vizinhos só são silenciadas enquanto o Ministério gere os contratos desse recurso.
 
-Para restaurar essas mensagens originais depois de desligar a gestão automática de contratos, remova o ficheiro de recursos em causa com o jogo fechado.
+Se desligar a gestão (ou todo o Ministério), as mensagens originais voltam de imediato, sem reiniciar o jogo.
 
 **Requer:** Ministério ativo.
 

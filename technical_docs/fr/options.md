@@ -97,17 +97,17 @@ Vous pouvez modifier la plupart des réglages depuis la fenêtre d’options du 
 
 | Fichier de configuration | Ce qu’il contrôle |
 |---|---|
-| `DepartmentEfficiency.ini` | Financement de l’éducation et de la santé, marges de sécurité et interrupteur général du Ministère. |
-| `DepartmentEfficiencyUtility.ini` | Électricité, eau, gestion des déchets, conseil sur la décharge, contrats régionaux et leurs options associées. |
-| `DepartmentEfficiencyDemolition.ini` | Démolition automatique, délais d’attente, zones éligibles, motifs d’abandon et dépenses de démolition. |
+| `DepartmentEfficiency.ini`, section `[AutoFinance]` | Financement de l’éducation et de la santé, marges de sécurité et interrupteur général du Ministère. |
+| `DepartmentEfficiency.ini`, section `[UtilityResearch]` | Électricité, eau, gestion des déchets, conseil sur la décharge, contrats régionaux et leurs options associées. |
+| `DepartmentEfficiency.ini`, section `[LotDemolition]` | Démolition automatique, délais d’attente, zones éligibles, motifs d’abandon et dépenses de démolition. |
 
-Chaque fichier a sa propre section de configuration.
+Depuis la version 1.0.2, il n’y a plus qu’un seul fichier avec trois sections indépendantes. Une section absente ou invalide n’affecte que son propre module ; les deux autres continuent de fonctionner.
 
 #### Éducation et santé
 
 Fichier : `DepartmentEfficiency.ini`
 
-Section : `[DepartmentEfficiency]`
+Section : `[AutoFinance]`
 
 | Réglage | Clé INI |
 |---|---|
@@ -121,9 +121,9 @@ La configuration fournie utilise `ReservePercent=5` pour les marges de sécurit�
 
 #### Services publics et contrats régionaux
 
-Fichier : `DepartmentEfficiencyUtility.ini`
+Fichier : `DepartmentEfficiency.ini`
 
-Section : `[DepartmentEfficiencyUtility]`
+Section : `[UtilityResearch]`
 
 | Réglage | Clé INI |
 |---|---|
@@ -146,7 +146,7 @@ Section : `[DepartmentEfficiencyUtility]`
 
 #### Démolition automatique
 
-Fichier : `DepartmentEfficiencyDemolition.ini`
+Fichier : `DepartmentEfficiency.ini`
 
 Section : `[LotDemolition]`
 
@@ -215,7 +215,7 @@ Vos préférences individuelles sont aussi conservées : elles redeviennent acti
 
 Tous les autres réglages des pages Services et Démolition deviennent indisponibles tant que l’interrupteur général est désactivé.
 
-**Important :** les fichiers de ressources de conseillers inclus et la modification qui masque les icônes « pas d’eau » des fermes restent actifs tant qu’ils sont installés, même lorsque le Ministère est désactivé.
+**Important :** la modification qui masque les icônes d’*absence d’eau* agricoles reste active tant qu’elle est installée, même lorsque le Ministère est désactivé. Les messages des conseillers du jeu lui-même ne sont plus masqués lorsque le Ministère est désactivé.
 
 Vous pouvez aussi contrôler ce même interrupteur avec **Instituer un Ministère de l’Optimisation** dans la fenêtre des ordonnances de SimCity 4.
 
@@ -243,7 +243,7 @@ Lorsque l’option est activée :
 
 Lorsqu’elle est désactivée, le financement de l’éducation reste aux valeurs que vous avez définies à la main et les avis de capacité de l’éducation sont désactivés.
 
-**Important :** les bâtiments qui ne prennent pas en charge le mécanisme de financement standard du jeu ne sont pas modifiés. Les conseils d’origine du jeu sur le financement de l’éducation restent supprimés tant que le fichier de ressources de conseils civiques est installé, même si la gestion automatique de l’éducation est désactivée.
+**Important :** les bâtiments qui ne prennent pas en charge le mécanisme de financement standard du jeu ne sont pas modifiés. Les conseils d’origine du jeu sur le financement de l’éducation ne sont masqués que tant que le Ministère gère l’éducation.
 
 **Nécessite :** Ministère actif.
 
@@ -299,7 +299,7 @@ Lorsqu’elle est désactivée, le financement de la santé reste sous votre con
 
 Les bâtiments qui ne prennent pas en charge le mécanisme de financement standard sont exclus.
 
-Les conseils d’origine du jeu sur le financement ordinaire de la santé restent supprimés tant que le fichier de ressources de conseils civiques est installé, quel que soit ce réglage.
+Les conseils d’origine du jeu sur le financement ordinaire de la santé ne sont masqués que tant que le Ministère gère la santé.
 
 **Nécessite :** Ministère actif.
 
@@ -677,9 +677,9 @@ Lorsqu’il est désactivé :
 - Aucune capacité locale n’est réservée pour d’hypothétiques ventes futures.
 - Les avis de pénurie de services publics ne peuvent pas être entièrement prouvés, car les offres régionales ne sont pas examinées.
 
-**Important :** les messages de conseillers d’origine de SimCity 4 sur les accords avec les voisins restent supprimés tant que le fichier de ressources de conseils sur les accords du Ministère est installé.
+**Important :** les messages de conseillers d’origine de SimCity 4 sur les accords avec les voisins ne sont masqués que tant que le Ministère gère les contrats de cette ressource.
 
-Pour rétablir ces messages d’origine après avoir désactivé la gestion automatique des contrats, retirez le fichier de ressources concerné, le jeu étant fermé.
+Si vous désactivez la gestion (ou tout le Ministère), les messages d’origine reviennent aussitôt, sans redémarrer le jeu.
 
 **Nécessite :** Ministère actif.
 

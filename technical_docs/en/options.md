@@ -97,17 +97,17 @@ You can change most settings through the Department's in-game options window, or
 
 | Configuration file | What it controls |
 |---|---|
-| `DepartmentEfficiency.ini` | Education and healthcare funding, safety margins and the main Department switch. |
-| `DepartmentEfficiencyUtility.ini` | Power, water, sanitation, landfill advice, regional contracts and their related options. |
-| `DepartmentEfficiencyDemolition.ini` | Automatic demolition, waiting periods, eligible zones, abandonment reasons and demolition spending. |
+| `DepartmentEfficiency.ini`, section `[AutoFinance]` | Education and healthcare funding, safety margins and the main Department switch. |
+| `DepartmentEfficiency.ini`, section `[UtilityResearch]` | Power, water, sanitation, landfill advice, regional contracts and their related options. |
+| `DepartmentEfficiency.ini`, section `[LotDemolition]` | Automatic demolition, waiting periods, eligible zones, abandonment reasons and demolition spending. |
 
-Each file has its own configuration section.
+Since version 1.0.2 there is one file with three independent sections. A missing or invalid section affects only its own module; the other two keep working.
 
 #### Education and healthcare
 
 File: `DepartmentEfficiency.ini`
 
-Section: `[DepartmentEfficiency]`
+Section: `[AutoFinance]`
 
 | Setting | INI key |
 |---|---|
@@ -121,9 +121,9 @@ The supplied configuration uses `ReservePercent=5` for both education and health
 
 #### Utilities and regional contracts
 
-File: `DepartmentEfficiencyUtility.ini`
+File: `DepartmentEfficiency.ini`
 
-Section: `[DepartmentEfficiencyUtility]`
+Section: `[UtilityResearch]`
 
 | Setting | INI key |
 |---|---|
@@ -146,7 +146,7 @@ Section: `[DepartmentEfficiencyUtility]`
 
 #### Automatic demolition
 
-File: `DepartmentEfficiencyDemolition.ini`
+File: `DepartmentEfficiency.ini`
 
 Section: `[LotDemolition]`
 
@@ -215,7 +215,7 @@ Your individual preferences are also preserved, so they become active again when
 
 Every other setting on the Services and Demolition pages becomes unavailable while the main switch is off.
 
-**Important:** The included advisor resource files and the modification that hides agricultural *no water* icons remain effective while installed, even when the Department is disabled.
+**Important:** The modification that hides agricultural *no water* icons remains effective while installed, even when the Department is disabled. The game's own advisor messages are no longer silenced when the Department is disabled.
 
 You can also control the same switch through **Establish a Department of Efficiency** in SimCity 4's Ordinances window.
 
@@ -243,7 +243,7 @@ When enabled:
 
 When disabled, education funding remains at the values you set manually, and education capacity notices are disabled.
 
-**Important:** Buildings that do not support the game's standard funding mechanism are not modified. The original game's education funding advice remains suppressed while the civic advice resource file is installed, even if automatic education management is disabled.
+**Important:** Buildings that do not support the game's standard funding mechanism are not modified. The original game's education funding advice is silenced only while the Department manages education.
 
 **Requires:** Department active.
 
@@ -299,7 +299,7 @@ When disabled, healthcare funding remains under your manual control and healthca
 
 Buildings that do not support the standard funding mechanism are excluded.
 
-The original game's ordinary healthcare funding advice remains suppressed while the civic advice resource file is installed, regardless of this setting.
+The original game's ordinary healthcare funding advice is silenced only while the Department manages healthcare.
 
 **Requires:** Department active.
 
@@ -677,9 +677,9 @@ When disabled:
 - No local capacity is reserved for hypothetical future sales.
 - Utility shortage notices cannot be fully proven because regional offers are not examined.
 
-**Important:** SimCity 4's original neighbor-deal advisor messages remain suppressed while the Department's deal advice resource file is installed.
+**Important:** SimCity 4's original neighbor-deal advisor messages are silenced only while the Department manages the contracts of that resource.
 
-To restore those original messages after disabling automatic contract management, remove the relevant resource file with the game closed.
+If you switch the management off (or the whole Department), the original messages return at once, without restarting the game.
 
 **Requires:** Department active.
 

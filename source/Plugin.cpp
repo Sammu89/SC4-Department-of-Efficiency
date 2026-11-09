@@ -9,7 +9,7 @@
 #define SC4AF_VERSION "0.0.0"      // the real value comes from project(... VERSION ...) in CMakeLists.txt (compile definition of this file)
 #endif
 #include "AutoFinance.h"
-#include "DealNoticeSwitch.h"
+#include "AdviceSwitches.h"
 #include "ServiceNotices.h"
 #include "NoticeMemory.h"
 #include "CivicBuildingNotices.h"
@@ -161,7 +161,7 @@ public:
         const DWORD folderAttr = dataDir_.empty() ? INVALID_FILE_ATTRIBUTES : GetFileAttributesA(dataDir_.c_str());
         const bool folderPresent = folderAttr != INVALID_FILE_ATTRIBUTES && (folderAttr & FILE_ATTRIBUTE_DIRECTORY);
         sc4af::InitLog(gModule);       // creates the folder if it is missing: the log is the one write that needs it
-        sc4af::Log(sc4af::LogLevel::Info, "Plugin loaded: version " SC4AF_VERSION " commit=" SC4AF_GIT_SHA_STR ";  AutoFinance is OFF unless DepartmentEfficiency.ini enables it; writer test harness disarmed unless an armed config exists; probe=read-only; utilities=Off unless DepartmentEfficiencyUtility.ini says Shadow or Auto (Auto writes only power plant and water department funding, per-subsystem opt-in)");
+        sc4af::Log(sc4af::LogLevel::Info, "Plugin loaded: version " SC4AF_VERSION " commit=" SC4AF_GIT_SHA_STR ";  AutoFinance is OFF unless DepartmentEfficiency.ini enables it; writer test harness disarmed unless an armed config exists; probe=read-only; utilities=Off unless DepartmentEfficiency.ini [UtilityResearch] says Shadow or Auto (Auto writes only power plant and water department funding, per-subsystem opt-in)");
 #ifdef SC4AF_ENABLE_FINAL_AUTO_VALIDATION
         sc4af::Log(sc4af::LogLevel::Warning, "[FinalValidation] BUILD=FINAL_VALIDATION (unified Power/Water/Sanitation/Deals Auto is compiled in; NOT a release binary)");
 #endif
@@ -243,7 +243,7 @@ public:
                 const std::string& dir = dataDir_;
                 writer_.SetConfigDirectory(dir);
                 autoFinance_.SetConfigDirectory(dir);
-                sc4af::LotWatchSetConfigDirectory(dir);             // DepartmentEfficiencyDemolition.ini (missing = the lots are only observed)
+                sc4af::LotWatchSetConfigDirectory(dir);             // DepartmentEfficiency.ini [LotDemolition] (missing = the lots are only observed)
                 toldPath_ = dir + "DepartmentEfficiency.told.txt";
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
                 LoadTold();
@@ -269,20 +269,22 @@ public:
                 utility_.SetConfigDirectory(dir);
                 utilityWriter_.SetConfigDirectory(dir);
                 utility_.LoadConfigIfChanged();
-                CheckDealNoticeDat(dir);
                 // the options window: Accept writes the two ini files, then the plugin reads them at once (no wait for the next day / month)
                 optionsUi_.SetConfigDirectory(dir);
-                ordinance_.SetOnPlayerToggle([this](bool on) { optionsUi_.SetMaster(on); });   // the player enacted / repealed the Department ordinance
+                ordinance_.SetOnPlayerToggle([this](bool on) {                                 // the player enacted / repealed the Department ordinance
+                    optionsUi_.SetMaster(on);
+                    autoFinance_.LoadConfigIfChanged();                        // SetMaster rewrote the INI: read it now, and the game's advice follows at once
+                    RefreshAdviceSwitches(false, "ordinance");
+                });
                 optionsUi_.SetOnApplied([this, dir] {
                     autoFinance_.LoadConfigIfChanged();
                     utility_.LoadConfigIfChanged();
                     sc4af::LotWatchReloadConfig();
                     UpdatePhase8Subscriptions();
-                    CheckDealNoticeDat(dir);
+                    RefreshAdviceSwitches(false, "options applied");                    // anything switched in the window: the game's advice follows at once
                     ordinance_.FollowSwitch(CurrentCity(), optionsUi_.MasterIsOn());   // the Ordinances window shows the same switch
                     sc4af::Log(sc4af::LogLevel::Info, "[OptionsUI] options applied: " + autoFinance_.Banner() + " | " + utility_.Banner());
                 });
-                CheckCivicNoticeDat(dir);
                 UpdatePhase8Subscriptions();
                 sc4af::Log(sc4af::LogLevel::Info, std::string("Department of Efficiency " SC4AF_VERSION " | CivicAutoFinance=") + sc4af::AutoModeName(autoFinance_.config().mode) + " | " + utility_.Banner());
                 LogFinalReadiness();
@@ -297,28 +299,51 @@ public:
         return true;
     }
 
-    // The game's neighbor-deal notices are silenced by DepartmentEfficiencyDealAdvice.dat, which only makes sense while the plugin manages the deals (DealNoticeSwitch.h).
-    // The game holds its DATs open (a rename fails while it runs) and reads them at start, so the plugin cannot switch the file: it says in the log what the player must do.
-    void CheckDealNoticeDat(const std::string& dir) {
-        const bool present = FileExists(dir + "DepartmentEfficiencyDealAdvice.dat");
-        const auto verdict = sc4af::JudgeDealNoticeDat(sc4af::DealNoticesShouldBeSilenced(utility_.config()), present);
-        sc4af::Log(verdict == sc4af::DealNoticeVerdict::Consistent ? sc4af::LogLevel::Info : sc4af::LogLevel::Warning,
-                   std::string("[DealNotices] ") + sc4af::DealNoticeVerdictText(verdict));
+    // The game's own advice follows the Department (src/AdviceSwitches.h): the Lua of DepartmentEfficiency.dat (its two Lua scripts, built by the project tools) extends the trigger of the
+    // Education / Health, neighbor-deal and garbage advice with six switches that this plugin publishes. A switch is 1 only while the Department can REALLY manage what the advice is about
+    // (OWNER RULE 2026-11-08): switched off, another mode, a controller that failed (fail-closed) or a plugin that did not load all leave the game's advice exactly as the game ships it.
+    sc4af::AdviceOperational AdviceOperationalNow() {
+        sc4af::AdviceOperational op;
+        op.civicWritesAllowed = autoFinance_.WritesAllowed();
+        op.civicSnapshotUsable = autoFinance_.SnapshotUsable();
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+        op.unifiedActive = UnifiedActive();
+        if (op.unifiedActive && unifiedAuto_) {
+            op.unifiedFailed = unifiedAuto_->sessionFailed();
+            op.dealsDisabled = unifiedAuto_->dealsDisabled();
+            op.garbageDisabled = unifiedAuto_->garbageDisabled();
+            for (int i = 0; i < 3; ++i) op.ready[i] = unifiedAuto_->commodityReady(i);
+        }
+#endif
+        return op;
     }
 
-    // The game's Education / Health pre-strike and underfunding advice is quiet unless a strike is in progress (DepartmentEfficiencyCivicAdvice.dat), which only makes
-    // sense while the Department manages those budgets (DepartmentEfficiency.ini Mode=Auto with Education or Health). Same rule as the deal notices: the plugin says in the log what the player must do.
-    void CheckCivicNoticeDat(const std::string& dir) {
-        const bool present = FileExists(dir + "DepartmentEfficiencyCivicAdvice.dat");
-        const auto& c = autoFinance_.config();
-        const bool managed = c.mode == sc4af::AutoMode::Auto && (c.education || c.health);
-        const auto verdict = sc4af::JudgeDealNoticeDat(managed, present);      // the same pure decision: wanted / present
-        const char* text = verdict == sc4af::DealNoticeVerdict::RemoveDat
-                               ? "the Ministry does not manage Education / Health but DepartmentEfficiencyCivicAdvice.dat is installed: the game's pre-strike advice stays quiet; delete that file (the game must be closed) to get it back"
-                           : verdict == sc4af::DealNoticeVerdict::DatMissing
-                               ? "the Ministry manages Education / Health but DepartmentEfficiencyCivicAdvice.dat is not installed: the game's pre-strike advice will appear during the budget adjustments (build it with tools/civic_advice_patch.py)"
-                               : "the game's Education / Health pre-strike advice follows the configuration (quiet unless a strike is in progress, only while the Ministry manages those budgets)";
-        sc4af::Log(verdict == sc4af::DealNoticeVerdict::Consistent ? sc4af::LogLevel::Info : sc4af::LogLevel::Warning, std::string("[CivicNotices] ") + text);
+    // Publishes the six switches of the CURRENT city. force: the city was just initialised (its advisor holds nothing). Without an advisor system (no city, a failed query) nothing is
+    // written and the game's own advice stays as it is: the Lua reads a missing switch as 0. Written only when a value changed (a set is never written half).
+    void RefreshAdviceSwitches(bool force, const char* reason) {
+        if (!cityActive_) return;
+        const auto op = AdviceOperationalNow();
+        const sc4af::AdviceSwitches want = sc4af::AdviceSwitchesFor(autoFinance_.config(), utility_.config(), op);
+        auto* advisor = AdvisorSystemNow();
+        if (!advisor) {
+            adviceSwitches_.ResetCity();
+            if (!adviceSwitchesWarned_) { adviceSwitchesWarned_ = true; sc4af::Log(sc4af::LogLevel::Warning, std::string("[AdviceSwitches] ") + reason + ": no advisor system, the switches are not published (the game's advice stays as it is); retried every day"); }
+            return;
+        }
+        const sc4af::AdviceSwitches before = adviceSwitches_.last();
+        const bool had = adviceSwitches_.published();
+        bool raised = false;
+        const bool ok = adviceSwitches_.Publish(want, force, [&](const char* name, double value) { return GuardedSetGlobalNumber(advisor, name, value, raised); });
+        if (raised && !adviceSwitchesWarned_) sc4af::Log(sc4af::LogLevel::Error, std::string("[AdviceSwitches] ") + reason + ": SetGlobalValue raised an exception");
+        if (!ok) {
+            if (!adviceSwitchesWarned_) { adviceSwitchesWarned_ = true; sc4af::Log(sc4af::LogLevel::Warning, std::string("[AdviceSwitches] ") + reason + ": the game refused the switches; retried every day (" + sc4af::AdviceSwitchesText(want) + ")"); }
+            return;
+        }
+        adviceSwitchesWarned_ = false;
+        if (force || !had || before != want)
+            sc4af::Log(sc4af::LogLevel::Info, std::string("[AdviceSwitches] ") + reason + ": published " + sc4af::AdviceSwitchesText(want) + " (civic Mode=" + sc4af::AutoModeName(autoFinance_.config().mode) +
+                                                  " civicWrites=" + (op.civicWritesAllowed ? "allowed" : "STOPPED") + " unified=" + (op.unifiedActive ? (op.unifiedFailed ? "FAILED" : "active") : "inactive") +
+                                                  " dealsDisabled=" + (op.dealsDisabled ? "yes" : "no") + " sanitationDisabled=" + (op.garbageDisabled ? "yes" : "no") + ")");
     }
 
     bool PreAppShutdown() override {
@@ -356,10 +381,15 @@ public:
             sc4af::Log(sc4af::LogLevel::Info,
                        "[CityLifecycle] PostCityInit CitySerial=" +
                        std::to_string(citySerial_));
+            adviceSwitches_.ResetCity();                                       // every city has its own advisor system (and Lua state): nothing is inherited
+            adviceSwitchesWarned_ = false;
             if (!cityActive_) {
                 sc4af::Log(sc4af::LogLevel::Error,
                            "Civic probe disabled for this city: city or ResidentialSimulator unavailable");
             } else {
+                autoFinance_.LoadConfigIfChanged();                            // an INI edited between two cities is read before the switches are published
+                utility_.LoadConfigIfChanged();
+                RefreshAdviceSwitches(true, "PostCityInit");                   // before the first simulated day
                 sc4af::LogCivicSnapshot(sc4af::ReadCivicSnapshot(city), true);
                 sc4af::OmniReset();
                 writer_.ResetCity();
@@ -408,6 +438,7 @@ public:
             if (cityActive_ && dirtySinceMs_ == 0) dirtySinceMs_ = GetTickCount64();
             break;
         case kPostCityShutdown:
+            adviceSwitches_.ResetCity();                                       // the advisor system of this city is gone with its Lua state: nothing to write, nothing to clear
             if (utility_.config().phase8Runtime) phase8_.NoteCityShutdown(citySerial_);
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
             civicBoard_.Reset();
@@ -907,7 +938,7 @@ private:
         utilityWriter_.OnMonth(city, regional, utility_.last());
     }
 
-    // Diagnostic trace: one compact line per simulated day, only when DepartmentEfficiencyUtility.ini says DailyTrace=true. Read-only.
+    // Diagnostic trace: one compact line per simulated day, only when DepartmentEfficiency.ini [UtilityResearch] says DailyTrace=true. Read-only.
     // The Civic controller's early reaction: four getters a day; a full evaluation only when the game reports a strike or a strike chance.
     void CivicDailyWatch() {
         if (!cityActive_ || autoFinance_.config().mode != sc4af::AutoMode::Auto) return;
@@ -1063,6 +1094,7 @@ private:
 
     void OnNewDay() {
         ++simDays_;
+        if (cityActive_) RefreshAdviceSwitches(false, "SimNewDay");                                   // a controller that failed, an earlier publish that failed: the switches follow within a day (a hand-edited INI is read monthly; the options window and the ordinance apply at once)
         { PerfScope p(perfCivicDayMs_); CivicDailyWatch(); }
         if (cityActive_ && simDays_ % 10 == 0) { PerfScope p(perfLotDayMs_); LotWatchTick(); }      // logs only the lots that appeared or changed state / reason (the monthly pass lists them all)
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
@@ -1297,6 +1329,8 @@ private:
     bool supported_ = false;
     bool subscribed_ = false;
     bool cityActive_ = false;
+    bool adviceSwitchesWarned_ = false;                                                // one warning per city when the switches cannot be published
+    sc4af::AdviceSwitchPublisher adviceSwitches_;                                      // what this city's advisor holds of the six switches
     bool occupantMessages_ = false;
     bool phase8Messages_ = false;
     bool inPoll_ = false;

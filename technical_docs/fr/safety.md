@@ -551,9 +551,9 @@ Cela ne modifie pas le service de l’eau lui-même.
 
 Voir [Eau](water.md#water-farm-icon).
 
-Le Ministère comprend aussi trois fichiers de ressources qui modifient certains des messages de conseillers d’origine de SimCity 4.
+Le Ministère masque aussi certains messages de conseillers d’origine de SimCity 4, mais uniquement tant qu’il gère réellement le service correspondant.
 
-Ces fichiers agissent dès qu’ils sont installés, quelles que soient les options de gestion correspondantes. Leur comportement est expliqué dans [Avis des conseillers](#safety-notices-game).
+Quand il ne gère pas (ou ne peut pas gérer) le service, les messages d’origine sont exactement ceux que fournit le jeu. Voir les [Avis des conseillers](#safety-notices-game).
 
 <a id="safety-automation"></a>
 #### Quelles fonctions agissent automatiquement, et lesquelles ne font que conseiller ?
@@ -864,23 +864,17 @@ Voir [Déchets et décharges](garbage.md#garbage-landfills-advice).
 <a id="safety-notices-game"></a>
 #### Avis d’origine de SimCity 4 modifiés par le Ministère
 
-Le Ministère comprend **trois fichiers de ressources** qui modifient certains des messages de conseillers du jeu d’origine.
+Le Ministère masque certains messages de conseillers d’origine du jeu qui seraient trompeurs ou redondants pendant que la gestion automatique est active, **mais uniquement tant qu’il peut réellement gérer le service concerné**. Dans tous les autres cas, les messages d’origine sont exactement ceux que fournit le jeu.
 
-Leur but est d’éviter des avertissements trompeurs ou redondants pendant que la gestion automatique est active.
+Ce sont deux petits scripts propres au Ministère, dans `DepartmentEfficiency.dat`, qui s’en chargent. Ils suivent six interrupteurs que le Ministère publie dans chaque ville et met à jour sans redémarrer le jeu : quand vous désactivez un service, quand vous désactivez tout le Ministère, ou quand le Ministère ne peut pas agir sur un service (par exemple parce que des relevés manquent ou qu’un de ses contrôleurs s’est arrêté par sécurité), les messages d’origine de ce service reviennent aussitôt. Les services sont indépendants les uns des autres.
 
-**Ces fichiers sont chargés au démarrage de SimCity 4.**
+| Messages d’origine du jeu | Masqués tant que le Ministère gère |
+|---|---|
+| Offres de contrats, suggestions d’annulation, renouvellements et avertissements de défaut avec les voisins | les contrats de cette ressource (électricité, eau ou déchets, séparément) |
+| Conseils habituels de financement de l’éducation et de la santé ; les rumeurs de pré-grève sont limitées aux périodes où une grève est réellement en cours | l’éducation, ou la santé, respectivement |
+| Les avertissements de problèmes de déchets sont limités aux situations avec une quantité importante de déchets non collectés | la gestion locale des déchets |
 
-Tant qu’ils restent installés, leurs modifications continuent de s’appliquer même si vous désactivez en cours de partie les options correspondantes du Ministère.
-
-| Fichier de ressources | Messages d’origine du jeu concernés | Usage prévu |
-|---|---|---|
-| **Fichier de conseils sur les accords avec les voisins** | Supprime les offres de contrat d’origine, les suggestions d’annulation, les messages de renouvellement et les avertissements de défaut. | Quand la gestion automatique des accords avec les voisins est active pour au moins une ressource. |
-| **Fichier de conseils sur l’éducation et la santé** | Supprime les conseils de financement normaux et limite les rumeurs de pré-grève aux périodes où une grève est réellement en cours. | Quand la gestion de l’éducation ou de la santé est active. |
-| **Fichier de conseils sur les déchets** | Limite les avertissements sur les problèmes de déchets aux situations où la quantité de déchets non collectés est importante. | Toujours. |
-
-Le fichier sur l’éducation et la santé ne supprime **pas** les véritables alertes de grève ni les messages positifs des conseillers.
-
-Le fichier sur les déchets laisse inchangés les messages de bonne nouvelle.
+Les vraies alertes de grève et les messages positifs des conseillers ne sont jamais modifiés. Un message dont l’événement survient pendant qu’il est masqué n’est pas affiché ensuite.
 
 #### Pourquoi certains avertissements d’origine sur les déchets sont-ils supprimés ?
 
@@ -917,19 +911,9 @@ Cela évite des alertes inutiles quand le traitement des déchets fonctionne nor
 
 #### Comment restaurer les messages d’origine des conseillers du jeu ?
 
-Comme SimCity 4 charge ces fichiers de ressources au démarrage, modifier les options du Ministère ne restaure pas immédiatement les messages d’origine.
+Il n’y a rien à supprimer. Le Ministère publie son état dans chaque ville : désactivez le service correspondant dans la fenêtre d’options (ou abrogez l’ordonnance, ou mettez `Mode=Off`) et les messages d’origine reviennent aussitôt, sans redémarrer le jeu. Ils reviennent aussi quand le Ministère ne peut pas agir sur un service. Un message déjà masqué revient selon la fréquence d’affichage propre au jeu, ce qui peut prendre un certain temps.
 
-Si vous désactivez une fonction mais laissez son fichier de ressources de conseils installé, le Ministère consigne un avertissement dans son journal.
-
-L’avertissement indique quel fichier doit être supprimé.
-
-Pour restaurer les messages d’origine correspondants :
-
-1. Fermez SimCity 4.
-2. Supprimez le fichier de ressources de conseils indiqué du dossier Plugins.
-3. Relancez le jeu.
-
-**Les fichiers de ressources des conseillers affectent les messages du jeu indépendamment du fait que le Ministère effectue ou non des changements de gestion automatiques.**
+**Un événement qui survient pendant que son message est masqué n’est pas affiché ensuite.**
 
 <a id="safety-isolation"></a>
 ### 4. Conditions de sécurité
@@ -1218,8 +1202,8 @@ Le Ministère est conçu pour fonctionner avec prudence, mais il ne peut pas sur
 
 #### Messages d’origine des conseillers du jeu
 
-- **Les trois fichiers de ressources de conseils agissent dès qu’ils sont installés.** Désactiver les options correspondantes du Ministère n’annule pas immédiatement leurs effets.
-- **Rétablir les messages d’origine peut exiger de retirer le fichier de ressources concerné et de redémarrer SimCity 4.** Le Ministère consigne dans son journal les incohérences de configuration.
+- **Le Ministère ne masque les messages du jeu que tant qu’il gère réellement le service.** Désactiver un service, ou un service sur lequel le Ministère ne peut pas agir, rétablit aussitôt les messages d’origine.
+- **Un événement qui survient pendant que son message est masqué n’est pas affiché ensuite.** Un message qui revient reste soumis à la fréquence d’affichage propre au jeu.
 
 #### Sécurité technique
 

@@ -33,7 +33,7 @@ inline bool ReserveFactorInRange(double factor, double lo, double hi) { return f
 // like every other bad value. The search (LandfillSavings.h) clamps it again before use.
 constexpr int kLandfillAlertThresholdMin = 20, kLandfillAlertThresholdMax = 50, kLandfillAlertThresholdDefault = 25;
 
-// DepartmentEfficiencyUtility.ini beside the DLL. `Mode=Shadow` logs the optimizer plan and performs ZERO writes. `Mode=Auto` executes the plan only
+// DepartmentEfficiency.ini, section [UtilityResearch], beside the DLL. `Mode=Shadow` logs the optimizer plan and performs ZERO writes. `Mode=Auto` executes the plan only
 // for the subsystems opted in with AutoPower / AutoWater / AutoGarbage / AutoDeals, and only while the unified controller is enabled
 // (EnableUnifiedAuto=true; EnableUnifiedAutoValidation additionally needs a build with the compile-time capability SC4_FINAL_AUTO_VALIDATION).
 //

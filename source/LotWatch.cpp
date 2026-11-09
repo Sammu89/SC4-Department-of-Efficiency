@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
-// LotWatch, game side: walks the lot grid and logs what the rules in LotWatch.h say; with DepartmentEfficiencyDemolition.ini Mode=Auto it then demolishes the lots the rules pick, ONLY through the game's own
+// LotWatch, game side: walks the lot grid and logs what the rules in LotWatch.h say; with DepartmentEfficiency.ini [LotDemolition] Mode=Auto it then demolishes the lots the rules pick, ONLY through the game's own
 // `Demolish` command (cIGZCommandServer, the path sc4-auto-run-cheats uses for any command string). It writes nothing else.
 //
 // Runtime facts that shaped it:
@@ -8,6 +8,7 @@
 //   * GetLocation() of a lot is not the top-left cell of its bounding rect (it depends on the lot's facing): the rect is validated against the lot's size and must contain the location cell;
 //   * the walk of the grid is the costly part, so a lot is read with one call (its state) unless it is vacant / being demolished / destroyed.
 #include "LotWatch.h"
+#include "IniSections.h"
 
 #include "Logging.h"
 #include "GZServPtrs.h"
@@ -83,6 +84,8 @@ bool g_unavailableLogged = false;
 DemolitionConfig g_config;
 std::string g_configPath;
 std::uint64_t g_configStamp = ~0ull;                 // never equal to a real stamp: the first call loads (or notes the missing file)
+bool g_configRead = false;                           // the [LotDemolition] text below is what the current g_config was parsed from
+std::string g_configSection;
 FailureGuard g_guard;
 bool g_trippedLogged = false;
 std::vector<Pending> g_pending;
@@ -141,16 +144,23 @@ void LoadConfigIfChanged() {
     const auto stamp = FileWriteTime(g_configPath);
     if (stamp == g_configStamp) return;
     g_configStamp = stamp;
+    std::string section;
+    if (stamp != 0) {
+        std::ifstream in(g_configPath, std::ios::binary);
+        std::ostringstream buffer;
+        buffer << in.rdbuf();
+        section = IniSectionText(buffer.str(), kIniSecDemolition);
+    }
+    if (g_configRead && section == g_configSection) return;      // the file changed for another module (health, utilities): the demolition session goes on
+    g_configRead = true;
+    g_configSection = section;
     g_config = DemolitionConfig{};                    // Mode=Off unless the file says otherwise and is valid
     ResetSession();
-    if (stamp == 0) { Log(LogLevel::Info, "[LotDemolish] no DepartmentEfficiencyDemolition.ini: Mode=OFF (the lots are only observed)"); return; }
-    std::ifstream in(g_configPath, std::ios::binary);
-    std::ostringstream buffer;
-    buffer << in.rdbuf();
+    if (stamp == 0) { Log(LogLevel::Info, "[LotDemolish] no DepartmentEfficiency.ini: Mode=OFF (the lots are only observed)"); return; }
     std::string error;
-    if (!ParseDemolitionConfig(buffer.str(), g_config, error)) {
+    if (!ParseDemolitionConfig(section, g_config, error)) {
         g_config = DemolitionConfig{};
-        Log(LogLevel::Warning, "[LotDemolish] DepartmentEfficiencyDemolition.ini invalid (" + error + "): Mode=OFF");
+        Log(LogLevel::Warning, "[LotDemolish] DepartmentEfficiency.ini [LotDemolition] invalid (" + error + "): Mode=OFF");
         return;
     }
     const Rules& r = g_config.rules;
@@ -339,8 +349,9 @@ void LotWatchReset() {
 }
 
 void LotWatchSetConfigDirectory(const std::string& directory) {
-    g_configPath = directory + "DepartmentEfficiencyDemolition.ini";
+    g_configPath = directory + "DepartmentEfficiency.ini";      // the one file; this module reads its [LotDemolition] section
     g_configStamp = ~0ull;
+    g_configRead = false;
     LoadConfigIfChanged();
 }
 

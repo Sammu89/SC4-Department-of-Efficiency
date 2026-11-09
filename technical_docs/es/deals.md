@@ -2160,7 +2160,7 @@ Así se evita que varias operaciones de contrato sin verificar interfieran entre
 
 #### ¿Qué pasa con los mensajes de los asesores del juego original?
 
-Mientras el Ministerio gestiona los contratos regionales, los mensajes de los asesores del juego original sobre acuerdos con vecinos quedan suprimidos por un archivo de recursos incluido.
+Mientras el Ministerio gestiona los contratos de un recurso, no se muestran los mensajes originales del asesor del juego sobre acuerdos con vecinos para ese recurso.
 
 Entre ellos están:
 
@@ -2174,7 +2174,7 @@ Cuando una carencia real no se puede resolver automáticamente, puede emitir su 
 
 Consulta [Avisos](safety.md#notices).
 
-**Importante:** Los mensajes del juego original los suprime un archivo de recursos que se carga al iniciar SimCity 4. Desactivar la gestión automática de contratos en las opciones no restablece esos mensajes de inmediato. El procedimiento para restablecerlos se explica en [Limitaciones conocidas](#neighbor-deals-limitations).
+**Importante:** Esto sigue el estado del Ministerio en cada ciudad y se actualiza sin reiniciar el juego. Si desactivas la gestión de contratos de un recurso (o todo el Ministerio), o si el Ministerio no puede actuar sobre él, los mensajes originales de ese recurso vuelven al instante. Un mensaje cuyo evento ocurre mientras está silenciado no se muestra después. Consulta las [Limitaciones conocidas](#neighbor-deals-limitations).
 
 <a id="neighbor-deals-settings"></a>
 ### 5. Ajustes
@@ -2237,7 +2237,7 @@ Este ajuste está disponible a través del archivo INI, no en la ventana de opci
 |---|---:|---:|
 | `MinContractBenefit` | §0/mes | §0–§100.000/mes |
 
-Archivo: `DepartmentEfficiencyUtility.ini`
+Archivo: `DepartmentEfficiency.ini` (sección `[UtilityResearch]`)
 
 Cuando vale cero, **basta cualquier beneficio económico estrictamente positivo**.
 
@@ -2531,26 +2531,13 @@ El Ministerio puede gestionar los contratos regionales de forma automática, per
 - **Las búsquedas en contratos de basura grandes tienen límites.** Si el Ministerio no puede evaluar de forma exhaustiva las combinaciones legales porque hay más de cinco millones en uno de los lados, no hace ningún cambio de contrato especulativo. Las búsquedas mixtas de compra y venta también tienen sus propios límites, descritos anteriormente.
 
 #### Mensajes originales de los asesores sobre acuerdos con vecinos
+El Ministerio silencia los mensajes originales del asesor de SimCity 4 sobre acuerdos con vecinos (ofertas, sugerencias de cancelación, renovaciones y avisos de incumplimiento) **solo mientras gestiona de verdad los contratos de ese recurso**: el Ministerio está activo, los acuerdos automáticos están activados, el comercio automático de ese recurso está activado y nada le impide actuar.
 
-El Ministerio incluye un archivo de recursos que suprime los mensajes originales de los asesores de SimCity 4 sobre los acuerdos con vecinos.
+Lo hace un pequeño script propio del Ministerio dentro de `DepartmentEfficiency.dat`. Sigue un interruptor que el Ministerio publica en cada ciudad, por separado para electricidad, agua y basura. No se copia nada de los scripts del juego.
 
-Este archivo es:
+En cualquier otro caso los mensajes originales son exactamente los que trae el juego: Ministerio desactivado, acuerdos desactivados, comercio del recurso desactivado, otro modo, un controlador que se ha detenido por seguridad o el plugin sin cargar. El cambio se aplica al juego en curso, sin reiniciarlo, y también devuelve mensajes como *Acuerdo incumplido*.
 
-`DepartmentEfficiencyDealAdvice.dat`
-
-**SimCity 4 carga los archivos de recursos al iniciarse el juego.**
-
-Por tanto, desactivar las opciones de gestión de contratos del Ministerio no restablece de inmediato los mensajes originales de los asesores.
-
-Si quieres gestionar los contratos manualmente y restaurar los mensajes originales:
-
-1. Cierra SimCity 4.
-2. Elimina `DepartmentEfficiencyDealAdvice.dat` de la carpeta Plugins del juego.
-3. Reinicia el juego.
-
-Esto también restaura mensajes originales como *Acuerdo incumplido*.
-
-El Ministerio registra una advertencia en su registro cuando el archivo de recursos y los ajustes de gestión actuales no coinciden.
+Un mensaje cuyo evento ocurrió mientras estaba silenciado no se recupera después.
 
 #### Propuestas pendientes
 

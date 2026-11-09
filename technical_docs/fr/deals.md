@@ -2160,7 +2160,7 @@ Cela évite que plusieurs opérations de contrat non vérifiées interfèrent en
 
 #### Qu’advient-il des messages des conseillers du jeu d’origine ?
 
-Tant que le Ministère gère les contrats régionaux, les messages des conseillers du jeu d’origine sur les accords avec les voisins sont supprimés par un fichier de ressources inclus.
+Tant que le Ministère gère les contrats d’une ressource, les messages d’origine du conseiller du jeu sur les accords avec les voisins pour cette ressource ne sont pas affichés.
 
 Cela comprend :
 
@@ -2174,7 +2174,7 @@ Lorsqu’une véritable pénurie ne peut pas être résolue automatiquement, il 
 
 Voir [Avis](safety.md#notices).
 
-**Important :** les messages du jeu d’origine sont supprimés par un fichier de ressources chargé au démarrage de SimCity 4. Désactiver la gestion automatique des contrats dans les options ne rétablit pas immédiatement ces messages. La procédure pour les rétablir est expliquée dans [Limites connues](#neighbor-deals-limitations).
+**Important :** cela suit l’état du Ministère dans chaque ville et se met à jour sans redémarrer le jeu. Si vous désactivez la gestion des contrats d’une ressource (ou tout le Ministère), ou si le Ministère ne peut pas agir dessus, les messages d’origine de cette ressource reviennent aussitôt. Un message dont l’événement survient pendant qu’il est masqué n’est pas affiché ensuite. Voir les [Limites connues](#neighbor-deals-limitations).
 
 <a id="neighbor-deals-settings"></a>
 ### 5. Réglages
@@ -2237,7 +2237,7 @@ Ce réglage est disponible dans le fichier INI, pas dans la fenêtre d’options
 |---|---:|---:|
 | `MinContractBenefit` | 0 §/mois | 0 à 100 000 §/mois |
 
-Fichier : `DepartmentEfficiencyUtility.ini`
+Fichier : `DepartmentEfficiency.ini` (section `[UtilityResearch]`)
 
 Lorsqu’il est à zéro, **tout avantage économique strictement positif suffit**.
 
@@ -2531,26 +2531,13 @@ Le Ministère peut gérer automatiquement les accords régionaux, mais il reste 
 - **Les recherches sur de grands accords de déchets ont des limites.** Si le Ministère ne peut pas évaluer de façon exhaustive les combinaisons légales parce qu’il y en a plus de cinq millions d’un côté, il ne fait aucun changement d’accord spéculatif. Les recherches mixtes d’achat et de vente ont aussi leurs propres limites, décrites plus haut.
 
 #### Messages d’origine des conseillers sur les accords avec les voisins
+Le Ministère masque les messages d’origine du conseiller de SimCity 4 sur les accords avec les voisins (offres, suggestions d’annulation, renouvellements et avertissements de défaut) **uniquement tant qu’il gère réellement les contrats de cette ressource** : le Ministère est actif, les accords automatiques sont activés, l’échange automatique de cette ressource est activé et rien ne l’empêche d’agir.
 
-Le Ministère inclut un fichier de ressources qui supprime les messages d’origine des conseillers de SimCity 4 sur les accords avec les voisins.
+C’est un petit script propre au Ministère, dans `DepartmentEfficiency.dat`, qui s’en charge. Il suit un interrupteur que le Ministère publie dans chaque ville, séparément pour l’électricité, l’eau et les déchets. Rien des scripts du jeu n’est copié.
 
-Ce fichier est :
+Dans tous les autres cas, les messages d’origine sont exactement ceux que fournit le jeu : Ministère désactivé, accords désactivés, échange de la ressource désactivé, autre mode, contrôleur arrêté par sécurité ou plugin non chargé. Le changement s’applique au jeu en cours, sans le redémarrer, et rétablit aussi des messages comme *Accord en défaut*.
 
-`DepartmentEfficiencyDealAdvice.dat`
-
-**SimCity 4 charge les fichiers de ressources au démarrage du jeu.**
-
-Par conséquent, désactiver les options de gestion des accords du Ministère ne rétablit pas immédiatement les messages d’origine des conseillers.
-
-Si vous voulez gérer les accords manuellement et rétablir les messages d’origine :
-
-1. Fermez SimCity 4.
-2. Retirez `DepartmentEfficiencyDealAdvice.dat` du dossier Plugins du jeu.
-3. Relancez le jeu.
-
-Cela rétablit aussi les messages d’origine tels que *Accord non honoré*.
-
-Le Ministère consigne un avertissement dans son journal lorsque le fichier de ressources et les réglages de gestion actuels ne correspondent pas.
+Un message dont l’événement s’est produit pendant qu’il était masqué n’est pas récupéré ensuite.
 
 #### Propositions en attente
 

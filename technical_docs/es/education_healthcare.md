@@ -582,23 +582,21 @@ Apagar el Ministerio no restaura los presupuestos anteriores. Cada edificio cons
 
 #### Los mensajes originales de los asesores del juego
 
-SimCity 4 normalmente muestra avisos cuando la financiación de educación o sanidad cae por debajo de ciertos porcentajes.
+SimCity 4 normalmente muestra avisos cuando la financiación de la educación o de la sanidad baja de ciertos porcentajes.
 
-Por ejemplo, el juego puede quejarse de presupuestos de educación inferiores al 90%, incluso cuando una escuela concreta tiene capacidad más que suficiente con una financiación mucho menor.
+Por ejemplo, el juego puede quejarse de presupuestos de educación por debajo del 90 %, incluso cuando una escuela tiene capacidad de sobra con una financiación mucho menor.
 
-Estos avisos no siempre son relevantes cuando el Ministerio gestiona los edificios de forma individual.
+Estos avisos no siempre son relevantes cuando el Ministerio gestiona los edificios de uno en uno.
 
-Para evitar mensajes engañosos, el plugin incluye un pequeño archivo de datos que ajusta parte de los consejos originales del juego sobre educación, sanidad y presupuesto:
+Mientras el Ministerio gestiona la educación, o la sanidad, el plugin ajusta por eso algunos consejos originales del juego para ese servicio:
 
 - Se suprimen los avisos rutinarios basados solo en porcentajes bajos de financiación.
-- También se suprimen ciertos avisos sobre exceso de financiación o niveles de personal.
-- Los avisos previos a una huelga pertinentes se limitan a las situaciones en las que realmente hay una huelga.
+- También se suprimen algunos avisos sobre exceso de financiación o niveles de personal.
+- Los avisos previos a una huelga relevantes se limitan a las situaciones en que hay una huelga.
 - **Las alertas de huelga reales siguen activas.**
-- Se conservan los mensajes habituales de elogio y de estado del juego.
+- Se conservan los mensajes normales de elogio y de estado del juego.
 
-Este ajuste es independiente de los interruptores de financiación automática del Ministerio. Sigue activo mientras el archivo de datos correspondiente esté instalado, incluso si desactivas la gestión de la educación o de la sanidad.
-
-Si quieres recuperar los consejos originales del juego sobre financiación, puedes eliminar el archivo de datos de consejos correspondiente con SimCity 4 cerrado.
+Esto sigue el estado del Ministerio en cada ciudad, sin reiniciar el juego. Si desactivas la gestión de la educación o de la sanidad (o todo el Ministerio), o si el Ministerio no puede actuar sobre ella, los consejos originales del juego para ese servicio vuelven al instante.
 
 Consulta la [seguridad general](safety.md#safety) para más información.
 

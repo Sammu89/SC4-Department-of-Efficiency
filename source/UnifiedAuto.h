@@ -256,6 +256,8 @@ public:
     void OnCivicMonth(const CivicMonthEvidence& e) { tracker_.OnCivicMonth(e); }     // its stability diagnostics are logged with the next OnMonth
     bool sessionFailed() const { return tracker_.sessionFailed(); }
     // The service-insufficiency episode of commodity `i` (0 power, 1 water, 2 garbage) has been proven and not yet closed by a proven recovery (the player notice is deferred on it).
+    // The readings of commodity i (0 power, 1 water, 2 garbage) and of the contracts are present and consistent in the latest snapshot: otherwise the controller neither writes nor trades for it.
+    bool commodityReady(int i) const { return ready_[i].ok; }
     bool serviceEpisodeActive(int i) const { return episodes_.active(i); }
     bool powerDisabled() const { return legacy_.powerDisabled(); }
     bool waterDisabled() const { return legacy_.waterDisabled(); }

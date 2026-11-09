@@ -1,24 +1,23 @@
 # SimCity 4 executable: reverse-engineering address reference
 
-This reference records research on the **SimCity 4 Deluxe Steam 1.1.641.0 Windows x86 executable**, not the Department of Efficiency plugin version (1.0.0). Addresses refer to the executable image inspected at base `0x00400000`. Other builds, patches, rebasing and installations have not been checked. Do not assume an address is portable or safe to call or patch.
+This reference records research on the **SimCity 4 Deluxe Steam 1.1.641.0 Windows x86 executable**, not the Department of Efficiency plugin version (1.0.2). Addresses refer to the executable image inspected at base `0x00400000`. Other builds, patches, rebasing and installations have not been checked. Do not assume an address is portable or safe to call or patch.
 
 The table describes addresses whose roles have been identified in the research. It distinguishes static analysis from observations in the running game; a runtime test of one use does not validate every possible caller or argument. The list is not exhaustive: values whose roles have not been established are omitted.
 
 
 ## Game resource identifiers
 
-A DAT resource is identified by a **type, group and instance** (TGI). The instance IDs below identify Maxis Lua resources in the game's `SimCity_1.dat`; they are **not executable memory addresses**. The distribution includes modified versions at the same TGIs in the named DAT files, so they override the game's resources while installed.
+A DAT resource is identified by a **type, group and instance** (TGI). The instance IDs below identify Maxis Lua resources in the game's `SimCity_1.dat`; they are **not executable memory addresses**. Since version 1.0.2 the distribution does **not** replace or copy any of them: two small Lua scripts of the Department's own (type `0xCA63E2A3`, group `0x4A5E8EF6`, instances `0x5C4AD810` and `0x5C4AD830`, inside `DepartmentEfficiency.dat`) extend, in place and after the game's own scripts have loaded, the `trigger` of selected records of the advisors below. Nothing else of those scripts is changed, and an advice record's event binding is never touched.
 
-All four resources use type `0xCA63E2A3` and group `0x4A5E8EF6`.
+| Instance ID | Original resource (read, not shipped) | What the Department's script extends |
+|---|---|---|
+| `0xFF4CE096` | Health & Education advisor Lua script | Selected education and healthcare advice, including pre-strike and funding warnings. Actual strike notices are left unchanged. |
+| `0xFF713106` | Budget advisor Lua script | Selected advice about education and healthcare funding. |
+| `0xFF4D6B4E` | Utilities advisor Lua script for neighbor deals | Selected deal offers, cancellation suggestions, renewals and default notices. |
+| `0xFF1D93C8` | Utilities advisor Lua script containing garbage advice | An uncollected-garbage threshold on selected garbage problem alerts. |
 
-| Instance ID | Original resource | Change in the distribution | Included in |
-|---|---|---|---|
-| `0xFF4CE096` | Health & Education advisor Lua script | Adds conditions to selected education and healthcare advice triggers, including pre-strike and funding warnings. Actual strike notices are left unchanged. | `DepartmentEfficiencyCivicAdvice.dat` |
-| `0xFF713106` | Budget advisor Lua script | Disables selected advice triggers about education and healthcare funding. | `DepartmentEfficiencyCivicAdvice.dat` |
-| `0xFF4D6B4E` | Utilities advisor Lua script for neighbor deals | Suppresses selected deal offers, cancellation suggestions, renewals and default notices. | `DepartmentEfficiencyDealAdvice.dat` |
-| `0xFF1D93C8` | Utilities advisor Lua script containing garbage advice | Adds an uncollected-garbage threshold to selected garbage problem alerts. | `DepartmentEfficiencyGarbageAdvice.dat` |
+The extension follows six switches that the plugin publishes in every city; with a switch at 0 or absent, the game's original behavior applies.
 
-These overrides are active while their DAT files are installed; for now, switching the corresponding automation off does not restore the original advice (it's a todo for the next fix). Close the game and remove the corresponding DAT to restore that resource's original behavior.
 
 ## Identified functions and data
 

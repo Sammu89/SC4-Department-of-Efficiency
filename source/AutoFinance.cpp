@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
 #include "AutoFinance.h"
+#include "IniSections.h"
 
 #include "CivicFacilityIO.h"
 #include "cISC4City.h"
@@ -95,9 +96,9 @@ void AutoFinance::LoadConfigIfChanged() {
     std::ostringstream buffer;
     buffer << in.rdbuf();
     std::string error;
-    if (!ParseAutoFinanceConfig(buffer.str(), config_, error)) {
+    if (!ParseAutoFinanceConfig(IniSectionText(buffer.str(), kIniSecAutoFinance), config_, error)) {      // only the [AutoFinance] section: Mode here is not the Mode of another module
         config_ = AutoFinanceConfig{};
-        Log(LogLevel::Warning, "[AutoFinance] config invalid (" + error + "); Mode=OFF");
+        Log(LogLevel::Warning, "[AutoFinance] DepartmentEfficiency.ini [AutoFinance] invalid (" + error + "); Mode=OFF");
         return;
     }
     Log(LogLevel::Info, "[AutoFinance] config loaded: " + Banner());

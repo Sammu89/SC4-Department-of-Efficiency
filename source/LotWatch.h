@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
-// LotWatch: observes the lots the game has left abandoned or destroyed and logs which ones the demolition rules pick. With DepartmentEfficiencyDemolition.ini Mode=Auto (Off by default) it
+// LotWatch: observes the lots the game has left abandoned or destroyed and logs which ones the demolition rules pick. With DepartmentEfficiency.ini [LotDemolition] Mode=Auto (Off by default) it
 // also demolishes them, through the game's OWN command (`Demolish x1 z1 x2 z2 None`, the documented command that community DLLs already issue): no demolition parameter is guessed.
 //
-// Rules (the defaults; each can be changed in the options window (OptionsModel.h) or DepartmentEfficiencyDemolition.ini):
+// Rules (the defaults; each can be changed in the options window (OptionsModel.h) or DepartmentEfficiency.ini [LotDemolition]):
 //   * a destroyed lot (Destroyed: fire, disaster) is a candidate after one month (DemolishDestroyed, DestroyedAfterDays=30);
 //   * an abandoned lot (Vacant) is a candidate after one year in that state (DemolishAbandoned, AbandonedAfterDays=365), when its zone type (AbandonedZones: residential,
 //     commercial, industrial by default; agriculture off) and the reason it was abandoned (AbandonedReasons: every reason but power and water by default) are selected;
@@ -165,7 +165,7 @@ inline int ListPriority(Verdict v) {
 }
 inline bool WouldDemolish(Verdict v) { return v == Verdict::EligibleDestroyed || v == Verdict::EligibleAbandoned; }
 
-// ---- configuration (DepartmentEfficiencyDemolition.ini) -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---- configuration (DepartmentEfficiency.ini [LotDemolition]) -----------------------------------------------------------------------------------------------------------------------------------------------------------
 enum class DemolitionMode { Off, Shadow, Auto };
 inline const char* ModeName(DemolitionMode m) { return m == DemolitionMode::Auto ? "AUTO" : m == DemolitionMode::Shadow ? "SHADOW" : "OFF"; }
 
@@ -410,5 +410,5 @@ namespace sc4af {
 void RunLotWatch(cISC4City* city, const char* reason, bool full);
 void LotWatchReset();
 void LotWatchSetConfigDirectory(const std::string& directory);
-void LotWatchReloadConfig();                                           // re-reads the ini after the options window wrote it; DepartmentEfficiencyDemolition.ini lives next to the DLL (missing file = Off)
+void LotWatchReloadConfig();                                           // re-reads the ini after the options window wrote it; DepartmentEfficiency.ini [LotDemolition] lives next to the DLL (missing file = Off)
 } // namespace sc4af

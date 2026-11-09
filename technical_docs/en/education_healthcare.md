@@ -588,7 +588,7 @@ For example, the game may complain about education budgets below 90%, even when 
 
 These warnings are not always relevant when the Department is managing buildings individually.
 
-To avoid misleading messages, the plugin includes a small data file that adjusts some of the game's original education, healthcare and budget advice:
+While the Department manages education, or healthcare, the plugin therefore adjusts some of the game's original advice for that service:
 
 - Routine warnings based only on low funding percentages are suppressed.
 - Certain warnings about overfunding or staffing levels are also suppressed.
@@ -596,9 +596,7 @@ To avoid misleading messages, the plugin includes a small data file that adjusts
 - **Real strike alerts remain active.**
 - The game's normal praise and status messages are preserved.
 
-This adjustment is separate from the Department's automatic funding switches. It remains active while the corresponding data file is installed, even if you disable education or healthcare management.
-
-If you want the game's original funding advice back, you can remove the corresponding advice data file while SimCity 4 is closed.
+This follows the Department's state in every city, without restarting the game. If you disable education or healthcare management (or the whole Department), or the Department cannot act on it, the game's original advice for that service returns at once.
 
 See [General Safety](safety.md#safety) for more information.
 

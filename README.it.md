@@ -43,7 +43,7 @@ Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizza
 
 ## Download e installazione
 
-### [⬇ Scarica Department of Efficiency 1.0.0](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.0/Departement_of_Efficiency_1.00.zip)
+### [⬇ Scarica Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 1\. Apri la [pagina delle release](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) del progetto e scegli la versione più recente.
 
@@ -55,20 +55,14 @@ Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizza
 
 5\. Avvia il gioco e segui le istruzioni della [configurazione iniziale](#first-time-setup) prima di giocare una città salvata.
 
-Lo ZIP di distribuzione contiene la DLL e una cartella con cinque file DAT e tre INI. Dopo l'installazione dovresti avere:
+Lo ZIP di distribuzione contiene la DLL e una cartella con un file DAT e un INI. Dopo l'installazione dovresti avere:
 
 ```text
 Documents\SimCity 4\Plugins\
     DepartmentEfficiency.dll
     Department of Efficiency\
         DepartmentEfficiency.dat
-        DepartmentEfficiencyUI.dat
-        DepartmentEfficiencyGarbageAdvice.dat
-        DepartmentEfficiencyDealAdvice.dat
-        DepartmentEfficiencyCivicAdvice.dat
         DepartmentEfficiency.ini
-        DepartmentEfficiencyUtility.ini
-        DepartmentEfficiencyDemolition.ini
 ```
 
 I file Markdown e le schermate del repository pubblico **non** servono al gioco. Tieni la DLL **direttamente in Plugins**, con la cartella che la accompagna accanto.
@@ -228,9 +222,9 @@ Tutte le schermate mostrano la versione inglese del gioco.
 
 ## Aggiornamento e disinstallazione
 
-**Conserva le tue preferenze.** I tre file INI nella cartella `Department of Efficiency` contengono le tue impostazioni. Prima di sostituire il mod, copia `DepartmentEfficiency.ini`, `DepartmentEfficiencyUtility.ini` e `DepartmentEfficiencyDemolition.ini` fuori dalla cartella Plugins.
+**Le impostazioni non vengono trasferite.** Dalla versione 1.0.2 i tre file INI della versione 1.0.0 sono un unico file, `DepartmentEfficiency.ini`, nella cartella `Department of Efficiency` (sezioni `[AutoFinance]`, `[UtilityResearch]` e `[LotDemolition]`). I vecchi `DepartmentEfficiencyUtility.ini` e `DepartmentEfficiencyDemolition.ini` non vengono più letti.
 
-**Per sostituire un'installazione:** chiudi il gioco, rimuovi la `DepartmentEfficiency.dll` e la cartella `Department of Efficiency` esistenti, installa il nuovo pacchetto e ripristina i file INI copiati **solo se il loro formato è compatibile** con la nuova versione. Altrimenti, reimposta le preferenze nel gioco.
+**Per sostituire un'installazione (serve un'installazione pulita):** chiudi il gioco, elimina la `DepartmentEfficiency.dll` esistente **e l'intera cartella `Department of Efficiency`**, poi installa il nuovo pacchetto. Copiare i nuovi file sopra una vecchia installazione non è supportato: i vecchi file di risorse resterebbero nella cartella e terrebbero silenziati i suggerimenti del gioco. Reimposta le preferenze nel gioco (Opzioni di gioco → Ministero dell'Ottimizzazione).
 
 **Per disinstallare:** chiudi il gioco ed elimina `DepartmentEfficiency.dll` e la cartella `Department of Efficiency`. Le tue città salvate restano leggibili senza il mod. I livelli di finanziamento, i contratti esistenti e le demolizioni già salvate in una città non vengono annullati automaticamente.
 
@@ -261,7 +255,7 @@ La compilazione scarica [gzcom-dll](https://github.com/nsgomez/gzcom-dll) a una 
 
 - Il codice originale di Department of Efficiency (i file in [`source/`](source/)) è stato scritto da me, **Sammu89** ed è pubblicato con la **GNU General Public License, versione 3 soltanto** (GPL-3.0-only). Il testo completo è in [LICENSE](LICENSE). Puoi studiarlo, modificarlo e ridistribuirlo secondo la GPLv3: conserva gli avvisi di copyright e i crediti, indica le tue modifiche e pubblica la tua versione con la stessa licenza. Per favore, non presentare versioni modificate come mie versioni ufficiali.
 
-- La documentazione (questi README e i file in [`technical_docs/`](technical_docs/)) e i testi scritti per questo progetto (inclusi quelli dei tre file INI e quelli compilati in `DepartmentEfficiency.dat`), con le loro traduzioni originali, sono pubblicati con la stessa licenza, GPL-3.0-only.
+- La documentazione (questi README e i file in [`technical_docs/`](technical_docs/)) e i testi scritti per questo progetto (inclusi quelli del file INI e quelli compilati in `DepartmentEfficiency.dat`), con le loro traduzioni originali, sono pubblicati con la stessa licenza, GPL-3.0-only.
 
 - **gzcom-dll** non è coperta da questa licenza: mantiene la propria, LGPL-2.1-or-later ([licenses/LGPL-2.1.txt](licenses/LGPL-2.1.txt)), e viene scaricata dal repository originale durante la compilazione.
 

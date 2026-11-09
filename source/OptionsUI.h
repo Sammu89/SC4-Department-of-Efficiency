@@ -6,7 +6,7 @@
 // "Credits" button, right under it: the panel grows by one button height and the game's Accept / Cancel bar moves down by the same amount. The button opens the plugin's own window,
 // built only from the game's controls: the Play Options check boxes, the Budget window's funding spinners for the reserve percentages, the Play Options Accept / Cancel bar.
 // Nothing changes before Accept; Accept writes the changed keys of the three ini files (OptionsModel.h) and makes the plugin read them at once; Cancel writes nothing.
-// Both UI scripts and the texts are in DepartmentEfficiencyUI.dat (derived from the game's own scripts at build time); without that DAT nothing is added.
+// Both UI scripts and the texts are in DepartmentEfficiency.dat (derived from the game's own scripts at build time); without that DAT nothing is added.
 //
 // Mechanism (the one of 0xC0000054's sc4-region-census, MIT): SC4UI::CreateWindowFromScript + cIGZWin::ChildAdd; the clicks reach a cRZBaseWinProc attached with cIGZWinGen::SetWinProc as
 // command messages (type 3, data1 = the notification, data2 = the control id).
@@ -38,7 +38,7 @@ public:
 
     bool DoWinProcMessage(cIGZWin* pWin, cGZMessage& msg) override;
 
-    // One text of DepartmentEfficiencyUI.dat in the game's language (English when that language has no translation); empty when the DAT is missing.
+    // One text of DepartmentEfficiency.dat in the game's language (English when that language has no translation); empty when the DAT is missing.
     static std::string Text(std::uint32_t id);
     static std::string LanguageText();   // "language=0x23 (Portuguese)" for the log
 

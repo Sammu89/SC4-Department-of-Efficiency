@@ -551,9 +551,9 @@ Esto no cambia el servicio de agua en sí.
 
 Consulta [Agua](water.md#water-farm-icon).
 
-El Ministerio también incluye tres archivos de recursos que modifican algunos de los mensajes de asesor originales de SimCity 4.
+El Ministerio también silencia algunos de los mensajes originales de los asesores de SimCity 4, pero solo mientras gestiona de verdad el servicio correspondiente.
 
-Esos archivos actúan siempre que están instalados, con independencia de las opciones de gestión correspondientes. Su comportamiento se explica en [Avisos de los asesores](#safety-notices-game).
+Cuando no gestiona (o no puede gestionar) el servicio, los mensajes originales son exactamente los que trae el juego. Consulta los [Avisos de los asesores](#safety-notices-game).
 
 <a id="safety-automation"></a>
 #### ¿Qué funciones actúan automáticamente y cuáles solo aconsejan?
@@ -864,23 +864,17 @@ Consulta [Limpieza y vertederos](garbage.md#garbage-landfills-advice).
 <a id="safety-notices-game"></a>
 #### Avisos originales de SimCity 4 modificados por el Ministerio
 
-El Ministerio incluye **tres archivos de recursos** que cambian algunos de los mensajes de asesor del juego original.
+El Ministerio silencia algunos mensajes originales de los asesores del juego que serían engañosos o redundantes mientras la gestión automática está activa, **pero solo mientras puede gestionar de verdad el servicio afectado**. En cualquier otro caso los mensajes originales son exactamente los que trae el juego.
 
-Su propósito es evitar avisos engañosos o redundantes mientras la gestión automática está activa.
+Lo hacen dos pequeños scripts propios del Ministerio dentro de `DepartmentEfficiency.dat`. Siguen seis interruptores que el Ministerio publica en cada ciudad y actualiza sin reiniciar el juego: cuando desactivas un servicio, desactivas todo el Ministerio, o cuando el Ministerio no puede actuar sobre un servicio (por ejemplo, porque faltan lecturas o porque uno de sus controladores se ha detenido por seguridad), los mensajes originales de ese servicio vuelven al instante. Los servicios son independientes entre sí.
 
-**Estos archivos se cargan cuando se inicia SimCity 4.**
+| Mensajes originales del juego | Silenciados mientras el Ministerio gestiona |
+|---|---|
+| Ofertas de contratos, sugerencias de cancelación, renovaciones y avisos de incumplimiento con vecinos | los contratos de ese recurso (electricidad, agua o basura, por separado) |
+| Consejos normales de financiación de educación y sanidad; los rumores previos a una huelga se limitan a los periodos en que hay una huelga | la educación, o la sanidad, respectivamente |
+| Los avisos de problemas de basura se limitan a situaciones con una cantidad significativa de basura sin recoger | el saneamiento local |
 
-Mientras sigan instalados, sus cambios continúan aplicándose aunque desactives durante la partida las opciones relacionadas del Ministerio.
-
-| Archivo de recursos | Mensajes originales del juego afectados | Uso previsto |
-|---|---|---|
-| **Archivo de consejos de acuerdos con vecinos** | Suprime las ofertas de contrato originales, las sugerencias de cancelación, los mensajes de renovación y los avisos de impago. | Cuando la gestión automática de acuerdos con vecinos está activa para al menos un recurso. |
-| **Archivo de consejos de educación y sanidad** | Suprime los consejos normales de financiación y limita los rumores previos a una huelga a los periodos en que realmente hay una huelga en curso. | Cuando la gestión de la educación o de la sanidad está activa. |
-| **Archivo de consejos de basura** | Restringe los avisos de problemas de basura a las situaciones con una cantidad significativa de basura sin recoger. | Siempre. |
-
-El archivo de educación y sanidad **no** suprime las alertas de huelga genuinas ni los mensajes positivos de los asesores.
-
-El archivo de basura deja sin cambios los mensajes de buenas noticias.
+Las alertas de huelga reales y los mensajes positivos de los asesores nunca se modifican. Un mensaje cuyo evento ocurre mientras está silenciado no se muestra después.
 
 #### ¿Por qué se suprimen algunos avisos originales de basura?
 
@@ -917,19 +911,9 @@ Esto evita alertas innecesarias cuando la eliminación de basura funciona con no
 
 #### ¿Cómo puedo restaurar los mensajes de asesor del juego original?
 
-Como SimCity 4 carga estos archivos de recursos al arrancar, cambiar las opciones del Ministerio no restaura de inmediato los mensajes originales.
+No hay nada que eliminar. El Ministerio publica su estado en cada ciudad: desactiva el servicio correspondiente en la ventana de opciones (o deroga la ordenanza, o pon `Mode=Off`) y los mensajes originales vuelven al instante, sin reiniciar el juego. También vuelven cuando el Ministerio no puede actuar sobre un servicio. Un mensaje que ya estaba oculto vuelve sujeto a la frecuencia de aparición propia del juego, lo que puede tardar algún tiempo.
 
-Si desactivas una función pero dejas instalado su archivo de recursos de asesor, el Ministerio registra una advertencia en su log.
-
-La advertencia identifica qué archivo conviene quitar.
-
-Para restaurar los mensajes originales correspondientes:
-
-1. Cierra SimCity 4.
-2. Quita el archivo de recursos de consejos indicado de la carpeta Plugins.
-3. Reinicia el juego.
-
-**Los archivos de recursos de asesor afectan a los mensajes del juego con independencia de que el Ministerio esté haciendo cambios de gestión automática en ese momento.**
+**Un evento que ocurre mientras su mensaje está silenciado no se muestra después.**
 
 <a id="safety-isolation"></a>
 ### 4. Condiciones de seguridad
@@ -1218,8 +1202,8 @@ El Ministerio está diseñado para actuar con prudencia, pero no puede superar t
 
 #### Mensajes originales de los asesores del juego
 
-- **Los tres archivos de recursos de consejos actúan en cuanto están instalados.** Desactivar las opciones correspondientes del Ministerio no deshace sus efectos de inmediato.
-- **Restaurar los mensajes originales puede requerir quitar el archivo de recursos correspondiente y reiniciar SimCity 4.** El Ministerio registra en el log las discrepancias de configuración.
+- **El Ministerio solo silencia los mensajes del juego mientras gestiona de verdad el servicio.** Desactivar un servicio, o un servicio sobre el que el Ministerio no puede actuar, devuelve al instante los mensajes originales.
+- **Un evento que ocurre mientras su mensaje está silenciado no se muestra después.** Un mensaje que vuelve queda sujeto a la frecuencia de aparición propia del juego.
 
 #### Seguridad técnica
 

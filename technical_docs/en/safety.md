@@ -551,9 +551,9 @@ This does not change the water service itself.
 
 See [Water](water.md#water-farm-icon).
 
-The Department also includes three resource files that modify some of SimCity 4's original advisor messages.
+The Department also silences some of SimCity 4's original advisor messages, but only while it really manages the corresponding service.
 
-Those files operate whenever they are installed, regardless of the corresponding management options. Their behavior is explained under [Advisor Notices](#safety-notices-game).
+When it does not (or cannot) manage the service, the original messages are exactly as the game ships them. See [Advisor Notices](#safety-notices-game).
 
 <a id="safety-automation"></a>
 #### Which features act automatically, and which only give advice?
@@ -864,23 +864,17 @@ See [Garbage & Landfills](garbage.md#garbage-landfills-advice).
 <a id="safety-notices-game"></a>
 #### Original SimCity 4 notices modified by the Department
 
-The Department includes **three resource files** that change some of the original game's advisor messages.
+The Department silences some of the original game's advisor messages that would be misleading or redundant while automatic management is active, **but only while it really can manage the service concerned**. In every other case the original messages are exactly as the game ships them.
 
-Their purpose is to avoid warnings that are misleading or redundant while automatic management is active.
+This is done by two small scripts of the Department's own inside `DepartmentEfficiency.dat`. They follow six switches that the Department publishes in every city and updates without restarting the game: when you switch a service off, switch the whole Department off, or when the Department cannot act on a service (for example because its readings are missing or one of its controllers has stopped itself for safety), the original messages for that service return at once. The services are independent of each other.
 
-**These files are loaded when SimCity 4 starts.**
+| Original game messages | Silenced while the Department manages |
+|---|---|
+| Neighbor-deal offers, cancellation suggestions, renewals and default warnings | the contracts of that resource (power, water or garbage separately) |
+| Normal education and healthcare funding advice; pre-strike rumors are limited to periods when a strike is actually in progress | education, or healthcare, respectively |
+| Garbage problem warnings are limited to situations with a significant amount of uncollected garbage | local sanitation |
 
-As long as they remain installed, their changes continue to apply even if you disable the related Department options during play.
-
-| Resource file | Original game messages affected | Intended use |
-|---|---|---|
-| **Neighbor-deal advice file** | Suppresses original contract offers, cancellation suggestions, renewal messages and default warnings. | When automatic neighbor deal management is active for at least one resource. |
-| **Education and healthcare advice file** | Suppresses normal funding advice and limits pre-strike rumors to periods when a strike is actually in progress. | When education or healthcare management is active. |
-| **Garbage advice file** | Restricts garbage problem warnings to situations with a significant amount of uncollected garbage. | Always. |
-
-The education and healthcare file does **not** suppress genuine strike alerts or positive advisor messages.
-
-The garbage file leaves good-news messages unchanged.
+Genuine strike alerts and positive advisor messages are never changed. A message whose event happens while it is silenced is not shown afterwards.
 
 #### Why are some original garbage warnings suppressed?
 
@@ -917,19 +911,9 @@ This prevents unnecessary alerts when garbage disposal is functioning normally b
 
 #### How can I restore the original game's advisor messages?
 
-Because SimCity 4 loads these resource files at startup, changing the Department's options does not immediately restore the original messages.
+There is nothing to remove. The Department publishes its state in every city: switch the corresponding service off in the options window (or repeal the ordinance, or set `Mode=Off`) and the original messages return at once, without restarting the game. They also return when the Department cannot act on a service. A message that was already hidden returns subject to the game's own display frequency, which can take some time.
 
-If you disable a feature but leave its advisor resource file installed, the Department records a warning in its log.
-
-The warning identifies which file should be removed.
-
-To restore the corresponding original messages:
-
-1. Close SimCity 4.
-2. Remove the indicated advice resource file from the Plugins folder.
-3. Restart the game.
-
-**The advisor resource files affect the game's messages independently of whether the Department is currently making automatic management changes.**
+**An event that happens while its message is silenced is not shown afterwards.**
 
 <a id="safety-isolation"></a>
 ### 4. Safety conditions
@@ -1218,8 +1202,8 @@ The Department is designed to operate conservatively, but it cannot overcome eve
 
 #### Original game advisor messages
 
-- **The three advice resource files act whenever installed.** Disabling the corresponding Department options does not immediately undo their effects.
-- **Restoring original messages may require removing the relevant resource file and restarting SimCity 4.** The Department logs configuration mismatches.
+- **The Department silences the game's messages only while it really manages the service.** Switching a service off, or a service the Department cannot act on, brings the original messages back at once.
+- **An event that happens while its message is silenced is not shown afterwards.** A message that returns is subject to the game's own display frequency.
 
 #### Technical safety
 

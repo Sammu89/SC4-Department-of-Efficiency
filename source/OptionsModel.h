@@ -7,11 +7,12 @@
 // research keys, order, line ends), and the result is parsed back with the plugin's own strict parsers: if it does not give exactly the chosen options, nothing
 // is written (a wrong ini would turn the plugin Off).
 //
-// The master switch ("Department active"): off = Mode=Off in DepartmentEfficiency.ini, DepartmentEfficiencyUtility.ini and DepartmentEfficiencyDemolition.ini; every other
+// The master switch ("Department active"): off = Mode=Off in the three sections of DepartmentEfficiency.ini ([AutoFinance], [UtilityResearch], [LotDemolition]); every other
 // choice is kept, so switching it on again gives back exactly the previous configuration.
 #pragma once
 
 #include "CivicPolicy.h"
+#include "IniSections.h"
 #include "LotWatch.h"
 #include "UtilityConfig.h"
 
@@ -26,7 +27,7 @@
 
 namespace sc4af {
 
-// ---- window and script ids, shared with the UI resource file DepartmentEfficiencyUI.dat (the two must agree) ---------------------------------------------
+// ---- window and script ids, shared with the UI resources of DepartmentEfficiency.dat (the two must agree) ---------------------------------------------
 constexpr std::uint32_t kOptionsUiGroup = 0x5C4A6000;
 constexpr std::uint32_t kOptionsUiButtonScript = 0x5C4A6001, kOptionsUiWindowScript = 0x5C4A6002;
 constexpr std::uint32_t kOptionsUiButtonRoot = 0x5C4A6010, kOptionsUiButton = 0x5C4A6011;
@@ -264,7 +265,7 @@ inline bool IniHasKey(const std::string& text, const std::string& key) {
     return false;
 }
 
-// Sets each key to its value: an existing line is rewritten in place (a comment after the value is kept: only DepartmentEfficiencyDemolition.ini has them), a missing key is
+// Sets each key to its value: an existing line is rewritten in place (a comment after the value is kept: only [LotDemolition] has them), a missing key is
 // added at the end; every other line is kept as it is. A missing file (empty text) gets the section header first. The file's own line end is used.
 inline std::string IniSetKeys(const std::string& text, const std::string& section, const std::vector<std::pair<std::string, std::string>>& keys) {
     const std::string nl = text.find("\r\n") != std::string::npos ? "\r\n" : "\n";
@@ -304,17 +305,38 @@ inline std::string IniSetKeys(const std::string& text, const std::string& sectio
     return out;
 }
 
+// DepartmentEfficiency.ini as ONE text (`file`) and the three sections that each module's own parser is given (each with its header; "" = the section is absent).
 struct OptionsIniTexts {
-    std::string civic, utility, demolition;   // DepartmentEfficiency.ini, DepartmentEfficiencyUtility.ini, DepartmentEfficiencyDemolition.ini
+    std::string file, civic, utility, demolition;
+    OptionsIniTexts() = default;
+    static OptionsIniTexts FromFile(const std::string& f) {
+        OptionsIniTexts t;
+        t.file = f;
+        t.civic = IniSectionText(f, kIniSecAutoFinance);
+        t.utility = IniSectionText(f, kIniSecUtility);
+        t.demolition = IniSectionText(f, kIniSecDemolition);
+        return t;
+    }
+    // the three sections joined into a file (tests, an empty file); an absent section stays absent
+    OptionsIniTexts(const std::string& c, const std::string& u, const std::string& d) {
+        auto part = [](const std::string& s) { return s.empty() || s.back() == '\n' ? s : s + "\n"; };
+        *this = FromFile(part(c) + part(u) + part(d));
+    }
+    OptionsIniTexts(const char* c, const char* u, const char* d) : OptionsIniTexts(std::string(c), std::string(u), std::string(d)) {}
 };
 
-// What the three files make the plugin do (a missing file = the parser's defaults; an invalid file = what the plugin does with it: its defaults, all Off).
+// Sets keys inside ONE section of the file (a repeated key such as Mode only ever changes in its own section); every other byte of the file is kept.
+inline std::string IniSetKeysInSection(const std::string& file, const std::string& section, const std::vector<std::pair<std::string, std::string>>& keys) {
+    return IniReplaceSection(file, section, IniSetKeys(IniSectionText(file, section), section, keys));
+}
+
+// What the three sections make the plugin do (a missing section = the parser's defaults; an invalid section = what the plugin does with it: its defaults, all Off; the other two are not affected).
 inline OptionsConfigs ConfigsFromTexts(const OptionsIniTexts& t, std::string* error = nullptr) {
     OptionsConfigs c;
     std::string e;
-    if (!t.civic.empty() && !ParseAutoFinanceConfig(t.civic, c.civic, e)) { c.civic = AutoFinanceConfig{}; if (error) *error = "DepartmentEfficiency.ini: " + e; }
-    if (!t.utility.empty() && !ParseUtilityResearchConfig(t.utility, c.utility, e)) { c.utility = UtilityResearchConfig{}; if (error) *error = "DepartmentEfficiencyUtility.ini: " + e; }
-    if (!t.demolition.empty() && !lotwatch::ParseDemolitionConfig(t.demolition, c.demolition, e)) { c.demolition = lotwatch::DemolitionConfig{}; if (error) *error = "DepartmentEfficiencyDemolition.ini: " + e; }
+    if (!t.civic.empty() && !ParseAutoFinanceConfig(t.civic, c.civic, e)) { c.civic = AutoFinanceConfig{}; if (error) *error = "DepartmentEfficiency.ini [AutoFinance]: " + e; }
+    if (!t.utility.empty() && !ParseUtilityResearchConfig(t.utility, c.utility, e)) { c.utility = UtilityResearchConfig{}; if (error) *error = "DepartmentEfficiency.ini [UtilityResearch]: " + e; }
+    if (!t.demolition.empty() && !lotwatch::ParseDemolitionConfig(t.demolition, c.demolition, e)) { c.demolition = lotwatch::DemolitionConfig{}; if (error) *error = "DepartmentEfficiency.ini [LotDemolition]: " + e; }
     return c;
 }
 inline OptionsDraft DraftFromTexts(const OptionsIniTexts& t) { return DraftFromConfigs(ConfigsFromTexts(t)); }
@@ -323,11 +345,11 @@ struct OptionsApplyResult {
     bool ok = false;
     bool civicChanged = false, utilityChanged = false, demolitionChanged = false;
     OptionsIniTexts texts;
-    std::vector<std::string> keys;   // "File:Key=value" of every key written (for the log)
+    std::vector<std::string> keys;   // "DepartmentEfficiency.ini[Section]:Key=value" of every key written (for the log)
     std::string error;
 };
 
-// The new contents of the three ini files for the player's choices `want`, starting from the current files.
+// The new contents of the ini file for the player's choices `want`, starting from the current files.
 inline OptionsApplyResult ApplyOptions(const OptionsIniTexts& current, const OptionsDraft& want) {
     OptionsApplyResult r;
     std::string error;
@@ -338,7 +360,7 @@ inline OptionsApplyResult ApplyOptions(const OptionsIniTexts& current, const Opt
     const auto b = [](bool v) { return std::string(v ? "true" : "false"); };
     const bool master = want.on(kOptMaster);
 
-    // DepartmentEfficiency.ini
+    // [AutoFinance]
     std::vector<std::pair<std::string, std::string>> ck;
     if (changed(kOptEducation) || changed(kOptHealth)) {                                      // both together: a missing key defaults to true
         ck.push_back({"Education", b(want.on(kOptEducation))});
@@ -349,7 +371,7 @@ inline OptionsApplyResult ApplyOptions(const OptionsIniTexts& current, const Opt
     const AutoMode civicMode = master && (want.on(kOptEducation) || want.on(kOptHealth)) ? AutoMode::Auto : AutoMode::Off;
     if (c.civic.mode != civicMode) ck.push_back({"Mode", civicMode == AutoMode::Auto ? "Auto" : "Off"});
 
-    // DepartmentEfficiencyUtility.ini
+    // [UtilityResearch]
     std::vector<std::pair<std::string, std::string>> uk;
     const std::pair<int, const char*> managers[] = {{kOptPower, "AutoPower"}, {kOptWater, "AutoWater"}, {kOptSanitation, "AutoGarbage"}, {kOptDeals, "AutoDeals"}};
     bool anyChanged = false;
@@ -388,7 +410,7 @@ inline OptionsApplyResult ApplyOptions(const OptionsIniTexts& current, const Opt
         uk.push_back({"Mode", "Off"});
     }
 
-    // DepartmentEfficiencyDemolition.ini
+    // [LotDemolition]
     std::vector<std::pair<std::string, std::string>> dk;
     if (changed(kOptDemolishDestroyed)) dk.push_back({"DemolishDestroyed", b(want.on(kOptDemolishDestroyed))});
     if (changed(kOptDestroyedMonths)) dk.push_back({"DestroyedAfterDays", std::to_string(DaysFromMonths(want.at(kOptDestroyedMonths)))});
@@ -408,13 +430,14 @@ inline OptionsApplyResult ApplyOptions(const OptionsIniTexts& current, const Opt
     if (demolish && demolitionMode != lotwatch::DemolitionMode::Auto) dk.push_back({"Mode", "Auto"});
     if (!demolish && demolitionMode == lotwatch::DemolitionMode::Auto) dk.push_back({"Mode", "Off"});
 
-    r.texts = current;
-    if (!ck.empty()) { r.texts.civic = IniSetKeys(current.civic, "DepartmentEfficiency", ck); r.civicChanged = true; }
-    if (!uk.empty()) { r.texts.utility = IniSetKeys(current.utility, "DepartmentEfficiencyUtility", uk); r.utilityChanged = true; }
-    if (!dk.empty()) { r.texts.demolition = IniSetKeys(current.demolition, "LotDemolition", dk); r.demolitionChanged = true; }
-    for (const auto& [k, val] : ck) r.keys.push_back("DepartmentEfficiency.ini:" + k + "=" + val);
-    for (const auto& [k, val] : uk) r.keys.push_back("DepartmentEfficiencyUtility.ini:" + k + "=" + val);
-    for (const auto& [k, val] : dk) r.keys.push_back("DepartmentEfficiencyDemolition.ini:" + k + "=" + val);
+    std::string file = current.file;
+    if (!ck.empty()) { file = IniSetKeysInSection(file, kIniSecAutoFinance, ck); r.civicChanged = true; }
+    if (!uk.empty()) { file = IniSetKeysInSection(file, kIniSecUtility, uk); r.utilityChanged = true; }
+    if (!dk.empty()) { file = IniSetKeysInSection(file, kIniSecDemolition, dk); r.demolitionChanged = true; }
+    r.texts = OptionsIniTexts::FromFile(file);
+    for (const auto& [k, val] : ck) r.keys.push_back(std::string("DepartmentEfficiency.ini[") + kIniSecAutoFinance + "]:" + k + "=" + val);
+    for (const auto& [k, val] : uk) r.keys.push_back(std::string("DepartmentEfficiency.ini[") + kIniSecUtility + "]:" + k + "=" + val);
+    for (const auto& [k, val] : dk) r.keys.push_back(std::string("DepartmentEfficiency.ini[") + kIniSecDemolition + "]:" + k + "=" + val);
 
     // the files must give back exactly the chosen options, read by the plugin's own parsers
     error.clear();

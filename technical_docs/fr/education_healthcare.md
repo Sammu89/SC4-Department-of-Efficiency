@@ -582,23 +582,21 @@ Désactiver le Ministère ne rétablit pas les budgets précédents. Chaque bât
 
 #### Les messages d’origine des conseillers du jeu
 
-SimCity 4 affiche normalement des avertissements lorsque le financement de l’éducation ou de la santé passe sous certains pourcentages.
+SimCity 4 affiche normalement des avertissements lorsque le financement de l’éducation ou de la santé tombe sous certains pourcentages.
 
-Par exemple, le jeu peut se plaindre de budgets d’éducation inférieurs à 90 %, même lorsqu’une école a largement assez de capacité avec un financement bien plus bas.
+Par exemple, le jeu peut se plaindre de budgets d’éducation inférieurs à 90 %, même lorsqu’une école a largement assez de capacité avec un financement bien plus faible.
 
-Ces avertissements ne sont pas toujours pertinents quand le Ministère gère les bâtiments individuellement.
+Ces avertissements ne sont pas toujours pertinents lorsque le Ministère gère les bâtiments individuellement.
 
-Pour éviter des messages trompeurs, le plugin inclut un petit fichier de données qui ajuste certains conseils d’origine du jeu sur l’éducation, la santé et le budget :
+Tant que le Ministère gère l’éducation, ou la santé, le plugin ajuste donc certains conseils d’origine du jeu pour ce service :
 
 - Les avertissements courants fondés uniquement sur de faibles pourcentages de financement sont supprimés.
-- Certains avertissements sur un financement excessif ou sur les niveaux d’effectifs sont aussi supprimés.
+- Certains avertissements de surfinancement ou de niveaux de personnel sont aussi supprimés.
 - Les avertissements de pré-grève concernés sont limités aux situations où une grève a réellement lieu.
 - **Les vraies alertes de grève restent actives.**
-- Les messages de félicitations et d’état habituels du jeu sont conservés.
+- Les messages habituels de félicitations et d’état du jeu sont conservés.
 
-Cet ajustement est indépendant des interrupteurs de financement automatique du Ministère. Il reste actif tant que le fichier de données correspondant est installé, même si vous désactivez la gestion de l’éducation ou de la santé.
-
-Si vous voulez retrouver les conseils de financement d’origine du jeu, vous pouvez supprimer le fichier de données de conseils correspondant pendant que SimCity 4 est fermé.
+Cela suit l’état du Ministère dans chaque ville, sans redémarrer le jeu. Si vous désactivez la gestion de l’éducation ou de la santé (ou tout le Ministère), ou si le Ministère ne peut pas agir dessus, les conseils d’origine du jeu pour ce service reviennent aussitôt.
 
 Consultez la [Sécurité générale](safety.md#safety) pour en savoir plus.
 

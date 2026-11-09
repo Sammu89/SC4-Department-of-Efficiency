@@ -2160,7 +2160,7 @@ Isto impede que várias operações de contrato não verificadas interfiram umas
 
 #### O que acontece às mensagens dos conselheiros do jogo original?
 
-Enquanto o Ministério gere os contratos regionais, as mensagens dos conselheiros do jogo original sobre acordos com os vizinhos são suprimidas por um ficheiro de recursos incluído.
+Enquanto o Ministério gere os contratos de um recurso, as mensagens originais do conselheiro do jogo sobre acordos com os vizinhos para esse recurso não são mostradas.
 
 Estas incluem:
 
@@ -2174,7 +2174,7 @@ Quando uma falta genuína não pode ser resolvida automaticamente, pode emitir o
 
 Veja os [Avisos dos conselheiros](safety.md#notices).
 
-**Importante:** As mensagens do jogo original são suprimidas por um ficheiro de recursos carregado quando o SimCity 4 arranca. Desativar a gestão automática de contratos nas opções não restaura essas mensagens de imediato. O procedimento para as restaurar é explicado em [Limitações conhecidas](#neighbor-deals-limitations).
+**Importante:** Isto segue o estado do Ministério em cada cidade e é atualizado sem reiniciar o jogo. Se desligar a gestão dos contratos de um recurso (ou todo o Ministério), ou se o Ministério não puder atuar sobre ele, as mensagens originais desse recurso voltam de imediato. Uma mensagem cujo evento ocorra enquanto está silenciada não é mostrada depois. Consulte as [Limitações conhecidas](#neighbor-deals-limitations).
 
 <a id="neighbor-deals-settings"></a>
 ### 5. Definições
@@ -2237,7 +2237,7 @@ Esta definição está disponível através do ficheiro INI, não na janela de o
 |---|---:|---:|
 | `MinContractBenefit` | §0/mês | §0–§100.000/mês |
 
-Ficheiro: `DepartmentEfficiencyUtility.ini`
+Ficheiro: `DepartmentEfficiency.ini` (secção `[UtilityResearch]`)
 
 Quando está a zero, **qualquer benefício económico estritamente positivo é suficiente**.
 
@@ -2531,26 +2531,13 @@ O Ministério consegue gerir automaticamente os contratos regionais, mas continu
 - **As pesquisas em grandes contratos de lixo têm limites.** Se o Ministério não conseguir avaliar exaustivamente as combinações legais por haver mais de cinco milhões de um dos lados, não faz nenhuma alteração especulativa de contratos. As pesquisas mistas de compra e venda têm também os seus próprios limites, descritos atrás.
 
 #### Mensagens originais do conselheiro sobre acordos com os vizinhos
+O Ministério silencia as mensagens originais do conselheiro do SimCity 4 sobre acordos com os vizinhos (ofertas, sugestões de cancelamento, renovações e avisos de incumprimento) **apenas enquanto gere mesmo os contratos desse recurso**: o Ministério está ativo, os acordos automáticos estão ligados, a troca automática desse recurso está ligada e nada o impede de atuar.
 
-O Ministério inclui um ficheiro de recursos que suprime as mensagens originais do conselheiro do SimCity 4 sobre acordos com os vizinhos.
+Isto é feito por um pequeno script do próprio Ministério dentro de `DepartmentEfficiency.dat`. Segue um interruptor que o Ministério publica em cada cidade, separadamente para eletricidade, água e lixo. Nada dos scripts do jogo é copiado.
 
-Esse ficheiro é:
+Em todos os outros casos as mensagens originais são exatamente as que o jogo traz: Ministério desligado, acordos desligados, troca do recurso desligada, outro modo, um controlador que parou por segurança, ou o plugin não carregado. A alteração aplica-se ao jogo em curso, sem o reiniciar, e também repõe mensagens como *Acordo em incumprimento*.
 
-`DepartmentEfficiencyDealAdvice.dat`
-
-**O SimCity 4 carrega os ficheiros de recursos quando o jogo arranca.**
-
-Por isso, desligar as opções de gestão de contratos do Ministério não restaura de imediato as mensagens originais do conselheiro.
-
-Se quiser gerir os contratos manualmente e restaurar as mensagens originais:
-
-1. Feche o SimCity 4.
-2. Retire `DepartmentEfficiencyDealAdvice.dat` da pasta Plugins do jogo.
-3. Reinicie o jogo.
-
-Isto restaura também mensagens originais como *Acordo Incumprido*.
-
-O Ministério regista um aviso no seu registo quando o ficheiro de recursos e as definições de gestão atuais não coincidem.
+Uma mensagem cujo evento ocorreu enquanto estava silenciada não é recuperada depois.
 
 #### Propostas pendentes
 

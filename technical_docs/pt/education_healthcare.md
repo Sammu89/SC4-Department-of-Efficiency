@@ -584,21 +584,19 @@ Desligar o Ministério não repõe os orçamentos anteriores. Cada edifício man
 
 O SimCity 4 costuma mostrar avisos quando o financiamento da educação ou da saúde desce abaixo de certas percentagens.
 
-Por exemplo, o jogo pode queixar-se de orçamentos de educação abaixo de 90%, mesmo quando uma escola individual tem capacidade de sobra com um financiamento muito mais baixo.
+Por exemplo, o jogo pode queixar-se de orçamentos de educação abaixo de 90%, mesmo quando uma escola tem capacidade mais do que suficiente com um financiamento muito inferior.
 
-Estes avisos nem sempre são relevantes quando o Ministério está a gerir os edifícios individualmente.
+Estes avisos nem sempre são relevantes quando o Ministério gere os edifícios individualmente.
 
-Para evitar mensagens enganadoras, o plugin inclui um pequeno ficheiro de dados que ajusta alguns dos conselhos originais do jogo sobre educação, saúde e orçamento:
+Enquanto o Ministério gere a educação, ou a saúde, o plugin ajusta por isso alguns conselhos originais do jogo para esse serviço:
 
 - Os avisos de rotina baseados apenas em percentagens baixas de financiamento são suprimidos.
 - Alguns avisos sobre excesso de financiamento ou níveis de pessoal também são suprimidos.
-- Os avisos de pré-greve relevantes ficam restritos às situações em que está realmente a decorrer uma greve.
-- **Os alertas de greve reais continuam ativos.**
-- Os elogios e as mensagens de estado normais do jogo são preservados.
+- Os avisos de pré-greve relevantes limitam-se às situações em que há mesmo uma greve.
+- **Os alertas de greve verdadeiros mantêm-se ativos.**
+- As mensagens normais de elogio e de estado do jogo são preservadas.
 
-Este ajuste é independente dos interruptores de financiamento automático do Ministério. Mantém-se ativo enquanto o ficheiro de dados correspondente estiver instalado, mesmo que desative a gestão da educação ou da saúde.
-
-Se quiser recuperar os conselhos originais do jogo sobre financiamento, pode remover o ficheiro de dados de conselhos correspondente com o SimCity 4 fechado.
+Isto segue o estado do Ministério em cada cidade, sem reiniciar o jogo. Se desativar a gestão da educação ou da saúde (ou todo o Ministério), ou se o Ministério não puder atuar sobre ela, os conselhos originais do jogo para esse serviço voltam de imediato.
 
 Consulte a [Segurança geral](safety.md#safety) para mais informação.
 

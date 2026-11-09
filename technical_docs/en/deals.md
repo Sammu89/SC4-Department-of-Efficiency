@@ -2160,7 +2160,7 @@ This prevents several unverified contract operations from interfering with one a
 
 #### What happens to the original game's advisor messages?
 
-While the Department manages regional contracts, the original game's neighbor-deal advisor messages are suppressed by an included resource file.
+While the Department manages the contracts of a resource, the original game's neighbor-deal advisor messages for that resource are not shown.
 
 These include:
 
@@ -2174,7 +2174,7 @@ When a genuine shortage cannot be resolved automatically, it can issue its own n
 
 See [Notices](safety.md#notices).
 
-**Important:** The original game's messages are suppressed by a resource file loaded when SimCity 4 starts. Disabling automatic contract management in the options does not immediately restore those messages. The procedure for restoring them is explained under [Known limitations](#neighbor-deals-limitations).
+**Important:** This follows the Department's state in every city and is updated without restarting the game. If you switch off the contract management of a resource (or the whole Department), or if the Department cannot act on it, the original messages for that resource return at once. A message whose event happens while it is silenced is not shown afterwards. See [Known limitations](#neighbor-deals-limitations).
 
 <a id="neighbor-deals-settings"></a>
 ### 5. Settings
@@ -2237,7 +2237,7 @@ This setting is available through the INI file, not the in-game options window.
 |---|---:|---:|
 | `MinContractBenefit` | §0/month | §0–§100,000/month |
 
-File: `DepartmentEfficiencyUtility.ini`
+File: `DepartmentEfficiency.ini` (section `[UtilityResearch]`)
 
 When set to zero, **any strictly positive economic benefit is sufficient**.
 
@@ -2531,26 +2531,13 @@ The Department can manage regional contracts automatically, but it remains subje
 - **Large garbage contract searches have limits.** If the Department cannot exhaustively evaluate the legal combinations because there are more than five million on one side, it does not make a speculative contract change. Mixed buy-and-sell searches also have their own limits, described earlier.
 
 #### Original neighbor-deal advisor messages
+The Department silences SimCity 4's original neighbor-deal advisor messages (offers, cancellation suggestions, renewals and default warnings) **only while it really manages the contracts of that resource**: the Department is active, automatic deals are on, the automatic trade of that resource is on, and nothing prevents it from acting.
 
-The Department includes a resource file that suppresses SimCity 4's original neighbor-deal advisor messages.
+This is done by a small script of the Department's own inside `DepartmentEfficiency.dat`. It follows a switch that the Department publishes in every city, for power, water and garbage separately. Nothing of the game's own scripts is copied.
 
-This file is:
+In every other case the original messages are exactly as the game ships them: Department off, deals off, the resource's trade off, a different mode, a controller that has stopped itself for safety, or the plugin not loaded. The change takes effect in the running game, without restarting it, and also restores messages such as *Deal Defaulted*.
 
-`DepartmentEfficiencyDealAdvice.dat`
-
-**SimCity 4 loads resource files when the game starts.**
-
-Therefore, disabling the Department's contract management options does not immediately restore the original advisor messages.
-
-If you want to manage contracts manually and restore the original messages:
-
-1. Close SimCity 4.
-2. Remove `DepartmentEfficiencyDealAdvice.dat` from the game's Plugins folder.
-3. Restart the game.
-
-This also restores original messages such as *Deal Defaulted*.
-
-The Department records a warning in its log when the resource file and current management settings do not match.
+A message whose event happened while it was silenced is not recovered afterwards.
 
 #### Pending proposals
 

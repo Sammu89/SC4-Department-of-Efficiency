@@ -130,7 +130,7 @@ struct FacilityState {
 
 // Policy: the margins follow the game's STRIKE rule. The game rolls a strike only below coverage 0.8; its
 // "strike rumour" and underfunding advice are silenced unless a strike is in progress
-// (DepartmentEfficiencyCivicAdvice.dat), because they fired during small transient budget adjustments.
+// (the civic Lua of DepartmentEfficiency.dat), because they fired during small transient budget adjustments.
 constexpr double kStrikeTargetCoverage = 0.85;  // coverage kept even after the largest rise seen: 0.05 above the strike knee (0.8) for the jitter and the monthly-stale coverage
 constexpr float kStrikeSafeCoverage = 0.85f;  // a building the game shows below this coverage is never lowered (the knee is 0.8)
 

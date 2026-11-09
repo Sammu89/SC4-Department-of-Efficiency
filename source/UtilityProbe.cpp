@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright (c) 2026 Sammu89
 #include "UtilityProbe.h"
+#include "IniSections.h"
 
 #include "Logging.h"
 #include "NeighborGameAbi.h"
@@ -790,13 +791,13 @@ void UtilityProbe::LoadConfigIfChanged() {
     std::ostringstream buffer;
     buffer << in.rdbuf();
     std::string error;
-    if (!ParseUtilityResearchConfig(buffer.str(), config_, error)) {
+    if (!ParseUtilityResearchConfig(IniSectionText(buffer.str(), kIniSecUtility), config_, error)) {      // only the [UtilityResearch] section
         config_ = UtilityResearchConfig{};
-        Log(LogLevel::Warning, "[Utility] DepartmentEfficiencyUtility.ini invalid (" + error + "); using defaults");
+        Log(LogLevel::Warning, "[Utility] DepartmentEfficiency.ini [UtilityResearch] invalid (" + error + "); using defaults");
     } else if (!config_.obsoleteKeys.empty()) {
         std::string names;
         for (const auto& k : config_.obsoleteKeys) names += (names.empty() ? "" : ", ") + k;
-        Log(LogLevel::Warning, "[Utility] DepartmentEfficiencyUtility.ini: obsolete key(s) ignored: " + names +
+        Log(LogLevel::Warning, "[Utility] DepartmentEfficiency.ini [UtilityResearch]: obsolete key(s) ignored: " + names +
                                    "; AutoTradePower / AutoTradeWater / AutoTradeGarbage now control the contracts of each resource");
     }
 }
