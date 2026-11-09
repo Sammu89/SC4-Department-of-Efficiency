@@ -240,7 +240,7 @@ This protection applies to eligible facilities (schools, libraries, museums, cli
 
 ## Updating and uninstalling
 
-**Settings are not carried over.** Since version 1.0.2 the Department has a single settings file, `DepartmentEfficiency.ini`, which replaces the three INI files of version 1.0.0 and the `Department of Efficiency` folder of the first 1.0.2 package. Settings in older files are neither read nor migrated: set your preferences again in **Play Options → Department of Efficiency**.
+**Settings are not carried over.** Since version 1.0.2 the Department has a single settings file, `DepartmentEfficiency.ini`, which replaces the three INI files of version 1.0.0 and the `Department of Efficiency` folder. Settings in older files are neither read nor migrated: set your preferences again in **Play Options → Department of Efficiency**.
 
 **To update an earlier installation (a clean install is required).** Close the game and delete the Department's old files **before** copying the three new ones. Delete only these, in `Documents\SimCity 4\Plugins`:
 
