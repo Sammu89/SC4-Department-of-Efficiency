@@ -55,23 +55,11 @@ Everything is controlled from within the game at **Play Options → Department o
 
 3\. **Close SimCity 4.** Extract the ZIP to a temporary folder.
 
-4\. Copy the **three files** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** and **`DepartmentEfficiency.ini`** directly into `Documents\SimCity 4\Plugins`. Do not create a subfolder.
+4\. Copy the three files **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** and **`DepartmentEfficiency.ini`** directly into `Documents\SimCity 4\Plugins`.
 
 5\. Start the game and follow the [first-time setup](#first-time-setup) instructions before playing a saved city.
 
-The distribution ZIP contains exactly these three files. After installation, you should have:
-
-```text
-Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    DepartmentEfficiency.dat
-    DepartmentEfficiency.ini
-```
-
-The public repository's Markdown files and screenshots are **not** required by the game. Keep the three files **directly in Plugins**, side by side. There is no `Department of Efficiency` folder any more.
-
-> [!WARNING]
-> **Updating from an earlier version?** Do not copy the new files over the old ones. First delete the old Department files, as explained in [Updating and uninstalling](#updating-and-uninstalling).
+**Preferences:** Back up `DepartmentEfficiency.ini` before replacing it to keep your personal settings.
 
 **Changing settings later:** open **Play Options → Department of Efficiency**, use the **Services** and **Demolition** pages, and click **Accept**. For the master switch you can also use the **Establish a Department of Efficiency** ordinance at no monthly cost. Switching the Department off stops future actions; it does not undo funding, contracts or demolition already applied.
 
@@ -240,18 +228,9 @@ This protection applies to eligible facilities (schools, libraries, museums, cli
 
 ## Updating and uninstalling
 
-**Settings are not carried over.** Since version 1.0.2 the Department has a single settings file, `DepartmentEfficiency.ini`, which replaces the three INI files of version 1.0.0 and the `Department of Efficiency` folder. Settings in older files are neither read nor migrated: set your preferences again in **Play Options → Department of Efficiency**.
+**To update:** Close the game, back up `DepartmentEfficiency.ini` if you wish to keep your preferences, remove the previous Department installation and copy the new files to `Plugins`. Settings from version 1.0.0 must be configured again.
 
-**To update an earlier installation (a clean install is required).** Close the game and delete the Department's old files **before** copying the three new ones. Delete only these, in `Documents\SimCity 4\Plugins`:
-
-- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini`;
-- the whole `Department of Efficiency` folder, if it exists;
-- from version 1.0.0, if they are still there: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` and `DepartmentEfficiencyDemolition.ini`;
-- `DepartmentEfficiency.told.txt`, a small memory file the plugin may have left (it is created again when needed).
-
-Do not touch the files of other mods. Copying the new files over an old installation is not supported: the old resource files would stay and could keep the game's own advice silenced. The plugin never reads files from the old folder; if the folder is still there, it only writes a warning to its log.
-
-**To uninstall:** close the game and delete the same files. Your saved cities remain readable without the mod. Funding levels, existing contracts and any demolitions already saved in a city are not automatically reversed.
+**To uninstall:** Close the game and remove `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini` from `Plugins`. Changes already saved in your cities are not automatically reversed.
 
 **Log file:** `DepartmentEfficiency.log` is in the `Logs` folder of your SimCity 4 user folder (normally `Documents\SimCity 4\Logs`, or the `Logs` folder of the folder given with `-UserDir`). If that folder cannot be used, it is written next to the DLL.
 
