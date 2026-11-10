@@ -55,23 +55,11 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 
 3\. **Zamknij SimCity 4.** Rozpakuj plik ZIP do folderu tymczasowego.
 
-4\. Skopiuj **trzy pliki** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** i **`DepartmentEfficiency.ini`** bezpośrednio do `Documents\SimCity 4\Plugins`. Nie twórz żadnego podfolderu.
+4\. Skopiuj trzy pliki **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** i **`DepartmentEfficiency.ini`** bezpośrednio do `Documents\SimCity 4\Plugins`.
 
 5\. Uruchom grę i przed zagraniem w zapisane miasto wykonaj instrukcje z sekcji [pierwsza konfiguracja](#first-time-setup).
 
-Dystrybucyjny plik ZIP zawiera dokładnie te trzy pliki. Po instalacji układ powinien wyglądać tak:
-
-```text
-Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    DepartmentEfficiency.dat
-    DepartmentEfficiency.ini
-```
-
-Pliki Markdown i zrzuty ekranu z publicznego repozytorium **nie** są potrzebne grze. Trzymaj te trzy pliki **bezpośrednio w Plugins**, obok siebie. Folder `Department of Efficiency` już nie istnieje.
-
-> [!WARNING]
-> **Aktualizujesz z wcześniejszej wersji?** Nie kopiuj nowych plików na stare. Najpierw usuń stare pliki Ministerstwa, jak opisano w [Aktualizacja i odinstalowanie](#updating-and-uninstalling).
+**Ustawienia:** przed zastąpieniem pliku `DepartmentEfficiency.ini` zrób jego kopię zapasową, aby zachować swoje ustawienia.
 
 **Zmiana ustawień później:** otwórz **Opcje gry → Ministerstwo Optymalizacji**, skorzystaj ze stron **Służby miejskie** i **Wyburzanie** i kliknij **Akceptuj**. Jako główny wyłącznik możesz też użyć uchwały **Utwórz Ministerstwo Optymalizacji**, bez miesięcznych kosztów. Wyłączenie Ministerstwa zatrzymuje przyszłe działania; nie cofa już zastosowanego finansowania, umów ani wyburzeń.
 
@@ -240,18 +228,9 @@ Ta ochrona dotyczy kwalifikujących się obiektów (szkół, bibliotek, muzeów,
 
 ## Aktualizacja i odinstalowanie
 
-**Ustawienia nie są przenoszone.** Od wersji 1.0.2 Ministerstwo ma jeden plik ustawień, `DepartmentEfficiency.ini`, który zastępuje trzy pliki INI z wersji 1.0.0 oraz folder `Department of Efficiency` z pierwszego pakietu 1.0.2. Ustawienia ze starszych plików nie są odczytywane ani przenoszone: ustaw preferencje ponownie w **Opcje gry → Ministerstwo Optymalizacji**.
+**Aktualizacja:** Zamknij grę, zrób kopię zapasową `DepartmentEfficiency.ini`, jeśli chcesz zachować ustawienia, usuń poprzednią instalację Ministerstwa i skopiuj nowe pliki do `Plugins`. Ustawienia z wersji 1.0.0 trzeba skonfigurować ponownie.
 
-**Jak zaktualizować wcześniejszą instalację (wymagana jest czysta instalacja).** Zamknij grę i usuń stare pliki Ministerstwa **przed** skopiowaniem trzech nowych. Usuń tylko te, w `Documents\SimCity 4\Plugins`:
-
-- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` i `DepartmentEfficiency.ini`;
-- cały folder `Department of Efficiency`, jeśli istnieje;
-- z wersji 1.0.0, jeśli nadal tam są: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` i `DepartmentEfficiencyDemolition.ini`;
-- `DepartmentEfficiency.told.txt`, mały plik pamięci, który wtyczka mogła zostawić (zostanie utworzony ponownie w razie potrzeby).
-
-Nie ruszaj plików innych modów. Kopiowanie nowych plików na starą instalację nie jest obsługiwane: stare pliki zasobów zostałyby i mogłyby nadal wyciszać własne porady gry. Wtyczka nigdy nie czyta plików ze starego folderu; jeśli folder nadal istnieje, zapisuje tylko ostrzeżenie w swoim dzienniku.
-
-**Odinstalowanie:** zamknij grę i usuń te same pliki. Zapisane miasta pozostają czytelne bez moda. Poziomy finansowania, istniejące umowy i wyburzenia zapisane już w mieście nie są automatycznie cofane.
+**Odinstalowanie:** Zamknij grę i usuń `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` oraz `DepartmentEfficiency.ini` z `Plugins`. Zmiany zapisane wcześniej w miastach nie zostaną automatycznie cofnięte.
 
 **Plik dziennika:** `DepartmentEfficiency.log` znajduje się w folderze `Logs` Twojego folderu użytkownika SimCity 4 (zwykle `Documents\SimCity 4\Logs` albo folder `Logs` folderu podanego przez `-UserDir`). Jeśli tego folderu nie można użyć, plik jest zapisywany obok pliku DLL.
 
