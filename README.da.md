@@ -55,23 +55,11 @@ Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet
 
 3\. **Luk SimCity 4.** Pak ZIP'en ud i en midlertidig mappe.
 
-4\. Kopiér de **tre filer** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** og **`DepartmentEfficiency.ini`** direkte til `Documents\SimCity 4\Plugins`. Opret ikke nogen undermappe.
+4\. Kopiér de tre filer **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** og **`DepartmentEfficiency.ini`** direkte til `Documents\SimCity 4\Plugins`.
 
 5\. Start spillet, og følg vejledningen i [første opsætning](#first-time-setup), før du spiller en gemt by.
 
-Distributions-ZIP'en indeholder præcis disse tre filer. Efter installationen skal du have:
-
-```text
-Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    DepartmentEfficiency.dat
-    DepartmentEfficiency.ini
-```
-
-Det offentlige repositorys Markdown-filer og skærmbilleder er **ikke** nødvendige for spillet. Behold de tre filer **direkte i Plugins**, side om side. Mappen `Department of Efficiency` findes ikke længere.
-
-> [!WARNING]
-> **Opdaterer du fra en tidligere version?** Kopiér ikke de nye filer oven på de gamle. Slet først Ministeriets gamle filer, som beskrevet under [Opdatering og afinstallation](#updating-and-uninstalling).
+**Indstillinger:** tag en sikkerhedskopi af `DepartmentEfficiency.ini`, inden du erstatter den, for at bevare dine personlige indstillinger.
 
 **Ændre indstillinger senere:** åbn **Spilindstillinger → Effektivitetsministeriet**, brug siderne **Serviceområder** og **Nedrivning**, og klik på **Accepter**. Til hovedafbryderen kan du også bruge forordningen **Opret Effektivitetsministeriet** uden månedlige omkostninger. At slå Ministeriet fra stopper fremtidige handlinger; det fortryder ikke finansiering, aftaler og nedrivninger, der allerede er udført.
 
@@ -240,18 +228,9 @@ Denne beskyttelse gælder for egnede anlæg (skoler, biblioteker, museer, klinik
 
 ## Opdatering og afinstallation
 
-**Indstillinger overføres ikke.** Siden version 1.0.2 har Ministeriet én enkelt indstillingsfil, `DepartmentEfficiency.ini`, som erstatter de tre INI-filer fra version 1.0.0 og mappen `Department of Efficiency` fra den første 1.0.2-pakke. Indstillinger i ældre filer læses eller overføres ikke: indstil dine præferencer igen under **Spilindstillinger → Effektivitetsministeriet**.
+**Opdatering:** Luk spillet, tag en sikkerhedskopi af `DepartmentEfficiency.ini`, hvis du vil beholde dine indstillinger, fjern den tidligere installation af Ministeriet, og kopiér de nye filer til `Plugins`. Indstillinger fra version 1.0.0 skal konfigureres igen.
 
-**Sådan opdaterer du en tidligere installation (en ren installation er påkrævet).** Luk spillet og slet Ministeriets gamle filer, **før** du kopierer de tre nye. Slet kun disse, i `Documents\SimCity 4\Plugins`:
-
-- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` og `DepartmentEfficiency.ini`;
-- hele mappen `Department of Efficiency`, hvis den findes;
-- fra version 1.0.0, hvis de stadig er der: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` og `DepartmentEfficiencyDemolition.ini`;
-- `DepartmentEfficiency.told.txt`, en lille hukommelsesfil, som pluginet kan have efterladt (den oprettes igen, når det er nødvendigt).
-
-Rør ikke andre modders filer. At kopiere de nye filer oven på en gammel installation understøttes ikke: de gamle ressourcefiler ville blive liggende og kunne holde spillets egne råd tavse. Pluginet læser aldrig filer fra den gamle mappe; hvis mappen stadig er der, skriver det kun en advarsel i sin log.
-
-**Sådan afinstallerer du:** luk spillet og slet de samme filer. Dine gemte byer kan stadig læses uden modden. Finansieringsniveauer, eksisterende kontrakter og nedrivninger, der allerede er gemt i en by, bliver ikke automatisk fortrudt.
+**Afinstallation:** Luk spillet, og fjern `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` og `DepartmentEfficiency.ini` fra `Plugins`. Ændringer, der allerede er gemt i byerne, fortrydes ikke automatisk.
 
 **Logfil:** `DepartmentEfficiency.log` ligger i mappen `Logs` i din SimCity 4-brugermappe (normalt `Documents\SimCity 4\Logs`, eller mappen `Logs` i den mappe, der er angivet med `-UserDir`). Kan den mappe ikke bruges, skrives den ved siden af DLL-filen.
 
