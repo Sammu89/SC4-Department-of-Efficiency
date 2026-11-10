@@ -5,15 +5,13 @@
 This package **replaces** the 1.0.2 package first uploaded on 9 November 2026. Compared with **1.0.0** it contains everything below. Items marked **New in this revision** were not in the first 1.0.2 package.
 
 > [!IMPORTANT]
-> **Install it cleanly.** The Department now consists of exactly three files placed directly in `Plugins`. Do not copy the new files over an old installation: follow [Updating and uninstalling](README.md#updating-and-uninstalling) first.
+> **Installation:** Copy `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini` to `Plugins`. Back up the INI to keep your personal settings.
 
-### Installation: three files, no subfolder (New in this revision)
+### Installation and configuration (New in this revision)
 
-- **One DLL, one DAT, one INI, side by side in `Documents\SimCity 4\Plugins`.** The `Department of Efficiency` folder no longer exists, and the plugin never looks for its files there.
-- `DepartmentEfficiency.dat` holds all the plugin's resources (every text in ten languages, the options window, the Department's own advisor scripts). `DepartmentEfficiency.ini` holds all its settings, in three sections: `[AutoFinance]`, `[UtilityResearch]` and `[LotDemolition]`.
-- The four extra DAT files and the three INI files of version 1.0.0 are gone. Settings are **not** carried over: set your preferences again in **Play Options → Department of Efficiency**.
-- A clean install is required (delete the old Department files first; other mods' files are never touched).
-- If the plugin finds the old `Department of Efficiency` folder next to the DLL, it writes one warning to its log and still ignores everything in it.
+- The DLL, DAT and INI are installed in `Documents\SimCity 4\Plugins`.
+- `DepartmentEfficiency.dat` contains the plugin resources and `DepartmentEfficiency.ini` stores user preferences.
+- Remove the previous Department installation before updating. Settings from version 1.0.0 must be configured again.
 
 ### Phantom Funding Slider Bug: the Department keeps managing affected buildings (New in this revision)
 
