@@ -43,25 +43,22 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 <a id="download-and-installation"></a>
 
-## Hämtning och installation
+## Installation
 
 ### [⬇ Ladda ner Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 **Nytt i 1.0.2:** se [ändringsloggen](CHANGELOG.md) (på engelska).
 
-1\. Öppna projektets [releasesida](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) och välj den senaste utgåvan.
+1. Ladda ner den [senaste versionen](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) och stäng SimCity 4.
 
-2\. Under **Assets** hämtar du **distributions-ZIP:en för Department of Efficiency**.
+2. Packa upp ZIP-filen direkt i `Documents\SimCity 4\Plugins`.
 
-3\. **Stäng SimCity 4.** Packa upp ZIP-filen i en tillfällig mapp.
+3. Kontrollera att `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` och `DepartmentEfficiency.ini` finns i Plugins-mappen.
 
-4\. Kopiera de tre filerna **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** och **`DepartmentEfficiency.ini`** direkt till `Documents\SimCity 4\Plugins`.
+4. Starta SimCity 4 och öppna **Spelalternativ → Effektivitetsdepartementet** för att välja dina inställningar.
 
-5\. Starta spelet och följ anvisningarna under [första inställningen](#first-time-setup) innan du spelar en sparad stad.
-
-**Inställningar:** säkerhetskopiera `DepartmentEfficiency.ini` innan du ersätter den för att behålla dina personliga inställningar.
-
-**Ändra inställningar senare:** öppna **Spelalternativ → Effektivitetsdepartementet**, använd sidorna **Samhällsservice** och **Rivning** och klicka på **Godkänn**. För huvudströmbrytaren kan du också använda förordningen **Inrätta ett effektivitetsdepartement**, utan månadskostnad. Att stänga av Departementet stoppar framtida åtgärder; det ångrar inte finansiering, avtal eller rivningar som redan genomförts.
+> [!IMPORTANT]
+> Ministeriet är aktiverat som standard, inklusive automatisk rivning av förstörda och övergivna byggnader. Kontrollera inställningarna för **rivning** innan du öppnar en stad med byggnader du vill bevara.
 
 <a id="features"></a>
 
@@ -228,9 +225,11 @@ Skyddet gäller lämpliga anläggningar (skolor, bibliotek, museer, kliniker och
 
 ## Uppdatera och avinstallera
 
-**Uppdatera:** Stäng spelet, säkerhetskopiera `DepartmentEfficiency.ini` om du vill behålla dina inställningar, ta bort den tidigare installationen av Departementet och kopiera de nya filerna till `Plugins`. Inställningar från version 1.0.0 måste anges på nytt.
+Ministeriets tre filer installeras direkt i Plugins. Säkerhetskopiera `DepartmentEfficiency.ini` före uppdatering för att behålla dina inställningar.
 
-**Avinstallera:** Stäng spelet och ta bort `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` och `DepartmentEfficiency.ini` från `Plugins`. Ändringar som redan har sparats i städerna återställs inte automatiskt.
+**Uppdatera från version 1.0.0:** Stäng spelet, ta bort hela undermappen `Department of Efficiency` och ersätt `DepartmentEfficiency.dll` med den nya filen. Packa upp den nya ZIP-filen i Plugins. Inställningar från version 1.0.0 måste göras om.
+
+**Avinstallera:** Stäng spelet och ta bort ministeriets tre filer från Plugins. Dina sparade städer kan fortfarande användas; redan sparad finansiering, avtal och rivningar kvarstår.
 
 **Loggfil:** `DepartmentEfficiency.log` finns i mappen `Logs` i din SimCity 4-användarmapp (normalt `Documents\SimCity 4\Logs`, eller mappen `Logs` i den mapp som anges med `-UserDir`). Kan den mappen inte användas skrivs den bredvid DLL-filen.
 

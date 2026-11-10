@@ -43,25 +43,22 @@ Everything is controlled from within the game at **Play Options → Department o
 
 <a id="download-and-installation"></a>
 
-## Download and installation
+## Installation
 
 ### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 **What's new in 1.0.2:** see the [changelog](CHANGELOG.md).
 
-1\. Open the project’s [Releases page](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) and choose the latest release.
+1. Download the [latest release](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) and close SimCity 4.
 
-2\. Under **Assets**, download the **Department of Efficiency distribution ZIP**.
+2. Extract the ZIP directly to `Documents\SimCity 4\Plugins`.
 
-3\. **Close SimCity 4.** Extract the ZIP to a temporary folder.
+3. Check that `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini` are in the Plugins folder.
 
-4\. Copy the three files **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** and **`DepartmentEfficiency.ini`** directly into `Documents\SimCity 4\Plugins`.
+4. Start SimCity 4 and open **Play Options → Department of Efficiency** to set your preferences.
 
-5\. Start the game and follow the [first-time setup](#first-time-setup) instructions before playing a saved city.
-
-**Preferences:** Back up `DepartmentEfficiency.ini` before replacing it to keep your personal settings.
-
-**Changing settings later:** open **Play Options → Department of Efficiency**, use the **Services** and **Demolition** pages, and click **Accept**. For the master switch you can also use the **Establish a Department of Efficiency** ordinance at no monthly cost. Switching the Department off stops future actions; it does not undo funding, contracts or demolition already applied.
+> [!IMPORTANT]
+> The Department is enabled by default, including automatic demolition of destroyed and abandoned buildings. Review the **Demolition** settings before opening a city containing buildings you wish to preserve.
 
 <a id="features"></a>
 
@@ -228,9 +225,11 @@ This protection applies to eligible facilities (schools, libraries, museums, cli
 
 ## Updating and uninstalling
 
-**To update:** Close the game, back up `DepartmentEfficiency.ini` if you wish to keep your preferences, remove the previous Department installation and copy the new files to `Plugins`. Settings from version 1.0.0 must be configured again.
+All three Department files are installed directly in the Plugins folder. Back up `DepartmentEfficiency.ini` before updating to preserve your personal preferences.
 
-**To uninstall:** Close the game and remove `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini` from `Plugins`. Changes already saved in your cities are not automatically reversed.
+**Updating from 1.0.0:** Close the game, delete the entire `Department of Efficiency` subfolder and replace `DepartmentEfficiency.dll` with the new file. Extract the new ZIP to Plugins. Settings from 1.0.0 must be configured again.
+
+**To uninstall:** Close the game and remove the three Department files from Plugins. Your saved cities remain usable; funding values, contracts and demolitions already saved remain as they were.
 
 **Log file:** `DepartmentEfficiency.log` is in the `Logs` folder of your SimCity 4 user folder (normally `Documents\SimCity 4\Logs`, or the `Logs` folder of the folder given with `-UserDir`). If that folder cannot be used, it is written next to the DLL.
 

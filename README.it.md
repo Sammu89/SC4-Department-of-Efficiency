@@ -43,25 +43,22 @@ Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizza
 
 <a id="download-and-installation"></a>
 
-## Download e installazione
+## Installazione
 
 ### [⬇ Scarica Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 **Novità della 1.0.2:** vedi il [registro delle modifiche](CHANGELOG.md) (in inglese).
 
-1\. Apri la [pagina delle release](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) del progetto e scegli la versione più recente.
+1. Scarica la [versione più recente](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) e chiudi SimCity 4.
 
-2\. In **Assets**, scarica lo **ZIP di distribuzione di Department of Efficiency**.
+2. Estrai lo ZIP direttamente in `Documents\SimCity 4\Plugins`.
 
-3\. **Chiudi SimCity 4.** Estrai lo ZIP in una cartella temporanea.
+3. Verifica che `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` e `DepartmentEfficiency.ini` siano nella cartella Plugins.
 
-4\. Copia i tre file **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** e **`DepartmentEfficiency.ini`** direttamente in `Documents\SimCity 4\Plugins`.
+4. Avvia SimCity 4 e apri **Opzioni di gioco → Ministero dell'Ottimizzazione** per impostare le preferenze.
 
-5\. Avvia il gioco e segui le istruzioni della [configurazione iniziale](#first-time-setup) prima di giocare una città salvata.
-
-**Preferenze:** esegui una copia di sicurezza di `DepartmentEfficiency.ini` prima di sostituirlo per conservare le impostazioni personali.
-
-**Cambiare le impostazioni in seguito:** apri **Opzioni di gioco → Ministero dell'Ottimizzazione**, usa le pagine **Servizi** e **Demolizioni** e fai clic su **Accetta**. Per l'interruttore generale puoi anche usare l'ordinanza **Istituzione del Ministero dell'Ottimizzazione**, senza costi mensili. Disattivare il Ministero ferma le azioni future; non annulla finanziamenti, contratti e demolizioni già applicati.
+> [!IMPORTANT]
+> Il Ministero è attivo per impostazione predefinita, inclusa la demolizione automatica degli edifici distrutti e abbandonati. Controlla le impostazioni di **Demolizione** prima di aprire una città con edifici da conservare.
 
 <a id="features"></a>
 
@@ -228,9 +225,11 @@ Questa protezione si applica alle strutture idonee (scuole, biblioteche, musei, 
 
 ## Aggiornamento e disinstallazione
 
-**Per aggiornare:** chiudi il gioco, salva una copia di `DepartmentEfficiency.ini` se vuoi mantenere le preferenze, rimuovi l'installazione precedente del Ministero e copia i nuovi file in `Plugins`. Le impostazioni della versione 1.0.0 devono essere configurate nuovamente.
+I tre file del Ministero sono installati direttamente in Plugins. Prima di aggiornare, salva una copia di `DepartmentEfficiency.ini` per conservare le preferenze.
 
-**Per disinstallare:** chiudi il gioco ed elimina `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` e `DepartmentEfficiency.ini` da `Plugins`. Le modifiche già salvate nelle città non vengono annullate automaticamente.
+**Aggiornamento dalla versione 1.0.0:** Chiudi il gioco, elimina l’intera sottocartella `Department of Efficiency` e sostituisci `DepartmentEfficiency.dll` con il nuovo file. Estrai il nuovo ZIP in Plugins. Le impostazioni della versione 1.0.0 devono essere configurate nuovamente.
+
+**Disinstallazione:** Chiudi il gioco e rimuovi i tre file del Ministero da Plugins. Le città salvate restano utilizzabili; finanziamenti, contratti e demolizioni già salvati rimangono invariati.
 
 **File di registro:** `DepartmentEfficiency.log` si trova nella cartella `Logs` della tua cartella utente di SimCity 4 (normalmente `Documents\SimCity 4\Logs`, o la cartella `Logs` della cartella indicata con `-UserDir`). Se quella cartella non è utilizzabile, viene scritto accanto alla DLL.
 

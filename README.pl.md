@@ -43,25 +43,22 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 
 <a id="download-and-installation"></a>
 
-## Pobieranie i instalacja
+## Instalacja
 
 ### [⬇ Pobierz Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 **Nowości w 1.0.2:** zobacz [dziennik zmian](CHANGELOG.md) (po angielsku).
 
-1\. Otwórz [stronę wydań](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) projektu i wybierz najnowsze wydanie.
+1. Pobierz [najnowszą wersję](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) i zamknij SimCity 4.
 
-2\. W sekcji **Assets** pobierz **dystrybucyjny plik ZIP Department of Efficiency**.
+2. Rozpakuj plik ZIP bezpośrednio do `Documents\SimCity 4\Plugins`.
 
-3\. **Zamknij SimCity 4.** Rozpakuj plik ZIP do folderu tymczasowego.
+3. Sprawdź, czy `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` i `DepartmentEfficiency.ini` znajdują się w folderze Plugins.
 
-4\. Skopiuj trzy pliki **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** i **`DepartmentEfficiency.ini`** bezpośrednio do `Documents\SimCity 4\Plugins`.
+4. Uruchom SimCity 4 i otwórz **Opcje gry → Ministerstwo Optymalizacji**, aby ustawić preferencje.
 
-5\. Uruchom grę i przed zagraniem w zapisane miasto wykonaj instrukcje z sekcji [pierwsza konfiguracja](#first-time-setup).
-
-**Ustawienia:** przed zastąpieniem pliku `DepartmentEfficiency.ini` zrób jego kopię zapasową, aby zachować swoje ustawienia.
-
-**Zmiana ustawień później:** otwórz **Opcje gry → Ministerstwo Optymalizacji**, skorzystaj ze stron **Służby miejskie** i **Wyburzanie** i kliknij **Akceptuj**. Jako główny wyłącznik możesz też użyć uchwały **Utwórz Ministerstwo Optymalizacji**, bez miesięcznych kosztów. Wyłączenie Ministerstwa zatrzymuje przyszłe działania; nie cofa już zastosowanego finansowania, umów ani wyburzeń.
+> [!IMPORTANT]
+> Ministerstwo jest domyślnie włączone, w tym automatyczne wyburzanie zniszczonych i opuszczonych budynków. Sprawdź ustawienia **wyburzania** przed otwarciem miasta z budynkami, które chcesz zachować.
 
 <a id="features"></a>
 
@@ -228,9 +225,11 @@ Ta ochrona dotyczy kwalifikujących się obiektów (szkół, bibliotek, muzeów,
 
 ## Aktualizacja i odinstalowanie
 
-**Aktualizacja:** Zamknij grę, zrób kopię zapasową `DepartmentEfficiency.ini`, jeśli chcesz zachować ustawienia, usuń poprzednią instalację Ministerstwa i skopiuj nowe pliki do `Plugins`. Ustawienia z wersji 1.0.0 trzeba skonfigurować ponownie.
+Trzy pliki Ministerstwa znajdują się bezpośrednio w folderze Plugins. Przed aktualizacją zachowaj kopię `DepartmentEfficiency.ini`, aby nie utracić preferencji.
 
-**Odinstalowanie:** Zamknij grę i usuń `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` oraz `DepartmentEfficiency.ini` z `Plugins`. Zmiany zapisane wcześniej w miastach nie zostaną automatycznie cofnięte.
+**Aktualizacja z wersji 1.0.0:** Zamknij grę, usuń cały podfolder `Department of Efficiency` i zastąp `DepartmentEfficiency.dll` nowym plikiem. Rozpakuj nowy ZIP do Plugins. Ustawienia z wersji 1.0.0 trzeba skonfigurować ponownie.
+
+**Odinstalowanie:** Zamknij grę i usuń trzy pliki Ministerstwa z Plugins. Zapisane miasta nadal będą działać; zapisane finansowanie, umowy i wyburzenia pozostaną bez zmian.
 
 **Plik dziennika:** `DepartmentEfficiency.log` znajduje się w folderze `Logs` Twojego folderu użytkownika SimCity 4 (zwykle `Documents\SimCity 4\Logs` albo folder `Logs` folderu podanego przez `-UserDir`). Jeśli tego folderu nie można użyć, plik jest zapisywany obok pliku DLL.
 

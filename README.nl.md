@@ -43,25 +43,22 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 <a id="download-and-installation"></a>
 
-## Downloaden en installeren
+## Installatie
 
 ### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
 
 **Nieuw in 1.0.2:** zie het [wijzigingslogboek](CHANGELOG.md) (in het Engels).
 
-1\. Open de [releasepagina](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases) van het project en kies de nieuwste release.
+1. Download de [nieuwste versie](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) en sluit SimCity 4 af.
 
-2\. Download onder **Assets** de **distributie-ZIP van Department of Efficiency**.
+2. Pak het ZIP-bestand rechtstreeks uit in `Documents\SimCity 4\Plugins`.
 
-3\. **Sluit SimCity 4.** Pak de ZIP uit in een tijdelijke map.
+3. Controleer of `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` en `DepartmentEfficiency.ini` in de map Plugins staan.
 
-4\. Kopieer de drie bestanden **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** en **`DepartmentEfficiency.ini`** rechtstreeks naar `Documents\SimCity 4\Plugins`.
+4. Start SimCity 4 en open **Spelopties → Ministerie van Efficiëntie** om je voorkeuren in te stellen.
 
-5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
-
-**Voorkeuren:** maak een reservekopie van `DepartmentEfficiency.ini` voordat u het vervangt om uw persoonlijke instellingen te behouden.
-
-**Instellingen later wijzigen:** open **Spelopties → Ministerie van Efficiëntie**, gebruik de pagina's **Diensten** en **Sloop** en klik op **Accepteren**. Voor de hoofdschakelaar kunt u ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken, zonder maandelijkse kosten. Het Ministerie uitschakelen stopt toekomstige acties; reeds toegepaste financiering, contracten en sloop worden niet ongedaan gemaakt.
+> [!IMPORTANT]
+> Het ministerie staat standaard aan, inclusief automatische sloop van verwoeste en verlaten gebouwen. Controleer de instellingen voor **Sloop** voordat je een stad opent met gebouwen die je wilt behouden.
 
 <a id="features"></a>
 
@@ -228,9 +225,11 @@ Deze bescherming geldt voor geschikte voorzieningen (scholen, bibliotheken, muse
 
 ## Bijwerken en verwijderen
 
-**Bijwerken:** sluit het spel, maak een reservekopie van `DepartmentEfficiency.ini` als u uw instellingen wilt behouden, verwijder de vorige installatie van het Ministerie en kopieer de nieuwe bestanden naar `Plugins`. Instellingen van versie 1.0.0 moeten opnieuw worden ingesteld.
+De drie bestanden van het ministerie staan rechtstreeks in Plugins. Maak vóór het bijwerken een reservekopie van `DepartmentEfficiency.ini` om je voorkeuren te bewaren.
 
-**Verwijderen:** sluit het spel en verwijder `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` en `DepartmentEfficiency.ini` uit `Plugins`. Eerder opgeslagen wijzigingen aan steden worden niet automatisch ongedaan gemaakt.
+**Bijwerken vanaf versie 1.0.0:** Sluit het spel, verwijder de volledige submap `Department of Efficiency` en vervang `DepartmentEfficiency.dll` door het nieuwe bestand. Pak de nieuwe ZIP uit in Plugins. Instellingen uit versie 1.0.0 moet je opnieuw instellen.
+
+**Verwijderen:** Sluit het spel en verwijder de drie bestanden van het ministerie uit Plugins. Opgeslagen steden blijven bruikbaar; opgeslagen financiering, contracten en sloop blijven behouden.
 
 **Logbestand:** `DepartmentEfficiency.log` staat in de map `Logs` van uw SimCity 4-gebruikersmap (normaal `Documents\SimCity 4\Logs`, of de map `Logs` van de map die met `-UserDir` is opgegeven). Kan die map niet worden gebruikt, dan wordt het naast de DLL geschreven.
 
