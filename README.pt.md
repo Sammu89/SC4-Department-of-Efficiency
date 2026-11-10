@@ -55,23 +55,11 @@ Tudo se controla dentro do jogo, em **Opções de Jogo → Ministério da Optimi
 
 3\. **Feche o SimCity 4.** Extraia o ZIP para uma pasta temporária.
 
-4\. Copie os **três ficheiros** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** e **`DepartmentEfficiency.ini`** diretamente para `Documents\SimCity 4\Plugins`. Não crie nenhuma subpasta.
+4\. Copie os três ficheiros **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** e **`DepartmentEfficiency.ini`** diretamente para `Documents\SimCity 4\Plugins`.
 
 5\. Inicie o jogo e siga as instruções da [configuração inicial](#first-time-setup) antes de jogar uma cidade gravada.
 
-O ZIP de distribuição contém exatamente estes três ficheiros. Depois da instalação, deverá ter:
-
-```text
-Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    DepartmentEfficiency.dat
-    DepartmentEfficiency.ini
-```
-
-Os ficheiros Markdown e as capturas de ecrã do repositório público **não** são necessários ao jogo. Mantenha os três ficheiros **diretamente em Plugins**, lado a lado. Já não existe a pasta `Department of Efficiency`.
-
-> [!WARNING]
-> **Vai atualizar de uma versão anterior?** Não copie os ficheiros novos por cima dos antigos. Apague primeiro os ficheiros antigos do Ministério, como explicado em [Atualizar e desinstalar](#updating-and-uninstalling).
+**Preferências:** Faça uma cópia de segurança de `DepartmentEfficiency.ini` antes de o substituir para conservar as suas definições pessoais.
 
 **Alterar as definições mais tarde:** abra **Opções de Jogo → Ministério da Optimização**, use as páginas **Serviços** e **Demolição** e clique em **Aceitar**. Para o interruptor geral pode também usar a lei **Instituir o Ministério da Optimização**, sem custo mensal. Desligar o Ministério impede ações futuras; não anula o financiamento, os contratos nem as demolições já aplicados.
 
@@ -240,18 +228,9 @@ Esta proteção aplica-se às instalações elegíveis (escolas, bibliotecas, mu
 
 ## Atualizar e desinstalar
 
-**As definições não são transferidas.** Desde a versão 1.0.2 o Ministério tem um único ficheiro de definições, `DepartmentEfficiency.ini`, que substitui os três ficheiros INI da versão 1.0.0 e a pasta `Department of Efficiency` do primeiro pacote 1.0.2. As definições dos ficheiros antigos não são lidas nem migradas: defina de novo as preferências em **Opções de Jogo → Ministério da Optimização**.
+**Para atualizar:** Feche o jogo, faça uma cópia de segurança de `DepartmentEfficiency.ini` se quiser conservar as preferências, remova a instalação anterior do Ministério e copie os novos ficheiros para `Plugins`. As definições da versão 1.0.0 têm de ser configuradas novamente.
 
-**Para atualizar uma instalação anterior (é obrigatória uma instalação limpa).** Feche o jogo e apague os ficheiros antigos do Ministério **antes** de copiar os três novos. Apague apenas estes, em `Documents\SimCity 4\Plugins`:
-
-- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` e `DepartmentEfficiency.ini`;
-- a pasta `Department of Efficiency` inteira, se existir;
-- da versão 1.0.0, se ainda lá estiverem: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` e `DepartmentEfficiencyDemolition.ini`;
-- `DepartmentEfficiency.told.txt`, um pequeno ficheiro de memória que o plugin pode ter deixado (é criado de novo quando necessário).
-
-Não toque nos ficheiros de outros mods. Copiar os ficheiros novos por cima de uma instalação antiga não é suportado: os ficheiros de recursos antigos ficariam e poderiam manter silenciados os avisos do próprio jogo. O plugin nunca lê ficheiros da pasta antiga; se a pasta ainda lá estiver, apenas escreve um aviso no seu registo.
-
-**Para desinstalar:** feche o jogo e apague os mesmos ficheiros. As cidades guardadas continuam legíveis sem o mod. Os níveis de financiamento, os contratos existentes e as demolições já guardadas numa cidade não são revertidos automaticamente.
+**Para desinstalar:** Feche o jogo e remova `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` e `DepartmentEfficiency.ini` de `Plugins`. As alterações já guardadas nas cidades não são revertidas automaticamente.
 
 **Ficheiro de registo:** o `DepartmentEfficiency.log` está na pasta `Logs` da sua pasta de utilizador do SimCity 4 (normalmente `Documents\SimCity 4\Logs`, ou a pasta `Logs` da pasta indicada com `-UserDir`). Se essa pasta não puder ser usada, é escrito ao lado da DLL.
 
