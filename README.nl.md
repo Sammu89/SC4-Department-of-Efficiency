@@ -55,23 +55,11 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 3\. **Sluit SimCity 4.** Pak de ZIP uit in een tijdelijke map.
 
-4\. Kopieer de **drie bestanden** **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** en **`DepartmentEfficiency.ini`** rechtstreeks naar `Documents\SimCity 4\Plugins`. Maak geen submap aan.
+4\. Kopieer de drie bestanden **`DepartmentEfficiency.dll`**, **`DepartmentEfficiency.dat`** en **`DepartmentEfficiency.ini`** rechtstreeks naar `Documents\SimCity 4\Plugins`.
 
 5\. Start het spel en volg de [eerste installatie-instellingen](#first-time-setup) voordat u een opgeslagen stad speelt.
 
-De distributie-ZIP bevat precies deze drie bestanden. Na de installatie hebt u:
-
-```text
-Documents\SimCity 4\Plugins\
-    DepartmentEfficiency.dll
-    DepartmentEfficiency.dat
-    DepartmentEfficiency.ini
-```
-
-De Markdown-bestanden en schermafbeeldingen van de openbare repository zijn **niet** nodig voor het spel. Houd de drie bestanden **rechtstreeks in Plugins**, naast elkaar. De map `Department of Efficiency` bestaat niet meer.
-
-> [!WARNING]
-> **Werkt u bij vanaf een eerdere versie?** Kopieer de nieuwe bestanden niet over de oude heen. Verwijder eerst de oude bestanden van het Ministerie, zoals uitgelegd bij [Bijwerken en verwijderen](#updating-and-uninstalling).
+**Voorkeuren:** maak een reservekopie van `DepartmentEfficiency.ini` voordat u het vervangt om uw persoonlijke instellingen te behouden.
 
 **Instellingen later wijzigen:** open **Spelopties → Ministerie van Efficiëntie**, gebruik de pagina's **Diensten** en **Sloop** en klik op **Accepteren**. Voor de hoofdschakelaar kunt u ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken, zonder maandelijkse kosten. Het Ministerie uitschakelen stopt toekomstige acties; reeds toegepaste financiering, contracten en sloop worden niet ongedaan gemaakt.
 
@@ -240,18 +228,9 @@ Deze bescherming geldt voor geschikte voorzieningen (scholen, bibliotheken, muse
 
 ## Bijwerken en verwijderen
 
-**Instellingen worden niet overgenomen.** Sinds versie 1.0.2 heeft het Ministerie één instellingenbestand, `DepartmentEfficiency.ini`, dat de drie INI-bestanden van versie 1.0.0 en de map `Department of Efficiency` van het eerste 1.0.2-pakket vervangt. Instellingen in oudere bestanden worden niet gelezen of overgenomen: stel uw voorkeuren opnieuw in bij **Spelopties → Ministerie van Efficiëntie**.
+**Bijwerken:** sluit het spel, maak een reservekopie van `DepartmentEfficiency.ini` als u uw instellingen wilt behouden, verwijder de vorige installatie van het Ministerie en kopieer de nieuwe bestanden naar `Plugins`. Instellingen van versie 1.0.0 moeten opnieuw worden ingesteld.
 
-**Een eerdere installatie bijwerken (een schone installatie is verplicht).** Sluit het spel en verwijder de oude bestanden van het Ministerie **voordat** u de drie nieuwe kopieert. Verwijder alleen deze, in `Documents\SimCity 4\Plugins`:
-
-- `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` en `DepartmentEfficiency.ini`;
-- de hele map `Department of Efficiency`, als die bestaat;
-- uit versie 1.0.0, als ze er nog staan: `DepartmentEfficiencyUI.dat`, `DepartmentEfficiencyCivicAdvice.dat`, `DepartmentEfficiencyDealAdvice.dat`, `DepartmentEfficiencyGarbageAdvice.dat`, `DepartmentEfficiencyUtility.ini` en `DepartmentEfficiencyDemolition.ini`;
-- `DepartmentEfficiency.told.txt`, een klein geheugenbestand dat de plug-in kan hebben achtergelaten (het wordt zo nodig opnieuw aangemaakt).
-
-Raak de bestanden van andere mods niet aan. De nieuwe bestanden over een oude installatie kopiëren wordt niet ondersteund: de oude resourcebestanden zouden blijven staan en de eigen adviezen van het spel stil kunnen houden. De plug-in leest nooit bestanden uit de oude map; als die map er nog is, schrijft hij alleen een waarschuwing in zijn logboek.
-
-**Verwijderen:** sluit het spel en verwijder dezelfde bestanden. Uw opgeslagen steden blijven zonder de mod leesbaar. Financieringsniveaus, bestaande contracten en al opgeslagen sloopacties in een stad worden niet automatisch teruggedraaid.
+**Verwijderen:** sluit het spel en verwijder `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` en `DepartmentEfficiency.ini` uit `Plugins`. Eerder opgeslagen wijzigingen aan steden worden niet automatisch ongedaan gemaakt.
 
 **Logbestand:** `DepartmentEfficiency.log` staat in de map `Logs` van uw SimCity 4-gebruikersmap (normaal `Documents\SimCity 4\Logs`, of de map `Logs` van de map die met `-UserDir` is opgegeven). Kan die map niet worden gebruikt, dan wordt het naast de DLL geschreven.
 
