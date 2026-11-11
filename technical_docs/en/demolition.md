@@ -920,7 +920,7 @@ Building C remains until a later review when sufficient money is available.
 
 Imagine a city containing **400 buildings** that have already been abandoned for more than a year because of insufficient demand.
 
-You install the Department with its default demolition settings.
+You install the Department, turn automatic demolition on and keep its default rules.
 
 These buildings are already old enough to qualify.
 

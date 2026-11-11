@@ -13,7 +13,7 @@ Het beheert de budgetten van afzonderlijke onderwijs- en zorggebouwen, elektrici
 Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiëntie**. Kies de diensten die u wilt automatiseren, pas hun veiligheidsmarges aan, stel het slopen in of schakel het hele Ministerie uit. U kunt ook de verordening **Ministerie van Efficiëntie oprichten** gebruiken als hoofdschakelaar. Een aparte toepassing is niet nodig.
 
 > [!IMPORTANT]
-> **Het Ministerie start ingeschakeld, inclusief het automatisch slopen van verwoeste en verlaten gebouwen.** Controleer de instellingen voordat u een stad opent die u dierbaar is. Het voert echte wijzigingen door in het spel: financiering, contracten en sloop worden opgeslagen als u de stad opslaat. Opgeslagen bestanden worden niet rechtstreeks bewerkt.
+> **Het Ministerie start ingeschakeld, maar het automatisch slopen staat standaard uit.** Controleer de instellingen voordat u een stad opent die u dierbaar is. Het voert echte wijzigingen door in het spel: financiering en contracten (en sloop, als u die inschakelt) worden opgeslagen als u de stad opslaat. Opgeslagen bestanden worden niet rechtstreeks bewerkt.
 
 ## Inhoud
 
@@ -45,9 +45,9 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 
 ## Installatie
 
-### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Download Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Nieuw in 1.0.2:** zie het [wijzigingslogboek](CHANGELOG.md) (in het Engels).
+**Nieuw in 1.0.3:** zie het [wijzigingslogboek](CHANGELOG.md) (in het Engels).
 
 1. Download de [nieuwste versie](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) en sluit SimCity 4 af.
 
@@ -58,7 +58,7 @@ Alles wordt in het spel geregeld via **Spelopties → Ministerie van Efficiënti
 4. Start SimCity 4 en open **Spelopties → Ministerie van Efficiëntie** om je voorkeuren in te stellen.
 
 > [!IMPORTANT]
-> Het ministerie staat standaard aan, inclusief automatische sloop van verwoeste en verlaten gebouwen. Controleer de instellingen voor **Sloop** voordat je een stad opent met gebouwen die je wilt behouden.
+> Het ministerie staat standaard aan; automatische sloop staat standaard **uit**. Als je die inschakelt, controleer dan de instellingen voor **Sloop** voordat je een stad opent met gebouwen die je wilt behouden.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ De tabel hieronder beschrijft wat het Ministerie doet. Voor formules, voorbeelde
 | [Water](technical_docs/en/water.md#water) | Past de waterfinanciering van de stad aan op de vraag plus een veiligheidsreserve. Bescherming van de waterleidingen staat standaard aan, om bezuinigingen te voorkomen waardoor het netwerk zou verslechteren. Het verbergt ook het misleidende „geen water”-pictogram van het spel boven boerderijen. |
 | [Afvalverwerking](technical_docs/en/garbage.md#garbage-landfills) | Past de financiering van de afvalverwerking aan op basis van afvalproductie, recycling, verwerking, opslag in stortplaatsen en regionale contracten, en beschermt daarbij de eigen verwerkingsbehoefte van de stad. |
 | [Contracten met buursteden](technical_docs/en/deals.md#neighbor-deals) | Kan **elektriciteit en water kopen of verkopen**, **buren betalen om uw afval over te nemen** of **hun afval tegen betaling accepteren**. Het sluit, past aan en zegt geschikte contracten op als het totaalresultaat de stad ten goede komt en de eigen behoeften en reserves beschermd blijven. |
-| [Automatisch slopen](technical_docs/en/demolition.md#demolition) | Kan standaard ruïnes na ongeveer **30 gesimuleerde dagen** opruimen en geschikte gebouwen die **een gesimuleerd jaar** verlaten zijn. U bepaalt welke zones en welke redenen van verlating meetellen, of beschermde ruïnes mogen worden opgeruimd en of u een maandelijkse bestedingslimiet instelt. |
+| [Automatisch slopen](technical_docs/en/demolition.md#demolition) | **Standaard uit.** Kan standaard ruïnes na ongeveer **30 gesimuleerde dagen** opruimen en geschikte gebouwen die **een gesimuleerd jaar** verlaten zijn. U bepaalt welke zones en welke redenen van verlating meetellen, of beschermde ruïnes mogen worden opgeruimd en of u een maandelijkse bestedingslimiet instelt. |
 | [Meldingen van adviseurs](technical_docs/en/safety.md#notices) | Gebruikt de eigen adviseurs van het spel om bewezen, aanhoudende tekorten te melden die financiering of beschikbare contracten niet kunnen verhelpen. Waar nuttig bevatten de berichten links naar de betrokken gebouwen. Het voegt ook een nieuwsbericht toe (titel in de lijst, details bij een klik) wanneer een dienst die u hebt ingeschakeld moet stoppen vanwege een technische fout. |
 | [Advies over de omvang van de stortplaats](technical_docs/en/garbage.md#garbage-landfills-advice) | Het optionele advies wijst een concrete, veilige verkleining van de stortplaats aan (lege vakken die weg kunnen) die de afvalrekening met meer dan uw gekozen besparingsdrempel zou kunnen verlagen. **Het Ministerie adviseert; u beslist of u de zonering wijzigt.** |
 | [Herstel van spookvakjes](technical_docs/en/garbage.md#ghost-tiles) | Als het beheer van de afvalverwerking aanstaat, herstelt het veilig geschikte onzichtbare stortplaatsvakjes die het spel nog in het onderhoud meetelt. Onveilige of niet-geverifieerde gevallen blijven met rust; voor dit herstel bestaat geen aparte schakelaar. |
@@ -90,7 +90,7 @@ Het Ministerie gebruikt de instellingen die bij de plug-in worden geleverd en **
 
 2\. Kies op de pagina **Diensten** welke budgetten en contracten met buursteden het Ministerie mag beheren en hoeveel reservecapaciteit het moet aanhouden.
 
-3\. Controleer op de pagina **Sloop** de regels voor het opruimen van ruïnes en verlaten gebouwen. **Schakel het automatisch slopen uit als u alles zelf wilt platgooien.**
+3\. Op de pagina **Sloop** staat het automatisch slopen uit. Vink de opties voor ruïnes en verlaten gebouwen alleen aan als u wilt dat het Ministerie ze voor u opruimt.
 
 4\. Klik op **Accepteren** om uw keuzes op te slaan. **Annuleren** sluit het venster zonder wijzigingen op te slaan.
 
@@ -137,10 +137,10 @@ Open **Spelopties → Ministerie van Efficiëntie**. Het venster heeft twee pagi
 
 | Optie | Standaard | Wat het betekent |
 |---|---|---|
-| [Verwoeste gebouwen slopen](technical_docs/en/options.md#opt-demolishdestroyed) | **Aan** | Sloopt ruïnes na een bepaalde tijd. Ruimt beschermde gemeentelijke of historische ruïnes niet automatisch op, tenzij de optie hieronder dat toestaat. |
+| [Verwoeste gebouwen slopen](technical_docs/en/options.md#opt-demolishdestroyed) | **Uit** | Sloopt ruïnes na een bepaalde tijd. Ruimt beschermde gemeentelijke of historische ruïnes niet automatisch op, tenzij de optie hieronder dat toestaat. |
 | [Wachttijd (verwoeste gebouwen)](technical_docs/en/options.md#opt-destroyedmonths) | **1 maand** (1–24) | Hoe lang ruïnes moeten blijven staan voordat ze kunnen worden opgeruimd; standaard ongeveer **30 gesimuleerde dagen**. |
 | [Verwoeste gemeentelijke en historische gebouwen slopen](technical_docs/en/options.md#opt-demolishmunicipal) | **Uit** | Indien ingeschakeld worden na de wachttijd ook geschikte **ruïnes** van gemeentelijke, speciale en historische gebouwen opgeruimd. |
-| [Verlaten gebouwen slopen](technical_docs/en/options.md#opt-demolishabandoned) | **Aan** | Ruimt geschikte verlaten gebouwen op na de wachttijd, in de gekozen zonetypen en om de gekozen redenen. |
+| [Verlaten gebouwen slopen](technical_docs/en/options.md#opt-demolishabandoned) | **Uit** | Ruimt geschikte verlaten gebouwen op na de wachttijd, in de gekozen zonetypen en om de gekozen redenen. |
 | [Wachttijd (verlaten gebouwen)](technical_docs/en/options.md#opt-abandonedmonths) | **12 maanden** (1–60) | Hoe lang een gebouw verlaten moet zijn voordat het gesloopt mag worden; standaard een gesimuleerd jaar. |
 | [Woonzone](technical_docs/en/options.md#opt-zoneresidential) | **Aan** | Omvat verlaten huizen en appartementsgebouwen. |
 | [Commerciële zone](technical_docs/en/options.md#opt-zonecommercial) | **Aan** | Omvat verlaten winkels en kantoren. |

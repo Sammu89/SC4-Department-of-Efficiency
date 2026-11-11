@@ -278,7 +278,11 @@ public:
                 ordinance_.SetOnPlayerToggle([this](bool on) {                                 // the player enacted / repealed the Department ordinance
                     optionsUi_.SetMaster(on);
                     autoFinance_.LoadConfigIfChanged();                        // SetMaster rewrote the INI: read it now, and the game's advice follows at once
+                    utility_.LoadConfigIfChanged();
                     RefreshAdviceSwitches(false, "ordinance");
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+                    TickNotices();                                             // a utility switched off withdraws its notice at once, whether or not the game is paused
+#endif
                 });
                 optionsUi_.SetOnApplied([this, dir] {
                     autoFinance_.LoadConfigIfChanged();
@@ -286,6 +290,9 @@ public:
                     sc4af::LotWatchReloadConfig();
                     UpdatePhase8Subscriptions();
                     RefreshAdviceSwitches(false, "options applied");                    // anything switched in the window: the game's advice follows at once
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+                    TickNotices();                                             // the same: no wait for a simulated day that a paused game does not run
+#endif
                     ordinance_.FollowSwitch(CurrentCity(), optionsUi_.MasterIsOn());   // the Ordinances window shows the same switch
                     sc4af::Log(sc4af::LogLevel::Info, "[OptionsUI] options applied: " + autoFinance_.Banner() + " | " + utility_.Banner());
                 });
@@ -416,10 +423,14 @@ public:
                 ObserveUtilities(city, "PostCityInit");
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
                 unifiedAuto_->ObserveLandfillBaseline(utility_.last());
-                deferred_.Reset();
-                civicBoard_.Reset();
+                notices_.StartSession();                          // a NEW session of the utility notices: no counter, dismissal, deadline or episode of an earlier one; a notice an earlier session left listed is withdrawn on the first tick
+                civicBoard_.Reset();                              // Education / Health: the committed behaviour (memory of the notices kept between sessions)
                 civicRestored_ = false;
                 for (auto& c : civicCount_) c = 0;
+                for (bool& k : enabledKnown_) k = false;
+                for (bool& l : listedLogged_) l = false;
+                noticeSessionLogged_ = false;
+                unifiedRanDay_ = 0xFFFFFFFFu;
                 simDays_ = 0;
                 cityKey_.clear();
                 failureKey_.clear();                              // the failure notices link to the city again on its first simulated day
@@ -449,7 +460,7 @@ public:
             civicBoard_.Reset();
             civicRestored_ = false;
             for (auto& c : civicCount_) c = 0;
-            deferred_.Reset();
+            notices_ = sc4af::NoticeBoard();                  // the advisor of this city goes with it: nothing is left to withdraw
             simDays_ = 0;
             cityKey_.clear();
             failureKey_.clear();                              // the failure notices link to the city again on its first simulated day
@@ -748,13 +759,98 @@ private:
                 sc4af::Log(sc4af::LogLevel::Warning, "[Notice] the advice subject could not be created: the links are not written (tried again at the next evaluation)");
                 return false;
             }
-            subject->SetLocation(b.posX / 16.0f, b.posZ / 16.0f);          // CELL coordinates (verified in the game)
-            advisor->SetLocalValue(LinkVariable(kind, 0, i + 1), 1.0, subject);
+            bool raised = false;
+            GuardedSetLocation(subject, b.posX / 16.0f, b.posZ / 16.0f, raised);          // CELL coordinates (verified in the game)
+            if (!raised) GuardedSetLink(advisor, LinkVariable(kind, 0, i + 1), subject, raised);
             subject->Release();                                              // the game keeps its own reference
+            if (raised) { MarkAdvisorBroken(); return false; }
         }
         return true;
     }
 
+    static cISC4Advisor* GuardedAdvisor(cISC4AdvisorSystem* system, int type, bool& raised) {
+        __try { return system ? system->GetAdvisor(type) : nullptr; } __except (EXCEPTION_EXECUTE_HANDLER) { raised = true; return nullptr; }
+    }
+    static void GuardedSetLocation(cISC4AdviceSubject* subject, float x, float z, bool& raised) {
+        __try { subject->SetLocation(x, z); } __except (EXCEPTION_EXECUTE_HANDLER) { raised = true; }
+    }
+    void MarkAdvisorBroken() {
+        advisorApiBroken_ = true;
+        sc4af::Log(sc4af::LogLevel::Warning, "[Notice] a native advisor call raised an exception: the notices are not checked, pushed or retired again in this session");
+    }
+
+    // The advice records of the notice of one utility slot: the pop-up and the discreet variant (slots 0..2), or the single discreet record of the stagnant-backlog notice (slot 3).
+    static int UtilityGuids(int slot, std::int32_t (&guids)[2]) {
+        guids[0] = sc4af::NoSupplyAdviceGuid(slot, true);
+        if (slot == sc4af::kStagnantSlot) return 1;
+        guids[1] = sc4af::NoSupplyAdviceGuid(slot, false);
+        return 2;
+    }
+
+    // What the advisor says about the notice of a utility slot: Listed when the advice of ANY of its records carries the active flag 2, NotListed when the records exist and none does, Unknown when the
+    // call is unavailable, raised or the records are not known. Flag 2 is all the interface shows: it does not say WHY a notice left the list (dismissed, expired or retired), only that it is not listed.
+    sc4af::Listing UtilityListing(int slot) {
+        auto* system = AdvisorSystemNow();
+        bool raised = false, known = false, listed = false;
+        auto* advisor = advisorApiBroken_ ? nullptr : GuardedAdvisor(system, 21, raised);
+        if (raised) { MarkAdvisorBroken(); return sc4af::Listing::Unknown; }
+        if (!advisor || advisorApiBroken_) return sc4af::Listing::Unknown;
+        std::int32_t guids[2];
+        const int n = UtilityGuids(slot, guids);
+        for (int i = 0; i < n; ++i) {
+            cISC4Advice* advice = GuardedAdviceByGuid(advisor, guids[i], raised);
+            if (raised) break;
+            if (!advice) continue;
+            known = true;
+            if (GuardedShown(advice, raised)) listed = true;
+            if (raised) break;
+        }
+        if (raised) { MarkAdvisorBroken(); return sc4af::Listing::Unknown; }
+        return listed ? sc4af::Listing::Listed : known ? sc4af::Listing::NotListed : sc4af::Listing::Unknown;
+    }
+
+    // Withdraws every record of the notice of a utility slot that the advisor lists, then asks the advisor again: TRUE only when it no longer lists any (also when nothing was listed); FALSE when the call is
+    // unavailable, raised, or the notice is still listed (it is tried again later, after a bounded back-off; no duplicate is ever pushed on top of it). The retirement is judged by the advisor's flag, not by
+    // the return value of RetireAdvice, and nothing here claims the player ever saw or dismissed it.
+    bool RetireNotice(int slot) {
+        const std::string name = std::string("[Notice] ") + sc4af::NoticeSlotName(slot);
+        auto* system = AdvisorSystemNow();
+        bool raised = false;
+        auto* advisor = advisorApiBroken_ ? nullptr : GuardedAdvisor(system, 21, raised);
+        if (raised) { MarkAdvisorBroken(); return false; }
+        if (!advisor || advisorApiBroken_) { sc4af::Log(sc4af::LogLevel::Info, name + ": retirement: the advisor cannot be asked (NOT confirmed, tried again later)"); return false; }
+        int called = 0, refused = 0;
+        std::int32_t guids[2];
+        const int n = UtilityGuids(slot, guids);
+        for (int i = 0; i < n && !raised; ++i) {
+            cISC4Advice* advice = GuardedAdviceByGuid(advisor, guids[i], raised);
+            if (raised || !advice) continue;
+            if (!GuardedShown(advice, raised) || raised) continue;
+            ++called;
+            if (!GuardedRetire(advisor, advice, raised)) ++refused;
+        }
+        if (raised) { MarkAdvisorBroken(); return false; }
+        const auto after = UtilityListing(slot);
+        sc4af::Log(sc4af::LogLevel::Info, name + ": retirement: " + (called ? "RetireAdvice called for " + std::to_string(called) + " listed record(s)" + (refused ? " (" + std::to_string(refused) + " returned false)" : std::string()) : std::string("nothing was listed (expired, dismissed or retired earlier: the interface does not say which)")) +
+                   "; the advisor " + (after == sc4af::Listing::NotListed ? "no longer lists it (confirmed)" : after == sc4af::Listing::Listed ? "STILL lists it (NOT confirmed, tried again later)" : "could not be asked afterwards (NOT confirmed, tried again later)"));
+        return after == sc4af::Listing::NotListed;
+    }
+
+    // Hands the notice of a utility slot to the advisor. true = PushEvent returned true: it is NOT proof that the notice was displayed (the advisor lists it a moment later, on its next evaluation, and whether a
+    // pop-up window opens depends on the player's own advisor settings, which the plugin cannot read).
+    bool PushNotice(int slot, bool popup) {
+        const std::int32_t event = sc4af::NoSupplyAdviceEvent(slot, popup);
+        const std::string name = std::string("[Notice] ") + sc4af::NoticeSlotName(slot) + ": " + (popup ? "pop-up" : "discreet") + " event 0x" + sc4af::HexId(event);
+        auto* advisor = AdvisorSystemNow();
+        if (!advisor || advisorApiBroken_) { sc4af::Log(sc4af::LogLevel::Info, name + " NOT pushed: the advisor cannot be asked (tried again later)"); return false; }
+        bool raised = false;
+        const bool accepted = GuardedPushEvent(advisor, event, raised);
+        if (raised) MarkAdvisorBroken();
+        sc4af::Log(sc4af::LogLevel::Info, name + (accepted ? " handed to the advisor (PushEvent returned true; this is NOT proof that it was displayed)" : raised ? " NOT accepted (the call raised an exception)" : " NOT accepted by the advisor (tried again later)"));
+        return accepted;
+    }
+
+    // ---- the Education / Health notices (committed behaviour, restored 2026-11-11): see CivicBuildingNotices.h ----
     // Whether the Health and Education advisor shows the notice of one (type, number of buildings): its advice carries the active flag 2. Unknown when the call is unavailable or raised.
     sc4af::Listing ShownState(int kind, int count) {
         auto* advisor = AdvisorSystemNow();
@@ -987,12 +1083,75 @@ private:
         if (memoryChanged) SaveTold();
     }
 
+    // ---- the shortage notices of the three utilities (ServiceNotices.h) ----------------------------------------------------------------------------------------------------------------------------------------
+    // The management of a service is what makes its notices exist: they are shown only while the player has it on, and its switch (or the master switch) withdraws the notice, cancels the reminders and closes
+    // the episode. The regional CONTRACTS have their own switches and are never touched here. Slot 3 is the informative notice of a STAGNANT garbage backlog (it follows the sanitation management).
+    bool UtilityNoticeEnabled(int slot) const {
+        if (!unifiedAuto_) return false;
+        const auto& c = utility_.config();
+        sc4af::UtilityManagement m;
+        m.controllerRuns = UnifiedActive();
+        m.sessionFailed = unifiedAuto_->sessionFailed();
+        m.localOn[0] = c.autoPower; m.localOn[1] = c.autoWater; m.localOn[2] = c.autoGarbage;
+        m.failedClosed[0] = unifiedAuto_->powerDisabled(); m.failedClosed[1] = unifiedAuto_->waterDisabled(); m.failedClosed[2] = unifiedAuto_->garbageDisabled();
+        for (int i = 0; i < 3; ++i) m.contractsOn[i] = c.tradeActive(i);
+        return sc4af::UtilityNoticeEnabled(m, slot);
+    }
+
+    // Once per simulated day (at the end of the day's work: OnNewDay), on every change of the options, on every month, and from the 1-second poll while something must still be withdrawn: one look at each
+    // slot, in the order of importance. Calling it again on the same day is harmless: the clocks only move with the simulated days.
+    void TickNotices() {
+        if (!cityActive_ || !unifiedAuto_) return;
+        const bool ran = unifiedRanDay_ == simDays_;                   // the unified controller has read today's counters
+        if (!noticeSessionLogged_) {
+            noticeSessionLogged_ = true;
+            sc4af::Log(sc4af::LogLevel::Info, "[Notice] utility notices: city session started (simulated day " + std::to_string(simDays_) + "): no counter, dismissal, deadline or episode of an earlier session is kept; a notice of the Department that an earlier session left listed is withdrawn");
+        }
+        for (const int slot : sc4af::kSlotsByImportance) {
+            const char* name = sc4af::NoticeSlotName(slot);
+            sc4af::NoticeInput in;
+            in.enabled = UtilityNoticeEnabled(slot);
+            if (enabledKnown_[slot] && enabledNow_[slot] != in.enabled)
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + name + " (simulated day " + std::to_string(simDays_) + "): the management is now " + (in.enabled ? "ON: a shortage must be proven again with the normal persistence before any notice (an old episode is not resumed)"
+                                                                                                                                                                      : "OFF: its notice is withdrawn, the reminders are cancelled and the episode is closed; the regional contracts are untouched"));
+            if (slot < sc4af::kUtilitySlots && enabledKnown_[slot] && enabledNow_[slot] != in.enabled) unifiedAuto_->ForgetProofs();      // what an earlier plan proved must be proven again
+            enabledKnown_[slot] = true;
+            enabledNow_[slot] = in.enabled;
+            in.evidence = in.enabled && ran ? unifiedAuto_->noticeEvidence(slot) : sc4af::ShortageEvidence::Uncertain;
+            if (notices_.outstanding(slot)) in.listing = UtilityListing(slot);
+            if (in.listing == sc4af::Listing::Listed && !listedLogged_[slot]) {
+                listedLogged_[slot] = true;
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + name + ": the advisor lists the notice (active flag observed on simulated day " + std::to_string(simDays_) + ")");
+            }
+            const auto step = notices_.Update(slot, simDays_, in);
+            if (step.what == sc4af::NoticeDo::Retire) {
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + name + " (simulated day " + std::to_string(simDays_) + "): the notice is withdrawn: " +
+                           (step.why == sc4af::RetireWhy::Recovered ? "recovery confirmed (or the situation changed to another notice)" : step.why == sc4af::RetireWhy::Disabled ? "the management of this service is off" : "left listed by an earlier session"));
+                notices_.ConfirmRetire(slot, RetireNotice(slot), simDays_);
+            } else if (step.what == sc4af::NoticeDo::Emit) {
+                if (step.retireFirst) {
+                    const bool gone = RetireNotice(slot);
+                    notices_.ConfirmRetire(slot, gone, simDays_);
+                    if (!gone) {
+                        sc4af::Log(sc4af::LogLevel::Warning, std::string("[Notice] ") + name + ": the previous notice could not be withdrawn: no second notice is pushed, tried again after the back-off");
+                        continue;
+                    }
+                }
+                const auto before = notices_.State(slot);
+                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + name + " (simulated day " + std::to_string(simDays_) + "): notice #" + std::to_string(step.emission) + " (" + (step.popup ? "pop-up" : "discreet") + ") after " + std::to_string(before.clock) + " simulated days with the situation proven" +
+                           (step.emission > 1 ? ", " + std::to_string(sc4af::ReminderDays(sc4af::ClassOfSlot(slot), 0)) + " days after the previous one (the interface cannot tell a dismissal from an expiry, so no dismissal is claimed: fixed interval)" : std::string()));
+                const bool accepted = PushNotice(slot, step.popup);
+                notices_.ConfirmEmit(slot, accepted, simDays_);
+                if (accepted) listedLogged_[slot] = false;
+            }
+        }
+    }
+
     void Notice(const sc4af::NoticeCue& cue) {
         if (cue.kind == sc4af::NoticeKind::None) return;
 #ifndef SC4AF_ENABLE_FINAL_AUTO_VALIDATION
-        // The only intrusive notice is the proven impossibility to serve a utility, through the native advisor. No caption change, no beep, no validation cue.
-        if (cue.kind != sc4af::NoticeKind::NoSupply) return;
-        if (cue.advice != 0) deferred_.Armed(cue.advice - sc4af::kAdviceNoSupplyBase, simDays_);      // told to the player only if it is still unresolved a month later
+        // The shortage notices of the product come from the notice board (TickNotices), from the evidence of every day: a log line hands nothing to the advisor. No caption change, no beep, no validation cue.
+        (void)cue;
 #else
         if (cue.advice != 0) PushAdvice(cue.advice);
         for (int i = 0; i < cue.beeps; ++i) MessageBeep(cue.problem ? MB_ICONHAND : MB_ICONASTERISK);
@@ -1063,18 +1222,18 @@ private:
     }
 
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
-    // ---- memory of the shortages already told (NoticeMemory.h): one notice per episode, also across sessions of the same city ----
+    // ---- memory file (NoticeMemory.h, DepartmentEfficiency.told.txt): the record of the landfill advisor ONLY. The shortage notices keep nothing between sessions ----
     void LoadTold() {
         std::ifstream in(toldPath_, std::ios::binary);
         if (!in) return;
         std::ostringstream buffer;
         buffer << in.rdbuf();
         told_ = sc4af::NoticeMemory::Parse(buffer.str());
-        sc4af::Log(sc4af::LogLevel::Info, "[Notice] memory loaded: " + std::to_string(told_.size()) + " shortage(s) already told in earlier sessions");
+        sc4af::Log(sc4af::LogLevel::Info, "[Notice] memory file loaded: " + std::to_string(told_.size()) + " line(s) (the record of the landfill advisor; the shortage notices keep no memory between sessions)");
     }
     void SaveTold() {
         std::ofstream out(toldPath_, std::ios::binary | std::ios::trunc);
-        if (!out) { sc4af::Log(sc4af::LogLevel::Warning, "[Notice] memory file could not be written; a told shortage may be announced again in a later session"); return; }
+        if (!out) { sc4af::Log(sc4af::LogLevel::Warning, "[Notice] memory file could not be written; the landfill advisor may repeat an advice in a later session"); return; }
         out << told_.Serialize();
     }
     // Landfill advisor record (LandfillAdvisor.h): restored once per city, when the key is known; a city with no key keeps a session-only record (nothing is persisted).
@@ -1118,43 +1277,6 @@ private:
         return cityKey_;
     }
 
-    // The advisor event and the log name of a utility notice slot: 0 power, 1 water, 2 garbage (Utilities advisor).
-    static std::int32_t EventForSlot(int id) { return sc4af::kAdviceNoSupplyBase + id; }
-    static const char* NameForSlot(int id) {
-        static const char* utilities[3] = {"POWER", "WATER", "GARBAGE"};
-        return utilities[id];
-    }
-
-    // Once per simulated day: a notice whose shortage is still unresolved (no proven recovery) a month after it was proven is handed to the advisor, once per episode (also across sessions);
-    // the memory of a shortage that is no longer proven late in a session is forgotten, so a later shortage is a new episode.
-    void TickDeferredNotices() {
-        for (int id = 0; id < 3; ++id) {      // the three utilities; the facility notices are per building (UpdateCivicNotices)
-            const bool active = unifiedAuto_->serviceEpisodeActive(id);
-            const bool due = deferred_.Due(id, active, simDays_);
-            if (deferred_.RepeatDue(id, active, simDays_)) {                  // still unresolved: the reminder (power / water every 2 months, garbage every 4)
-                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + NameForSlot(id) + " shortage still unresolved: reminder of the urgent notice (every " + std::to_string(sc4af::NoticeRepeatDays(id)) + " simulated days)");
-                PushAdvice(EventForSlot(id));
-                continue;
-            }
-            if (!due && (active || simDays_ < sc4af::kNoticeForgetDay)) continue;
-            const std::string key = sc4af::NoticeKey(CityKeyNow(), id);
-            switch (sc4af::DecideNotice(told_, key, due, active, simDays_)) {
-            case sc4af::NoticeAction::Push:
-                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + NameForSlot(id) + " shortage still unresolved after " + std::to_string(sc4af::kNoticePersistDays) + " simulated days: told to the player (once for this episode)");
-                if (PushAdvice(EventForSlot(id)) && told_.Add(key)) SaveTold();
-                break;
-            case sc4af::NoticeAction::AlreadyTold:
-                deferred_.NoteToldEarlier(id, simDays_);       // the next reminder comes one interval from now
-                sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + NameForSlot(id) + " shortage is the same episode already told in an earlier session: not shown now, the next reminder follows in " + std::to_string(sc4af::NoticeRepeatDays(id)) + " simulated days");
-                break;
-            case sc4af::NoticeAction::Forget:
-                if (told_.Erase(key)) { SaveTold(); sc4af::Log(sc4af::LogLevel::Info, std::string("[Notice] ") + NameForSlot(id) + " shortage no longer proven in this session: its memory is forgotten (a later shortage is a new episode)"); }
-                break;
-            case sc4af::NoticeAction::None:
-                break;
-            }
-        }
-    }
 #endif
 
     // Time spent by the plugin itself in the simulation callbacks (a measurement, not a guess): one line per simulated month.
@@ -1204,11 +1326,11 @@ private:
         ++simDays_;
         if (cityActive_) ObserveFailures();                                                           // the failure notices: a few booleans per day, never touches a controller
         if (cityActive_) RefreshAdviceSwitches(false, "SimNewDay");                                   // a controller that failed, an earlier publish that failed: the switches follow within a day (a hand-edited INI is read monthly; the options window and the ordinance apply at once)
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+        struct DayEnd { AutoFinanceDirector* self; ~DayEnd() { try { self->noticePollBudget_ = kNoticePollsPerDay; if (self->cityActive_) { PerfScope p(self->perfNoticeDayMs_); self->TickNotices(); } } catch (...) {} } } dayEnd{this};       // the notices of the day, whichever way OnNewDay returns, after the day's evidence is in
+#endif
         { PerfScope p(perfCivicDayMs_); CivicDailyWatch(); }
         if (cityActive_ && simDays_ % 10 == 0) { PerfScope p(perfLotDayMs_); LotWatchTick(); }      // logs only the lots that appeared or changed state / reason (the monthly pass lists them all)
-#ifdef SC4AF_ENABLE_UNIFIED_AUTO
-        if (cityActive_) { PerfScope p(perfNoticeDayMs_); TickDeferredNotices(); }
-#endif
         if (!cityActive_ || !utility_.config().enabled) return;
         utility_.LoadConfigIfChanged();
         UpdatePhase8Subscriptions();
@@ -1250,6 +1372,7 @@ private:
             sc4af::TimedUnifiedActuator timed(unified);       // diagnostics only: where a slow day's time went
             EnsureLandfillRestored();
             unifiedAuto_->OnDay(config, timed);
+            unifiedRanDay_ = simDays_;                        // the evidence of the notices is today's
             LogLines(unifiedAuto_->lines());
             const double total = PerfNowMs() - t0;
             if (total > 100.0) {                              // a slow day (a quiet day costs well under 10 ms): say where the time went, once per such day
@@ -1313,6 +1436,7 @@ private:
         { PerfScope p(perfCivicMonthMs_); autoFinance_.OnMonth(city, observedMonths_); }  // Off by default; Shadow logs, Auto writes
 #ifdef SC4AF_ENABLE_UNIFIED_AUTO
         UpdateCivicNotices();
+        TickNotices();
 #endif
 #ifdef SC4AF_ENABLE_FINAL_AUTO_VALIDATION
         if (UnifiedActive()) {                         // the Civic controller's evidence is graded with the rest of the validation
@@ -1353,6 +1477,9 @@ public:
                         if (utility_.config().phase8Runtime)
                             phase8_.ObserveDealUiDisabled(sc4af::ReadNeighborDealsUiDisabled(city), "Poll");
                         writer_.Poll(city, GetTickCount64() - cityInitMs_);
+#ifdef SC4AF_ENABLE_UNIFIED_AUTO
+                        if (noticePollBudget_ > 0 && notices_.NeedsAttention(simDays_)) { --noticePollBudget_; TickNotices(); }       // a notice that must be withdrawn (the switch was turned off while the game is paused, an event still pending in the advisor): do not wait for a day
+#endif
                         const bool countsChanged = sc4af::OmniCountsChanged(city);
                         if (kRefreshPolicy.ShouldRefresh(countsChanged, dirtySinceMs_, GetTickCount64())) {
                             dirtySinceMs_ = 0;
@@ -1451,15 +1578,20 @@ private:
     std::uint64_t cityInitMs_ = 0;
     sc4af::FailureNoticeBoard failures_;          // the failure notices: one per service and city for the whole game session (FailureNotice.h)
     std::string failureKey_;                      // the city key the board is linked to (empty until the first day of a city session)
-    sc4af::CivicNoticeBoard civicBoard_;          // the one notice per facility type: selection, replacement, cooldown, retirement (CivicBuildingNotices.h)
+    sc4af::NoticeBoard notices_;                  // the lifecycle of the notice of each utility slot (power, water, garbage, stagnant garbage backlog): ServiceNotices.h; nothing of it survives the session
+    sc4af::CivicNoticeBoard civicBoard_;          // the one notice per facility type: selection, replacement, cooldown, retirement, memory between sessions (CivicBuildingNotices.h, committed behaviour)
     bool civicRestored_ = false;                  // the memory of an earlier session was loaded into civicBoard_ for this city
     int civicCount_[sc4af::kCivicKinds] = {};     // affected buildings per type at the last evaluation (log on change only)
+    bool noticeSessionLogged_ = false;            // the "city session started" line of the notices was logged for this session
+    bool listedLogged_[sc4af::kNoticeSlots] = {}; // the "the advisor lists the notice" line was logged since the last push (once per notice)
+    bool enabledKnown_[sc4af::kNoticeSlots] = {}, enabledNow_[sc4af::kNoticeSlots] = {};      // the management switch of each slot at the last look (log on change only)
+    static constexpr int kNoticePollsPerDay = 40;   // how many times between two simulated days the poll may look again at a notice that must still be withdrawn (a paused game never ends the day)
+    int noticePollBudget_ = kNoticePollsPerDay;
+    std::uint32_t unifiedRanDay_ = 0xFFFFFFFFu;   // the simulated day on which the unified controller last read the counters: its evidence is only valid that day
     std::vector<std::string> linkVariables_;      // the names of the advice local values, kept for the life of the plugin (the game may keep the pointer of a name)
     bool advisorApiBroken_ = false;               // a native advisor call raised an exception: those calls are not used again in this session
-    // The utility notices are a PROVEN shortage that is still unresolved a month later (ServiceNotices.h, DeferredNotices). Ids 0..2 = power, water, garbage.
-    sc4af::DeferredNotices deferred_;
     std::uint32_t simDays_ = 0;                // simulated days since the city opened
-    sc4af::NoticeMemory told_;                 // shortages already told in earlier sessions (outside the saves)
+    sc4af::NoticeMemory told_;                 // DepartmentEfficiency.told.txt: the record of the landfill advisor (outside the saves)
     std::string toldPath_, cityKey_, dataDir_;
     std::string landfillKey_;                  // key under which the landfill advisor record is persisted (empty = session only)
     bool landfillRestored_ = false, landfillKeyLogged_ = false;

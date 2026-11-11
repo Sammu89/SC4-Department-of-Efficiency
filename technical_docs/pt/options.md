@@ -173,7 +173,7 @@ Uma definição desconhecida ou um valor inválido tornam inválido o ficheiro d
 
 As definições omitidas nos ficheiros fornecidos usam os seus valores predefinidos.
 
-Por exemplo, a configuração de demolição predefinida liga a remoção de ruínas e de edifícios abandonados elegíveis, protegendo ao mesmo tempo os lotes agrícolas e os edifícios abandonados por falta de eletricidade ou de água.
+Por exemplo, depois de ligada a demolição, as suas regras predefinidas ativam a remoção de ruínas e de edifícios abandonados elegíveis, protegendo ao mesmo tempo os lotes agrícolas e os edifícios abandonados por falta de eletricidade ou de água. A demolição em si vem desligada por predefinição.
 
 **As edições manuais são normalmente detetadas e aplicadas no prazo de um mês simulado.**
 
@@ -819,7 +819,7 @@ Não remove o zonamento subjacente.
 <a id="opt-demolishdestroyed"></a>
 ### Demolir edifícios destruídos
 
-<text color="secondary">Predefinição: Ligado | Valores: Ligado / Desligado | INI: `DemolishDestroyed`</text>
+<text color="secondary">Predefinição: Desligado | Valores: Ligado / Desligado | INI: `DemolishDestroyed`</text>
 
 Remove automaticamente as ruínas deixadas por incêndios e desastres.
 
@@ -916,7 +916,7 @@ Consulte [Demolição automática](demolition.md#demolition-protected).
 <a id="opt-demolishabandoned"></a>
 ### Demolir edifícios abandonados
 
-<text color="secondary">Predefinição: Ligado | Valores: Ligado / Desligado | INI: `DemolishAbandoned`</text>
+<text color="secondary">Predefinição: Desligado | Valores: Ligado / Desligado | INI: `DemolishAbandoned`</text>
 
 Limpa automaticamente os edifícios que permaneceram abandonados durante o tempo de espera configurado.
 

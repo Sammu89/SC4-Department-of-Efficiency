@@ -13,7 +13,7 @@ Il gère le budget de chaque établissement d’éducation et de santé, les cen
 Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisation**. Choisissez les services à automatiser, ajustez leurs marges de sécurité, configurez la démolition ou désactivez tout le Ministère. Vous pouvez aussi utiliser l’ordonnance **Instituer un Ministère de l’Optimisation** comme interrupteur général. Aucune application séparée n’est nécessaire.
 
 > [!IMPORTANT]
-> **Le Ministère démarre activé, y compris la démolition automatique des bâtiments détruits et abandonnés.** Vérifiez ses réglages avant d’ouvrir une ville à laquelle vous tenez. Il fait de vrais changements dans le jeu : financements, accords et démolitions seront enregistrés si vous sauvegardez la ville. Il ne modifie pas directement les fichiers de sauvegarde.
+> **Le Ministère démarre activé, mais la démolition automatique est désactivée par défaut.** Vérifiez ses réglages avant d’ouvrir une ville à laquelle vous tenez. Il fait de vrais changements dans le jeu : financements et accords (et démolitions, si vous les activez) seront enregistrés si vous sauvegardez la ville. Il ne modifie pas directement les fichiers de sauvegarde.
 
 ## Sommaire
 
@@ -45,9 +45,9 @@ Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisa
 
 ## Installation
 
-### [⬇ Télécharger le Département de l’efficacité 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Télécharger le Département de l’efficacité 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Nouveautés de la 1.0.2 :** voir le [journal des modifications](CHANGELOG.md) (en anglais).
+**Nouveautés de la 1.0.3 :** voir le [journal des modifications](CHANGELOG.md) (en anglais).
 
 1. Téléchargez la [dernière version](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) et fermez SimCity 4.
 
@@ -58,7 +58,7 @@ Tout se règle dans le jeu, dans **Options de jeu → Ministère de l’Optimisa
 4. Lancez SimCity 4 et ouvrez **Options de jeu → Ministère de l’Optimisation** pour définir vos préférences.
 
 > [!IMPORTANT]
-> Le ministère est activé par défaut, y compris la démolition automatique des bâtiments détruits ou abandonnés. Vérifiez les paramètres de **démolition** avant d’ouvrir une ville contenant des bâtiments à préserver.
+> Le ministère est activé par défaut ; la démolition automatique est **désactivée** par défaut. Si vous l’activez, vérifiez les paramètres de **démolition** avant d’ouvrir une ville contenant des bâtiments à préserver.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ Le tableau ci-dessous décrit ce que fait le Ministère. Pour les formules, les 
 | [Eau](technical_docs/fr/water.md#water) | Ajuste le financement de l’eau de la ville pour couvrir la demande plus une réserve de sécurité. La protection des canalisations est activée par défaut, pour éviter des coupes qui laisseraient le réseau se dégrader. Il masque aussi l’icône trompeuse « pas d’eau » du jeu au-dessus des fermes. |
 | [Déchets](technical_docs/fr/garbage.md#garbage-landfills) | Ajuste le financement de la gestion des déchets d’après la production d’ordures, le recyclage, le traitement, le stockage des décharges et les accords régionaux, tout en protégeant les besoins propres de la ville. |
 | [Accords avec les voisins](technical_docs/fr/deals.md#neighbor-deals) | Peut **acheter ou vendre de l’électricité et de l’eau**, **payer les voisins pour qu’ils prennent vos déchets** ou **accepter les leurs contre paiement**. Il crée, ajuste et annule les accords éligibles lorsque le résultat global profite à la ville et que ses propres besoins et réserves restent protégés. |
-| [Démolition automatique](technical_docs/fr/demolition.md#demolition) | Peut déblayer les ruines après environ **30 jours simulés** et les bâtiments éligibles abandonnés depuis **une année simulée**, par défaut. Vous décidez quelles zones et quels motifs d’abandon comptent, si les ruines protégées peuvent être déblayées et si vous fixez un plafond de dépenses mensuel. |
+| [Démolition automatique](technical_docs/fr/demolition.md#demolition) | **Désactivée par défaut.** Peut déblayer les ruines après environ **30 jours simulés** et les bâtiments éligibles abandonnés depuis **une année simulée**, par défaut. Vous décidez quelles zones et quels motifs d’abandon comptent, si les ruines protégées peuvent être déblayées et si vous fixez un plafond de dépenses mensuel. |
 | [Avis des conseillers](technical_docs/fr/safety.md#notices) | Utilise les conseillers du jeu pour signaler les pénuries avérées et persistantes que ni le financement ni les accords disponibles ne peuvent résoudre. Quand c’est utile, les messages contiennent des liens qui mènent aux bâtiments concernés. Il ajoute aussi une actualité (titre dans la liste, détail au clic) quand un service que vous avez activé doit s’arrêter à cause d’une défaillance technique. |
 | [Conseil sur la taille de la décharge](technical_docs/fr/garbage.md#garbage-landfills-advice) | Un conseil optionnel indique une réduction précise et sans risque de la décharge (cases vides à retirer), qui pourrait réduire la facture des déchets de plus que le seuil d’économie choisi. **Le Ministère conseille ; c’est à vous de décider de modifier ou non le zonage.** |
 | [Réparation des cases fantômes](technical_docs/fr/garbage.md#ghost-tiles) | Quand la gestion des déchets est activée, répare sans risque les cases de décharge invisibles éligibles que le jeu compte encore dans l’entretien. Les cas risqués ou non vérifiés sont laissés tels quels ; cette réparation n’a pas d’interrupteur distinct. |
@@ -90,7 +90,7 @@ Le Ministère utilise les réglages fournis avec le plugin et **se met au travai
 
 2\. Sur la page **Services**, choisissez les budgets et les accords avec les voisins que le Ministère peut gérer, et la marge de capacité qu’il doit conserver.
 
-3\. Sur la page **Démolition**, vérifiez les règles de déblaiement des ruines et des bâtiments abandonnés. **Désactivez la démolition automatique si vous voulez tout raser vous-même.**
+3\. Sur la page **Démolition**, la démolition automatique est désactivée. Cochez les options des ruines et des bâtiments abandonnés seulement si vous voulez que le Ministère les déblaie pour vous.
 
 4\. Cliquez sur **Accepter** pour enregistrer vos choix. **Annuler** ferme la fenêtre sans enregistrer les changements.
 
@@ -137,10 +137,10 @@ Ouvrez **Options de jeu → Ministère de l’Optimisation**. La fenêtre compor
 
 | Option | Par défaut | Signification |
 |---|---|---|
-| [Démolir les bâtiments détruits](technical_docs/fr/options.md#opt-demolishdestroyed) | **Activé** | Démolit les ruines après un certain délai. Ne déblaie pas automatiquement les ruines municipales ou historiques protégées, sauf si l’option ci-dessous l’autorise. |
+| [Démolir les bâtiments détruits](technical_docs/fr/options.md#opt-demolishdestroyed) | **Désactivé** | Démolit les ruines après un certain délai. Ne déblaie pas automatiquement les ruines municipales ou historiques protégées, sauf si l’option ci-dessous l’autorise. |
 | [Attendre (bâtiments détruits)](technical_docs/fr/options.md#opt-destroyedmonths) | **1 mois** (1–24) | Durée pendant laquelle les ruines doivent rester avant de pouvoir être déblayées ; environ **30 jours simulés** par défaut. |
 | [Démolir les bâtiments municipaux et historiques détruits](technical_docs/fr/options.md#opt-demolishmunicipal) | **Désactivé** | Si activée, déblaie aussi, après le délai, les **ruines** éligibles de bâtiments municipaux, spéciaux et historiques. |
-| [Démolir les bâtiments abandonnés](technical_docs/fr/options.md#opt-demolishabandoned) | **Activé** | Déblaie les bâtiments abandonnés éligibles après le délai d’attente, dans les types de zone et pour les motifs choisis. |
+| [Démolir les bâtiments abandonnés](technical_docs/fr/options.md#opt-demolishabandoned) | **Désactivé** | Déblaie les bâtiments abandonnés éligibles après le délai d’attente, dans les types de zone et pour les motifs choisis. |
 | [Attendre (bâtiments abandonnés)](technical_docs/fr/options.md#opt-abandonedmonths) | **12 mois** (1–60) | Durée pendant laquelle un bâtiment doit rester abandonné avant de pouvoir être démoli ; une année simulée par défaut. |
 | [Zone résidentielle](technical_docs/fr/options.md#opt-zoneresidential) | **Activé** | Inclut les maisons et immeubles d’habitation abandonnés. |
 | [Zone commerciale](technical_docs/fr/options.md#opt-zonecommercial) | **Activé** | Inclut les commerces et bureaux abandonnés. |

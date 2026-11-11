@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Copyright (c) 2026 Sammu89
 cmake_minimum_required(VERSION 3.20)
-project(DepartmentEfficiency VERSION 1.0.2 LANGUAGES CXX)
+project(DepartmentEfficiency VERSION 1.0.3 LANGUAGES CXX)
 
 # Department of Efficiency: SimCity 4 Deluxe plugin (GZCOM DLL), Windows x86 only.
 # This file builds the plugin DLL and nothing else. The DLL is produced inside the build

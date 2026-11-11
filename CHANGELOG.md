@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.3 (November 2026)
+
+Version **1.0.3** updates 1.0.2.
+
+> [!IMPORTANT]
+> **Installation:** Replace `DepartmentEfficiency.dll`, `DepartmentEfficiency.dat` and `DepartmentEfficiency.ini` in `Plugins`. Keep your current INI if you want to preserve your personal settings.
+
+### Automatic demolition
+
+- Automatic demolition is now off by default. Turn it on in **Play Options → Department of Efficiency → Demolition**.
+
+### Shortage notifications
+
+- Improved shortage notifications for electricity, water and garbage, with clearer messages and less intrusive reminders.
+- Better distinction between severe garbage shortages and residual waste accumulation, with a neutral notice for the latter.
+- Updated notification titles and descriptions in ten languages, including the city and mayor names.
+- Improved notification handling when a service recovers or automatic management is disabled.
+
 ## 1.0.2 (November 2026)
 
 Version **1.0.2 replaces version 1.0.0** and includes the changes below.

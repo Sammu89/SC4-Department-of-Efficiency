@@ -34,6 +34,9 @@
 
 namespace sc4af {
 
+// The Education / Health notices keep their own, earlier policy (owner, 2026-11-11: restored as it was before the revision of the utility notices): discreet, 30 simulated days of proof, memory kept between sessions.
+constexpr std::uint32_t kNoticePersistDays = 30;
+
 constexpr int kMaxLinks = kCivicMaxLinks;
 constexpr std::uint32_t kReplaceWindowDays = 30;
 constexpr int kReplacementsPerWindow = 2;
@@ -52,7 +55,7 @@ inline CellKey CellOf(const AffectedBuilding& b) { return {b.cellX, b.cellZ}; }
 // What the advisor says about one notice record: listed (the advice carries the advisor's active flag 2, the state of the in-game notices list), not listed, or unknown (the call failed).
 // SimCity 4.exe 1.1.641.0: GetAdviceByGUID returns the advisor's own advice object; PushEvent sets its flag 2 (0x50 -> 0x42);
 // RetireAdvice requires flag 2 and clears it (0x42 -> 0x50, returns true).
-enum class Listing { Listed, NotListed, Unknown };
+// (Listing is defined in ServiceNotices.h)
 
 // Everything that has to survive a reload for one type.
 struct BoardMemory {

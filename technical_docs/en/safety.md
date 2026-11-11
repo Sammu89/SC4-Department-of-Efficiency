@@ -627,128 +627,61 @@ The Department only uses advisor notices when the player may need to intervene, 
 
 The Department can warn you when a shortage persists and **the available automatic solutions have been exhausted**.
 
-These notices come from the **Utilities advisor**.
+These notices come from the **Utilities advisor**. Their text addresses the mayor and the city by name.
+
+A shortage notice exists **only while the Department manages that service locally** (power, water or sanitation, with the Department active). If you switch that management off, the notice is withdrawn. Regional contracts are a separate matter: they never cause a notice, and a notice never cancels a contract.
 
 | Resource | Notice title |
 |---|---|
-| **Power** | **By Candlelight!** |
-| **Water** | **The Faucets Are on Strike!** |
-| **Garbage** | **Garbage Takes Over!** |
+| **Power** | **Blackout! Who Bought the Candles?** |
+| **Water** | **Even the Faucets Are Thirsty!** |
+| **Garbage: severe shortage** | **Up to Our Necks in Garbage!** |
+| **Garbage: old pile that does not shrink** | **This Garbage Is Paying Rent!** |
 
-These are urgent advisor messages.
-
-Depending on your SimCity 4 advice settings, they can appear as pop-ups as well as entries in the news list.
-
-They do not include a camera link.
+The first two notices of an episode are urgent messages that can open as pop-ups; the later ones are discreet entries of the news list. The old-pile notice is informative: neutral, always discreet, never a pop-up. None of them include a camera link.
 
 #### When does the Department consider a shortage proven?
 
-A shortage notice is not generated simply because demand temporarily exceeds supply.
+A notice is not generated simply because demand temporarily exceeds supply. The Department must establish, with current readings, that **the shortage cannot be solved with what it is allowed to do**.
 
-The Department must first establish that **the shortage cannot be solved using the currently available legal options**.
+For power and water it checks the usable capacity of local facilities, the regional purchases available, the sales that take capacity, the city's real demand and delivered service, and that no change of its own is still awaiting confirmation. **A building without water only because it is disconnected from the pipe network does not prove a regional supply shortage.**
 
-For power and water, this requires checking:
+For garbage it compares its disposal model with the game's own backlog of uncollected garbage, read month by month. A backlog of up to **1% of the monthly production** counts as residual.
 
-- The maximum usable capacity of local facilities.
-- Available regional purchases.
-- The removal of sales that consume needed capacity.
-- The city's actual demand and delivered service.
-- The completeness of regional records and contract offers.
-
-If you manage contracts manually, the Department evaluates the existing contracts rather than assuming it can create new ones.
-
-The regional information must be complete enough to support the conclusion.
-
-For power and water, the game's counters must also confirm a genuine regional deficit.
-
-**A building that lacks water because it is disconnected from the pipe network does not, by itself, prove a regional supply shortage.**
-
-For garbage, the Department relies on its physical disposal model to determine whether the city's waste can be handled.
-
-This is a model prediction, not a direct game measurement of every future garbage flow.
-
-Finally, **no contract change or sanitation funding adjustment for the affected resource may still be awaiting confirmation**.
-
-The Department does not declare a shortage impossible to solve while its own corrective action is still in progress.
-
-#### Why does the Department wait 30 days before warning you?
-
-Shortages may disappear after a funding adjustment, contract change or other normal game update.
-
-The Department therefore waits until a proven shortage has remained unresolved for **30 simulated days**.
-
-**A shortage resolved during those 30 days produces no notice.**
-
-This avoids unnecessary warnings about problems that automatic management successfully corrects.
-
-#### When are reminders displayed?
-
-**Utility shortage notice schedule**
-
-```math
-t_{\mathrm{first}}=t_{\mathrm{proof}}+30
-```
-
-```math
-t_k=t_{\mathrm{first}}+kP
-```
-
-Where:
-
-- **tproof** is the simulated day when the shortage was first proven.
-- **tfirst** is the first notice date.
-- **k** is the reminder number, starting at 1.
-- **P** is the reminder interval.
-
-| Resource | First notice | Reminder interval |
+| Situation | What the Department sees | Notice |
 |---|---|---|
-| **Power** | After 30 unresolved simulated days | Every 60 simulated days |
-| **Water** | After 30 unresolved simulated days | Every 60 simulated days |
-| **Garbage** | After 30 unresolved simulated days | Every 120 simulated days |
+| **Severe** | the backlog grew by more than that margin in each of the last two months | urgent notice |
+| **Old pile** | there is a backlog above the margin, but it no longer grows: practically all new garbage is treated, the old pile stays | neutral, discreet notice |
+| **Draining or recovered** | the backlog shrinks, or is gone or residual | no new notice; recovery withdraws the notice |
+| **Unclear** | the data are not enough | nothing changes |
 
-The Department continues reminders only while the shortage remains unresolved.
+The two garbage notices never exist at the same time. When the data stop showing a shortage but do not yet confirm that it is over, the Department neither warns nor withdraws a notice already shown, and the waiting days stand still.
+
+#### When are notices and reminders displayed?
+
+| Resource | First notice (days with the shortage proven) | Reminder every |
+|---|---|---|
+| **Power** | 15 simulated days | 120 simulated days |
+| **Water** | 30 simulated days | 150 simulated days |
+| **Garbage** | 60 simulated days | 240 simulated days |
+
+A shortage solved before those days produces no notice. Only days on which the shortage is proven count. The first two notices of an episode can open as pop-ups; from the third on they are discreet. There is no limit on reminders while the shortage lasts.
+
+The Department cannot see whether you dismissed a notice, so it never assumes it: reminders simply follow these fixed intervals.
 
 #### When does a shortage episode end?
 
-For power and water, the episode ends when a fresh game reading confirms that delivered service is at least equal to demand.
+For power and water, when fresh readings confirm on two consecutive days that delivered service is at least equal to demand. For garbage, when the disposal model is feasible again and the backlog is gone or residual.
 
-For garbage, two conditions must be met:
-
-- The disposal model becomes feasible again.
-- The game reports no uncollected garbage.
-
-Once recovery is confirmed, the Department stops reminders.
-
-**A later shortage is treated as a new episode**, with its own 30-day waiting period.
+Then the notice is withdrawn from the advisor and the reminders stop. **A later shortage is a new episode**, with its own waiting days. Switching the management of the service off also ends the episode and withdraws the notice; switching it on again requires the shortage to be proven again.
 
 #### What happens if you close and reopen the city?
 
-The Department remembers which shortages it has already reported.
-
-This information is stored **per city** in a small notice-history file inside the Department's folder, outside your city saves.
-
-For example, if you receive a water shortage notice and reopen the city while the same shortage remains unresolved, the Department does not immediately display the same warning again.
-
-After the shortage is proven again in the new session and remains unresolved for the normal waiting period, it schedules the next reminder rather than repeating the first notice.
-
-If the session reaches its **75th simulated day** without that shortage being proven again, the previous episode's memory is discarded.
-
-A later shortage can then start a new episode.
-
-The notice-history file can be deleted without damaging city saves.
+**Nothing is remembered between sessions** for these notices. When a city opens, the Department withdraws any shortage notice left over from an earlier session. If the shortage is still there, it must be proven again and the first notice comes after the normal waiting days (15, 30 or 60). The education and healthcare notices below do keep their memory.
 
 #### Which settings are required for shortage notices?
 
-Utility shortage notices require **Manage neighbor deals** to be enabled.
-
-This is because the Department needs to inspect regional offers and markets before concluding that a shortage cannot be resolved.
-
-The affected resource must also be managed through either:
-
-- Its local funding manager.
-- Its corresponding regional contract manager.
-
-**If the Department cannot examine all relevant alternatives, it does not claim that the shortage is impossible to solve.**
+Only the Department active and the **local management of that service** (power, water or sanitation). The regional contract settings play no part.
 
 <a id="safety-notices-civic"></a>
 #### Education and healthcare capacity notices
@@ -1045,7 +978,7 @@ They follow the relevant service-management settings and appear only when their 
 
 The following examples show how the Department responds to persistent shortages, incomplete information and manual changes.
 
-#### Example 1: An power shortage that cannot be resolved
+#### Example 1: A power shortage that cannot be resolved
 
 Suppose your city has the following situation on **simulated day 40** after opening:
 
@@ -1071,41 +1004,25 @@ That is less than the city's demand:
 
 The game's counters also confirm that power delivery is below demand.
 
-**The shortage is proven on day 40.**
+**The shortage is proven on day 40.** The Department waits 15 simulated days.
 
-However, the Department does not immediately display a warning.
+**Day 55**
 
-It waits 30 simulated days.
+The shortage is still unresolved. The Department issues the first notice, which can open as a pop-up:
 
-**Day 70**
+**Blackout! Who Bought the Candles?**
 
-The shortage is still unresolved.
+**Day 175**
 
-The Department issues:
+The shortage continues. The reminder appears, 120 simulated days after the notice.
 
-**By Candlelight!**
+**Day 180**
 
-**Day 130**
+You build another power plant. Fresh readings confirm that power delivered now meets demand. The Department withdraws the notice and stops the reminders.
 
-The shortage continues.
+**Day 250**
 
-The first reminder appears, 60 simulated days after the original notice.
-
-**Day 150**
-
-You build another power plant.
-
-A fresh reading confirms that power delivered now meets demand.
-
-The Department closes the shortage episode and stops the reminders.
-
-**Day 200**
-
-A new power shortage is proven.
-
-Because the previous episode ended, the new shortage starts its own 30-day waiting period.
-
-If it remains unresolved, the next notice appears on **day 230**.
+A new power shortage is proven. Because the previous episode ended, it starts its own waiting period; if it remains unresolved, a new first notice appears on **day 265**.
 
 #### Example 2: Buildings without power, but enough generating capacity
 
@@ -1134,23 +1051,11 @@ The player must inspect the power network.
 
 #### Example 3: Reopening a city during an existing shortage
 
-Suppose a water shortage was first reported on **day 70** of a city session.
+Suppose a water shortage was reported on **day 70** of a city session, and you save the city on day 100 while it remains unresolved.
 
-You save the city on day 100 while the shortage remains unresolved.
+Later, you reopen the city. The Department begins a new session: it **remembers nothing** of the earlier one and withdraws the old notice if the game kept it in the list.
 
-Later, you reopen the city.
-
-The Department begins a new session and evaluates the water system again.
-
-The shortage is proven again and remains unresolved for another 30 simulated days.
-
-However, the Department remembers that the same shortage episode was already reported.
-
-**It does not repeat the first warning.**
-
-Instead, it schedules the next reminder according to the normal 60-day interval.
-
-This prevents the same unresolved problem from producing a new initial warning every time you reopen the city.
+If the water shortage is still there, it is proven again and the first notice comes after the normal 30 simulated days. Reopening the city therefore never produces an immediate warning, and the old reminder schedule is not continued.
 
 #### Example 4: Changing water funding manually
 
@@ -1211,9 +1116,9 @@ The Department is designed to operate conservatively, but it cannot overcome eve
 
 #### Shortage notices
 
-- **Utility shortage notices require Manage neighbor deals.** Without access to regional offers and markets, the Department cannot prove that all possible solutions have been exhausted.
-- **The Department cannot know whether a notice was actually displayed on screen.** SimCity 4 decides whether to show a pop-up according to its advisor settings.
-- **Garbage shortage notices rely on a model.** Unlike power and water, garbage feasibility is determined through the Department's disposal projection rather than a direct game counter proving future disposal requirements.
+- **Shortage notices follow the local management.** If you manage a service by hand, the Department does not warn you about it.
+- **The Department cannot know whether a notice was actually displayed or dismissed.** SimCity 4 decides whether to show a pop-up according to its advisor settings. Reminders follow fixed intervals.
+- **Garbage notices rely on a model and on monthly readings.** Unlike power and water, garbage is judged from the Department's disposal projection and the game's backlog, month by month.
 
 #### Original game advisor messages
 

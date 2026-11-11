@@ -625,130 +625,63 @@ Le Ministère n’utilise les avis des conseillers que lorsque le joueur a peut-
 <a id="safety-notices-utility"></a>
 #### Avis de pénurie d’électricité, d’eau et de déchets
 
-Le Ministère peut vous avertir quand une pénurie persiste et que **les solutions automatiques disponibles sont épuisées**.
+Le Ministère peut vous prévenir lorsqu’une pénurie persiste et que **les solutions automatiques disponibles sont épuisées**.
 
-Ces avis proviennent du **conseiller des services publics**.
+Ces avis viennent du **conseiller des Services publics**. Leur texte s’adresse au maire et à la ville par leur nom.
+
+Un avis de pénurie n’existe **que tant que le Ministère gère ce service localement** (électricité, eau ou déchets, Ministère actif). Si vous désactivez cette gestion, l’avis est retiré. Les contrats régionaux sont une autre affaire : ils ne provoquent jamais d’avis, et un avis n’annule jamais un contrat.
 
 | Ressource | Titre de l’avis |
 |---|---|
-| **Électricité** | **À la lueur des bougies !** |
-| **Eau** | **Les robinets font grève !** |
-| **Déchets** | **Une ville qui déborde !** |
+| **Électricité** | **Panne de courant ! Qui a acheté les bougies ?** |
+| **Eau** | **Même les robinets ont soif !** |
+| **Déchets : pénurie grave** | **Des déchets jusqu’au cou !** |
+| **Déchets : vieux tas qui ne diminue pas** | **Ces déchets paient déjà un loyer !** |
 
-Ce sont des messages de conseiller urgents.
+Les deux premiers avis d’un épisode sont des messages urgents qui peuvent s’ouvrir en fenêtre ; les suivants sont des entrées discrètes de la liste des nouvelles. L’avis du vieux tas est informatif : neutre, toujours discret, jamais en fenêtre. Aucun ne comporte de lien vers la caméra.
 
-Selon vos réglages des conseils dans SimCity 4, ils peuvent apparaître sous forme de fenêtres contextuelles en plus des entrées de la liste des nouvelles.
+#### Quand le Ministère considère-t-il une pénurie comme prouvée ?
 
-Ils ne contiennent pas de lien vers la caméra.
+Un avis n’est pas généré simplement parce que la demande dépasse temporairement l’offre. Le Ministère doit établir, avec des relevés actuels, que **la pénurie ne peut pas être résolue avec ce qu’il a le droit de faire**.
 
-#### Quand le Ministère considère-t-il une pénurie comme avérée ?
+Pour l’électricité et l’eau, il vérifie la capacité utilisable des installations locales, les achats régionaux disponibles, les ventes qui occupent de la capacité, la demande réelle de la ville et le service livré, et qu’aucune modification de sa part n’attend de confirmation. **Un bâtiment sans eau uniquement parce qu’il est déconnecté du réseau ne prouve pas une pénurie régionale.**
 
-Un avis de pénurie n’est pas généré simplement parce que la demande dépasse temporairement l’offre.
+Pour les déchets, il compare son modèle de traitement au retard de déchets non collectés du jeu, relevé mois par mois. Un retard allant jusqu’à **1 % de la production mensuelle** est considéré comme résiduel.
 
-Le Ministère doit d’abord établir que **la pénurie ne peut pas être résolue avec les options légales actuellement disponibles**.
-
-Pour l’électricité et l’eau, cela exige de vérifier :
-
-- La capacité maximale utilisable des installations locales.
-- Les achats régionaux disponibles.
-- La suppression des ventes qui consomment de la capacité nécessaire.
-- La demande réelle de la ville et le service livré.
-- L’exhaustivité des enregistrements régionaux et des offres de contrat.
-
-Si vous gérez les contrats manuellement, le Ministère évalue les contrats existants au lieu de supposer qu’il peut en créer de nouveaux.
-
-Les informations régionales doivent être assez complètes pour étayer la conclusion.
-
-Pour l’électricité et l’eau, les compteurs du jeu doivent aussi confirmer un véritable déficit régional.
-
-**Un bâtiment qui manque d’eau parce qu’il est déconnecté du réseau de canalisations ne prouve pas, à lui seul, une pénurie d’approvisionnement régional.**
-
-Pour les déchets, le Ministère s’appuie sur son modèle physique de traitement pour déterminer si les déchets de la ville peuvent être gérés.
-
-C’est une prédiction du modèle, pas une mesure directe du jeu de chaque flux futur de déchets.
-
-Enfin, **aucun changement de contrat ni ajustement du financement du traitement des déchets pour la ressource concernée ne doit encore attendre de confirmation**.
-
-Le Ministère ne déclare pas une pénurie impossible à résoudre tant que sa propre action corrective est en cours.
-
-#### Pourquoi le Ministère attend-il 30 jours avant de vous avertir ?
-
-Les pénuries peuvent disparaître après un ajustement de financement, un changement de contrat ou une autre mise à jour normale du jeu.
-
-Le Ministère attend donc qu’une pénurie avérée soit restée non résolue pendant **30 jours simulés**.
-
-**Une pénurie résolue pendant ces 30 jours ne produit aucun avis.**
-
-Cela évite des avertissements inutiles sur des problèmes que la gestion automatique corrige avec succès.
-
-#### Quand les rappels sont-ils affichés ?
-
-**Calendrier des avis de pénurie de services**
-
-```math
-t_{\mathrm{premier}}=t_{\mathrm{preuve}}+30
-```
-
-```math
-t_k=t_{\mathrm{premier}}+kP
-```
-
-Où :
-
-- **tpreuve** est le jour simulé où la pénurie a été avérée pour la première fois.
-- **tpremier** est la date du premier avis.
-- **k** est le numéro du rappel, à partir de 1.
-- **P** est l’intervalle entre les rappels.
-
-| Ressource | Premier avis | Intervalle entre les rappels |
+| Situation | Ce que voit le Ministère | Avis |
 |---|---|---|
-| **Électricité** | Après 30 jours simulés sans résolution | Tous les 60 jours simulés |
-| **Eau** | Après 30 jours simulés sans résolution | Tous les 60 jours simulés |
-| **Déchets** | Après 30 jours simulés sans résolution | Tous les 120 jours simulés |
+| **Grave** | le retard a augmenté de plus que cette marge chacun des deux derniers mois | avis urgent |
+| **Vieux tas** | il y a un retard au-dessus de la marge, mais il ne grandit plus : presque tous les nouveaux déchets sont traités, le vieux tas reste | avis neutre et discret |
+| **En baisse ou résolu** | le retard diminue, ou a disparu ou est résiduel | aucun nouvel avis ; la résolution retire l’avis |
+| **Incertain** | les données ne suffisent pas | rien ne change |
 
-Le Ministère ne poursuit les rappels que tant que la pénurie reste non résolue.
+Les deux avis de déchets n’existent jamais en même temps. Quand les données ne montrent plus de pénurie sans confirmer qu’elle est finie, le Ministère ne prévient pas et ne retire pas un avis déjà affiché, et les jours d’attente restent à l’arrêt.
 
-#### Quand un épisode de pénurie prend-il fin ?
+#### Quand les avis et les rappels apparaissent-ils ?
 
-Pour l’électricité et l’eau, l’épisode prend fin lorsqu’une lecture fraîche du jeu confirme que le service livré est au moins égal à la demande.
+| Ressource | Premier avis (jours de pénurie prouvée) | Rappel tous les |
+|---|---|---|
+| **Électricité** | 15 jours simulés | 120 jours simulés |
+| **Eau** | 30 jours simulés | 150 jours simulés |
+| **Déchets** | 60 jours simulés | 240 jours simulés |
 
-Pour les déchets, deux conditions doivent être remplies :
+Une pénurie résolue avant ces jours ne produit aucun avis. Seuls comptent les jours où la pénurie est prouvée. Les deux premiers avis d’un épisode peuvent s’ouvrir en fenêtre ; à partir du troisième, ils sont discrets. Il n’y a pas de limite de rappels tant que la pénurie dure.
 
-- Le modèle de traitement redevient réalisable.
-- Le jeu ne signale aucun déchet non collecté.
+Le Ministère ne peut pas voir si vous avez fermé un avis, donc il ne le suppose jamais : les rappels suivent simplement ces intervalles fixes.
 
-Une fois le rétablissement confirmé, le Ministère cesse les rappels.
+#### Quand un épisode de pénurie se termine-t-il ?
 
-**Une pénurie ultérieure est traitée comme un nouvel épisode**, avec sa propre période d’attente de 30 jours.
+Pour l’électricité et l’eau, quand des relevés récents confirment, deux jours de suite, que le service livré est au moins égal à la demande. Pour les déchets, quand le modèle de traitement redevient viable et que le retard a disparu ou est résiduel.
 
-#### Que se passe-t-il si vous fermez puis rouvrez la ville ?
+L’avis est alors retiré du conseiller et les rappels s’arrêtent. **Une pénurie ultérieure est un nouvel épisode**, avec ses propres jours d’attente. Désactiver la gestion du service termine aussi l’épisode et retire l’avis ; en la réactivant, la pénurie doit être prouvée à nouveau.
 
-Le Ministère se souvient des pénuries qu’il a déjà signalées.
+#### Que se passe-t-il si vous fermez et rouvrez la ville ?
 
-Cette information est stockée **par ville** dans un petit fichier d’historique des avis situé dans le dossier du Ministère, en dehors de vos sauvegardes de villes.
-
-Par exemple, si vous recevez un avis de pénurie d’eau et rouvrez la ville alors que la même pénurie n’est pas résolue, le Ministère n’affiche pas immédiatement le même avertissement de nouveau.
-
-Une fois la pénurie de nouveau avérée dans la nouvelle session et restée non résolue pendant la période d’attente normale, il planifie le rappel suivant au lieu de répéter le premier avis.
-
-Si la session atteint son **75e jour simulé** sans que cette pénurie soit de nouveau avérée, la mémoire de l’épisode précédent est effacée.
-
-Une pénurie ultérieure peut alors commencer un nouvel épisode.
-
-Le fichier d’historique des avis peut être supprimé sans endommager les sauvegardes de villes.
+**Rien n’est mémorisé d’une session à l’autre** pour ces avis. À l’ouverture d’une ville, le Ministère retire tout avis de pénurie laissé par une session précédente. Si la pénurie est toujours là, elle doit être prouvée à nouveau et le premier avis arrive après les jours d’attente normaux (15, 30 ou 60). Les avis d’éducation et de santé, plus bas, conservent leur mémoire.
 
 #### Quels réglages sont nécessaires pour les avis de pénurie ?
 
-Les avis de pénurie de services exigent que **Gérer les accords avec les voisins** soit activé.
-
-En effet, le Ministère doit inspecter les offres et les marchés régionaux avant de conclure qu’une pénurie ne peut pas être résolue.
-
-La ressource concernée doit aussi être gérée par l’un des deux :
-
-- Son gestionnaire de financement local.
-- Son gestionnaire de contrats régionaux correspondant.
-
-**Si le Ministère ne peut pas examiner toutes les alternatives pertinentes, il ne prétend pas que la pénurie est impossible à résoudre.**
+Seulement le Ministère actif et la **gestion locale de ce service** (électricité, eau ou déchets). Les réglages des contrats régionaux n’interviennent pas.
 
 <a id="safety-notices-civic"></a>
 #### Avis de capacité pour l’éducation et la santé
@@ -1051,13 +984,13 @@ Supposons que votre ville se trouve dans la situation suivante au **jour simulé
 
 - **Demande d’électricité :** 10 000 unités.
 - **Électricité livrée :** 9 200 unités.
-- **Capacité de production locale maximale :** 8 900 unités.
+- **Capacité locale maximale de production :** 8 900 unités.
 - **Importations régionales utilisables :** 200 unités.
 - **Ventes :** aucune.
 
 Le Ministère a déjà envisagé le financement légal maximal des centrales et tous les achats disponibles.
 
-L’offre totale disponible est de :
+L’offre totale disponible est :
 
 ```math
 8900+200=9100
@@ -1071,41 +1004,25 @@ C’est moins que la demande de la ville :
 
 Les compteurs du jeu confirment aussi que l’électricité livrée est inférieure à la demande.
 
-**La pénurie est avérée au jour 40.**
+**La pénurie est prouvée au jour 40.** Le Ministère attend 15 jours simulés.
 
-Pourtant, le Ministère n’affiche pas d’avertissement immédiatement.
+**Jour 55**
 
-Il attend 30 jours simulés.
+La pénurie n’est toujours pas résolue. Le Ministère émet le premier avis, qui peut s’ouvrir en fenêtre :
 
-**Jour 70**
+**Panne de courant ! Qui a acheté les bougies ?**
 
-La pénurie n’est toujours pas résolue.
+**Jour 175**
 
-Le Ministère publie :
+La pénurie continue. Le rappel apparaît 120 jours simulés après l’avis.
 
-**À la lueur des bougies !**
+**Jour 180**
 
-**Jour 130**
+Vous construisez une autre centrale. Des relevés récents confirment que l’électricité livrée couvre maintenant la demande. Le Ministère retire l’avis et arrête les rappels.
 
-La pénurie continue.
+**Jour 250**
 
-Le premier rappel apparaît, 60 jours simulés après l’avis initial.
-
-**Jour 150**
-
-Vous construisez une autre centrale électrique.
-
-Une nouvelle lecture confirme que l’électricité livrée couvre désormais la demande.
-
-Le Ministère clôt l’épisode de pénurie et arrête les rappels.
-
-**Jour 200**
-
-Une nouvelle pénurie d’électricité est avérée.
-
-Comme l’épisode précédent est terminé, la nouvelle pénurie démarre son propre délai d’attente de 30 jours.
-
-Si elle n’est pas résolue, le prochain avis apparaît au **jour 230**.
+Une nouvelle pénurie d’électricité est prouvée. Comme l’épisode précédent est terminé, elle commence sa propre période d’attente ; si elle n’est pas résolue, un nouveau premier avis apparaît au **jour 265**.
 
 #### Exemple 2 : des bâtiments sans électricité, mais une capacité de production suffisante
 
@@ -1134,23 +1051,11 @@ Le joueur doit inspecter le réseau électrique.
 
 #### Exemple 3 : rouvrir une ville pendant une pénurie en cours
 
-Supposons qu’une pénurie d’eau ait été signalée pour la première fois au **jour 70** d’une session de la ville.
+Supposons qu’une pénurie d’eau ait été signalée au **jour 70** d’une session et que vous sauvegardiez la ville au jour 100 alors qu’elle n’est pas résolue.
 
-Vous sauvegardez la ville au jour 100, alors que la pénurie n’est pas résolue.
+Plus tard, vous rouvrez la ville. Le Ministère commence une nouvelle session : il **ne se souvient de rien** de la précédente et retire l’ancien avis si le jeu l’a gardé dans la liste.
 
-Plus tard, vous rouvrez la ville.
-
-Le Ministère commence une nouvelle session et évalue de nouveau le système d’eau.
-
-La pénurie est de nouveau avérée et reste non résolue pendant 30 jours simulés supplémentaires.
-
-Cependant, le Ministère se souvient que ce même épisode de pénurie a déjà été signalé.
-
-**Il ne répète pas le premier avertissement.**
-
-Il programme plutôt le prochain rappel selon l’intervalle normal de 60 jours.
-
-Cela évite qu’un même problème non résolu produise un nouvel avertissement initial à chaque réouverture de la ville.
+Si la pénurie d’eau est toujours là, elle est prouvée à nouveau et le premier avis arrive après les 30 jours simulés normaux. Rouvrir la ville ne produit donc jamais d’avertissement immédiat, et l’ancien calendrier de rappels n’est pas repris.
 
 #### Exemple 4 : modifier le financement de l’eau à la main
 
@@ -1211,9 +1116,9 @@ Le Ministère est conçu pour fonctionner avec prudence, mais il ne peut pas sur
 
 #### Avis de pénurie
 
-- **Les avis de pénurie de services publics exigent l’option Gérer les accords avec les voisins.** Sans accès aux offres et aux marchés régionaux, le Ministère ne peut pas prouver que toutes les solutions possibles ont été épuisées.
-- **Le Ministère ne peut pas savoir si un avis s’est réellement affiché à l’écran.** SimCity 4 décide d’afficher ou non une fenêtre contextuelle selon les réglages de ses conseillers.
-- **Les avis de pénurie de déchets reposent sur un modèle.** Contrairement à l’électricité et à l’eau, la faisabilité du traitement des déchets est déterminée par la projection d’élimination du Ministère, et non par un compteur direct du jeu prouvant les besoins futurs.
+- **Les avis de pénurie suivent la gestion locale.** Si vous gérez un service à la main, le Ministère ne vous prévient pas à son sujet.
+- **Le Ministère ne peut pas savoir si un avis a réellement été affiché ou fermé.** SimCity 4 décide d’ouvrir ou non une fenêtre selon ses réglages de conseillers. Les rappels suivent des intervalles fixes.
+- **Les avis de déchets reposent sur un modèle et sur des relevés mensuels.** Contrairement à l’électricité et à l’eau, les déchets sont jugés d’après la projection de traitement du Ministère et le retard du jeu, mois par mois.
 
 #### Messages d’origine des conseillers du jeu
 

@@ -173,7 +173,7 @@ Un ajuste desconocido o un valor no válido hace que el archivo de configuració
 
 Los ajustes omitidos en los archivos suministrados usan sus valores por defecto.
 
-Por ejemplo, la configuración de demolición por defecto activa la eliminación de ruinas y de edificios abandonados elegibles, y protege las parcelas agrícolas y los edificios abandonados por falta de electricidad o de agua.
+Por ejemplo, una vez activada la demolición, sus reglas por defecto activan la eliminación de ruinas y de edificios abandonados elegibles, y protegen las parcelas agrícolas y los edificios abandonados por falta de electricidad o de agua. La demolición en sí viene desactivada por defecto.
 
 **Las ediciones manuales se detectan y se aplican normalmente en el plazo de un mes simulado.**
 
@@ -819,7 +819,7 @@ No elimina la zonificación subyacente.
 <a id="opt-demolishdestroyed"></a>
 ### Demoler edificios destruidos
 
-<text color="secondary">Por defecto: Activado | Valores: Activado / Desactivado | INI: `DemolishDestroyed`</text>
+<text color="secondary">Por defecto: Desactivado | Valores: Activado / Desactivado | INI: `DemolishDestroyed`</text>
 
 Retira automáticamente las ruinas que dejan los incendios y los desastres.
 
@@ -916,7 +916,7 @@ Consulta [Demolición automática](demolition.md#demolition-protected).
 <a id="opt-demolishabandoned"></a>
 ### Demoler edificios abandonados
 
-<text color="secondary">Por defecto: Activado | Valores: Activado / Desactivado | INI: `DemolishAbandoned`</text>
+<text color="secondary">Por defecto: Desactivado | Valores: Activado / Desactivado | INI: `DemolishAbandoned`</text>
 
 Despeja automáticamente los edificios que llevan abandonados el periodo de espera configurado.
 

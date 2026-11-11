@@ -625,130 +625,63 @@ O Ministério só usa avisos dos conselheiros quando o jogador pode precisar de 
 <a id="safety-notices-utility"></a>
 #### Avisos de falta de eletricidade, água e lixo
 
-O Ministério pode avisá-lo quando uma falta persiste e **as soluções automáticas disponíveis se esgotaram**.
+O Ministério pode avisá-lo quando uma falta persiste e **as soluções automáticas disponíveis estão esgotadas**.
 
-Estes avisos vêm do **conselheiro de serviços públicos**.
+Estes avisos vêm do **conselheiro dos Serviços Públicos**. O texto dirige-se ao presidente e à cidade pelo nome.
+
+Um aviso de falta existe **apenas enquanto o Ministério gere esse serviço localmente** (eletricidade, água ou saneamento, com o Ministério ativo). Se desligar essa gestão, o aviso é retirado. Os contratos regionais são outra matéria: nunca causam um aviso, e um aviso nunca cancela um contrato.
 
 | Recurso | Título do aviso |
 |---|---|
-| **Eletricidade** | **À luz das velas!** |
-| **Água** | **Torneiras em greve!** |
-| **Lixo** | **Uma cidade a transbordar!** |
+| **Eletricidade** | **Apagão! Quem comprou as velas?** |
+| **Água** | **Até as torneiras têm sede!** |
+| **Lixo: falta grave** | **Lixo até ao pescoço!** |
+| **Lixo: pilha antiga que não diminui** | **Este lixo já paga renda!** |
 
-São mensagens urgentes dos conselheiros.
+Os dois primeiros avisos de um episódio são mensagens urgentes que podem abrir como pop-up; os seguintes são entradas discretas da lista de notícias. O aviso da pilha antiga é informativo: neutro, sempre discreto, nunca um pop-up. Nenhum inclui ligação para a câmara.
 
-Consoante as definições de conselhos do seu SimCity 4, podem aparecer como pop-ups e também como entradas na lista de notícias.
+#### Quando considera o Ministério que uma falta está comprovada?
 
-Não incluem uma ligação para a câmara.
+Não se gera um aviso só porque a procura excede temporariamente a oferta. O Ministério tem de estabelecer, com leituras atuais, que **a falta não se resolve com o que lhe é permitido fazer**.
 
-#### Quando considera o Ministério que uma falta está provada?
+Na eletricidade e na água, verifica a capacidade utilizável das instalações locais, as compras regionais disponíveis, as vendas que ocupam capacidade, a procura real da cidade e o serviço entregue, e que nenhuma alteração sua aguarda confirmação. **Um edifício sem água apenas por estar desligado da rede de canalização não prova uma falta regional.**
 
-Um aviso de falta não é gerado só porque a procura excede temporariamente o abastecimento.
+No lixo, compara o seu modelo de tratamento com o atraso de lixo por recolher do próprio jogo, lido mês a mês. Um atraso até **1 % da produção mensal** conta como residual.
 
-O Ministério tem primeiro de estabelecer que **a falta não pode ser resolvida com as opções legais atualmente disponíveis**.
-
-No caso da eletricidade e da água, isto exige verificar:
-
-- A capacidade máxima utilizável das instalações locais.
-- As compras regionais disponíveis.
-- A eliminação das vendas que consomem capacidade necessária.
-- A procura real da cidade e o serviço efetivamente fornecido.
-- A integridade dos registos regionais e das ofertas de contrato.
-
-Se gerir os contratos manualmente, o Ministério avalia os contratos existentes em vez de presumir que pode criar novos.
-
-A informação regional tem de estar suficientemente completa para sustentar a conclusão.
-
-No caso da eletricidade e da água, os contadores do jogo também têm de confirmar um défice regional genuíno.
-
-**Um edifício sem água por estar desligado da rede de canalizações não prova, por si só, uma falta de abastecimento regional.**
-
-No caso do lixo, o Ministério recorre ao seu modelo físico de eliminação para determinar se os resíduos da cidade podem ser tratados.
-
-Trata-se de uma previsão do modelo, e não de uma medição direta, feita pelo jogo, de cada fluxo futuro de lixo.
-
-Por fim, **nenhuma alteração de contrato nem ajuste do financiamento do saneamento do recurso afetado pode ainda estar à espera de confirmação**.
-
-O Ministério não declara uma falta impossível de resolver enquanto a sua própria ação corretiva ainda está em curso.
-
-#### Por que espera o Ministério 30 dias antes de o avisar?
-
-As faltas podem desaparecer depois de um ajuste de financiamento, de uma alteração de contrato ou de outra atualização normal do jogo.
-
-Por isso, o Ministério espera até que uma falta provada se mantenha por resolver durante **30 dias simulados**.
-
-**Uma falta resolvida durante esses 30 dias não gera nenhum aviso.**
-
-Assim evitam-se avisos desnecessários sobre problemas que a gestão automática corrige com êxito.
-
-#### Quando são mostrados os lembretes?
-
-**Calendário dos avisos de falta de serviços públicos**
-
-```math
-t_{\mathrm{primeiro}}=t_{\mathrm{prova}}+30
-```
-
-```math
-t_k=t_{\mathrm{primeiro}}+kP
-```
-
-Em que:
-
-- **tprova** é o dia simulado em que a falta foi provada pela primeira vez.
-- **tprimeiro** é a data do primeiro aviso.
-- **k** é o número do lembrete, a começar em 1.
-- **P** é o intervalo entre lembretes.
-
-| Recurso | Primeiro aviso | Intervalo entre lembretes |
+| Situação | O que o Ministério vê | Aviso |
 |---|---|---|
-| **Eletricidade** | Após 30 dias simulados por resolver | De 60 em 60 dias simulados |
-| **Água** | Após 30 dias simulados por resolver | De 60 em 60 dias simulados |
-| **Lixo** | Após 30 dias simulados por resolver | De 120 em 120 dias simulados |
+| **Grave** | o atraso cresceu mais do que essa margem em cada um dos dois últimos meses | aviso urgente |
+| **Pilha antiga** | há um atraso acima da margem, mas já não cresce: o lixo novo é praticamente todo tratado, a pilha antiga fica | aviso neutro e discreto |
+| **A diminuir ou recuperado** | o atraso diminui, ou desapareceu ou é residual | nenhum aviso novo; a recuperação retira o aviso |
+| **Incerto** | os dados não chegam | nada muda |
 
-O Ministério só continua os lembretes enquanto a falta se mantiver por resolver.
+Os dois avisos de lixo nunca existem ao mesmo tempo. Quando os dados deixam de mostrar uma falta mas ainda não confirmam que acabou, o Ministério nem avisa nem retira um aviso já mostrado, e os dias de espera ficam parados.
+
+#### Quando aparecem os avisos e os lembretes?
+
+| Recurso | Primeiro aviso (dias com a falta comprovada) | Lembrete de |
+|---|---|---|
+| **Eletricidade** | 15 dias simulados | 120 em 120 dias simulados |
+| **Água** | 30 dias simulados | 150 em 150 dias simulados |
+| **Lixo** | 60 dias simulados | 240 em 240 dias simulados |
+
+Uma falta resolvida antes desses dias não produz aviso. Só contam os dias em que a falta está comprovada. Os dois primeiros avisos de um episódio podem abrir como pop-up; a partir do terceiro são discretos. Não há limite de lembretes enquanto a falta durar.
+
+O Ministério não consegue ver se dispensou um aviso, por isso nunca o presume: os lembretes seguem simplesmente estes intervalos fixos.
 
 #### Quando termina um episódio de falta?
 
-No caso da eletricidade e da água, o episódio termina quando uma leitura nova do jogo confirma que o serviço fornecido é, pelo menos, igual à procura.
+Na eletricidade e na água, quando leituras novas confirmam, em dois dias seguidos, que o serviço entregue é pelo menos igual à procura. No lixo, quando o modelo de tratamento volta a ser viável e o atraso desapareceu ou é residual.
 
-No caso do lixo, têm de se cumprir duas condições:
+Nessa altura o aviso é retirado do conselheiro e os lembretes param. **Uma falta posterior é um novo episódio**, com os seus próprios dias de espera. Desligar a gestão do serviço também termina o episódio e retira o aviso; ao ligá-la de novo, a falta tem de ser comprovada outra vez.
 
-- O modelo de eliminação volta a ser viável.
-- O jogo não comunica lixo por recolher.
+#### O que acontece se fechar e reabrir a cidade?
 
-Quando a recuperação é confirmada, o Ministério deixa de enviar lembretes.
-
-**Uma falta posterior é tratada como um novo episódio**, com o seu próprio período de espera de 30 dias.
-
-#### O que acontece se fechar e voltar a abrir a cidade?
-
-O Ministério lembra-se das faltas que já comunicou.
-
-Esta informação é guardada **por cidade**, num pequeno ficheiro de histórico de avisos dentro da pasta do Ministério, fora das gravações das suas cidades.
-
-Por exemplo, se receber um aviso de falta de água e voltar a abrir a cidade enquanto essa mesma falta continua por resolver, o Ministério não volta a mostrar de imediato o mesmo aviso.
-
-Depois de a falta ser provada de novo na nova sessão e de continuar por resolver durante o período de espera normal, agenda o lembrete seguinte em vez de repetir o primeiro aviso.
-
-Se a sessão chegar ao seu **75.º dia simulado** sem que essa falta seja provada de novo, a memória do episódio anterior é descartada.
-
-Uma falta posterior pode então iniciar um novo episódio.
-
-O ficheiro de histórico de avisos pode ser apagado sem danificar as gravações das cidades.
+**Nada se guarda entre sessões** para estes avisos. Quando uma cidade abre, o Ministério retira qualquer aviso de falta deixado por uma sessão anterior. Se a falta continuar, tem de ser comprovada de novo e o primeiro aviso chega após os dias de espera normais (15, 30 ou 60). Os avisos de educação e saúde, abaixo, mantêm a sua memória.
 
 #### Que definições são necessárias para os avisos de falta?
 
-Os avisos de falta de serviços públicos exigem que **Gerir os acordos com os vizinhos** esteja ativado.
-
-Isto deve-se a que o Ministério precisa de inspecionar as ofertas e os mercados regionais antes de concluir que uma falta não pode ser resolvida.
-
-O recurso afetado tem também de ser gerido através de:
-
-- O seu gestor de financiamento local.
-- O gestor de contratos regionais correspondente.
-
-**Se o Ministério não conseguir examinar todas as alternativas relevantes, não afirma que a falta é impossível de resolver.**
+Apenas o Ministério ativo e a **gestão local desse serviço** (eletricidade, água ou saneamento). As definições dos contratos regionais não contam.
 
 <a id="safety-notices-civic"></a>
 #### Avisos de capacidade de educação e de saúde
@@ -1047,17 +980,17 @@ Os exemplos seguintes mostram como o Ministério reage a faltas persistentes, a 
 
 #### Exemplo 1: Uma falta de eletricidade que não se consegue resolver
 
-Imagine que a cidade se encontra na seguinte situação no **dia simulado 40** após a abertura:
+Imagine que a sua cidade tem a seguinte situação no **dia simulado 40** após a abertura:
 
-- **Procura de eletricidade:** 10.000 unidades.
-- **Eletricidade fornecida:** 9.200 unidades.
-- **Capacidade máxima de produção local:** 8.900 unidades.
+- **Procura de eletricidade:** 10 000 unidades.
+- **Eletricidade entregue:** 9 200 unidades.
+- **Capacidade local máxima de produção:** 8 900 unidades.
 - **Importações regionais utilizáveis:** 200 unidades.
 - **Vendas:** nenhuma.
 
-O Ministério já considerou o financiamento máximo permitido das centrais e todas as compras disponíveis.
+O Ministério já considerou o financiamento máximo legal das centrais e todas as compras disponíveis.
 
-O fornecimento total disponível é:
+A oferta total disponível é:
 
 ```math
 8900+200=9100
@@ -1069,43 +1002,27 @@ O fornecimento total disponível é:
 9100<10000
 ```
 
-Os contadores do jogo confirmam também que a eletricidade fornecida está abaixo da procura.
+Os contadores do jogo confirmam também que a eletricidade entregue está abaixo da procura.
 
-**A falta fica comprovada no dia 40.**
+**A falta fica comprovada no dia 40.** O Ministério espera 15 dias simulados.
 
-No entanto, o Ministério não mostra um aviso de imediato.
+**Dia 55**
 
-Espera 30 dias simulados.
+A falta continua por resolver. O Ministério emite o primeiro aviso, que pode abrir como pop-up:
 
-**Dia 70**
+**Apagão! Quem comprou as velas?**
 
-A falta continua por resolver.
+**Dia 175**
 
-O Ministério emite:
+A falta continua. O lembrete aparece 120 dias simulados depois do aviso.
 
-**À luz das velas!**
+**Dia 180**
 
-**Dia 130**
+Constrói outra central elétrica. Leituras novas confirmam que a eletricidade entregue já cobre a procura. O Ministério retira o aviso e termina os lembretes.
 
-A falta continua.
+**Dia 250**
 
-Surge o primeiro lembrete, 60 dias simulados depois do aviso original.
-
-**Dia 150**
-
-Constrói outra central elétrica.
-
-Uma nova leitura confirma que a eletricidade fornecida já satisfaz a procura.
-
-O Ministério encerra o episódio de falta e deixa de enviar lembretes.
-
-**Dia 200**
-
-Fica comprovada uma nova falta de eletricidade.
-
-Como o episódio anterior terminou, a nova falta inicia o seu próprio período de espera de 30 dias.
-
-Se continuar por resolver, o aviso seguinte surge no **dia 230**.
+Fica comprovada uma nova falta de eletricidade. Como o episódio anterior terminou, começa o seu próprio período de espera; se continuar por resolver, um novo primeiro aviso aparece no **dia 265**.
 
 #### Exemplo 2: Edifícios sem eletricidade, mas com capacidade de produção suficiente
 
@@ -1134,23 +1051,11 @@ O jogador tem de inspecionar a rede elétrica.
 
 #### Exemplo 3: Reabrir uma cidade durante uma falta existente
 
-Imagine que uma falta de água foi comunicada pela primeira vez no **dia 70** de uma sessão da cidade.
+Imagine que uma falta de água foi comunicada no **dia 70** de uma sessão e que guarda a cidade no dia 100 enquanto continua por resolver.
 
-Grava a cidade no dia 100, com a falta ainda por resolver.
+Mais tarde, reabre a cidade. O Ministério começa uma nova sessão: **não se lembra de nada** da anterior e retira o aviso antigo, se o jogo o manteve na lista.
 
-Mais tarde, reabre a cidade.
-
-O Ministério inicia uma nova sessão e volta a avaliar o sistema de água.
-
-A falta volta a ficar comprovada e continua por resolver durante mais 30 dias simulados.
-
-No entanto, o Ministério lembra-se de que esse mesmo episódio de falta já foi comunicado.
-
-**Não repete o primeiro aviso.**
-
-Em vez disso, agenda o lembrete seguinte de acordo com o intervalo normal de 60 dias.
-
-Isto evita que o mesmo problema por resolver gere um novo aviso inicial de cada vez que reabre a cidade.
+Se a falta de água continuar, é comprovada de novo e o primeiro aviso chega após os 30 dias simulados normais. Reabrir a cidade nunca produz, portanto, um aviso imediato, e o calendário de lembretes antigo não continua.
 
 #### Exemplo 4: Alterar manualmente o financiamento da água
 
@@ -1211,9 +1116,9 @@ O Ministério foi concebido para funcionar de forma conservadora, mas não conse
 
 #### Avisos de falta
 
-- **Os avisos de falta de serviços públicos exigem Gerir os acordos com os vizinhos.** Sem acesso às ofertas e aos mercados regionais, o Ministério não consegue provar que todas as soluções possíveis foram esgotadas.
-- **O Ministério não consegue saber se um aviso chegou mesmo a ser mostrado no ecrã.** É o SimCity 4 que decide se mostra uma janela de aviso, de acordo com as definições dos seus conselheiros.
-- **Os avisos de falta de saneamento assentam num modelo.** Ao contrário da eletricidade e da água, a viabilidade no caso do lixo é determinada pela projeção de tratamento do Ministério, e não por um contador do jogo que prove as necessidades futuras de tratamento.
+- **Os avisos de falta seguem a gestão local.** Se gerir um serviço à mão, o Ministério não o avisa sobre ele.
+- **O Ministério não consegue saber se um aviso foi mesmo mostrado ou dispensado.** O SimCity 4 decide se abre um pop-up consoante as suas definições de conselheiros. Os lembretes seguem intervalos fixos.
+- **Os avisos de lixo assentam num modelo e em leituras mensais.** Ao contrário da eletricidade e da água, o lixo é avaliado pela projeção de tratamento do Ministério e pelo atraso do jogo, mês a mês.
 
 #### Mensagens originais dos conselheiros do jogo
 

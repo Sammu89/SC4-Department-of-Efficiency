@@ -920,7 +920,7 @@ Le bâtiment C reste en place jusqu’à une évaluation ultérieure où l’arg
 
 Imaginons une ville contenant **400 bâtiments** déjà abandonnés depuis plus d’un an à cause d’une demande insuffisante.
 
-Vous installez le Ministère avec ses réglages de démolition par défaut.
+Vous installez le Ministère, activez la démolition automatique et gardez ses réglages par défaut.
 
 Ces bâtiments sont déjà assez anciens pour être retenus.
 

@@ -13,7 +13,7 @@ It manages individual education and healthcare budgets, power plants, water and 
 Everything is controlled from within the game at **Play Options → Department of Efficiency**. Choose the services you want to automate, adjust their safety margins, configure demolition, or switch the entire Department off. You can also use the **Establish a Department of Efficiency** city ordinance as the master on/off switch. No separate application is needed.
 
 > [!IMPORTANT]
-> **The Department starts enabled, including automatic demolition of destroyed and abandoned buildings.** Review its settings before opening a city you care about. It makes real in-game changes: funding, contracts and demolition will be saved if you save the city. It does not directly edit save files.
+> **The Department starts enabled, but automatic demolition is off by default.** Review its settings before opening a city you care about. It makes real in-game changes: funding and contracts (and demolitions, if you turn them on) will be saved if you save the city. It does not directly edit save files.
 
 ## Contents
 
@@ -45,9 +45,9 @@ Everything is controlled from within the game at **Play Options → Department o
 
 ## Installation
 
-### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Download Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**What's new in 1.0.2:** see the [changelog](CHANGELOG.md).
+**What's new in 1.0.3:** see the [changelog](CHANGELOG.md).
 
 1. Download the [latest release](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) and close SimCity 4.
 
@@ -58,7 +58,7 @@ Everything is controlled from within the game at **Play Options → Department o
 4. Start SimCity 4 and open **Play Options → Department of Efficiency** to set your preferences.
 
 > [!IMPORTANT]
-> The Department is enabled by default, including automatic demolition of destroyed and abandoned buildings. Review the **Demolition** settings before opening a city containing buildings you wish to preserve.
+> The Department is enabled by default; automatic demolition is **off** by default. If you turn it on, review the **Demolition** settings before opening a city containing buildings you wish to preserve.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ The table below describes what the Department does. For formulas, examples, safe
 | [Water](technical_docs/en/water.md#water) | Adjusts the city's water funding to meet demand plus a safety reserve. Pipe protection is enabled by default to avoid cuts that would let the network deteriorate. It also hides the game's misleading “no water” icon over farms. |
 | [Sanitation and garbage](technical_docs/en/garbage.md#garbage-landfills) | Adjusts sanitation funding using garbage production, recycling, treatment, landfill storage and regional contracts, while protecting the city's own disposal needs. |
 | [Neighbor deals](technical_docs/en/deals.md#neighbor-deals) | Can **buy or sell electricity and water**, **pay neighbors to take your garbage**, or **accept theirs for payment**. It creates, adjusts and cancels eligible contracts when the overall result benefits the city and its own needs and reserves remain protected. |
-| [Automatic demolition](technical_docs/en/demolition.md#demolition) | Can clear ruins after roughly **30 simulated days** and eligible buildings abandoned for **one simulated year**, by default. You decide which zones and abandonment reasons count, whether protected ruins may be cleared, and whether to set a monthly spending limit. |
+| [Automatic demolition](technical_docs/en/demolition.md#demolition) | **Off by default.** Can clear ruins after roughly **30 simulated days** and eligible buildings abandoned for **one simulated year**, by default. You decide which zones and abandonment reasons count, whether protected ruins may be cleared, and whether to set a monthly spending limit. |
 | [Advisor notices](technical_docs/en/safety.md#notices) | Uses the game's own advisors to flag proven, persistent shortages that funding or available deals cannot fix. Where appropriate, messages include links that take you to the affected buildings. It also adds one news item (title in the list, detail on click) when a service you enabled has to stop because of a technical failure. |
 | [Landfill size advice](technical_docs/en/garbage.md#garbage-landfills-advice) | Optional advice identifies a specific safe landfill reduction (empty squares to remove) that could cut the sanitation bill by more than your chosen savings threshold. **The Department advises; you decide whether to change the zoning.** |
 | [Ghost-tile repair](technical_docs/en/garbage.md#ghost-tiles) | When sanitation management is enabled, safely repairs eligible invisible landfill squares that the game still counts toward maintenance. Unsafe or unverified cases are left alone; there is no separate switch for this repair. |
@@ -90,7 +90,7 @@ The Department uses the settings supplied with the plugin and **starts working a
 
 2\. On the **Services** page, choose which budgets and neighbor deals the Department may manage and how much spare capacity it should keep.
 
-3\. On the **Demolition** page, check the rules for clearing ruins and abandoned buildings. **Disable automatic demolition if you want to bulldoze everything yourself.**
+3\. On the **Demolition** page, automatic demolition is off by default. Tick the options for ruins and abandoned buildings only if you want the Department to clear them for you.
 
 4\. Click **Accept** to save your choices. **Cancel** closes the window without saving changes.
 
@@ -137,10 +137,10 @@ Open **Play Options → Department of Efficiency**. The window has two pages, **
 
 | Option | Default | What it means |
 |---|---|---|
-| [Demolish destroyed buildings](technical_docs/en/options.md#opt-demolishdestroyed) | **On** | Demolishes ruins after a certain period. Does not automatically clear protected municipal or historic ruins unless allowed below. |
+| [Demolish destroyed buildings](technical_docs/en/options.md#opt-demolishdestroyed) | **Off** | Demolishes ruins after a certain period. Does not automatically clear protected municipal or historic ruins unless allowed below. |
 | [Wait (destroyed buildings)](technical_docs/en/options.md#opt-destroyedmonths) | **1 month** (1–24) | How long ruins must remain before they can be cleared; approximately **30 simulated days** by default. |
 | [Demolish destroyed municipal and historic buildings](technical_docs/en/options.md#opt-demolishmunicipal) | **Off** | If enabled, also clears eligible **ruins** of municipal, special and historic buildings after the wait. |
-| [Demolish abandoned buildings](technical_docs/en/options.md#opt-demolishabandoned) | **On** | Clears eligible abandoned buildings after the waiting period, in the selected zone types and for the selected reasons. |
+| [Demolish abandoned buildings](technical_docs/en/options.md#opt-demolishabandoned) | **Off** | Clears eligible abandoned buildings after the waiting period, in the selected zone types and for the selected reasons. |
 | [Wait (abandoned buildings)](technical_docs/en/options.md#opt-abandonedmonths) | **12 months** (1–60) | How long a building must remain abandoned before it may be demolished; one simulated year by default. |
 | [Residential zone](technical_docs/en/options.md#opt-zoneresidential) | **On** | Includes abandoned houses and apartment buildings. |
 | [Commercial zone](technical_docs/en/options.md#opt-zonecommercial) | **On** | Includes abandoned shops and offices. |

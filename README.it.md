@@ -13,7 +13,7 @@ Gestisce i bilanci dei singoli edifici di istruzione e sanità, le centrali elet
 Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizzazione**. Scegli i servizi da automatizzare, regola i loro margini di sicurezza, configura la demolizione oppure disattiva l'intero Ministero. Puoi anche usare l'ordinanza **Istituzione del Ministero dell'Ottimizzazione** come interruttore generale. Non serve nessuna applicazione separata.
 
 > [!IMPORTANT]
-> **Il Ministero parte attivo, compresa la demolizione automatica degli edifici distrutti e abbandonati.** Controlla le sue impostazioni prima di aprire una città a cui tieni. Apporta modifiche reali nel gioco: finanziamenti, accordi e demolizioni verranno salvati se salvi la città. Non modifica direttamente i file di salvataggio.
+> **Il Ministero parte attivo, ma la demolizione automatica è disattivata per impostazione predefinita.** Controlla le sue impostazioni prima di aprire una città a cui tieni. Apporta modifiche reali nel gioco: finanziamenti e accordi (e demolizioni, se le attivi) verranno salvati se salvi la città. Non modifica direttamente i file di salvataggio.
 
 ## Indice
 
@@ -45,9 +45,9 @@ Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizza
 
 ## Installazione
 
-### [⬇ Scarica Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Scarica Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Novità della 1.0.2:** vedi il [registro delle modifiche](CHANGELOG.md) (in inglese).
+**Novità della 1.0.3:** vedi il [registro delle modifiche](CHANGELOG.md) (in inglese).
 
 1. Scarica la [versione più recente](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) e chiudi SimCity 4.
 
@@ -58,7 +58,7 @@ Tutto si controlla dal gioco, in **Opzioni di gioco → Ministero dell'Ottimizza
 4. Avvia SimCity 4 e apri **Opzioni di gioco → Ministero dell'Ottimizzazione** per impostare le preferenze.
 
 > [!IMPORTANT]
-> Il Ministero è attivo per impostazione predefinita, inclusa la demolizione automatica degli edifici distrutti e abbandonati. Controlla le impostazioni di **Demolizione** prima di aprire una città con edifici da conservare.
+> Il Ministero è attivo per impostazione predefinita; la demolizione automatica è **disattivata** per impostazione predefinita. Se la attivi, controlla le impostazioni di **Demolizione** prima di aprire una città con edifici da conservare.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ La tabella seguente descrive cosa fa il Ministero. Per formule, esempi, salvagua
 | [Acqua](technical_docs/en/water.md#water) | Regola il finanziamento dell'acqua della città per soddisfare la domanda più una riserva di sicurezza. La protezione delle condutture è attiva per impostazione predefinita, per evitare tagli che lascerebbero deteriorare la rete. Nasconde inoltre la fuorviante icona «niente acqua» del gioco sopra le fattorie. |
 | [Smaltimento e rifiuti](technical_docs/en/garbage.md#garbage-landfills) | Regola il finanziamento dello smaltimento in base alla produzione di rifiuti, al riciclaggio, al trattamento, alla capienza delle discariche e ai contratti regionali, proteggendo le esigenze di smaltimento della città. |
 | [Accordi con i vicini](technical_docs/en/deals.md#neighbor-deals) | Può **comprare o vendere elettricità e acqua**, **pagare i vicini perché prendano i tuoi rifiuti** o **accettare i loro dietro compenso**. Crea, adegua e annulla i contratti idonei quando il risultato complessivo avvantaggia la città e le sue esigenze e riserve restano protette. |
-| [Demolizione automatica](technical_docs/en/demolition.md#demolition) | Può sgomberare i ruderi dopo circa **30 giorni simulati** e gli edifici idonei abbandonati da **un anno simulato**, per impostazione predefinita. Sei tu a decidere quali zone e quali motivi di abbandono contano, se i ruderi protetti possono essere sgomberati e se fissare un limite di spesa mensile. |
+| [Demolizione automatica](technical_docs/en/demolition.md#demolition) | **Disattivata per impostazione predefinita.** Può sgomberare i ruderi dopo circa **30 giorni simulati** e gli edifici idonei abbandonati da **un anno simulato**, per impostazione predefinita. Sei tu a decidere quali zone e quali motivi di abbandono contano, se i ruderi protetti possono essere sgomberati e se fissare un limite di spesa mensile. |
 | [Avvisi dei consiglieri](technical_docs/en/safety.md#notices) | Usa i consiglieri del gioco per segnalare carenze accertate e persistenti che né il finanziamento né gli accordi disponibili possono risolvere. Quando serve, i messaggi contengono collegamenti che portano agli edifici interessati. Aggiunge anche una notizia (titolo nell'elenco, dettaglio al clic) quando un servizio che hai attivato deve fermarsi per un guasto tecnico. |
 | [Consiglio sulla dimensione della discarica](technical_docs/en/garbage.md#garbage-landfills-advice) | Un consiglio facoltativo indica una riduzione precisa e sicura della discarica (caselle vuote da rimuovere), che potrebbe tagliare la spesa per lo smaltimento oltre la soglia di risparmio scelta. **Il Ministero consiglia; sei tu a decidere se cambiare la zonizzazione.** |
 | [Riparazione delle caselle fantasma](technical_docs/en/garbage.md#ghost-tiles) | Con la gestione dello smaltimento attiva, ripara in sicurezza le caselle di discarica invisibili idonee che il gioco continua a contare nella manutenzione. I casi non sicuri o non verificati vengono lasciati stare; questa riparazione non ha un interruttore a parte. |
@@ -90,7 +90,7 @@ Il Ministero usa le impostazioni fornite con il plugin e **inizia a lavorare aut
 
 2\. Nella pagina **Servizi**, scegli quali bilanci e accordi con i vicini il Ministero può gestire e quanta capacità di scorta deve mantenere.
 
-3\. Nella pagina **Demolizioni**, controlla le regole per sgomberare ruderi ed edifici abbandonati. **Disattiva la demolizione automatica se vuoi abbattere tutto da solo.**
+3\. Nella pagina **Demolizioni**, la demolizione automatica è disattivata. Seleziona le opzioni per ruderi ed edifici abbandonati solo se vuoi che il Ministero li sgomberi per te.
 
 4\. Fai clic su **Accetta** per salvare le scelte. **Annulla** chiude la finestra senza salvare le modifiche.
 
@@ -137,10 +137,10 @@ Apri **Opzioni di gioco → Ministero dell'Ottimizzazione**. La finestra ha due 
 
 | Opzione | Predefinito | Significato |
 |---|---|---|
-| [Demolisci gli edifici distrutti](technical_docs/en/options.md#opt-demolishdestroyed) | **Attivo** | Demolisce i ruderi dopo un certo periodo. Non sgombera automaticamente i ruderi comunali o storici protetti, a meno che l'opzione qui sotto lo consenta. |
+| [Demolisci gli edifici distrutti](technical_docs/en/options.md#opt-demolishdestroyed) | **Disattivato** | Demolisce i ruderi dopo un certo periodo. Non sgombera automaticamente i ruderi comunali o storici protetti, a meno che l'opzione qui sotto lo consenta. |
 | [Attesa (edifici distrutti)](technical_docs/en/options.md#opt-destroyedmonths) | **1 mese** (1–24) | Per quanto tempo i ruderi devono restare prima di poter essere sgomberati; circa **30 giorni simulati** per impostazione predefinita. |
 | [Demolisci gli edifici comunali e storici distrutti](technical_docs/en/options.md#opt-demolishmunicipal) | **Disattivo** | Se attiva, sgombera anche, dopo l'attesa, i **ruderi** idonei di edifici comunali, speciali e storici. |
-| [Demolisci gli edifici abbandonati](technical_docs/en/options.md#opt-demolishabandoned) | **Attivo** | Sgombera gli edifici abbandonati idonei dopo il periodo di attesa, nei tipi di zona e per i motivi selezionati. |
+| [Demolisci gli edifici abbandonati](technical_docs/en/options.md#opt-demolishabandoned) | **Disattivato** | Sgombera gli edifici abbandonati idonei dopo il periodo di attesa, nei tipi di zona e per i motivi selezionati. |
 | [Attesa (edifici abbandonati)](technical_docs/en/options.md#opt-abandonedmonths) | **12 mesi** (1–60) | Per quanto tempo un edificio deve restare abbandonato prima di poter essere demolito; un anno simulato per impostazione predefinita. |
 | [Zona residenziale](technical_docs/en/options.md#opt-zoneresidential) | **Attivo** | Include case e condomini abbandonati. |
 | [Zona commerciale](technical_docs/en/options.md#opt-zonecommercial) | **Attivo** | Include negozi e uffici abbandonati. |

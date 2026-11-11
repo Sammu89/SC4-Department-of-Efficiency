@@ -13,7 +13,7 @@ Det sköter budgeten för enskilda utbildnings- och vårdbyggnader, kraftverk, f
 Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**. Välj vilka tjänster som ska automatiseras, justera deras säkerhetsmarginaler, ställ in rivningen eller stäng av hela Departementet. Du kan också använda stadens förordning **Inrätta ett effektivitetsdepartement** som huvudströmbrytare. Inget separat program behövs.
 
 > [!IMPORTANT]
-> **Departementet startar påslaget, inklusive automatisk rivning av förstörda och övergivna byggnader.** Gå igenom inställningarna innan du öppnar en stad som du bryr dig om. Det gör verkliga ändringar i spelet: finansiering, avtal och rivningar sparas om du sparar staden. Det redigerar inte sparfiler direkt.
+> **Departementet startar påslaget, men automatisk rivning är avstängd som standard.** Gå igenom inställningarna innan du öppnar en stad som du bryr dig om. Det gör verkliga ändringar i spelet: finansiering och avtal (och rivningar, om du slår på dem) sparas om du sparar staden. Det redigerar inte sparfiler direkt.
 
 ## Innehåll
 
@@ -45,9 +45,9 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 
 ## Installation
 
-### [⬇ Ladda ner Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Ladda ner Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Nytt i 1.0.2:** se [ändringsloggen](CHANGELOG.md) (på engelska).
+**Nytt i 1.0.3:** se [ändringsloggen](CHANGELOG.md) (på engelska).
 
 1. Ladda ner den [senaste versionen](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) och stäng SimCity 4.
 
@@ -58,7 +58,7 @@ Allt styrs inne i spelet under **Spelalternativ → Effektivitetsdepartementet**
 4. Starta SimCity 4 och öppna **Spelalternativ → Effektivitetsdepartementet** för att välja dina inställningar.
 
 > [!IMPORTANT]
-> Ministeriet är aktiverat som standard, inklusive automatisk rivning av förstörda och övergivna byggnader. Kontrollera inställningarna för **rivning** innan du öppnar en stad med byggnader du vill bevara.
+> Ministeriet är aktiverat som standard; automatisk rivning är **avstängd** som standard. Om du slår på den, kontrollera inställningarna för **rivning** innan du öppnar en stad med byggnader du vill bevara.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ Tabellen nedan beskriver vad Departementet gör. För formler, exempel, skyddså
 | [Vatten](technical_docs/en/water.md#water) | Justerar stadens vattenfinansiering så att den täcker behovet plus en säkerhetsreserv. Skydd av vattenledningarna är påslaget som standard för att undvika nedskärningar som skulle låta nätet förfalla. Det döljer också spelets vilseledande ikon „inget vatten“ över gårdar. |
 | [Sophantering](technical_docs/en/garbage.md#garbage-landfills) | Justerar finansieringen av sophanteringen utifrån sopproduktion, återvinning, behandling, soptippens lagringsutrymme och regionala avtal, samtidigt som stadens eget behov av bortskaffning skyddas. |
 | [Grannavtal](technical_docs/en/deals.md#neighbor-deals) | Kan **köpa eller sälja el och vatten**, **betala grannar för att ta emot ditt avfall** eller **ta emot deras mot betalning**. Det skapar, justerar och säger upp lämpliga avtal när det samlade resultatet gynnar staden och dess egna behov och reserver förblir skyddade. |
-| [Automatisk rivning](technical_docs/en/demolition.md#demolition) | Kan som standard röja ruiner efter ungefär **30 simulerade dagar** och lämpliga byggnader som varit övergivna i **ett simulerat år**. Du bestämmer vilka zoner och vilka orsaker till övergivenhet som räknas, om skyddade ruiner får röjas och om en månatlig utgiftsgräns ska gälla. |
+| [Automatisk rivning](technical_docs/en/demolition.md#demolition) | **Avstängd som standard.** Kan som standard röja ruiner efter ungefär **30 simulerade dagar** och lämpliga byggnader som varit övergivna i **ett simulerat år**. Du bestämmer vilka zoner och vilka orsaker till övergivenhet som räknas, om skyddade ruiner får röjas och om en månatlig utgiftsgräns ska gälla. |
 | [Rådgivarnas meddelanden](technical_docs/en/safety.md#notices) | Använder spelets egna rådgivare för att flagga styrkta, ihållande brister som varken finansiering eller tillgängliga avtal kan åtgärda. Där det passar innehåller meddelandena länkar som tar dig till de berörda byggnaderna. Det lägger också till en nyhet (rubrik i listan, detaljer vid klick) när en tjänst du har aktiverat måste stoppas på grund av ett tekniskt fel. |
 | [Råd om soptippens storlek](technical_docs/en/garbage.md#garbage-landfills-advice) | Det valfria rådet pekar ut en bestämd, säker minskning av soptippen (tomma rutor som kan tas bort), som kan sänka sophanteringsräkningen med mer än din valda spargräns. **Departementet ger råd; du avgör om zonindelningen ska ändras.** |
 | [Reparation av spökrutor](technical_docs/en/garbage.md#ghost-tiles) | När skötseln av sophanteringen är påslagen repareras lämpliga osynliga soptippsrutor som spelet fortfarande räknar med i underhållet, på ett säkert sätt. Osäkra eller overifierade fall lämnas ifred; det finns ingen separat strömbrytare för den här reparationen. |
@@ -90,7 +90,7 @@ Departementet använder de inställningar som följer med tillägget och **börj
 
 2\. På sidan **Samhällsservice** väljer du vilka budgetar och grannavtal Departementet får sköta och hur mycket reservkapacitet det ska hålla.
 
-3\. På sidan **Rivning** kontrollerar du reglerna för röjning av ruiner och övergivna byggnader. **Stäng av den automatiska rivningen om du vill jämna allt med marken själv.**
+3\. På sidan **Rivning** är den automatiska rivningen avstängd. Kryssa i alternativen för ruiner och övergivna byggnader bara om du vill att Ministeriet ska röja dem åt dig.
 
 4\. Klicka på **Godkänn** för att spara dina val. **Avbryt** stänger fönstret utan att spara ändringar.
 
@@ -137,10 +137,10 @@ Du kan också slå på eller stänga av Departementet via stadens förordningar.
 
 | Alternativ | Standard | Vad det betyder |
 |---|---|---|
-| [Riv förstörda byggnader](technical_docs/en/options.md#opt-demolishdestroyed) | **På** | River ruiner efter en viss tid. Röjer inte automatiskt skyddade kommunala eller historiska ruiner om inte alternativet nedan tillåter det. |
+| [Riv förstörda byggnader](technical_docs/en/options.md#opt-demolishdestroyed) | **Av** | River ruiner efter en viss tid. Röjer inte automatiskt skyddade kommunala eller historiska ruiner om inte alternativet nedan tillåter det. |
 | [Väntetid (förstörda byggnader)](technical_docs/en/options.md#opt-destroyedmonths) | **1 månad** (1–24) | Hur länge ruiner måste ligga kvar innan de kan röjas; som standard ungefär **30 simulerade dagar**. |
 | [Riv förstörda kommunala och historiska byggnader](technical_docs/en/options.md#opt-demolishmunicipal) | **Av** | Om påslaget röjs efter väntetiden även lämpliga **ruiner** av kommunala, speciella och historiska byggnader. |
-| [Riv övergivna byggnader](technical_docs/en/options.md#opt-demolishabandoned) | **På** | Röjer lämpliga övergivna byggnader efter väntetiden, i de valda zontyperna och av de valda orsakerna. |
+| [Riv övergivna byggnader](technical_docs/en/options.md#opt-demolishabandoned) | **Av** | Röjer lämpliga övergivna byggnader efter väntetiden, i de valda zontyperna och av de valda orsakerna. |
 | [Väntetid (övergivna byggnader)](technical_docs/en/options.md#opt-abandonedmonths) | **12 månader** (1–60) | Hur länge en byggnad måste stå övergiven innan den får rivas; som standard ett simulerat år. |
 | [Bostadszon](technical_docs/en/options.md#opt-zoneresidential) | **På** | Omfattar övergivna hus och flerbostadshus. |
 | [Handelszon](technical_docs/en/options.md#opt-zonecommercial) | **På** | Omfattar övergivna butiker och kontor. |

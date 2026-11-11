@@ -13,7 +13,7 @@ Gestiona los presupuestos de cada centro de educación y de sanidad, las central
 Todo se controla desde el juego, en **Opciones de juego → Ministerio de Optimización**. Elige los servicios que quieres automatizar, ajusta sus márgenes de seguridad, configura la demolición o desactiva todo el Ministerio. También puedes usar la ordenanza **Crear un Ministerio de Optimización** como interruptor general. No hace falta ninguna aplicación aparte.
 
 > [!IMPORTANT]
-> **El Ministerio empieza activado, incluida la demolición automática de edificios destruidos y abandonados.** Revisa sus ajustes antes de abrir una ciudad que te importe. Hace cambios reales en el juego: la financiación, los contratos y las demoliciones se guardarán si guardas la ciudad. No edita directamente los archivos de guardado.
+> **El Ministerio empieza activado, pero la demolición automática viene desactivada por defecto.** Revisa sus ajustes antes de abrir una ciudad que te importe. Hace cambios reales en el juego: la financiación y los contratos (y las demoliciones, si las activas) se guardarán si guardas la ciudad. No edita directamente los archivos de guardado.
 
 ## Contenido
 
@@ -45,9 +45,9 @@ Todo se controla desde el juego, en **Opciones de juego → Ministerio de Optimi
 
 ## Instalación
 
-### [⬇ Descargar Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Descargar Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Novedades de la 1.0.2:** consulta el [registro de cambios](CHANGELOG.md) (en inglés).
+**Novedades de la 1.0.3:** consulta el [registro de cambios](CHANGELOG.md) (en inglés).
 
 1. Descarga la [última versión](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) y cierra SimCity 4.
 
@@ -58,7 +58,7 @@ Todo se controla desde el juego, en **Opciones de juego → Ministerio de Optimi
 4. Inicia SimCity 4 y abre **Opciones de juego → Ministerio de Optimización** para configurar tus preferencias.
 
 > [!IMPORTANT]
-> El Ministerio está activado por defecto, incluida la demolición automática de edificios destruidos y abandonados. Revisa los ajustes de **Demolición** antes de abrir una ciudad con edificios que quieras conservar.
+> El Ministerio está activado por defecto; la demolición automática está **desactivada** por defecto. Si la activas, revisa los ajustes de **Demolición** antes de abrir una ciudad con edificios que quieras conservar.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ La tabla siguiente describe lo que hace el Ministerio. Para las fórmulas, los e
 | [Agua](technical_docs/es/water.md#water) | Ajusta la financiación del agua de la ciudad para cubrir la demanda más una reserva de seguridad. La protección de las tuberías viene activada por defecto, para evitar recortes que dejarían que la red se deteriorase. También oculta el icono engañoso de «sin agua» del juego sobre las granjas. |
 | [Limpieza y basura](technical_docs/es/garbage.md#garbage-landfills) | Ajusta la financiación de la limpieza según la producción de basura, el reciclaje, el tratamiento, el almacenamiento de los vertederos y los contratos regionales, protegiendo siempre las necesidades propias de la ciudad. |
 | [Acuerdos con vecinos](technical_docs/es/deals.md#neighbor-deals) | Puede **comprar o vender electricidad y agua**, **pagar a los vecinos para que se queden tu basura** o **aceptar la suya a cambio de dinero**. Crea, ajusta y cancela contratos elegibles cuando el resultado global beneficia a la ciudad y sus propias necesidades y reservas siguen protegidas. |
-| [Demolición automática](technical_docs/es/demolition.md#demolition) | Puede despejar ruinas pasados unos **30 días simulados** y edificios elegibles abandonados durante **un año simulado**, por defecto. Tú decides qué zonas y qué motivos de abandono cuentan, si se pueden despejar las ruinas protegidas y si quieres fijar un límite de gasto mensual. |
+| [Demolición automática](technical_docs/es/demolition.md#demolition) | **Desactivada por defecto.** Puede despejar ruinas pasados unos **30 días simulados** y edificios elegibles abandonados durante **un año simulado**, por defecto. Tú decides qué zonas y qué motivos de abandono cuentan, si se pueden despejar las ruinas protegidas y si quieres fijar un límite de gasto mensual. |
 | [Avisos de los asesores](technical_docs/es/safety.md#notices) | Usa los propios asesores del juego para señalar carencias demostradas y persistentes que ni la financiación ni los acuerdos disponibles pueden resolver. Cuando procede, los mensajes incluyen enlaces que llevan a los edificios afectados. También añade una noticia (título en la lista, detalle al hacer clic) cuando un servicio que has activado tiene que detenerse por un fallo técnico. |
 | [Consejo sobre el tamaño del vertedero](technical_docs/es/garbage.md#garbage-landfills-advice) | El consejo opcional indica una reducción segura y concreta del vertedero (casillas vacías que quitar), que podría recortar la factura de la limpieza en más del umbral de ahorro elegido. **El Ministerio aconseja; tú decides si cambias la zonificación.** |
 | [Reparación de casillas fantasma](technical_docs/es/garbage.md#ghost-tiles) | Con la gestión de la limpieza activada, repara con seguridad las casillas de vertedero invisibles elegibles que el juego sigue contando en el mantenimiento. Los casos inseguros o sin verificar se dejan como están; esta reparación no tiene un interruptor propio. |
@@ -90,7 +90,7 @@ El Ministerio usa los ajustes que vienen con el plugin y **empieza a trabajar au
 
 2\. En la página **Servicios**, elige qué presupuestos y acuerdos con vecinos puede gestionar el Ministerio y cuánta capacidad de sobra debe mantener.
 
-3\. En la página **Demolición**, comprueba las reglas para despejar ruinas y edificios abandonados. **Desactiva la demolición automática si prefieres derribarlo todo tú mismo.**
+3\. En la página **Demolición**, la demolición automática viene desactivada. Marca las opciones de ruinas y de edificios abandonados solo si quieres que el Ministerio los despeje por ti.
 
 4\. Pulsa **Aceptar** para guardar tus elecciones. **Cancelar** cierra la ventana sin guardar los cambios.
 
@@ -137,10 +137,10 @@ Abre **Opciones de juego → Ministerio de Optimización**. La ventana tiene dos
 
 | Opción | Por defecto | Qué significa |
 |---|---|---|
-| [Demoler edificios destruidos](technical_docs/es/options.md#opt-demolishdestroyed) | **Activado** | Demuele las ruinas pasado un tiempo. No despeja automáticamente las ruinas municipales o históricas protegidas, salvo que la opción de más abajo lo permita. |
+| [Demoler edificios destruidos](technical_docs/es/options.md#opt-demolishdestroyed) | **Desactivado** | Demuele las ruinas pasado un tiempo. No despeja automáticamente las ruinas municipales o históricas protegidas, salvo que la opción de más abajo lo permita. |
 | [Tiempo de espera (edificios destruidos)](technical_docs/es/options.md#opt-destroyedmonths) | **1 mes** (1–24) | Cuánto tiempo deben permanecer las ruinas antes de poder despejarse; unos **30 días simulados** por defecto. |
 | [Demoler edificios municipales e históricos destruidos](technical_docs/es/options.md#opt-demolishmunicipal) | **Desactivado** | Si se activa, despeja también, pasada la espera, las **ruinas** elegibles de edificios municipales, especiales e históricos. |
-| [Demoler edificios abandonados](technical_docs/es/options.md#opt-demolishabandoned) | **Activado** | Despeja los edificios abandonados elegibles pasado el tiempo de espera, en los tipos de zona y por los motivos seleccionados. |
+| [Demoler edificios abandonados](technical_docs/es/options.md#opt-demolishabandoned) | **Desactivado** | Despeja los edificios abandonados elegibles pasado el tiempo de espera, en los tipos de zona y por los motivos seleccionados. |
 | [Tiempo de espera (edificios abandonados)](technical_docs/es/options.md#opt-abandonedmonths) | **12 meses** (1–60) | Cuánto tiempo debe permanecer abandonado un edificio antes de poder demolerse; un año simulado por defecto. |
 | [Zona residencial](technical_docs/es/options.md#opt-zoneresidential) | **Activado** | Incluye casas y bloques de viviendas abandonados. |
 | [Zona comercial](technical_docs/es/options.md#opt-zonecommercial) | **Activado** | Incluye tiendas y oficinas abandonadas. |

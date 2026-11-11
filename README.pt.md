@@ -13,7 +13,7 @@ Gere os orçamentos de cada estabelecimento de educação e de saúde, as centra
 Tudo se controla dentro do jogo, em **Opções de Jogo → Ministério da Optimização**. Escolha os serviços a automatizar, ajuste as respetivas margens de segurança, configure a demolição ou desligue todo o Ministério. Pode também usar a lei municipal **Instituir o Ministério da Optimização** como interruptor geral. Não é preciso nenhuma aplicação à parte.
 
 > [!IMPORTANT]
-> **O Ministério começa ligado, incluindo a demolição automática de edifícios destruídos e abandonados.** Reveja as suas definições antes de abrir uma cidade a que dê valor. Faz alterações reais no jogo: o financiamento, os contratos e as demolições ficam guardados se gravar a cidade. Não edita diretamente os ficheiros de gravação.
+> **O Ministério começa ligado, mas a demolição automática vem desligada por predefinição.** Reveja as suas definições antes de abrir uma cidade a que dê valor. Faz alterações reais no jogo: o financiamento e os contratos (e as demolições, se as ligar) ficam guardados se gravar a cidade. Não edita diretamente os ficheiros de gravação.
 
 ## Índice
 
@@ -45,9 +45,9 @@ Tudo se controla dentro do jogo, em **Opções de Jogo → Ministério da Optimi
 
 ## Instalação
 
-### [⬇ Transferir o Ministério da Optimização 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Transferir o Ministério da Optimização 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Novidades da 1.0.2:** consulte o [registo de alterações](CHANGELOG.md) (em inglês).
+**Novidades da 1.0.3:** consulte o [registo de alterações](CHANGELOG.md) (em inglês).
 
 1. Transfira a [versão mais recente](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) e feche o SimCity 4.
 
@@ -58,7 +58,7 @@ Tudo se controla dentro do jogo, em **Opções de Jogo → Ministério da Optimi
 4. Inicie o SimCity 4 e abra **Opções de Jogo → Ministério da Optimização** para configurar as suas preferências.
 
 > [!IMPORTANT]
-> O Ministério está ativado por predefinição, incluindo a demolição automática de edifícios destruídos e abandonados. Reveja as definições de **Demolição** antes de abrir uma cidade com edifícios que queira preservar.
+> O Ministério está ativado por predefinição; a demolição automática está **desligada** por predefinição. Se a ligar, reveja as definições de **Demolição** antes de abrir uma cidade com edifícios que queira preservar.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ A tabela seguinte descreve o que o Ministério faz. Para fórmulas, exemplos, sa
 | [Água](technical_docs/pt/water.md#water) | Ajusta o financiamento da água da cidade para satisfazer a procura mais uma reserva de segurança. A proteção das canalizações vem ligada por predefinição, para evitar cortes que deixariam a rede degradar-se. Esconde também o ícone enganador de «sem água» do jogo sobre as quintas. |
 | [Saneamento e lixo](technical_docs/pt/garbage.md#garbage-landfills) | Ajusta o financiamento do saneamento a partir da produção de lixo, da reciclagem, do tratamento, do armazenamento nos aterros e dos contratos regionais, protegendo sempre as necessidades da própria cidade. |
 | [Acordos com os vizinhos](technical_docs/pt/deals.md#neighbor-deals) | Pode **comprar ou vender eletricidade e água**, **pagar às vizinhas para tratarem o seu lixo** ou **aceitar o delas mediante pagamento**. Cria, ajusta e cancela contratos elegíveis quando o resultado global beneficia a cidade e as suas próprias necessidades e reservas ficam protegidas. |
-| [Demolição automática](technical_docs/pt/demolition.md#demolition) | Pode limpar ruínas ao fim de cerca de **30 dias simulados** e edifícios elegíveis abandonados há **um ano simulado**, por predefinição. Decide que zonas e que motivos de abandono contam, se as ruínas protegidas podem ser limpas e se quer fixar um limite mensal de gastos. |
+| [Demolição automática](technical_docs/pt/demolition.md#demolition) | **Desligada por predefinição.** Pode limpar ruínas ao fim de cerca de **30 dias simulados** e edifícios elegíveis abandonados há **um ano simulado**, por predefinição. Decide que zonas e que motivos de abandono contam, se as ruínas protegidas podem ser limpas e se quer fixar um limite mensal de gastos. |
 | [Avisos dos conselheiros](technical_docs/pt/safety.md#notices) | Usa os próprios conselheiros do jogo para assinalar faltas comprovadas e persistentes que o financiamento ou os acordos disponíveis não conseguem resolver. Quando faz sentido, as mensagens trazem ligações que levam aos edifícios afetados. Acrescenta também uma notícia (título na lista, detalhe ao clicar) quando um serviço que ativou tem de parar por uma falha técnica. |
 | [Aviso sobre o tamanho do aterro](technical_docs/pt/garbage.md#garbage-landfills-advice) | O aviso opcional indica uma redução segura e concreta do aterro (quadrados vazios a retirar), que poderia baixar a fatura do saneamento em mais do que o limiar de poupança escolhido. **O Ministério aconselha; a decisão de alterar a zona é sua.** |
 | [Reparação de quadrados fantasma](technical_docs/pt/garbage.md#ghost-tiles) | Com a gestão do saneamento ligada, repara com segurança os quadrados de aterro invisíveis elegíveis que o jogo ainda conta na manutenção. Os casos inseguros ou não verificados ficam como estão; não há interruptor próprio para esta reparação. |
@@ -90,7 +90,7 @@ O Ministério usa as definições fornecidas com o plugin e **começa a trabalha
 
 2\. Na página **Serviços**, escolha que orçamentos e acordos com os vizinhos o Ministério pode gerir e que folga de capacidade deve manter.
 
-3\. Na página **Demolição**, verifique as regras para limpar ruínas e edifícios abandonados. **Desligue a demolição automática se quiser deitar tudo abaixo pessoalmente.**
+3\. Na página **Demolição**, a demolição automática vem desligada. Ligue as opções de ruínas e de edifícios abandonados apenas se quiser que o Ministério os limpe por si.
 
 4\. Clique em **Aceitar** para guardar as escolhas. **Cancelar** fecha a janela sem guardar as alterações.
 
@@ -137,10 +137,10 @@ Abra **Opções de Jogo → Ministério da Optimização**. A janela tem duas p�
 
 | Opção | Predefinição | O que significa |
 |---|---|---|
-| [Demolir edifícios destruídos](technical_docs/pt/options.md#opt-demolishdestroyed) | **Ligado** | Demole as ruínas ao fim de um certo tempo. Não limpa automaticamente as ruínas municipais ou históricas protegidas, a não ser que a opção abaixo o permita. |
+| [Demolir edifícios destruídos](technical_docs/pt/options.md#opt-demolishdestroyed) | **Desligado** | Demole as ruínas ao fim de um certo tempo. Não limpa automaticamente as ruínas municipais ou históricas protegidas, a não ser que a opção abaixo o permita. |
 | [Esperar (edifícios destruídos)](technical_docs/pt/options.md#opt-destroyedmonths) | **1 mês** (1–24) | Quanto tempo as ruínas têm de permanecer antes de poderem ser limpas; por predefinição, cerca de **30 dias simulados**. |
 | [Demolir edifícios municipais e históricos destruídos](technical_docs/pt/options.md#opt-demolishmunicipal) | **Desligado** | Se ligada, limpa também, depois da espera, as **ruínas** elegíveis de edifícios municipais, especiais e históricos. |
-| [Demolir edifícios abandonados](technical_docs/pt/options.md#opt-demolishabandoned) | **Ligado** | Limpa os edifícios abandonados elegíveis depois do tempo de espera, nos tipos de zona e pelos motivos escolhidos. |
+| [Demolir edifícios abandonados](technical_docs/pt/options.md#opt-demolishabandoned) | **Desligado** | Limpa os edifícios abandonados elegíveis depois do tempo de espera, nos tipos de zona e pelos motivos escolhidos. |
 | [Esperar (edifícios abandonados)](technical_docs/pt/options.md#opt-abandonedmonths) | **12 meses** (1–60) | Quanto tempo um edifício tem de ficar abandonado antes de poder ser demolido; por predefinição, um ano simulado. |
 | [Zona residencial](technical_docs/pt/options.md#opt-zoneresidential) | **Ligado** | Inclui moradias e prédios de apartamentos abandonados. |
 | [Zona comercial](technical_docs/pt/options.md#opt-zonecommercial) | **Ligado** | Inclui lojas e escritórios abandonados. |

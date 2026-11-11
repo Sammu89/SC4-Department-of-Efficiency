@@ -173,7 +173,7 @@ Un réglage inconnu ou une valeur invalide rend invalide le fichier de configura
 
 Les réglages absents des fichiers fournis utilisent leurs valeurs par défaut.
 
-Par exemple, la configuration de démolition par défaut active la suppression des ruines et des bâtiments abandonnés éligibles, tout en protégeant les parcelles agricoles et les bâtiments abandonnés à cause de l’absence d’électricité ou d’eau.
+Par exemple, une fois la démolition activée, ses règles par défaut activent la suppression des ruines et des bâtiments abandonnés éligibles, tout en protégeant les parcelles agricoles et les bâtiments abandonnés à cause de l’absence d’électricité ou d’eau. La démolition elle-même est désactivée par défaut.
 
 **Les modifications manuelles sont normalement détectées et appliquées en l’espace d’un mois simulé.**
 
@@ -819,7 +819,7 @@ Elle ne supprime pas le zonage sous-jacent.
 <a id="opt-demolishdestroyed"></a>
 ### Démolir les bâtiments détruits
 
-<text color="secondary">Par défaut : activé | Valeurs : activé / désactivé | INI : `DemolishDestroyed`</text>
+<text color="secondary">Par défaut : désactivé | Valeurs : activé / désactivé | INI : `DemolishDestroyed`</text>
 
 Supprime automatiquement les ruines laissées par les incendies et les catastrophes.
 
@@ -916,7 +916,7 @@ Voir [Démolition automatique](demolition.md#demolition-protected).
 <a id="opt-demolishabandoned"></a>
 ### Démolir les bâtiments abandonnés
 
-<text color="secondary">Par défaut : activé | Valeurs : activé / désactivé | INI : `DemolishAbandoned`</text>
+<text color="secondary">Par défaut : désactivé | Valeurs : activé / désactivé | INI : `DemolishAbandoned`</text>
 
 Déblaie automatiquement les bâtiments qui sont restés abandonnés pendant le délai d’attente configuré.
 

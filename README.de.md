@@ -13,7 +13,7 @@ Es verwaltet die Budgets einzelner Bildungs- und Gesundheitseinrichtungen, Kraft
 Alles wird im Spiel unter **Spieloptionen → Ministerium für Effizienz** gesteuert. Wählen Sie die Dienste, die automatisiert werden sollen, passen Sie deren Sicherheitsreserven an, richten Sie den Abriss ein oder schalten Sie das ganze Ministerium aus. Als Hauptschalter können Sie auch die Verordnung **Ministerium für Effizienz einrichten** verwenden. Eine separate Anwendung ist nicht nötig.
 
 > [!IMPORTANT]
-> **Das Ministerium startet eingeschaltet, einschließlich des automatischen Abrisses zerstörter und verlassener Gebäude.** Prüfen Sie seine Einstellungen, bevor Sie eine Stadt öffnen, die Ihnen wichtig ist. Es nimmt echte Änderungen im Spiel vor: Finanzierung, Verträge und Abrisse werden gespeichert, wenn Sie die Stadt speichern. Spielstände werden nicht direkt bearbeitet.
+> **Das Ministerium startet eingeschaltet, der automatische Abriss ist jedoch standardmäßig ausgeschaltet.** Prüfen Sie seine Einstellungen, bevor Sie eine Stadt öffnen, die Ihnen wichtig ist. Es nimmt echte Änderungen im Spiel vor: Finanzierung und Verträge (und Abrisse, wenn Sie diese einschalten) werden gespeichert, wenn Sie die Stadt speichern. Spielstände werden nicht direkt bearbeitet.
 
 ## Inhalt
 
@@ -45,9 +45,9 @@ Alles wird im Spiel unter **Spieloptionen → Ministerium für Effizienz** geste
 
 ## Installation
 
-### [⬇ Department of Efficiency 1.0.0 herunterladen](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Department of Efficiency 1.0.3 herunterladen](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Neu in 1.0.2:** siehe das [Änderungsprotokoll](CHANGELOG.md) (auf Englisch).
+**Neu in 1.0.3:** siehe das [Änderungsprotokoll](CHANGELOG.md) (auf Englisch).
 
 1. Lade die [neueste Version](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) herunter und beende SimCity 4.
 
@@ -58,7 +58,7 @@ Alles wird im Spiel unter **Spieloptionen → Ministerium für Effizienz** geste
 4. Starte SimCity 4 und öffne **Spieloptionen → Ministerium für Effizienz**, um deine Einstellungen festzulegen.
 
 > [!IMPORTANT]
-> Das Ministerium ist standardmäßig aktiviert, einschließlich des automatischen Abrisses zerstörter und verlassener Gebäude. Prüfe die **Abriss**-Einstellungen, bevor du eine Stadt mit Gebäuden öffnest, die du erhalten möchtest.
+> Das Ministerium ist standardmäßig aktiviert; der automatische Abriss ist standardmäßig **ausgeschaltet**. Wenn du ihn einschaltest, prüfe die **Abriss**-Einstellungen, bevor du eine Stadt mit Gebäuden öffnest, die du erhalten möchtest.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ Die folgende Tabelle beschreibt, was das Ministerium tut. Formeln, Beispiele, Sc
 | [Wasser](technical_docs/en/water.md#water) | Passt die Wasserfinanzierung der Stadt an den Bedarf plus eine Sicherheitsreserve an. Der Schutz der Wasserleitungen ist standardmäßig eingeschaltet, um Kürzungen zu vermeiden, bei denen das Netz verfallen würde. Es blendet außerdem das irreführende „Kein Wasser“-Symbol des Spiels über Bauernhöfen aus. |
 | [Müllentsorgung](technical_docs/en/garbage.md#garbage-landfills) | Passt die Finanzierung der Müllentsorgung an Müllaufkommen, Recycling, Behandlung, Deponiespeicher und regionale Verträge an und schützt dabei den eigenen Entsorgungsbedarf der Stadt. |
 | [Nachbarschaftsverträge](technical_docs/en/deals.md#neighbor-deals) | Kann **Strom und Wasser kaufen oder verkaufen**, **Nachbarn dafür bezahlen, Ihren Müll zu übernehmen**, oder **deren Müll gegen Bezahlung annehmen**. Es schließt, ändert und kündigt geeignete Verträge, wenn das Gesamtergebnis der Stadt nützt und der eigene Bedarf und die Reserven geschützt bleiben. |
-| [Automatischer Abriss](technical_docs/en/demolition.md#demolition) | Kann standardmäßig Ruinen nach etwa **30 simulierten Tagen** räumen und geeignete Gebäude, die **ein simuliertes Jahr** lang verlassen waren. Sie legen fest, welche Gebiete und welche Verlassensgründe zählen, ob geschützte Ruinen geräumt werden dürfen und ob ein monatliches Ausgabenlimit gelten soll. |
+| [Automatischer Abriss](technical_docs/en/demolition.md#demolition) | **Standardmäßig aus.** Kann standardmäßig Ruinen nach etwa **30 simulierten Tagen** räumen und geeignete Gebäude, die **ein simuliertes Jahr** lang verlassen waren. Sie legen fest, welche Gebiete und welche Verlassensgründe zählen, ob geschützte Ruinen geräumt werden dürfen und ob ein monatliches Ausgabenlimit gelten soll. |
 | [Hinweise der Berater](technical_docs/en/safety.md#notices) | Nutzt die Berater des Spiels, um nachgewiesene, anhaltende Engpässe zu melden, die weder Finanzierung noch verfügbare Verträge beheben können. Wo es passt, enthalten die Meldungen Links zu den betroffenen Gebäuden. Außerdem fügt es eine Nachricht hinzu (Titel in der Liste, Details per Klick), wenn ein von Ihnen aktivierter Dienst wegen eines technischen Fehlers anhalten muss. |
 | [Hinweis zur Deponiegröße](technical_docs/en/garbage.md#garbage-landfills-advice) | Der optionale Hinweis nennt eine konkrete, sichere Verkleinerung der Deponie (leere Felder, die entfernt werden können), die die Müllkosten um mehr als Ihre gewählte Sparschwelle senken könnte. **Das Ministerium rät; ob Sie die Zonierung ändern, entscheiden Sie.** |
 | [Reparatur von Geisterfeldern](technical_docs/en/garbage.md#ghost-tiles) | Bei eingeschalteter Müllverwaltung werden geeignete unsichtbare Deponiefelder, die das Spiel weiterhin zur Instandhaltung rechnet, sicher repariert. Unsichere oder ungeprüfte Fälle bleiben unberührt; für diese Reparatur gibt es keinen eigenen Schalter. |
@@ -90,7 +90,7 @@ Das Ministerium verwendet die mit dem Plugin gelieferten Einstellungen und **beg
 
 2\. Wählen Sie auf der Seite **Versorgung**, welche Budgets und Nachbarschaftsverträge das Ministerium verwalten darf und wie viel freie Kapazität es vorhalten soll.
 
-3\. Prüfen Sie auf der Seite **Abriss** die Regeln zum Räumen von Ruinen und verlassenen Gebäuden. **Schalten Sie den automatischen Abriss aus, wenn Sie alles selbst abreißen möchten.**
+3\. Auf der Seite **Abriss** ist der automatische Abriss ausgeschaltet. Aktivieren Sie die Optionen für Ruinen und verlassene Gebäude nur, wenn das Ministerium sie für Sie räumen soll.
 
 4\. Klicken Sie auf **Übernehmen**, um Ihre Auswahl zu speichern. **Abbrechen** schließt das Fenster, ohne Änderungen zu speichern.
 
@@ -137,10 +137,10 @@ Sie können das Ministerium auch über die Verordnungen der Stadt ein- oder auss
 
 | Option | Standard | Bedeutung |
 |---|---|---|
-| [Zerstörte Gebäude abreißen](technical_docs/en/options.md#opt-demolishdestroyed) | **An** | Reißt Ruinen nach einer bestimmten Zeit ab. Räumt geschützte städtische oder historische Ruinen nicht automatisch, es sei denn, die Option weiter unten erlaubt es. |
+| [Zerstörte Gebäude abreißen](technical_docs/en/options.md#opt-demolishdestroyed) | **Aus** | Reißt Ruinen nach einer bestimmten Zeit ab. Räumt geschützte städtische oder historische Ruinen nicht automatisch, es sei denn, die Option weiter unten erlaubt es. |
 | [Wartezeit (zerstörte Gebäude)](technical_docs/en/options.md#opt-destroyedmonths) | **1 Monat** (1–24) | Wie lange Ruinen stehen bleiben müssen, bevor sie geräumt werden dürfen; standardmäßig etwa **30 simulierte Tage**. |
 | [Zerstörte städtische und historische Gebäude abreißen](technical_docs/en/options.md#opt-demolishmunicipal) | **Aus** | Wenn eingeschaltet, werden nach der Wartezeit auch geeignete **Ruinen** städtischer, besonderer und historischer Gebäude geräumt. |
-| [Verlassene Gebäude abreißen](technical_docs/en/options.md#opt-demolishabandoned) | **An** | Räumt geeignete verlassene Gebäude nach der Wartezeit, in den gewählten Gebietsarten und aus den gewählten Gründen. |
+| [Verlassene Gebäude abreißen](technical_docs/en/options.md#opt-demolishabandoned) | **Aus** | Räumt geeignete verlassene Gebäude nach der Wartezeit, in den gewählten Gebietsarten und aus den gewählten Gründen. |
 | [Wartezeit (verlassene Gebäude)](technical_docs/en/options.md#opt-abandonedmonths) | **12 Monate** (1–60) | Wie lange ein Gebäude verlassen sein muss, bevor es abgerissen werden darf; standardmäßig ein simuliertes Jahr. |
 | [Wohngebiet](technical_docs/en/options.md#opt-zoneresidential) | **An** | Umfasst verlassene Häuser und Mehrfamilienhäuser. |
 | [Gewerbegebiet](technical_docs/en/options.md#opt-zonecommercial) | **An** | Umfasst verlassene Läden und Büros. |

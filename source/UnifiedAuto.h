@@ -118,7 +118,11 @@ public:
         lastSanWriteDay_ = lastPacedLogDay_ = 0;
         createdHere_.clear();
         auditSig_.clear();
-        servedOk_[0] = servedOk_[1] = false;
+        for (int i = 0; i < 3; ++i) { planProof_[i] = planViable_[i] = false; basis_[i].clear(); why_[i].clear(); servedStreak_[i] = 0; }
+        for (auto& e : dayEvidence_) e = ShortageEvidence::Uncertain;
+        backlogState_ = BacklogState::Uncertain;
+        lastBacklogMonth_ = 0;
+        backlog_.Reset();
         internalLogged_[0] = internalLogged_[1] = false;
         lastCounters_ = ServiceCounters{};
         ledger_ = UnifiedLedger{};
@@ -159,6 +163,7 @@ public:
     void OnDay(const UtilityResearchConfig& cfg, IUnifiedActuator& act) {
         lines_.clear();
         ++days_;
+        for (auto& e : dayEvidence_) e = ShortageEvidence::Uncertain;            // nothing is concluded from an earlier day: every path that returns before the readings of today leaves the evidence uncertain
 #ifdef SC4AF_TEST_FAULTS
         TestFaultFile();                                              // TEST BUILD ONLY (never compiled into a release): see below
 #endif
@@ -187,19 +192,22 @@ public:
                 if (wantPower) {
                     const auto v = monitor_.ObservePower(sc);
                     urgentPower = v.trigger;
+                    if (v.trigger) planProof_[0] = false;                       // what the last plan proved no longer describes the city: it must be proven again by the replan this triggers
                     powerFresh = v.cause != ServiceCause::Stale;
-                    NoteServiceSample(0, v, sc.pDemand, ServiceMonitor::ServedOf(sc, true));      // the city's own consumption: the counter includes the exports
+                    NoteServiceSample(0, v);
                 }
                 if (wantWater) {
                     const auto v = monitor_.ObserveWater(sc);
                     urgentWater = v.trigger;
+                    if (v.trigger) planProof_[1] = false;
                     waterFresh = v.cause != ServiceCause::Stale;
-                    NoteServiceSample(1, v, sc.wDemand, sc.wConsumed);
+                    NoteServiceSample(1, v);
                 }
                 if (wantGarbage && sc.garbage) {
                     // Garbage is planned when the counters behind its plan moved (or something is in flight); an unchanged sample does not re-run the optimiser every day
                     const auto g = monitor_.ObserveGarbage(sc);
                     garbageDue = g.trigger;
+                    if (g.trigger) planProof_[2] = planViable_[2] = false;
                     if (g.trigger) Info(std::string("[ServiceCheck] ") + g.text + " -> garbage replan");
                 }
             }
@@ -218,11 +226,12 @@ public:
         allow.water = wantWater && waterCountersOk && (waterPeriodic || waterFirstTry || urgentWater);
         allow.garbage = wantGarbage && garbageDue;
         const bool inFlight = AnyDealPending() || pendingSan_;
-        if (!inFlight && !allow.power && !allow.water && !allow.garbage) return;       // nothing is due today
+        if (!inFlight && !allow.power && !allow.water && !allow.garbage) { NoteDayEvidence(haveCounters ? &sc : nullptr, wantPower, wantWater, wantGarbage); return; }       // nothing is due today
         if (!allow.power && !allow.water && !allow.garbage) {
             // Only transactions in flight, nothing due: they are advanced with fresh observations and that is all. The whole-system read and plan cost ~230 ms in a big city and a Sanitation write waits
             // days for the game to show its efficiency: a full cycle every day just to wait would slow the game down.
             PumpInFlight(act, allow);
+            NoteDayEvidence(haveCounters ? &sc : nullptr, wantPower, wantWater, wantGarbage);
             EmitMilestones(false);
             return;
         }
@@ -234,6 +243,7 @@ public:
             if (allow.water) monitor_.NoteEvaluated(sc, false);
             if (allow.garbage && sc.garbage) monitor_.NoteEvaluatedGarbage(sc);
         }
+        NoteDayEvidence(haveCounters ? &sc : nullptr, wantPower, wantWater, wantGarbage);
         EmitMilestones(false);
     }
 
@@ -253,7 +263,7 @@ public:
         if (allow.water && ready_[1].ok) { waterEvaluated_ = true; lastWaterDay_ = days_; }
         {
             ServiceCounters sc;
-            if (act.ReadServiceCounters(sc)) { lastCounters_ = sc; if (allow.water) monitor_.NoteEvaluated(sc, false); if (allow.garbage && sc.garbage) monitor_.NoteEvaluatedGarbage(sc); }
+            if (act.ReadServiceCounters(sc)) { lastCounters_ = sc; NoteMonthlyBacklog(sc); if (allow.water) monitor_.NoteEvaluated(sc, false); if (allow.garbage && sc.garbage) monitor_.NoteEvaluatedGarbage(sc); }
         }
         EmitMilestones(true);
     }
@@ -271,6 +281,15 @@ public:
     bool commodityContractsReady(int i) const { return contractsReady_[i].ok; }   // its regional contracts can be managed now (for garbage: no landfill needed)
     bool commodityStandby(int i) const { return ready_[i].standby; }              // nothing local to manage yet (not an error)
     bool serviceEpisodeActive(int i) const { return episodes_.active(i); }
+    // What the controller can PROVE today about the shortage of utility i (0 power, 1 water, 2 garbage): the notice board reads it once per simulated day, after OnDay (ServiceNotices.h). Uncertain on any
+    // day the controller did not read the counters, and whenever the earlier proof was invalidated by a change that no replan has proven again.
+    ShortageEvidence noticeEvidence(int i) const { return i >= 0 && i < 4 ? dayEvidence_[i] : ShortageEvidence::Uncertain; }       // 3 = the garbage notice of a STAGNANT backlog (informative, discreet)
+    // The management of a service was switched (on or off): what an earlier plan proved no longer describes the city. The proof must be made again by a new plan, and the backlog trend starts again.
+    void ForgetProofs() {
+        for (int i = 0; i < 3; ++i) { planProof_[i] = planViable_[i] = false; servedStreak_[i] = 0; }
+        backlog_.Reset();
+    }
+    const std::string& noticeWhy(int i) const { static const std::string none; return i >= 0 && i < 3 ? why_[i] : none; }
     bool powerDisabled() const { return legacy_.powerDisabled(); }
     bool waterDisabled() const { return legacy_.waterDisabled(); }
     bool garbageDisabled() const { return garbageOff_.disabled; }
@@ -729,28 +748,27 @@ private:
         }
     }
 
-    // The one intrusive service warning (see ServiceNotices.h). The episode state lives apart from the economic optimiser: it only reads the plan, never steers it.
+    // The evidence of the one intrusive service warning (see ServiceNotices.h). The episode state lives apart from the economic optimiser: it only reads the plan, never steers it.
+    // A plan can only PROVE the impossibility (every authorised means used or shown insufficient, regional data complete, nothing pending): it is remembered as `planProof_` until something that proof relied on
+    // changes. WHETHER the service is short today is read from the counters every day (NoteDayEvidence): the proof alone never keeps a warning alive.
     void UpdateServiceEpisodes(const UtilitySnapshot& snap, const UnifiedPlan& plan) {
-        static const char* names[3] = {"POWER", "WATER", "GARBAGE"};
         for (int i = 0; i < 3 && static_cast<std::size_t>(i) < plan.portfolio.commodities.size(); ++i) {
             const auto& pc = plan.portfolio.commodities[static_cast<std::size_t>(i)];
             const bool pending = pendingDeals_[i] || (i == 2 && pendingSan_);
             const bool data = NoticeEpisodes::DataComplete(snap, i);
-            bool proven = false, recovered = false;
             std::string basis;
             if (i < 2) {
-                // authoritative counters: the need above the service delivered AND the supply short (an internal connection problem never gets here)
-                // the warning waits for the recovery: while valid purchases / cancellations of this plan are still to be executed the insufficiency is not final (PlanServiceEmergency)
-                proven = pc.serviceDeficit && data && !pending && pc.recoveryPending == 0 && monitor_.InDeficit(i == 0);
-                recovered = servedOk_[i];
+                // authoritative counters decide whether the service is short TODAY; the plan says the shortage cannot be solved with what the Department may do (the need above the service delivered AND the supply short:
+                // an internal connection problem never gets here). While valid purchases / cancellations of this plan are still to be executed the insufficiency is not final (PlanServiceEmergency).
+                planProof_[i] = pc.serviceDeficit && data && !pending && pc.recoveryPending == 0;
                 basis = "game counters: demand " + std::to_string(i == 0 ? lastCounters_.pDemand.value_or(-1) : lastCounters_.wDemand.value_or(-1)) + ", service delivered " +
                         std::to_string(i == 0 ? lastCounters_.pConsumption.value_or(-1) : lastCounters_.wConsumed.value_or(-1)) +
                         (buyAllowed_[i] ? "; maximum usable local capacity and every regional purchase on offer cannot cover it"
                                         : "; maximum usable local capacity and the existing contracts cannot cover it (the player has switched off the automatic management of this resource's regional contracts)");
             } else {
                 // Garbage has no authoritative need counter: this is the physical MODEL, not a measurement by the game
-                proven = pc.serviceDeficit && data && !pending && pc.recoveryPending == 0 && snap.garbage.validity == SnapshotValidity::Valid;
-                recovered = pc.evaluated && !pc.serviceDeficit && snap.garbage.aggregate.uncollected && *snap.garbage.aggregate.uncollected == 0;
+                planProof_[2] = pc.serviceDeficit && data && !pending && pc.recoveryPending == 0 && snap.garbage.validity == SnapshotValidity::Valid;
+                planViable_[2] = pc.evaluated && !pc.serviceDeficit;
                 basis = buyAllowed_[2] ? "physical model (not a game measurement): the facilities and every export on offer cannot process the garbage produced"
                                        : "physical model (not a game measurement): the facilities and the existing export contracts cannot process the garbage produced (the player has switched off the automatic management of the garbage contracts)";
             }
@@ -759,16 +777,88 @@ private:
                 if (pc.emergencyDemand >= 0) basis += " (the best plan serves " + std::to_string(pc.emergencyServedPlan) + " of " + std::to_string(pc.emergencyDemand) + " with local capacity " + std::to_string(pc.emergencyCapacity) + " and " + std::to_string(pc.emergencyBought) + " bought)";
                 else basis += " (exports in force after the plan: " + std::to_string(pc.emergencyBought) + ")";
             }
-            const auto r = episodes_.Update(i, proven, recovered);
-            if (r.emit) Info(std::string("[Service][NoSupply] ") + names[i] + ": " + basis);
-            else if (r.rearmed) Info(std::string("[Service][EpisodeEnded] ") + names[i] + ": recovery proven, a new insufficiency would be a new episode");
+            basis_[i] = basis;
         }
     }
 
-    // A fresh authoritative sample of Power (0) or Water (1): recovery evidence, and the single log line of a state change (never a line per day).
-    void NoteServiceSample(int i, const ServiceVerdict& v, const Opt<std::int64_t>& demand, const Opt<std::int64_t>& served) {
+    // Once per simulated day, at the end of OnDay: what can be proven about the shortage of each utility with the readings of TODAY (`sc` = the counters read today, nullptr when they could not be).
+    //   Proven     the counters show the service short, the supply short too (a shortage of capacity), a plan proved that nothing the Department may do solves it, and no operation is pending
+    //              (garbage: the model says so AND the game's own backlog has been rising for two months running);
+    //   Recovered  the counters show the service delivered (garbage: the model is feasible again AND the game's backlog is gone or no longer rising);
+    //   Uncertain  anything else: no notice, no reminder, no recovery claimed, the persistence clock stands still (a reading that is unavailable, a supply that covers a service still short, an operation being confirmed).
+    void NoteDayEvidence(const ServiceCounters* sc, bool wantPower, bool wantWater, bool wantGarbage) {
+        static const char* names[3] = {"POWER", "WATER", "GARBAGE"};
+        const bool want[3] = {wantPower, wantWater, wantGarbage};
+        for (int i = 0; i < 3; ++i) {
+            ShortageEvidence ev = ShortageEvidence::Uncertain;
+            std::string why;
+            const int streakBefore = servedStreak_[i];
+            servedStreak_[i] = 0;                                    // set again below by a Served reading: the streak is of CONSECUTIVE daily readings
+            if (!want[i]) why = "this service is not evaluated (neither its manager nor its contracts are on)";
+            else if (!sc) why = "the counters could not be read today";
+            else if (!ready_[i].ok) why = std::string("the readings of the service are not ready") + (ready_[i].standby ? " (standby: nothing to manage yet)" : "") + (ready_[i].reason.empty() ? "" : ": " + ready_[i].reason);
+            else if (i < 2) {
+                switch (ServiceMonitor::Classify(*sc, i == 0)) {
+                case ServiceMonitor::SampleState::Served:
+                    // the service delivered covers the demand: confirmed by the next reading too (one day's dip of the demand below the delivered service is not the end of a shortage)
+                    servedStreak_[i] = streakBefore + 1;
+                    if (servedStreak_[i] >= 2) ev = ShortageEvidence::Recovered;
+                    else why = "the service delivered covers the demand on this reading: the recovery is confirmed by the next one";
+                    break;
+                case ServiceMonitor::SampleState::SupplyShort:
+                    if (pendingDeals_[i]) why = "an automatic purchase or cancellation is still being confirmed";
+                    else if (!planProof_[i]) why = "the supply looks short but no plan has proven since the last change that nothing the Department may do solves it";
+                    else ev = ShortageEvidence::Proven;
+                    break;
+                case ServiceMonitor::SampleState::SupplyCovers: why = "the service delivered is below the need but the supply (local capacity + usable imports) covers it: an internal problem or counters that have not caught up, not a shortage of capacity"; break;
+                case ServiceMonitor::SampleState::Unknown: why = "the demand, the service delivered or the capacity could not be read"; break;
+                }
+            } else {
+                BacklogState gs = BacklogStateOf(*sc, why);
+#ifdef SC4AF_TEST_FAULTS
+                if (forcedBacklogOn_ && want[2]) { gs = forcedBacklog_; why = "TEST FAULT: the backlog state is forced"; }
+#endif
+                ev = UrgentGarbageEvidence(gs);
+                dayEvidence_[3] = StagnantGarbageEvidence(gs);                  // the stagnant-backlog notice: never proven together with the urgent one
+                if (gs != backlogState_) {
+                    Info(std::string("[Service][Garbage] backlog state ") + BacklogStateName(backlogState_) + " -> " + BacklogStateName(gs) + (why.empty() ? std::string() : " (" + why + ")"));
+                    backlogState_ = gs;
+                }
+            }
+#ifdef SC4AF_TEST_FAULTS
+            if (forcedOn_[i] && want[i]) { ev = forced_[i]; why = "TEST FAULT: the evidence is forced"; }
+#endif
+            dayEvidence_[i] = ev;
+            why_[i] = why;
+            const auto r = episodes_.Update(i, ev);
+            if (r.emit) Info(std::string("[Service][NoSupply] ") + names[i] + ": " + basis_[i]);
+            else if (r.rearmed) Info(std::string("[Service][EpisodeEnded] ") + names[i] + ": recovery proven, a new insufficiency would be a new episode");
+            else if (r.uncertain) Info(std::string("[Service][Evidence] ") + names[i] + ": the shortage is no longer proven (" + why + "): notices and reminders are suspended, nothing is concluded");
+            else if (r.resumed) Info(std::string("[Service][Evidence] ") + names[i] + ": the shortage is proven again: the persistence clock resumes");
+        }
+    }
+
+    // Garbage: the model against the game's own backlog, month by month (ClassifyBacklog, ServiceNotices.h).
+    BacklogState BacklogStateOf(const ServiceCounters& sc, std::string& why) const {
+        BacklogFacts f;
+        f.countersRead = sc.garbage && sc.gUncollected;
+        f.uncollected = sc.gUncollected.value_or(0);
+        f.modelViable = planViable_[2];
+        f.modelProof = planProof_[2];
+        f.pending = pendingDeals_[2] || pendingSan_;
+        return ClassifyBacklog(f, backlog_, why);
+    }
+    // The month-start samples of the backlog and of the production of the month that ended (the trend ClassifyBacklog reads). Called with the counters read at the start of every month.
+    void NoteMonthlyBacklog(const ServiceCounters& sc) {
+        if (!sc.garbage || !sc.gUncollected || !sc.gProduced) return;
+        if (backlog_.n > 0 && months_ != lastBacklogMonth_ + 1) backlog_.Reset();       // a month without a sample: the trend is of CONSECUTIVE months only
+        backlog_.Note(*sc.gUncollected, *sc.gProduced);
+        lastBacklogMonth_ = months_;
+    }
+
+    // A fresh authoritative sample of Power (0) or Water (1): the single log line of a state change (never a line per day). Whether the service is short is read from the counters every day (NoteDayEvidence).
+    void NoteServiceSample(int i, const ServiceVerdict& v) {
         if (v.cause == ServiceCause::Stale) return;                     // an old counter proves nothing
-        if (demand && served) servedOk_[i] = *served >= *demand;
         const bool internal = v.cause == ServiceCause::InternalShortfall;
         if (v.trigger) Info(std::string("[ServiceCheck] ") + ServiceCauseName(v.cause) + ": " + v.text + " -> immediate replan");
         else if (internal && !internalLogged_[i]) Info(std::string("[ServiceCheck] ") + ServiceCauseName(v.cause) + ": " + v.text);
@@ -778,13 +868,25 @@ private:
 #ifdef SC4AF_TEST_FAULTS
     // TEST BUILD ONLY (-DSC4AF_TEST_FAULTS, a separate build directory; the release never contains this): a file written by the test harness at %LOCALAPPDATA%\SC4AFTests\sc4af_fault.txt puts a
     // manager in the state it reaches after a real technical failure (fail-closed), so the failure notices can be observed in the real game without waiting for the game to misbehave.
-    // Words: sanitation, deals (force that manager off), clear (undo both).
+    // Words: sanitation, deals (force that manager off), clear (undo both); proof_power / proof_water / proof_garbage and recover_power / recover_water / recover_garbage force the evidence of the shortage notices
+    // of that utility for as long as the word is in the file (the shortage notices can then be exercised in a disposable city without a real shortage; the lifecycle itself is the product's).
     void TestFaultFile() {
         const char* base = std::getenv("LOCALAPPDATA");
         if (!base) return;
         std::ifstream f(std::string(base) + "/SC4AFTests/sc4af_fault.txt");
         std::string w;
+        static const char* names[3] = {"power", "water", "garbage"};
+        for (bool& o : forcedOn_) o = false;
+        forcedBacklogOn_ = false;
         while (f >> w) {
+            for (int i = 0; i < 2; ++i) {                                         // power, water: the evidence itself
+                if (w == std::string("proof_") + names[i]) { forcedOn_[i] = true; forced_[i] = ShortageEvidence::Proven; }
+                else if (w == std::string("recover_") + names[i]) { forcedOn_[i] = true; forced_[i] = ShortageEvidence::Recovered; }
+            }
+            // garbage: the STATE of the backlog (the two garbage notices are derived from it): proof_garbage = Insufficient, stagnant_garbage = Stagnant, recover_garbage = Recovered
+            if (w == "proof_garbage") { forcedBacklogOn_ = true; forcedBacklog_ = BacklogState::Insufficient; }
+            else if (w == "stagnant_garbage") { forcedBacklogOn_ = true; forcedBacklog_ = BacklogState::Stagnant; }
+            else if (w == "recover_garbage") { forcedBacklogOn_ = true; forcedBacklog_ = BacklogState::Recovered; }
             if (w == "sanitation" && !garbageOff_.disabled) { garbageOff_.disabled = true; garbageOff_.reason = "TEST FAULT: sanitation forced into the fail-closed state"; Err("[UnifiedAuto][Sanitation] FAIL CLOSED (technical): " + garbageOff_.reason); }
             else if (w == "deals" && !deals_off_.disabled) { deals_off_.disabled = true; deals_off_.reason = "TEST FAULT: deals forced into the fail-closed state"; Err("[UnifiedAuto][Deal] FAIL CLOSED (technical): " + deals_off_.reason); }
             else if (w == "clear" && (garbageOff_.disabled || deals_off_.disabled)) { garbageOff_ = Off{}; deals_off_ = Off{}; Info("[UnifiedAuto] TEST FAULT cleared"); }
@@ -1220,7 +1322,20 @@ private:
     bool contractTableLogged_ = false;
     std::set<std::string> createdHere_;                 // contracts created by this plugin since the city loaded (diagnosis only)
     std::map<std::string, std::string> auditSig_;        // last [ContractAudit] line per contract
-    bool servedOk_[2] = {false, false};          // the latest fresh authoritative sample shows the service delivered
+    bool planProof_[3] = {false, false, false};      // the last plan proved that nothing the Department may do solves the shortage (cleared by any change of what it relied on)
+    bool planViable_[3] = {false, false, false};     // garbage: the last plan is feasible (the model says the garbage can be processed)
+    ShortageEvidence dayEvidence_[4] = {ShortageEvidence::Uncertain, ShortageEvidence::Uncertain, ShortageEvidence::Uncertain, ShortageEvidence::Uncertain};
+    BacklogState backlogState_ = BacklogState::Uncertain;      // the last classification of the garbage backlog (logged on change only)   // what can be proven TODAY (NoteDayEvidence)
+    std::string basis_[3], why_[3];                  // the wording of a proof (log) and the reason of an uncertain day
+    BacklogTrend backlog_;                           // garbage: the backlog at the start of the last months
+    std::uint32_t lastBacklogMonth_ = 0;
+    int servedStreak_[3] = {0, 0, 0};                // consecutive daily readings that show the service delivered (power, water)
+#ifdef SC4AF_TEST_FAULTS
+    bool forcedOn_[3] = {false, false, false};       // TEST BUILD ONLY: the evidence of the notices of this utility is forced (TestFaultFile)
+    ShortageEvidence forced_[3] = {ShortageEvidence::Uncertain, ShortageEvidence::Uncertain, ShortageEvidence::Uncertain};
+    bool forcedBacklogOn_ = false;
+    BacklogState forcedBacklog_ = BacklogState::Uncertain;
+#endif
     bool internalLogged_[2] = {false, false};
     ServiceCounters lastCounters_;
     std::size_t serviceChecks_ = 0;

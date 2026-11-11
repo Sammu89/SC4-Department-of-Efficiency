@@ -13,7 +13,7 @@ Zarządza budżetami poszczególnych budynków oświaty i ochrony zdrowia, elekt
 Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. Wybierz usługi do automatyzacji, dostosuj ich marginesy bezpieczeństwa, skonfiguruj wyburzanie albo wyłącz całe Ministerstwo. Jako główny wyłącznik możesz też użyć uchwały miejskiej **Utwórz Ministerstwo Optymalizacji**. Nie potrzeba żadnej osobnej aplikacji.
 
 > [!IMPORTANT]
-> **Ministerstwo startuje włączone, razem z automatycznym wyburzaniem zniszczonych i opuszczonych budynków.** Sprawdź jego ustawienia, zanim otworzysz miasto, na którym Ci zależy. Wprowadza ono prawdziwe zmiany w grze: finansowanie, umowy i wyburzenia zostaną zapisane, jeśli zapiszesz miasto. Nie edytuje bezpośrednio plików zapisu.
+> **Ministerstwo startuje włączone, ale automatyczne wyburzanie jest domyślnie wyłączone.** Sprawdź jego ustawienia, zanim otworzysz miasto, na którym Ci zależy. Wprowadza ono prawdziwe zmiany w grze: finansowanie i umowy (oraz wyburzenia, jeśli je włączysz) zostaną zapisane, jeśli zapiszesz miasto. Nie edytuje bezpośrednio plików zapisu.
 
 ## Spis treści
 
@@ -45,9 +45,9 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 
 ## Instalacja
 
-### [⬇ Pobierz Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Pobierz Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Nowości w 1.0.2:** zobacz [dziennik zmian](CHANGELOG.md) (po angielsku).
+**Nowości w 1.0.3:** zobacz [dziennik zmian](CHANGELOG.md) (po angielsku).
 
 1. Pobierz [najnowszą wersję](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) i zamknij SimCity 4.
 
@@ -58,7 +58,7 @@ Wszystkim steruje się w grze, w **Opcje gry → Ministerstwo Optymalizacji**. W
 4. Uruchom SimCity 4 i otwórz **Opcje gry → Ministerstwo Optymalizacji**, aby ustawić preferencje.
 
 > [!IMPORTANT]
-> Ministerstwo jest domyślnie włączone, w tym automatyczne wyburzanie zniszczonych i opuszczonych budynków. Sprawdź ustawienia **wyburzania** przed otwarciem miasta z budynkami, które chcesz zachować.
+> Ministerstwo jest domyślnie włączone; automatyczne wyburzanie jest domyślnie **wyłączone**. Jeśli je włączysz, sprawdź ustawienia **wyburzania** przed otwarciem miasta z budynkami, które chcesz zachować.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ Poniższa tabela opisuje, co robi Ministerstwo. Wzory, przykłady, zabezpieczeni
 | [Woda](technical_docs/en/water.md#water) | Dostosowuje finansowanie wodociągów miasta do zapotrzebowania plus rezerwy bezpieczeństwa. Ochrona rur jest domyślnie włączona, by uniknąć cięć, przez które sieć by niszczała. Ukrywa też mylącą ikonę „brak wody” w grze nad farmami. |
 | [Gospodarka odpadami](technical_docs/en/garbage.md#garbage-landfills) | Dostosowuje finansowanie gospodarki odpadami na podstawie ilości śmieci, recyklingu, przetwarzania, pojemności wysypisk i umów regionalnych, chroniąc przy tym własne potrzeby miasta w zakresie utylizacji. |
 | [Umowy z sąsiadami](technical_docs/en/deals.md#neighbor-deals) | Może **kupować lub sprzedawać prąd i wodę**, **płacić sąsiadom za przyjmowanie Twoich śmieci** albo **przyjmować ich śmieci za opłatą**. Zawiera, dostosowuje i wypowiada kwalifikujące się umowy, gdy ogólny wynik służy miastu, a jego własne potrzeby i rezerwy pozostają chronione. |
-| [Automatyczne wyburzanie](technical_docs/en/demolition.md#demolition) | Domyślnie może uprzątać ruiny po około **30 dniach symulacji** oraz kwalifikujące się budynki opuszczone od **jednego roku symulacji**. Ty decydujesz, które strefy i które powody opuszczenia się liczą, czy chronione ruiny mogą być uprzątane i czy ustawić miesięczny limit wydatków. |
+| [Automatyczne wyburzanie](technical_docs/en/demolition.md#demolition) | **Domyślnie wyłączone.** Domyślnie może uprzątać ruiny po około **30 dniach symulacji** oraz kwalifikujące się budynki opuszczone od **jednego roku symulacji**. Ty decydujesz, które strefy i które powody opuszczenia się liczą, czy chronione ruiny mogą być uprzątane i czy ustawić miesięczny limit wydatków. |
 | [Komunikaty doradców](technical_docs/en/safety.md#notices) | Korzysta z doradców gry, by zgłaszać udowodnione, trwałe niedobory, których nie rozwiążą ani finansowanie, ani dostępne umowy. Gdy to ma sens, komunikaty zawierają odnośniki prowadzące do danych budynków. Dodaje też wiadomość (tytuł na liście, szczegóły po kliknięciu), gdy włączona przez Ciebie usługa musi się zatrzymać z powodu awarii technicznej. |
 | [Porada o rozmiarze wysypiska](technical_docs/en/garbage.md#garbage-landfills-advice) | Opcjonalna porada wskazuje konkretne, bezpieczne zmniejszenie wysypiska (puste pola do usunięcia), które mogłoby obniżyć rachunek za odpady o więcej niż wybrany próg oszczędności. **Ministerstwo doradza; to Ty decydujesz, czy zmienić strefę.** |
 | [Naprawa pól-widm](technical_docs/en/garbage.md#ghost-tiles) | Gdy zarządzanie odpadami jest włączone, bezpiecznie naprawia kwalifikujące się niewidoczne pola wysypiska, które gra nadal wlicza do utrzymania. Przypadki niebezpieczne lub niezweryfikowane są pomijane; ta naprawa nie ma osobnego przełącznika. |
@@ -90,7 +90,7 @@ Ministerstwo używa ustawień dostarczonych z wtyczką i **zaczyna działać aut
 
 2\. Na stronie **Służby miejskie** wybierz, którymi budżetami i umowami z sąsiadami Ministerstwo może zarządzać oraz ile zapasowej pojemności ma utrzymywać.
 
-3\. Na stronie **Wyburzanie** sprawdź zasady uprzątania ruin i opuszczonych budynków. **Wyłącz automatyczne wyburzanie, jeśli chcesz wszystko zrównać z ziemią samodzielnie.**
+3\. Na stronie **Wyburzanie** automatyczne wyburzanie jest wyłączone. Zaznacz opcje dotyczące ruin i opuszczonych budynków tylko wtedy, gdy chcesz, aby Ministerstwo uprzątało je za Ciebie.
 
 4\. Kliknij **Akceptuj**, aby zapisać wybór. **Anuluj** zamyka okno bez zapisywania zmian.
 
@@ -137,10 +137,10 @@ Otwórz **Opcje gry → Ministerstwo Optymalizacji**. Okno ma dwie strony: **Sł
 
 | Opcja | Domyślnie | Co oznacza |
 |---|---|---|
-| [Wyburzaj zniszczone budynki](technical_docs/en/options.md#opt-demolishdestroyed) | **Włączone** | Wyburza ruiny po określonym czasie. Nie uprząta automatycznie chronionych ruin budynków miejskich ani zabytkowych, chyba że pozwala na to opcja poniżej. |
+| [Wyburzaj zniszczone budynki](technical_docs/en/options.md#opt-demolishdestroyed) | **Wyłączone** | Wyburza ruiny po określonym czasie. Nie uprząta automatycznie chronionych ruin budynków miejskich ani zabytkowych, chyba że pozwala na to opcja poniżej. |
 | [Okres oczekiwania (zniszczone budynki)](technical_docs/en/options.md#opt-destroyedmonths) | **1 miesiąc** (1–24) | Jak długo ruiny muszą stać, zanim będzie można je uprzątnąć; domyślnie około **30 dni symulacji**. |
 | [Wyburzaj zniszczone budynki miejskie i zabytkowe](technical_docs/en/options.md#opt-demolishmunicipal) | **Wyłączone** | Po włączeniu uprząta po okresie oczekiwania także kwalifikujące się **ruiny** budynków miejskich, specjalnych i zabytkowych. |
-| [Wyburzaj opuszczone budynki](technical_docs/en/options.md#opt-demolishabandoned) | **Włączone** | Uprząta kwalifikujące się opuszczone budynki po okresie oczekiwania, w wybranych typach stref i z wybranych powodów. |
+| [Wyburzaj opuszczone budynki](technical_docs/en/options.md#opt-demolishabandoned) | **Wyłączone** | Uprząta kwalifikujące się opuszczone budynki po okresie oczekiwania, w wybranych typach stref i z wybranych powodów. |
 | [Okres oczekiwania (opuszczone budynki)](technical_docs/en/options.md#opt-abandonedmonths) | **12 miesięcy** (1–60) | Jak długo budynek musi pozostawać opuszczony, zanim będzie można go wyburzyć; domyślnie jeden rok symulacji. |
 | [Strefy mieszkalne](technical_docs/en/options.md#opt-zoneresidential) | **Włączone** | Obejmuje opuszczone domy i bloki mieszkalne. |
 | [Strefy handlowe](technical_docs/en/options.md#opt-zonecommercial) | **Włączone** | Obejmuje opuszczone sklepy i biura. |

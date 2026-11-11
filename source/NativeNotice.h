@@ -27,7 +27,18 @@ constexpr std::int32_t kAdviceReady = 0x5C4AF001, kAdviceFailed = 0x5C4AF002, kA
 constexpr std::int32_t kAdviceScoutBase = 0x5C4AF020;
 
 // No way to supply a utility (local production and the neighbor deals are insufficient): one record per commodity, Power / Water / Garbage.
+// Two variants of the same notice (ServiceNotices.h: the first two notices of an episode are pop-ups, the third and the following are discreet): the POP-UP record (URGENT, ALARM, listed 30 days;
+// event 0x5C4AF030 + n, advice 0x5C4AD030 + n) and the DISCREET one (BAD_JOB, MEDIUM: a plain entry of the news bar, no pop-up; event 0x5C4AF090 + n, advice 0x5C4AD090 + n). Both read the same
+// texts (0x5C4AE030 / 0x5C4AE130 + n), so the translations exist once.
 constexpr std::int32_t kAdviceNoSupplyBase = 0x5C4AF030;
+constexpr std::int32_t kAdviceNoSupplyGuidBase = 0x5C4AD030;
+constexpr std::int32_t kAdviceNoSupplyDiscreetBase = 0x5C4AF090;
+constexpr std::int32_t kAdviceNoSupplyDiscreetGuidBase = 0x5C4AD090;
+// Slot 3 is the informative notice of a STAGNANT garbage backlog ("the garbage is here to stay"): a single DISCREET record (BAD_JOB, MEDIUM), event 0x5C4AF093, advice 0x5C4AD093, texts 0x5C4AE0B3 / 0x5C4AE1B3.
+constexpr std::int32_t kAdviceGarbageStagnantEvent = 0x5C4AF093;
+constexpr std::int32_t kAdviceGarbageStagnantGuid = 0x5C4AD093;
+constexpr std::int32_t NoSupplyAdviceEvent(int utility, bool popup) { return utility == 3 ? kAdviceGarbageStagnantEvent : (popup ? kAdviceNoSupplyBase : kAdviceNoSupplyDiscreetBase) + utility; }
+constexpr std::int32_t NoSupplyAdviceGuid(int utility, bool popup) { return utility == 3 ? kAdviceGarbageStagnantGuid : (popup ? kAdviceNoSupplyGuidBase : kAdviceNoSupplyDiscreetGuidBase) + utility; }
 
 // Education / Health capacity notices (Health and Education advisor, BAD_JOB 45: red in the news list, no pop-up): ONE notice per facility type (CivicType, CivicWatch.h) with one native link per
 // affected building, 1 to kCivicMaxLinks of them. Per type there is one static record for every number of buildings; the plugin retires the shown notice before it pushes another one.

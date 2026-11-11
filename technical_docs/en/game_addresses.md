@@ -1,6 +1,6 @@
 # SimCity 4 executable: reverse-engineering address reference
 
-This reference records research on the **SimCity 4 Deluxe Steam 1.1.641.0 Windows x86 executable**, not the Department of Efficiency plugin version (1.0.2). Addresses refer to the executable image inspected at base `0x00400000`. Other builds, patches, rebasing and installations have not been checked. Do not assume an address is portable or safe to call or patch.
+This reference records research on the **SimCity 4 Deluxe Steam 1.1.641.0 Windows x86 executable**, not the Department of Efficiency plugin version (1.0.3). Addresses refer to the executable image inspected at base `0x00400000`. Other builds, patches, rebasing and installations have not been checked. Do not assume an address is portable or safe to call or patch.
 
 The table describes addresses whose roles have been identified in the research. It distinguishes static analysis from observations in the running game; a runtime test of one use does not validate every possible caller or argument. The list is not exhaustive: values whose roles have not been established are omitted.
 

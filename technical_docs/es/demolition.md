@@ -920,7 +920,7 @@ El edificio C permanece hasta una revisión posterior en la que haya dinero sufi
 
 Imagina una ciudad con **400 edificios** que llevan abandonados más de un año por demanda insuficiente.
 
-Instalas el Ministerio con sus ajustes de demolición por defecto.
+Instalas el Ministerio, activas la demolición automática y mantienes sus ajustes por defecto.
 
 Estos edificios ya tienen la antigüedad suficiente para cumplir los requisitos.
 

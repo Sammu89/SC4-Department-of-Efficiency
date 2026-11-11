@@ -13,7 +13,7 @@ Det styrer budgetterne for de enkelte uddannelses- og sundhedsbygninger, kraftv�
 Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet**. Vælg de områder, der skal automatiseres, juster deres sikkerhedsmarginer, indstil nedrivning, eller slå hele Ministeriet fra. Du kan også bruge byforordningen **Opret Effektivitetsministeriet** som hovedafbryder. Der skal ikke bruges nogen separat applikation.
 
 > [!IMPORTANT]
-> **Ministeriet starter slået til, også med automatisk nedrivning af ødelagte og forladte bygninger.** Gennemgå dets indstillinger, før du åbner en by, du holder af. Det foretager rigtige ændringer i spillet: finansiering, aftaler og nedrivninger bliver gemt, hvis du gemmer byen. Det redigerer ikke gemte spil direkte.
+> **Ministeriet starter slået til, men automatisk nedrivning er slået fra som standard.** Gennemgå dets indstillinger, før du åbner en by, du holder af. Det foretager rigtige ændringer i spillet: finansiering og aftaler (og nedrivninger, hvis du slår dem til) bliver gemt, hvis du gemmer byen. Det redigerer ikke gemte spil direkte.
 
 ## Indhold
 
@@ -45,9 +45,9 @@ Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet
 
 ## Installation
 
-### [⬇ Download Department of Efficiency 1.0.2](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.2/Departement_of_Efficiency_1.02.zip)
+### [⬇ Download Department of Efficiency 1.0.3](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/download/v1.0.3/Department_of_Efficiency_1.0.3.zip)
 
-**Nyt i 1.0.2:** se [ændringsloggen](CHANGELOG.md) (på engelsk).
+**Nyt i 1.0.3:** se [ændringsloggen](CHANGELOG.md) (på engelsk).
 
 1. Download den [nyeste version](https://github.com/Sammu89/SC4-Department-of-Efficiency/releases/latest) og luk SimCity 4.
 
@@ -58,7 +58,7 @@ Alt styres inde i spillet under **Spilindstillinger → Effektivitetsministeriet
 4. Start SimCity 4, og åbn **Spilindstillinger → Effektivitetsministeriet** for at vælge dine indstillinger.
 
 > [!IMPORTANT]
-> Ministeriet er aktiveret som standard, herunder automatisk nedrivning af ødelagte og forladte bygninger. Kontrollér indstillingerne for **nedrivning**, før du åbner en by med bygninger, du vil bevare.
+> Ministeriet er aktiveret som standard; automatisk nedrivning er som standard **slået fra**. Hvis du slår den til, så kontrollér indstillingerne for **nedrivning**, før du åbner en by med bygninger, du vil bevare.
 
 <a id="features"></a>
 
@@ -73,7 +73,7 @@ Tabellen nedenfor beskriver, hvad Ministeriet gør. Formler, eksempler, sikkerhe
 | [Vand](technical_docs/en/water.md#water) | Justerer byens vandfinansiering, så den dækker behovet plus en sikkerhedsreserve. Beskyttelse af vandrørene er slået til som standard for at undgå nedskæringer, der ville lade nettet forfalde. Det skjuler også spillets misvisende „intet vand“-ikon over gårde. |
 | [Affaldshåndtering](technical_docs/en/garbage.md#garbage-landfills) | Justerer finansieringen af affaldshåndteringen ud fra affaldsmængde, genbrug, behandling, lossepladslager og regionale aftaler og beskytter samtidig byens eget behov for bortskaffelse. |
 | [Aftaler med nabobyer](technical_docs/en/deals.md#neighbor-deals) | Kan **købe eller sælge el og vand**, **betale naboer for at tage imod dit affald** eller **modtage deres mod betaling**. Det opretter, justerer og opsiger egnede aftaler, når det samlede resultat gavner byen, og dens egne behov og reserver forbliver beskyttet. |
-| [Automatisk nedrivning](technical_docs/en/demolition.md#demolition) | Kan som standard rydde ruiner efter ca. **30 simulerede dage** og egnede bygninger, der har stået forladt i **ét simuleret år**. Du bestemmer, hvilke zoner og hvilke årsager til forladthed der tæller, om beskyttede ruiner må ryddes, og om der skal gælde en månedlig udgiftsgrænse. |
+| [Automatisk nedrivning](technical_docs/en/demolition.md#demolition) | **Slået fra som standard.** Kan som standard rydde ruiner efter ca. **30 simulerede dage** og egnede bygninger, der har stået forladt i **ét simuleret år**. Du bestemmer, hvilke zoner og hvilke årsager til forladthed der tæller, om beskyttede ruiner må ryddes, og om der skal gælde en månedlig udgiftsgrænse. |
 | [Rådgivernes beskeder](technical_docs/en/safety.md#notices) | Bruger spillets egne rådgivere til at melde påviste, vedvarende mangler, som hverken finansiering eller tilgængelige aftaler kan afhjælpe. Hvor det giver mening, indeholder beskederne links til de berørte bygninger. Det tilføjer også en nyhed (titel på listen, detaljer ved klik), når en tjeneste, du har aktiveret, må stoppe på grund af en teknisk fejl. |
 | [Råd om lossepladsens størrelse](technical_docs/en/garbage.md#garbage-landfills-advice) | Det valgfrie råd peger på en bestemt, sikker indskrænkning af lossepladsen (tomme felter, der kan fjernes), der kan skære affaldsregningen med mere end din valgte sparegrænse. **Ministeriet rådgiver; du afgør, om zoneinddelingen skal ændres.** |
 | [Reparation af spøgelsesfelter](technical_docs/en/garbage.md#ghost-tiles) | Når styringen af affaldshåndteringen er slået til, repareres egnede usynlige lossepladsfelter, som spillet stadig tæller med i vedligeholdelsen, på en sikker måde. Usikre eller ikke-verificerede tilfælde lades i fred; der er ingen separat kontakt til denne reparation. |
@@ -90,7 +90,7 @@ Ministeriet bruger de indstillinger, der følger med pluginnet, og **går automa
 
 2\. På siden **Serviceområder** vælger du, hvilke budgetter og nabo-aftaler Ministeriet må styre, og hvor meget ekstra kapacitet det skal holde i reserve.
 
-3\. På siden **Nedrivning** tjekker du reglerne for rydning af ruiner og forladte bygninger. **Slå automatisk nedrivning fra, hvis du selv vil jævne alt med jorden.**
+3\. På siden **Nedrivning** er automatisk nedrivning slået fra. Sæt kryds ved indstillingerne for ruiner og forladte bygninger, kun hvis du vil have Ministeriet til at rydde dem for dig.
 
 4\. Klik på **Accepter** for at gemme dine valg. **Annuller** lukker vinduet uden at gemme ændringer.
 
@@ -137,10 +137,10 @@ Du kan også aktivere eller deaktivere Ministeriet via byens forordninger.
 
 | Indstilling | Standard | Hvad det betyder |
 |---|---|---|
-| [Ryd ødelagte bygninger](technical_docs/en/options.md#opt-demolishdestroyed) | **Til** | River ruiner ned efter en vis tid. Rydder ikke automatisk beskyttede kommunale eller historiske ruiner, medmindre indstillingen nedenfor tillader det. |
+| [Ryd ødelagte bygninger](technical_docs/en/options.md#opt-demolishdestroyed) | **Fra** | River ruiner ned efter en vis tid. Rydder ikke automatisk beskyttede kommunale eller historiske ruiner, medmindre indstillingen nedenfor tillader det. |
 | [Ventetid (ødelagte bygninger)](technical_docs/en/options.md#opt-destroyedmonths) | **1 måned** (1–24) | Hvor længe ruiner skal blive stående, før de kan ryddes; som standard ca. **30 simulerede dage**. |
 | [Ryd ødelagte kommunale og historiske bygninger](technical_docs/en/options.md#opt-demolishmunicipal) | **Fra** | Hvis slået til, ryddes også egnede **ruiner** af kommunale, særlige og historiske bygninger efter ventetiden. |
-| [Riv forladte bygninger ned](technical_docs/en/options.md#opt-demolishabandoned) | **Til** | Rydder egnede forladte bygninger efter ventetiden, i de valgte zonetyper og af de valgte årsager. |
+| [Riv forladte bygninger ned](technical_docs/en/options.md#opt-demolishabandoned) | **Fra** | Rydder egnede forladte bygninger efter ventetiden, i de valgte zonetyper og af de valgte årsager. |
 | [Ventetid (forladte bygninger)](technical_docs/en/options.md#opt-abandonedmonths) | **12 måneder** (1–60) | Hvor længe en bygning skal stå forladt, før den må rives ned; som standard ét simuleret år. |
 | [Boligzone](technical_docs/en/options.md#opt-zoneresidential) | **Til** | Omfatter forladte huse og etageejendomme. |
 | [Handelszone](technical_docs/en/options.md#opt-zonecommercial) | **Til** | Omfatter forladte butikker og kontorer. |

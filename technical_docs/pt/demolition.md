@@ -920,7 +920,7 @@ O edifício C permanece até uma revisão posterior em que haja dinheiro suficie
 
 Imagine-se uma cidade com **400 edifícios** que já estão abandonados há mais de um ano por procura insuficiente.
 
-O Ministério é instalado com as definições de demolição predefinidas.
+Instala o Ministério, liga a demolição automática e mantém as regras predefinidas.
 
 Estes edifícios já têm idade suficiente para se qualificarem.
 

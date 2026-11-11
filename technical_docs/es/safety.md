@@ -625,130 +625,63 @@ El Ministerio solo usa avisos de asesores cuando el jugador puede necesitar inte
 <a id="safety-notices-utility"></a>
 #### Avisos de escasez de electricidad, agua y basura
 
-El Ministerio puede avisarte cuando una escasez persiste y **las soluciones automáticas disponibles se han agotado**.
+El Ministerio puede avisarle cuando una escasez persiste y **las soluciones automáticas disponibles están agotadas**.
 
-Estos avisos proceden del **asesor de Servicios públicos**.
+Estos avisos vienen del **asesor de Servicios públicos**. Su texto se dirige al alcalde y a la ciudad por su nombre.
+
+Un aviso de escasez existe **solo mientras el Ministerio gestiona ese servicio a nivel local** (electricidad, agua o saneamiento, con el Ministerio activo). Si desactiva esa gestión, el aviso se retira. Los contratos regionales son otro asunto: nunca causan un aviso, y un aviso nunca cancela un contrato.
 
 | Recurso | Título del aviso |
 |---|---|
-| **Electricidad** | **¡A la luz de las velas!** |
-| **Agua** | **¡Los grifos se declaran en huelga!** |
-| **Basura** | **¡Una ciudad hasta los topes!** |
+| **Electricidad** | **¡Apagón! ¿Quién compró las velas?** |
+| **Agua** | **¡Hasta los grifos tienen sed!** |
+| **Basura: escasez grave** | **¡Basura hasta el cuello!** |
+| **Basura: montón antiguo que no baja** | **¡Esta basura ya paga alquiler!** |
 
-Son mensajes de asesor urgentes.
+Los dos primeros avisos de un episodio son mensajes urgentes que pueden abrirse como ventana emergente; los siguientes son entradas discretas de la lista de noticias. El aviso del montón antiguo es informativo: neutro, siempre discreto, nunca una ventana emergente. Ninguno incluye un enlace a la cámara.
 
-Según los ajustes de consejos de SimCity 4, pueden aparecer como ventanas emergentes además de como entradas en la lista de noticias.
+#### ¿Cuándo considera el Ministerio que una escasez está probada?
 
-No incluyen un enlace a la cámara.
+No se genera un aviso solo porque la demanda supere temporalmente la oferta. El Ministerio debe establecer, con lecturas actuales, que **la escasez no se puede resolver con lo que tiene permitido hacer**.
 
-#### ¿Cuándo considera el Ministerio que una escasez está demostrada?
+En electricidad y agua comprueba la capacidad utilizable de las instalaciones locales, las compras regionales disponibles, las ventas que ocupan capacidad, la demanda real de la ciudad y el servicio entregado, y que ningún cambio suyo esté pendiente de confirmación. **Un edificio sin agua solo por estar desconectado de la red de tuberías no prueba una escasez regional.**
 
-Un aviso de escasez no se genera solo porque la demanda supere temporalmente el suministro.
+En basura compara su modelo de tratamiento con el atraso de basura sin recoger del propio juego, leído mes a mes. Un atraso de hasta el **1 % de la producción mensual** cuenta como residual.
 
-El Ministerio debe establecer primero que **la escasez no se puede resolver con las opciones legales disponibles en ese momento**.
-
-Para la electricidad y el agua, esto exige comprobar:
-
-- La capacidad máxima utilizable de las instalaciones locales.
-- Las compras regionales disponibles.
-- La retirada de las ventas que consumen capacidad necesaria.
-- La demanda real de la ciudad y el servicio realmente entregado.
-- Que los registros regionales y las ofertas de contratos estén completos.
-
-Si gestionas los contratos manualmente, el Ministerio evalúa los contratos existentes en lugar de suponer que puede crear otros nuevos.
-
-La información regional debe ser lo bastante completa para sustentar la conclusión.
-
-Para la electricidad y el agua, los contadores del juego también deben confirmar un déficit regional genuino.
-
-**Un edificio que no tiene agua porque está desconectado de la red de tuberías no demuestra, por sí solo, una escasez de suministro regional.**
-
-Para la basura, el Ministerio se basa en su modelo físico de eliminación para determinar si se pueden gestionar los residuos de la ciudad.
-
-Se trata de una predicción del modelo, no de una medición directa del juego de cada flujo futuro de basura.
-
-Por último, **ningún cambio de contrato ni ajuste de financiación de la limpieza del recurso afectado puede estar todavía pendiente de confirmación**.
-
-El Ministerio no declara que una escasez es imposible de resolver mientras su propia acción correctiva sigue en marcha.
-
-#### ¿Por qué espera el Ministerio 30 días antes de avisarte?
-
-Las escaseces pueden desaparecer tras un ajuste de financiación, un cambio de contrato u otra actualización normal del juego.
-
-Por eso el Ministerio espera a que una escasez demostrada lleve **30 días simulados** sin resolverse.
-
-**Una escasez resuelta durante esos 30 días no genera ningún aviso.**
-
-Así se evitan avisos innecesarios sobre problemas que la gestión automática corrige con éxito.
-
-#### ¿Cuándo se muestran los recordatorios?
-
-**Calendario de avisos de escasez de servicios**
-
-```math
-t_{\mathrm{primer}}=t_{\mathrm{prueba}}+30
-```
-
-```math
-t_k=t_{\mathrm{primer}}+kP
-```
-
-Donde:
-
-- **tprueba** es el día simulado en que la escasez se demostró por primera vez.
-- **tprimer** es la fecha del primer aviso.
-- **k** es el número de recordatorio, empezando en 1.
-- **P** es el intervalo entre recordatorios.
-
-| Recurso | Primer aviso | Intervalo entre recordatorios |
+| Situación | Lo que ve el Ministerio | Aviso |
 |---|---|---|
-| **Electricidad** | Tras 30 días simulados sin resolver | Cada 60 días simulados |
-| **Agua** | Tras 30 días simulados sin resolver | Cada 60 días simulados |
-| **Basura** | Tras 30 días simulados sin resolver | Cada 120 días simulados |
+| **Grave** | el atraso creció más que ese margen en cada uno de los dos últimos meses | aviso urgente |
+| **Montón antiguo** | hay un atraso por encima del margen, pero ya no crece: casi toda la basura nueva se trata, el montón antiguo se queda | aviso neutro y discreto |
+| **Bajando o resuelto** | el atraso disminuye, o ha desaparecido o es residual | ningún aviso nuevo; la recuperación retira el aviso |
+| **Incierto** | los datos no bastan | nada cambia |
 
-El Ministerio sigue enviando recordatorios solo mientras la escasez continúa sin resolverse.
+Los dos avisos de basura nunca existen a la vez. Cuando los datos dejan de mostrar una escasez pero aún no confirman que ha terminado, el Ministerio ni avisa ni retira un aviso ya mostrado, y los días de espera se detienen.
+
+#### ¿Cuándo aparecen los avisos y los recordatorios?
+
+| Recurso | Primer aviso (días con la escasez probada) | Recordatorio cada |
+|---|---|---|
+| **Electricidad** | 15 días simulados | 120 días simulados |
+| **Agua** | 30 días simulados | 150 días simulados |
+| **Basura** | 60 días simulados | 240 días simulados |
+
+Una escasez resuelta antes de esos días no produce aviso. Solo cuentan los días en que la escasez está probada. Los dos primeros avisos de un episodio pueden abrirse como ventana emergente; a partir del tercero son discretos. No hay límite de recordatorios mientras dure la escasez.
+
+El Ministerio no puede ver si descartó un aviso, así que nunca lo da por hecho: los recordatorios siguen simplemente estos intervalos fijos.
 
 #### ¿Cuándo termina un episodio de escasez?
 
-En la electricidad y el agua, el episodio termina cuando una lectura nueva del juego confirma que el servicio entregado es al menos igual a la demanda.
+En electricidad y agua, cuando lecturas nuevas confirman, en dos días seguidos, que el servicio entregado es al menos igual a la demanda. En basura, cuando el modelo de tratamiento vuelve a ser viable y el atraso ha desaparecido o es residual.
 
-En la basura, deben cumplirse dos condiciones:
+Entonces el aviso se retira del asesor y los recordatorios se detienen. **Una escasez posterior es un episodio nuevo**, con sus propios días de espera. Desactivar la gestión del servicio también termina el episodio y retira el aviso; al volver a activarla, la escasez debe probarse otra vez.
 
-- El modelo de eliminación vuelve a ser viable.
-- El juego no informa de basura sin recoger.
+#### ¿Qué ocurre si cierra y reabre la ciudad?
 
-Una vez confirmada la recuperación, el Ministerio deja de enviar recordatorios.
-
-**Una escasez posterior se trata como un episodio nuevo**, con su propio periodo de espera de 30 días.
-
-#### ¿Qué ocurre si cierras y vuelves a abrir la ciudad?
-
-El Ministerio recuerda qué escaseces ya ha comunicado.
-
-Esta información se guarda **por ciudad** en un pequeño archivo de historial de avisos dentro de la carpeta del Ministerio, fuera de tus ciudades guardadas.
-
-Por ejemplo, si recibes un aviso de escasez de agua y vuelves a abrir la ciudad mientras la misma escasez sigue sin resolverse, el Ministerio no muestra de inmediato el mismo aviso otra vez.
-
-Cuando la escasez se vuelve a demostrar en la nueva sesión y sigue sin resolverse durante el periodo de espera normal, programa el siguiente recordatorio en lugar de repetir el primer aviso.
-
-Si la sesión llega a su **día simulado 75** sin que esa escasez se haya vuelto a demostrar, se descarta la memoria del episodio anterior.
-
-Una escasez posterior puede entonces iniciar un episodio nuevo.
-
-El archivo de historial de avisos se puede borrar sin dañar las ciudades guardadas.
+**No se recuerda nada entre sesiones** para estos avisos. Al abrir una ciudad, el Ministerio retira cualquier aviso de escasez que dejara una sesión anterior. Si la escasez sigue ahí, debe probarse de nuevo y el primer aviso llega tras los días de espera normales (15, 30 o 60). Los avisos de educación y sanidad, más abajo, conservan su memoria.
 
 #### ¿Qué ajustes se necesitan para los avisos de escasez?
 
-Los avisos de escasez de servicios requieren que **Gestionar acuerdos con vecinos** esté activado.
-
-Esto se debe a que el Ministerio necesita inspeccionar las ofertas y los mercados regionales antes de concluir que una escasez no se puede resolver.
-
-El recurso afectado también debe gestionarse mediante uno de estos:
-
-- Su gestor de financiación local.
-- Su gestor de contratos regionales correspondiente.
-
-**Si el Ministerio no puede examinar todas las alternativas relevantes, no afirma que la escasez sea imposible de resolver.**
+Solo el Ministerio activo y la **gestión local de ese servicio** (electricidad, agua o saneamiento). Los ajustes de los contratos regionales no intervienen.
 
 <a id="safety-notices-civic"></a>
 #### Avisos de capacidad de educación y sanidad
@@ -1047,65 +980,49 @@ Los siguientes ejemplos muestran cómo responde el Ministerio ante carencias per
 
 #### Ejemplo 1: Una escasez de electricidad que no se puede resolver
 
-Supón que tu ciudad se encuentra en esta situación el **día simulado 40** tras abrirla:
+Suponga que su ciudad se encuentra en esta situación en el **día simulado 40** tras la apertura:
 
-- **Demanda de electricidad:** 10.000 unidades.
-- **Electricidad suministrada:** 9.200 unidades.
-- **Capacidad máxima de generación local:** 8.900 unidades.
+- **Demanda de electricidad:** 10 000 unidades.
+- **Electricidad entregada:** 9 200 unidades.
+- **Capacidad local máxima de producción:** 8 900 unidades.
 - **Importaciones regionales utilizables:** 200 unidades.
 - **Ventas:** ninguna.
 
-El Ministerio ya ha tenido en cuenta la financiación máxima legal de las centrales y todas las compras disponibles.
+El Ministerio ya ha considerado la financiación legal máxima de las centrales y todas las compras disponibles.
 
-El suministro total disponible es:
+La oferta total disponible es:
 
 ```math
 8900+200=9100
 ```
 
-Eso es menos que la demanda de la ciudad:
+Es menos que la demanda de la ciudad:
 
 ```math
 9100<10000
 ```
 
-Los contadores del juego también confirman que el suministro de electricidad es inferior a la demanda.
+Los contadores del juego confirman además que la electricidad entregada está por debajo de la demanda.
 
-**La carencia queda demostrada el día 40.**
+**La escasez queda probada el día 40.** El Ministerio espera 15 días simulados.
 
-Aun así, el Ministerio no muestra un aviso de inmediato.
+**Día 55**
 
-Espera 30 días simulados.
+La escasez sigue sin resolverse. El Ministerio emite el primer aviso, que puede abrirse como ventana emergente:
 
-**Día 70**
+**¡Apagón! ¿Quién compró las velas?**
 
-La carencia sigue sin resolverse.
+**Día 175**
 
-El Ministerio emite:
+La escasez continúa. El recordatorio aparece 120 días simulados después del aviso.
 
-**¡A la luz de las velas!**
+**Día 180**
 
-**Día 130**
+Construye otra central eléctrica. Lecturas nuevas confirman que la electricidad entregada ya cubre la demanda. El Ministerio retira el aviso y detiene los recordatorios.
 
-La carencia continúa.
+**Día 250**
 
-Aparece el primer recordatorio, 60 días simulados después del aviso original.
-
-**Día 150**
-
-Construyes otra central eléctrica.
-
-Una nueva lectura confirma que la electricidad suministrada ya cubre la demanda.
-
-El Ministerio da por cerrado el episodio de carencia y deja de enviar recordatorios.
-
-**Día 200**
-
-Se demuestra una nueva carencia de electricidad.
-
-Como el episodio anterior terminó, la nueva carencia inicia su propio periodo de espera de 30 días.
-
-Si sigue sin resolverse, el siguiente aviso aparece el **día 230**.
+Se prueba una nueva escasez de electricidad. Como el episodio anterior terminó, empieza su propio periodo de espera; si sigue sin resolverse, un nuevo primer aviso aparece el **día 265**.
 
 #### Ejemplo 2: Edificios sin electricidad, pero con capacidad de generación suficiente
 
@@ -1134,23 +1051,11 @@ El jugador debe revisar la red eléctrica.
 
 #### Ejemplo 3: Reabrir una ciudad durante una carencia ya existente
 
-Supón que una carencia de agua se notificó por primera vez el **día 70** de una sesión de la ciudad.
+Suponga que una escasez de agua se comunicó el **día 70** de una sesión y que guarda la ciudad el día 100 mientras sigue sin resolverse.
 
-Guardas la ciudad el día 100 mientras la carencia sigue sin resolverse.
+Más tarde, reabre la ciudad. El Ministerio empieza una sesión nueva: **no recuerda nada** de la anterior y retira el aviso antiguo si el juego lo mantuvo en la lista.
 
-Más tarde, vuelves a abrir la ciudad.
-
-El Ministerio inicia una nueva sesión y evalúa de nuevo el sistema de agua.
-
-La carencia se demuestra otra vez y permanece sin resolverse durante otros 30 días simulados.
-
-Sin embargo, el Ministerio recuerda que ese mismo episodio de carencia ya se había notificado.
-
-**No repite el primer aviso.**
-
-En su lugar, programa el siguiente recordatorio según el intervalo normal de 60 días.
-
-Así se evita que el mismo problema sin resolver genere un nuevo aviso inicial cada vez que reabres la ciudad.
+Si la escasez de agua sigue ahí, se prueba de nuevo y el primer aviso llega tras los 30 días simulados normales. Reabrir la ciudad nunca produce, por tanto, un aviso inmediato, y el calendario de recordatorios antiguo no continúa.
 
 #### Ejemplo 4: Cambiar la financiación del agua a mano
 
@@ -1211,9 +1116,9 @@ El Ministerio está diseñado para actuar con prudencia, pero no puede superar t
 
 #### Avisos de carencia
 
-- **Los avisos de carencia de suministros requieren Gestionar acuerdos con vecinos.** Sin acceso a las ofertas y los mercados regionales, el Ministerio no puede demostrar que se han agotado todas las soluciones posibles.
-- **El Ministerio no puede saber si un aviso llegó a mostrarse en pantalla.** SimCity 4 decide si muestra una ventana emergente según los ajustes de sus asesores.
-- **Los avisos de carencia de basura se basan en un modelo.** A diferencia de la electricidad y el agua, la viabilidad de la basura se determina mediante la proyección de eliminación del Ministerio, y no mediante un contador directo del juego que demuestre las necesidades futuras de eliminación.
+- **Los avisos de escasez siguen la gestión local.** Si gestiona un servicio a mano, el Ministerio no le avisa sobre él.
+- **El Ministerio no puede saber si un aviso se mostró o se descartó realmente.** SimCity 4 decide si abre una ventana emergente según sus ajustes de asesores. Los recordatorios siguen intervalos fijos.
+- **Los avisos de basura se basan en un modelo y en lecturas mensuales.** A diferencia de la electricidad y el agua, la basura se juzga por la proyección de tratamiento del Ministerio y el atraso del juego, mes a mes.
 
 #### Mensajes originales de los asesores del juego
 

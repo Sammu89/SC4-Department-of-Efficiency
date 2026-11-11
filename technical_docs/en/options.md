@@ -173,7 +173,7 @@ An unknown setting or invalid value makes the affected configuration file invali
 
 Settings omitted from the supplied files use their defaults.
 
-For example, the default demolition configuration enables the removal of ruins and eligible abandoned buildings, while protecting agricultural lots and buildings abandoned because of missing power or water.
+For example, once demolition is turned on, its default rules enable the removal of ruins and eligible abandoned buildings, while protecting agricultural lots and buildings abandoned because of missing power or water. Demolition itself is off by default.
 
 **Manual edits are normally detected and applied within one simulated month.**
 
@@ -819,7 +819,7 @@ It does not remove the underlying zoning.
 <a id="opt-demolishdestroyed"></a>
 ### Demolish destroyed buildings
 
-<text color="secondary">Default: On | Values: On / Off | INI: `DemolishDestroyed`</text>
+<text color="secondary">Default: Off | Values: On / Off | INI: `DemolishDestroyed`</text>
 
 Automatically removes ruins left behind by fires and disasters.
 
@@ -916,7 +916,7 @@ See [Automatic Demolition](demolition.md#demolition-protected).
 <a id="opt-demolishabandoned"></a>
 ### Demolish abandoned buildings
 
-<text color="secondary">Default: On | Values: On / Off | INI: `DemolishAbandoned`</text>
+<text color="secondary">Default: Off | Values: On / Off | INI: `DemolishAbandoned`</text>
 
 Automatically clears buildings that have remained abandoned for the configured waiting period.
 

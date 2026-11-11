@@ -84,22 +84,43 @@ public:
         return *c.pConsumption - std::max<std::int64_t>(0, *c.pExport);
     }
 
+    // What one reading of the counters says about the service, without any tolerance. UNKNOWN is never read as covered or as short: a counter that is not available decides nothing.
+    //  Served       the service delivered covers the need
+    //  SupplyShort  the service is short AND the supply that exists (local capacity + usable imports - sales) cannot cover the need: a shortage of capacity
+    //  SupplyCovers the service is short but the supply covers the need: an internal problem of the city (connection) or counters that have not caught up; NO shortage of capacity is shown
+    //  Unknown      the need, the service delivered or the capacity could not be read
+    enum class SampleState { Unknown, Served, SupplyShort, SupplyCovers };
+    static SampleState Classify(std::optional<std::int64_t> demand, std::optional<std::int64_t> served, std::optional<std::int64_t> capacity, std::optional<std::int64_t> usableImport, std::int64_t exports = 0) {
+        if (!demand || !served) return SampleState::Unknown;
+        if (*served >= *demand) return SampleState::Served;
+        if (!capacity) return SampleState::Unknown;
+        const std::int64_t supply = *capacity + (usableImport ? *usableImport : 0) - std::max<std::int64_t>(0, exports);
+        return supply < *demand ? SampleState::SupplyShort : SampleState::SupplyCovers;
+    }
+    // The same reading taken from a set of counters (the choice of the counters is the one Observe makes: the imports the game uses, else the contracted ones; the contracted exports).
+    static SampleState Classify(const ServiceCounters& c, bool power) {
+        const auto imported = power ? c.pGameImported : c.wGameImported;
+        const auto usable = power ? c.pImport : c.wImport;
+        const auto ex = power ? c.pGameExported : c.wGameExported;
+        return Classify(power ? c.pDemand : c.wDemand, ServedOf(c, power), power ? c.pCapacity : c.wCapacity, usable ? usable : imported, ex ? *ex : 0);
+    }
+
     // Pure: the service state of a sample.
     // `exports`: what the city has sold. A sale eats the supply the city needs for itself, so it is subtracted from what the supply can cover.
     static ServiceVerdict Judge(const std::string& label, std::optional<std::int64_t> demand, std::optional<std::int64_t> served, std::optional<std::int64_t> capacity, std::optional<std::int64_t> usableImport,
                                 std::int64_t exports = 0) {
         ServiceVerdict v;
-        if (!demand || !served) return v;
-        if (*served >= *demand) return v;                                         // the service delivered covers the need
+        const SampleState st = Classify(demand, served, capacity, usableImport, exports);
+        if (st == SampleState::Unknown || st == SampleState::Served) return v;
         const std::int64_t supply = (capacity ? *capacity : 0) + (usableImport ? *usableImport : 0) - std::max<std::int64_t>(0, exports);
-        if (capacity && supply < *demand) {
+        if (st == SampleState::SupplyShort) {
             v.trigger = true;
             v.cause = ServiceCause::RegionalDeficit;
             v.text = label + " deficit: demand=" + std::to_string(*demand) + " served=" + std::to_string(*served) + " supply(local capacity " + std::to_string(*capacity) + " + usable imports " +
                      std::to_string(usableImport ? *usableImport : 0) + ")=" + std::to_string(supply) + " cannot cover the demand";
         } else {
             v.cause = ServiceCause::InternalShortfall;
-            v.text = label + " served=" + std::to_string(*served) + " < demand=" + std::to_string(*demand) + " but the supply covers it (capacity " + std::to_string(capacity ? *capacity : -1) +
+            v.text = label + " served=" + std::to_string(*served) + " < demand=" + std::to_string(*demand) + " but the supply covers it (capacity " + std::to_string(*capacity) +
                      " + imports " + std::to_string(usableImport ? *usableImport : 0) + "): an internal connection problem, not a regional deficit";
         }
         return v;
@@ -205,7 +226,11 @@ private:
         const auto usable = power ? c.pImport : c.wImport;
         const auto ex = power ? c.pGameExported : c.wGameExported;
         v = Judge(power ? "POWER" : "WATER", demand, served, capacity, usable ? usable : imported, ex ? *ex : 0);
-        (power ? pDeficit_ : wDeficit_) = v.trigger ? true : (demand && served && *served >= *demand) ? false : (power ? pDeficit_ : wDeficit_);
+        // The flag follows what THIS reading shows: set by a deficit of capacity, cleared by a service delivered AND by a reading that shows the supply covers the need (an internal shortfall is not a
+        // deficit of capacity: the earlier conclusion must not outlive it). An unreadable sample leaves it as it was (it only keeps sales from staying in force, it proves nothing).
+        const auto state = Classify(demand, served, capacity, usable ? usable : imported, ex ? *ex : 0);
+        if (state == SampleState::SupplyShort) (power ? pDeficit_ : wDeficit_) = true;
+        else if (state == SampleState::Served || state == SampleState::SupplyCovers) (power ? pDeficit_ : wDeficit_) = false;
         if (!haveBase) { base = c; haveBase = true; return v; }                    // the first sample is the reference (a deficit already visible on it triggers)
         // material change since this commodity was last evaluated
         const auto bd = power ? base.pDemand : base.wDemand;
